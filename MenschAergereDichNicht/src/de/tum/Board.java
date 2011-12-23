@@ -98,8 +98,22 @@ public class Board extends GameObject {
 										// some change
 	}
 
+	/**
+	 * getting the pegs of a special team
+	 * 
+	 * @param team
+	 *            the team that owns the pegs
+	 * @return an array containing all pegs of the given team
+	 */
+	public final Peg[] getPegs(Team team) {
+		Peg[] pegs = new Peg[start_pegs];
+		for (int i = 0; i < start_pegs; ++i)
+			pegs[i] = this.pegs[i + team.id * start_pegs];
+		return pegs;
+	}
+
 	// not needed later - just for testing
-	public void movePeg(int peg, int distance) {
+	public final void movePeg(int peg, int distance) {
 		pegs[peg].move(1);
 	}
 
