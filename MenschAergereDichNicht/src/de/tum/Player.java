@@ -50,8 +50,7 @@ public abstract class Player {
 	}
 
 	/**
-	 * it's this player's turn. If the player hasn't won, the dice will be
-	 * thrown
+	 * it's this player's turn. If the player hasn't won, the player is asked to throw the dice
 	 */
 	public final void makeTurn() {
 		player = this;
@@ -59,8 +58,13 @@ public abstract class Player {
 		if (won)
 			MenschAergereDichNichtActivity.nextTurn(team);
 		else
-			Dice.throwIt();
+			throwDice();
 	}
+	
+	/**
+	 * the player is asked to throw the dice
+	 */
+	protected abstract void throwDice();
 
 	/**
 	 * dice was thrown. If there is only one peg movable according o the dice
@@ -90,14 +94,21 @@ public abstract class Player {
 
 	// checks whether this player can throw again. E.g. when a player has all
 	// pegs on start, the player is allowed to throw three times
-	private void checkForMoreTurns() {
-		if (number == 6 && current_try < 3)
+	private final void checkForMoreTurns() {
+		if (!won && current_try < 3 && (number == 6 || !checkForOneFieldMove()))
 			makeTurn();
 		else {
 			current_try = 0;
 			MenschAergereDichNichtActivity.nextTurn(team);
 		}
-		// ############################### needs some change
+	}
+	
+	// checks whether any peg can move one field. Than the player is not allowed to get another try
+	private final boolean checkForOneFieldMove() {
+		for (Peg peg : pegs)
+			if (peg.checkMove(1))
+				return true;
+		return false;
 	}
 
 	/**
