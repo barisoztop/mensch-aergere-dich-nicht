@@ -61,6 +61,7 @@ public abstract class Peg extends GameObject {
 	 */
 	public final boolean checkMove(int fields) {
 		return pos_current + fields < Board.getPathLength();
+		// ############################### needs some change
 	}
 
 	/**
@@ -88,5 +89,14 @@ public abstract class Peg extends GameObject {
 	 */
 	public final boolean hasFinished() {
 		return pos_current > Board.getPathLength() - Board.start_pegs;
+	}
+
+	/**
+	 * getting whether this peg has already started
+	 * 
+	 * @return true if this peg has already started
+	 */
+	public final boolean hasStarted() {
+		return pos_current < Board.start_pegs;
 	}
 }

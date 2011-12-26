@@ -10,7 +10,7 @@ public class Board extends GameObject {
 	private static int start_length;
 	private static int path_length;
 	private static int players;
-	private Peg[] pegs;
+	private static Peg[] pegs;
 
 	/**
 	 * creating a board
@@ -105,10 +105,10 @@ public class Board extends GameObject {
 	 *            the team that owns the pegs
 	 * @return an array containing all pegs of the given team
 	 */
-	public final Peg[] getPegs(Team team) {
+	public static final Peg[] getPegs(Team team) {
 		Peg[] pegs = new Peg[start_pegs];
 		for (int i = 0; i < start_pegs; ++i)
-			pegs[i] = this.pegs[i + team.id * start_pegs];
+			pegs[i] = pegs[i + team.id * start_pegs];
 		return pegs;
 	}
 
@@ -118,7 +118,7 @@ public class Board extends GameObject {
 	}
 
 	// creating all pegs
-	private final void createPegs() {
+	private static final void createPegs() {
 		pegs = new Peg[players * start_pegs];
 		for (int i = 0; i < pegs.length; ++i) {
 			pegs[i] = new SimplePeg(true, Team.values()[i / 4], i % 4);

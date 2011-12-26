@@ -23,6 +23,7 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
     private GameRenderer renderer;
     private Room room;
     private Board board;
+    private static Player[] players;
 
     public boolean onTouch(View view, MotionEvent event) {
       hz = f * event.getY() / height - f / 2;
@@ -38,12 +39,23 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
       room = new Room();
 
       Room.addRenderable(board = new ClassicBoard(true, 4));
+      players = new Player[Board.getPlayers()];
       
       renderer = new GameRenderer(room);
       view = new GLSurfaceView(this);
       view.setRenderer(renderer);
       view.setOnTouchListener(this);
       setContentView(view);
+    }
+    
+	/**
+	 * it's the next player's turn. Calls the next player for its turn
+	 * 
+	 * @param team
+	 *            the current team
+	 */
+    public static final void nextTurn(Team team) {
+    	players[(team.id + 1) % players.length].makeTurn();
     }
 
     @Override
