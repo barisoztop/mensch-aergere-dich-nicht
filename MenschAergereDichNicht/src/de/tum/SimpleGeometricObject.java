@@ -85,17 +85,7 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 		amount = vertices.length / 3;
 	}
 
-	/**
-	 * method for transferring the vectors by adding the given offset to each
-	 * coordinate
-	 * 
-	 * @param dx
-	 *            the offset in x-direction
-	 * @param dy
-	 *            the offset in y-direction
-	 * @param dz
-	 *            the offset in z-direction
-	 */
+	/** {@inheritDoc} */
 	public final void transfer(float dx, float dy, float dz) {
 		// adding the given offset
 		for (int i = 0; i < vertices.length; i += 3) {
@@ -107,12 +97,7 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 		setVertices(vertices);
 	}
 
-	/**
-	 * method for rendering this geometric object
-	 * 
-	 * @param gl
-	 *            the GL10 object for rendering this geometric object
-	 */
+	/** {@inheritDoc} */
 	public final void render(GL10 gl) {
 		// checking whether current object is visible
 		if (!visible)

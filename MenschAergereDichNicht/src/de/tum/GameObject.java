@@ -35,17 +35,7 @@ public abstract class GameObject extends GeometricObject {
 		sgobjects = new ArrayList<SimpleGeometricObject>();
 	}
 
-	/**
-	 * method for transferring the object by adding the given offset to each
-	 * coordinate
-	 * 
-	 * @param dx
-	 *            the offset in x-direction
-	 * @param dy
-	 *            the offset in y-direction
-	 * @param dz
-	 *            the offset in z-direction
-	 */
+	/** {@inheritDoc} */
 	public final void transfer(float dx, float dy, float dz) {
 		if (sgobjects != null)
 			for (SimpleGeometricObject object : sgobjects)
@@ -55,12 +45,7 @@ public abstract class GameObject extends GeometricObject {
 		z += dz;
 	}
 
-	/**
-	 * method for rendering the game object
-	 * 
-	 * @param gl
-	 *            the GL10 object for rendering the game object
-	 */
+	/** {@inheritDoc} */
 	public final void render(GL10 gl) {
 		if (visible && sgobjects != null)
 			for (SimpleGeometricObject object : sgobjects)
