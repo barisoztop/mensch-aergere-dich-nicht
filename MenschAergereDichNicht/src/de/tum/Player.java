@@ -97,10 +97,14 @@ public abstract class Player {
 			current_try = 0;
 			MenschAergereDichNichtActivity.nextTurn(team);
 		}
+		// ############################### needs some change
 	}
 
 	/**
 	 * player has to choose a peg for moving
+	 * 
+	 * @param movables
+	 *            the current movable pegs
 	 */
 	protected abstract void choosePegForMove(Peg[] movables);
 
