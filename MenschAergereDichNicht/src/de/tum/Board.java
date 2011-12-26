@@ -4,7 +4,7 @@ package de.tum;
  * a board is a game object. The pegs are moving on the board.
  */
 public class Board extends GameObject {
-	private static final int start_pegs = 4;
+	public static final int start_pegs = 4;
 	private static TupleFloat[] fields;
 	private static int teams;
 	private static int start_length;
