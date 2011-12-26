@@ -62,9 +62,7 @@ public abstract class Player {
 			throwDice();
 	}
 
-	/**
-	 * the player is asked to throw the dice
-	 */
+	/** the player is asked to throw the dice */
 	protected abstract void throwDice();
 
 	/**
@@ -78,18 +76,18 @@ public abstract class Player {
 	public static final void diceThrown(int number) {
 		Player.number = number;
 		int movable = 0, index = 0, found1st = 0;
-		for (Peg peg : player.pegs)
+		for (Peg peg : player.pegs) // calculates which pegs can be moved
 			if (peg.checkMove(number)) {
 				++movable;
 				found1st = index;
 				movables[index++] = peg;
 			} else
 				movables[index++] = null;
-		if (movable == 1)
+		if (movable == 1) // just one peg - no options for the player
 			player.pegChosen(player.pegs[found1st]);
-		else if (movable == 0)
+		else if (movable == 0) // no peg can be moved
 			player.checkForMoreTurns();
-		else
+		else // player has to select one of two or more pegs
 			player.choosePegForMove(movables);
 	}
 
@@ -129,8 +127,12 @@ public abstract class Player {
 	 */
 	protected final void pegChosen(Peg peg) {
 		peg.move(number);
-		verifyWinner();
-		checkForMoreTurns();
+	}
+	
+	/** peg was moved */
+	public static final void pegMoved() {
+		player.verifyWinner();
+		player.checkForMoreTurns();
 	}
 
 	// just to verify if the player has won

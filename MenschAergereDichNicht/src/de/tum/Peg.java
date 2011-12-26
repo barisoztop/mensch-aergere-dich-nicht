@@ -43,6 +43,7 @@ public abstract class Peg extends GameObject {
 		TupleFloat position = Board.getPosition(team, pos_current);
 		// moving this peg
 		transfer(position.x - x, position.y - y, 0);
+		Player.pegMoved();
 	}
 
 	/**
