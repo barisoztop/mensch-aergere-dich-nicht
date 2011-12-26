@@ -50,7 +50,8 @@ public abstract class Player {
 	}
 
 	/**
-	 * it's this player's turn. If the player hasn't won, the player is asked to throw the dice
+	 * it's this player's turn. If the player hasn't won, the player is asked to
+	 * throw the dice
 	 */
 	public final void makeTurn() {
 		player = this;
@@ -60,7 +61,7 @@ public abstract class Player {
 		else
 			throwDice();
 	}
-	
+
 	/**
 	 * the player is asked to throw the dice
 	 */
@@ -102,8 +103,9 @@ public abstract class Player {
 			MenschAergereDichNichtActivity.nextTurn(team);
 		}
 	}
-	
-	// checks whether any peg can move one field. Than the player is not allowed to get another try
+
+	// checks whether any peg can move one field. Than the player is not allowed
+	// to get another try
 	private final boolean checkForOneFieldMove() {
 		for (Peg peg : pegs)
 			if (peg.checkMove(1))
@@ -120,15 +122,10 @@ public abstract class Player {
 	protected abstract void choosePegForMove(Peg[] movables);
 
 	/**
-	 * getting the next field for a peg
+	 * peg is chosen
 	 * 
-	 * @param team
-	 *            the team of this peg
-	 * @param fieldPos
-	 *            the current position for this peg
-	 * @param distance
-	 *            the distance to move, typically the number the dice shows
-	 * @return the number of the next field for the given peg
+	 * @param peg
+	 *            the peg to move
 	 */
 	protected final void pegChosen(Peg peg) {
 		peg.move(number);
