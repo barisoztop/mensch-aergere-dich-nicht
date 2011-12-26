@@ -22,14 +22,14 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
     private GLSurfaceView view;
     private GameRenderer renderer;
     private Room room;
-    private Board board;
+//    private Board board;
     private static Player[] players;
 
     public boolean onTouch(View view, MotionEvent event) {
       hz = f * event.getY() / height - f / 2;
       hz *= hz * Math.signum(hz);
-      if (event.getX() < 20)
-    	  board.movePeg((int) (Math.random() * 16), (int) (Math.random() * 6));
+//      if (event.getX() < 20)
+//    	  board.movePeg((int) (Math.random() * 16), (int) (Math.random() * 6));
       return true;
     }
 
@@ -38,7 +38,7 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
       super.onCreate(savedInstanceState);
       room = new Room();
 
-      Room.addRenderable(board = new ClassicBoard(true, 4));
+      Room.addRenderable(new ClassicBoard(true, 4));
       players = new Player[Board.getPlayers()];
       players[0] = new HumanPlayer(Team.RED);
       players[1] = new AIPlayer(Team.YELLOW);
