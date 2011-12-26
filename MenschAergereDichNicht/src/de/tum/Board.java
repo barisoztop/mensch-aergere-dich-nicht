@@ -64,8 +64,10 @@ public class Board extends GameObject {
 		int index = start_length
 				+ (team.id * path_length / teams + fieldPos - start_pegs)
 				% path_length;
-		return fields[index]; // ############################### needs some
-								// change
+		if (fieldPos > start_length + path_length)
+			// end field
+			index += team.id * start_length;
+		return fields[index];
 	}
 
 	/**
@@ -112,11 +114,11 @@ public class Board extends GameObject {
 		return pegs;
 	}
 
-	// not needed later - just for testing
-	public final void movePeg(int peg, int distance) {
-		pegs[peg].move(1);
-	}
-
+//	// not needed later - just for testing
+//	public final void movePeg(int peg, int distance) {
+//		pegs[peg].move(1);
+//	}
+//
 	// creating all pegs
 	private static final void createPegs() {
 		pegs = new Peg[players * start_pegs];
