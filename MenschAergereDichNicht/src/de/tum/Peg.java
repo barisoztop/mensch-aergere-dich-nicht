@@ -80,4 +80,13 @@ public abstract class Peg extends GameObject {
 	public final Team getTeam() {
 		return team;
 	}
+
+	/**
+	 * getting whether this peg is already in a finish field
+	 * 
+	 * @return true if this peg is in a finish field
+	 */
+	public final boolean hasFinished() {
+		return pos_current > Board.getPathLength() - Board.start_pegs;
+	}
 }
