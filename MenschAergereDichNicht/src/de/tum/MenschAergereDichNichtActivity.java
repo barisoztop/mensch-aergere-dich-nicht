@@ -40,6 +40,10 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
 
       Room.addRenderable(board = new ClassicBoard(true, 4));
       players = new Player[Board.getPlayers()];
+      players[0] = new HumanPlayer(Team.RED);
+      players[1] = new AIPlayer(Team.YELLOW);
+      players[2] = new AIPlayer(Team.GREEN);
+      players[3] = new AIPlayer(Team.BLUE);
       
       renderer = new GameRenderer(room);
       view = new GLSurfaceView(this);
