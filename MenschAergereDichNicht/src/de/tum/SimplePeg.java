@@ -34,7 +34,7 @@ public class SimplePeg extends Peg {
 				team), createColor(new float[][] { team.color, black }));
 		sgobjects.add(cuboid);
 		// getting the position
-		TupleFloat position = Board.getPosition(team, pos_start);
+		TupleFloat position = Board.getPosition(this);
 		// moving this peg to its start position
 		transfer(position.x, position.y, layer_z + bottom);
 	}
