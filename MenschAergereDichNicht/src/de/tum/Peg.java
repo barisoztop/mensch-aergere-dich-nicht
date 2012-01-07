@@ -13,6 +13,8 @@ public abstract class Peg extends GameObject {
 	private final Team team;
 	/** the current position of this peg */
 	private int pos_current;
+	/** the next possible position of this peg */
+	private int pos_next;
 
 	/**
 	 * creating a peg
@@ -36,11 +38,11 @@ public abstract class Peg extends GameObject {
 	 * @param fields
 	 *            amount of fields to move. Typically the number the dice shows
 	 */
-	public final void move(int fields) {
+	public final void move() {
 		// getting the next position
-		pos_current = Board.getPositionNext(team, pos_current, fields);
+		pos_current = pos_next;
 		// getting the next coordinates
-		TupleFloat position = Board.getPosition(team, pos_current);
+		TupleFloat position = Board.getPosition(this);
 		// moving this peg
 		transfer(position.x - x, position.y - y, 0);
 		Player.pegMoved();
@@ -61,8 +63,7 @@ public abstract class Peg extends GameObject {
 	 * @return true if this peg can move
 	 */
 	public final boolean checkMove(int fields) {
-		return pos_current + fields < Board.getPathLength();
-		// ############################### needs some change
+		return (pos_next = Board.getPositionNext(team, pos_current, fields)) != -1;
 	}
 
 	/**
@@ -89,7 +90,7 @@ public abstract class Peg extends GameObject {
 	 * @return true if this peg is in a finish field
 	 */
 	public final boolean hasFinished() {
-		return pos_current > Board.getPathLength() - Board.start_pegs;
+		return pos_current > Board.path_length + Board.start_pegs;
 	}
 
 	/**

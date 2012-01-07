@@ -126,7 +126,7 @@ public abstract class Player {
 	 *            the peg to move
 	 */
 	protected final void pegChosen(Peg peg) {
-		peg.move(number);
+		peg.move();
 	}
 	
 	/** peg was moved */
