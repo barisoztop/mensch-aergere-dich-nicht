@@ -14,7 +14,7 @@ public abstract class Player {
 	private static Player player;
 
 	/** the current movable pegs for the current player */
-	private static Peg[] movables;
+	private static final Peg[] movables = new Peg[Board.start_pegs];
 
 	/** the team of this player */
 	private Team team;
