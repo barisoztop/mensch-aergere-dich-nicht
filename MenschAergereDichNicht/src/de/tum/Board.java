@@ -1,5 +1,7 @@
 package de.tum;
 
+import android.util.Log;
+
 /**
  * a board is a game object. The pegs are moving on the board.
  */
@@ -110,7 +112,7 @@ public class Board extends GameObject {
 	public static final Peg[] getPegs(Team team) {
 		Peg[] pegs = new Peg[start_pegs];
 		for (int i = 0; i < start_pegs; ++i)
-			pegs[i] = pegs[i + team.id * start_pegs];
+			pegs[i] = Board.pegs[i + team.id * start_pegs];
 		return pegs;
 	}
 
