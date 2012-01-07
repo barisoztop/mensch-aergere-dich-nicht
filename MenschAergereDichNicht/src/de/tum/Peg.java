@@ -53,6 +53,10 @@ public abstract class Peg extends GameObject {
 	 */
 	public final void reset() {
 		pos_current = pos_start;
+		// getting the coordinates
+		TupleFloat position = Board.getPosition(this);
+		// moving this peg
+		transfer(position.x - x, position.y - y, 0);
 	}
 
 	/**
