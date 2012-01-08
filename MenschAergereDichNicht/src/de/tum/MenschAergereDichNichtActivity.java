@@ -28,8 +28,6 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
     public boolean onTouch(View view, MotionEvent event) {
       hz = f * event.getY() / height - f / 2;
       hz *= hz * Math.signum(hz);
-//      if (event.getX() < 20)
-//    	  board.movePeg((int) (Math.random() * 16), (int) (Math.random() * 6));
       return true;
     }
 
@@ -50,6 +48,8 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
       view.setRenderer(renderer);
       view.setOnTouchListener(this);
       setContentView(view);
+      
+//      players[0].makeTurn();
     }
     
 	/**
