@@ -1,7 +1,6 @@
 package de.tum;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 
@@ -51,7 +50,7 @@ public class ClassicBoard extends Board {
 		add4Parts(path_start, path_start_color);
 		add4Parts(path, path_color);
 		sgobjects.add(new TriangleStripe(visible, calculateVertices(middle, p,
-				p, layer_z), gray));
+				p, layer_z), gray, null));
 	}
 
 	// just helping method for creating the static final fields
@@ -75,15 +74,15 @@ public class ClassicBoard extends Board {
 	// just helping method for adding a mesh four times with four rotations
 	private final void add4Parts(int[] vertices, float[] color) {
 		sgobjects.add(new TriangleStripe(visible, calculateVertices(vertices,
-				p, p, layer_z), color != null ? color : Team.RED.color));
+				p, p, layer_z), color != null ? color : Team.RED.color, null));
 		sgobjects.add(new TriangleStripe(visible, Helper.rotate90(
 				calculateVertices(vertices, p, p, layer_z), 3),
-				color != null ? color : Team.YELLOW.color));
+				color != null ? color : Team.YELLOW.color, null));
 		sgobjects.add(new TriangleStripe(visible, calculateVertices(vertices,
-				-p, -p, layer_z), color != null ? color : Team.GREEN.color));
+				-p, -p, layer_z), color != null ? color : Team.GREEN.color, null));
 		sgobjects.add(new TriangleStripe(visible, Helper.rotate90(
 				calculateVertices(vertices, -p, -p, layer_z), 3),
-				color != null ? color : Team.BLUE.color));
+				color != null ? color : Team.BLUE.color, null));
 	}
 
 	// just helping method for calculating mesh
@@ -103,6 +102,6 @@ public class ClassicBoard extends Board {
 		Bitmap bitmap = Bitmap.createBitmap(40, 40, Config.ARGB_8888);
 		Canvas canvas = new Canvas(bitmap);
 		canvas.drawARGB(255, 100, 255, 50);
-		int i = Float.SIZE;
+		
 	}
 }
