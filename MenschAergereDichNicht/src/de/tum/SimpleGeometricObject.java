@@ -11,6 +11,8 @@ import javax.microedition.khronos.opengles.GL10;
  * like a triangle or stripe
  */
 public abstract class SimpleGeometricObject extends GeometricObject {
+	/** size in bytes of a float value */
+	private static final int float_size = Float.SIZE >> 3; 
 	/** float array for the rgba-color values */
 	private float[] color;
 	/** float array for the xyz-vector values */
@@ -57,8 +59,8 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 			return;
 		}
 		// verifying whether the buffer is null or a greater one is needed
-		if (bufferC == null || bufferC.capacity() < 4 * color.length) {
-			ByteBuffer buffer = ByteBuffer.allocateDirect(4 * color.length);
+		if (bufferC == null || bufferC.capacity() < float_size * color.length) {
+			ByteBuffer buffer = ByteBuffer.allocateDirect(float_size * color.length);
 			buffer.order(ByteOrder.nativeOrder());
 			bufferC = buffer.asFloatBuffer();
 		}
@@ -75,8 +77,8 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 	public final void setVertices(float[] vertices) {
 		this.vertices = vertices;
 		// verifying whether the buffer is null or a greater one is needed
-		if (bufferV == null || bufferV.capacity() < 4 * vertices.length) {
-			ByteBuffer buffer = ByteBuffer.allocateDirect(4 * vertices.length);
+		if (bufferV == null || bufferV.capacity() < float_size * vertices.length) {
+			ByteBuffer buffer = ByteBuffer.allocateDirect(float_size * vertices.length);
 			buffer.order(ByteOrder.nativeOrder());
 			bufferV = buffer.asFloatBuffer();
 		}

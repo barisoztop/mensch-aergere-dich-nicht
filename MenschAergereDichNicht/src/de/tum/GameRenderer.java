@@ -86,10 +86,11 @@ public class GameRenderer implements Renderer {
 		GLU.gluPerspective(gl, 67, (float) MenschAergereDichNichtActivity.width
 				/ MenschAergereDichNichtActivity.height, 0.01f, 20);
 		GLU.gluLookAt(gl, r, r, r, 0, 0, 0, 0, 0, 1);
-		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-		// gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
 		// gl.glDisable(GL10.GL_DITHER);
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glEnable(GL10.GL_COLOR_MATERIAL);
+		gl.glEnable(GL10.GL_TEXTURE_2D);
+		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+		gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
 	}
 }

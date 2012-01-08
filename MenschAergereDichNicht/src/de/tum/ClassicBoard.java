@@ -1,5 +1,10 @@
 package de.tum;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+
 /**
  * a classic board is a game board with a classic layout and design. It
  * represents a game object and can be rendered to the GUI
@@ -91,5 +96,13 @@ public class ClassicBoard extends Board {
 			vertices[i2 + 2] = dz;
 		}
 		return vertices;
+	}
+	
+	// just helping method for calculating the textures
+	private static void calculateTextures() {
+		Bitmap bitmap = Bitmap.createBitmap(40, 40, Config.ARGB_8888);
+		Canvas canvas = new Canvas(bitmap);
+		canvas.drawARGB(255, 100, 255, 50);
+		int i = Float.SIZE;
 	}
 }
