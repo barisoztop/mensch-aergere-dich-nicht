@@ -31,7 +31,7 @@ public class SimplePeg extends Peg {
 		super(visible, team, pos_start);
 		// creating the real mesh
 		TriangleStripe cuboid = new TriangleStripe(visible, convert(vertices,
-				team), createColor(new float[][] { team.color, black }));
+				team), createColor(new float[][] { team.color, black }), null);
 		sgobjects.add(cuboid);
 		// getting the position
 		TupleFloat position = Board.getPosition(this);

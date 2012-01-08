@@ -19,7 +19,7 @@ public class TriangleStripe extends SimpleGeometricObject {
 	 * @param color
 	 *            an array of rgba-color values for each vertex
 	 */
-	public TriangleStripe(boolean visible, float[] vertices, float[] color) {
-		super(visible, GL10.GL_TRIANGLE_STRIP, vertices, color);
+	public TriangleStripe(boolean visible, float[] vertices, float[] color, float[] textures) {
+		super(visible, GL10.GL_TRIANGLE_STRIP, vertices, color, textures);
 	}
 }

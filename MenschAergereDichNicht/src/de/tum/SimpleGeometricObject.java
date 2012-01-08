@@ -17,10 +17,14 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 	private float[] color;
 	/** float array for the xyz-vector values */
 	private float[] vertices;
+	/** float array for the texture values */
+	private float[] textures;
 	/** buffer for rendering with values for color */
 	private FloatBuffer bufferC;
 	/** buffer for rendering with values for vectors */
 	private FloatBuffer bufferV;
+	/** amount of vertices */
+	private FloatBuffer bufferT;
 	/** amount of vertices */
 	private int amount;
 	/** type of rendering */
@@ -39,11 +43,12 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 	 *            an array of rgba-color values for each vertex
 	 */
 	public SimpleGeometricObject(boolean visible, int type, float[] vertices,
-			float[] color) {
+			float[] color, float textures[]) {
 		super(visible);
 		this.type = type;
 		setVertices(vertices);
 		setColor(color);
+		setTextures(textures);
 	}
 
 	/**
@@ -53,8 +58,7 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 	 *            a float buffer with the rgba-color values
 	 */
 	public final void setColor(float[] color) {
-		this.color = color;
-		if (color.length == 4) {
+		if ((this.color = color).length == 4) {
 			bufferC = null;
 			return;
 		}
@@ -87,6 +91,25 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 		amount = vertices.length / 3;
 	}
 
+	/**
+	 * method for updating the texture buffer to the given float values
+	 * 
+	 * @param textures
+	 *            a float buffer with the texture values
+	 */
+	public final void setTextures(float[] textures) {
+		if ((this.textures = textures) == null)
+			return;
+		// verifying whether the buffer is null or a greater one is needed
+		if (bufferT == null || bufferT.capacity() < float_size * textures.length) {
+			ByteBuffer buffer = ByteBuffer.allocateDirect(float_size * textures.length);
+			buffer.order(ByteOrder.nativeOrder());
+			bufferT = buffer.asFloatBuffer();
+		}
+		bufferT.clear();
+		bufferT.put(textures);
+	}
+	
 	/** {@inheritDoc} */
 	public final void transfer(float dx, float dy, float dz) {
 		// adding the given offset
