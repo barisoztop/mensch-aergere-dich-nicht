@@ -3,6 +3,7 @@ package de.tum;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
 
@@ -19,15 +20,16 @@ public class GameRenderer implements Renderer {
 	// some change
 	private static final float r = 2;
 	private float degree;
-
+	Context context;
+	
 	/**
 	 * creating the game renderer. Usual only one renderer is created
 	 * 
 	 * @param room
 	 *            the room containing the renderable objects
 	 */
-	public GameRenderer(Room room) {
-		this.room = room;
+	public GameRenderer(Room room, Context context) {
+		this.room = room;this.context = context;
 	}
 
 	/**
@@ -39,6 +41,7 @@ public class GameRenderer implements Renderer {
 	 *            the configuration for the GL10
 	 */
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+		Textures.bindTextures(gl);
 	}
 
 	/**
@@ -86,10 +89,9 @@ public class GameRenderer implements Renderer {
 		GLU.gluPerspective(gl, 67, (float) MenschAergereDichNichtActivity.width
 				/ MenschAergereDichNichtActivity.height, 0.01f, 20);
 		GLU.gluLookAt(gl, r, r, r, 0, 0, 0, 0, 0, 1);
-		// gl.glDisable(GL10.GL_DITHER);
+		gl.glDisable(GL10.GL_DITHER);
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glEnable(GL10.GL_COLOR_MATERIAL);
-		gl.glEnable(GL10.GL_TEXTURE_2D);
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
 	}

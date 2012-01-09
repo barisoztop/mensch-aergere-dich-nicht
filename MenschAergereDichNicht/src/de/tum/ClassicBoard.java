@@ -3,6 +3,7 @@ package de.tum;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 /**
  * a classic board is a game board with a classic layout and design. It
@@ -19,19 +20,26 @@ public class ClassicBoard extends Board {
 	private static final int[] path = { -9, 1, -9, 3, -1, 1, -3, 3, -1, 9, -3,
 			11, 1, 9, 1, 11 };
 	private static final TupleFloat[] fields;
+	/** texture values */
+	private static final short[] player_start_texture = { 0, 0, 2, 0, 0, 2, 2,
+			2 };
+	private static final short[] player_end_texture = { 0, 0, 4, 0, 0, 1, 4, 1 };
+	/** texture IDs */
+	private static final int[] textures = new int[4];
+	/** float array for a gray color */
+	private static float[] gray = { 0.5f, 0.5f, 0.5f, 1 };
+	/** float array for color for the four first field on the path */
+	private static float[] path_start_color = { 0.9f, 0.9f, 0.9f, 1 };
+	/** float array for color for the path */
+	private static float[] path_color = { 0.8f, 0.8f, 0.8f, 1 };
 	static {
 		final float[] fields_start = { -10, 10, -8, 10, -10, 8, -8, 8 };
 		final float[] fields_path = { -10, 2, -8, 2, -6, 2, -4, 2, -2, 2, -2,
 				4, -2, 6, -2, 8, -2, 10, 0, 10 };
 		final float[] fields_end = { -8, 0, -6, 0, -4, 0, -2, 0 };
 		fields = createFields(fields_start, fields_path, fields_end);
+		calculateTextures();
 	}
-	/** float array for a gray color */
-	private float[] gray = { 0.5f, 0.5f, 0.5f, 1 };
-	/** float array for color for the four first field on the path */
-	private float[] path_start_color = { 0.9f, 0.9f, 0.9f, 1 };
-	/** float array for color for the path */
-	private float[] path_color = { 0.8f, 0.8f, 0.8f, 1 };
 
 	/**
 	 * creating a classic board
@@ -44,13 +52,13 @@ public class ClassicBoard extends Board {
 	public ClassicBoard(boolean visible, int players) {
 		super(true, fields, 4, players);
 		// adding board components
-		add4Parts(basicSquare, gray);
-		add4Parts(player_start, null);
-		add4Parts(player_end, null);
-		add4Parts(path_start, path_start_color);
-		add4Parts(path, path_color);
+		add4Parts(basicSquare, gray, null);
+		add4Parts(player_start, null, player_start_texture);
+		add4Parts(player_end, null, player_end_texture);
+		add4Parts(path_start, path_start_color, null);
+		add4Parts(path, path_color, null);
 		sgobjects.add(new TriangleStripe(visible, calculateVertices(middle, p,
-				p, layer_z), gray, null));
+				p, layer_z), gray, null, 0));
 	}
 
 	// just helping method for creating the static final fields
@@ -72,17 +80,21 @@ public class ClassicBoard extends Board {
 	}
 
 	// just helping method for adding a mesh four times with four rotations
-	private final void add4Parts(int[] vertices, float[] color) {
+	private final void add4Parts(int[] vertices, float[] color, short[] textures) {
 		sgobjects.add(new TriangleStripe(visible, calculateVertices(vertices,
-				p, p, layer_z), color != null ? color : Team.RED.color, null));
+				p, p, layer_z), textures == null ? color != null ? color
+				: Team.RED.color : null, textures, ClassicBoard.textures[0]));
 		sgobjects.add(new TriangleStripe(visible, Helper.rotate90(
 				calculateVertices(vertices, p, p, layer_z), 3),
-				color != null ? color : Team.YELLOW.color, null));
+				textures == null ? color != null ? color : Team.YELLOW.color
+						: null, textures, ClassicBoard.textures[1]));
 		sgobjects.add(new TriangleStripe(visible, calculateVertices(vertices,
-				-p, -p, layer_z), color != null ? color : Team.GREEN.color, null));
+				-p, -p, layer_z), textures == null ? color != null ? color
+				: Team.GREEN.color : null, textures, ClassicBoard.textures[2]));
 		sgobjects.add(new TriangleStripe(visible, Helper.rotate90(
 				calculateVertices(vertices, -p, -p, layer_z), 3),
-				color != null ? color : Team.BLUE.color, null));
+				textures == null ? color != null ? color : Team.BLUE.color
+						: null, textures, ClassicBoard.textures[3]));
 	}
 
 	// just helping method for calculating mesh
@@ -96,12 +108,22 @@ public class ClassicBoard extends Board {
 		}
 		return vertices;
 	}
-	
-	// just helping method for calculating the textures
+
+	// just helping method for calculating textures
 	private static void calculateTextures() {
-		Bitmap bitmap = Bitmap.createBitmap(40, 40, Config.ARGB_8888);
-		Canvas canvas = new Canvas(bitmap);
-		canvas.drawARGB(255, 100, 255, 50);
-		
+		Paint paint = new Paint();
+		paint.setStyle(Paint.Style.FILL);
+		paint.setAntiAlias(true);
+		for (int i = 0; i < 4; ++i) {
+			Bitmap bitmap = Bitmap.createBitmap(40, 40, Config.ARGB_8888);
+			Canvas canvas = new Canvas(bitmap);
+			canvas.drawRGB((int) (255 * gray[0]), (int) (255 * gray[1]),
+					(int) (255 * gray[2]));
+			float[] color = Team.values()[i].color;
+			paint.setARGB(255, (int) (255 * color[0]), (int) (255 * color[1]),
+					(int) (255 * color[2]));
+			canvas.drawCircle(20, 20, 20, paint);
+			textures[i] = Textures.addTexture(bitmap);
+		}
 	}
 }

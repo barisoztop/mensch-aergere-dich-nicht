@@ -43,7 +43,7 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
       players[2] = new AIPlayer(Team.GREEN);
       players[3] = new AIPlayer(Team.BLUE);
       
-      renderer = new GameRenderer(room);
+      renderer = new GameRenderer(room, this);
       view = new GLSurfaceView(this);
       view.setRenderer(renderer);
       view.setOnTouchListener(this);
