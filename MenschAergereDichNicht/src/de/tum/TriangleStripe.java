@@ -18,8 +18,12 @@ public class TriangleStripe extends SimpleGeometricObject {
 	 *            an array of vertices sorted in the stripe order
 	 * @param color
 	 *            an array of rgba-color values for each vertex
+	 * @param textures
+	 *            an array of texture values
+	 * @param texture
+	 *            the texture ID
 	 */
-	public TriangleStripe(boolean visible, float[] vertices, float[] color, float[] textures) {
-		super(visible, GL10.GL_TRIANGLE_STRIP, vertices, color, textures);
+	public TriangleStripe(boolean visible, float[] vertices, float[] color, short[] textures, int texture) {
+		super(visible, GL10.GL_TRIANGLE_STRIP, vertices, color, textures, texture);
 	}
 }

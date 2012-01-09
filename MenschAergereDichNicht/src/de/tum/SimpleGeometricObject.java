@@ -3,6 +3,7 @@ package de.tum;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -17,18 +18,18 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 	private float[] color;
 	/** float array for the xyz-vector values */
 	private float[] vertices;
-	/** float array for the texture values */
-	private float[] textures;
 	/** buffer for rendering with values for color */
 	private FloatBuffer bufferC;
 	/** buffer for rendering with values for vectors */
 	private FloatBuffer bufferV;
 	/** amount of vertices */
-	private FloatBuffer bufferT;
+	private ShortBuffer bufferT;
 	/** amount of vertices */
 	private int amount;
 	/** type of rendering */
 	private int type;
+	/** texture id*/
+	private int texture;
 
 	/**
 	 * initializing this object with its coordinates and its color
@@ -41,11 +42,16 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 	 *            an array of vertices
 	 * @param color
 	 *            an array of rgba-color values for each vertex
+	 * @param textures
+	 *            an array of texture values
+	 * @param texture
+	 *            the texture ID
 	 */
 	public SimpleGeometricObject(boolean visible, int type, float[] vertices,
-			float[] color, float textures[]) {
+			float[] color, short textures[], int texture) {
 		super(visible);
 		this.type = type;
+		this.texture = texture;
 		setVertices(vertices);
 		setColor(color);
 		setTextures(textures);
@@ -58,7 +64,7 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 	 *            a float buffer with the rgba-color values
 	 */
 	public final void setColor(float[] color) {
-		if ((this.color = color).length == 4) {
+		if ((this.color = color) == null || color.length == 4) {
 			bufferC = null;
 			return;
 		}
@@ -97,14 +103,16 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 	 * @param textures
 	 *            a float buffer with the texture values
 	 */
-	public final void setTextures(float[] textures) {
-		if ((this.textures = textures) == null)
+	public final void setTextures(short[] textures) {
+		if (textures == null) {
+			bufferT = null;
 			return;
+		}
 		// verifying whether the buffer is null or a greater one is needed
 		if (bufferT == null || bufferT.capacity() < float_size * textures.length) {
 			ByteBuffer buffer = ByteBuffer.allocateDirect(float_size * textures.length);
 			buffer.order(ByteOrder.nativeOrder());
-			bufferT = buffer.asFloatBuffer();
+			bufferT = buffer.asShortBuffer();
 		}
 		bufferT.clear();
 		bufferT.put(textures);
@@ -121,7 +129,7 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 		// updating vertices
 		setVertices(vertices);
 	}
-
+	
 	/** {@inheritDoc} */
 	public final void render(GL10 gl) {
 		// checking whether current object is visible
@@ -139,9 +147,17 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 		} else {
 			// disabling a color array
 			gl.glDisableClientState(GL10.GL_COLOR_ARRAY);
-			gl.glColor4f(color[0], color[1], color[2], color[3]);
+			if (bufferT == null) // simple color
+			  gl.glColor4f(color[0], color[1], color[2], color[3]);
+			else { // textures
+				bufferT.rewind();
+				gl.glEnable(GL10.GL_TEXTURE_2D); // enable textures
+			    gl.glBindTexture(GL10.GL_TEXTURE_2D, Textures.textures[texture]); // set current texture
+				gl.glTexCoordPointer(2, GL10.GL_SHORT, 0, bufferT);
+			}
 		}
 		// rendering this object
 		gl.glDrawArrays(type, 0, amount);
+		gl.glDisable(GL10.GL_TEXTURE_2D);
 	}
 }
