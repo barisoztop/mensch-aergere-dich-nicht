@@ -44,9 +44,14 @@ public abstract class GameObject extends GeometricObject {
 		y += dy;
 		z += dz;
 	}
+	
+	/** calculates moves and updates properties for this game object */
+	protected abstract void action();
 
-	/** {@inheritDoc} */
+	/** {@inheritDoc}
+	 * Calls the action method */
 	public final void render(GL10 gl) {
+		action();
 		if (visible && sgobjects != null)
 			for (SimpleGeometricObject object : sgobjects)
 				object.render(gl);

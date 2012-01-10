@@ -3,7 +3,7 @@ package de.tum;
 /**
  * a board is a game object. The pegs are moving on the board.
  */
-public class Board extends GameObject {
+public abstract class Board extends GameObject {
 	public static final int start_pegs = 4;
 	// length of the path around the board
 	public static int path_length;
@@ -65,8 +65,8 @@ public class Board extends GameObject {
 	 *            the current position for this peg
 	 * @return a pair of floats representing the location on the board
 	 */
-	public static final TupleFloat getPosition(Peg peg) {
-		int position_abs = peg.getCurrentField() < start_pegs ? peg.getCurrentField() + peg.getTeam().id * start_pegs : getAbsolutePositionOnPathOrEnd(peg.getTeam(), peg.getCurrentField());
+	public static final TupleFloat getPosition(Peg peg, int position) {
+		int position_abs = position < start_pegs ? position + peg.getTeam().id * start_pegs : getAbsolutePositionOnPathOrEnd(peg.getTeam(), position);
 		// updating current position
 		for (int i = 0; i < peg_fields.length; ++i)
 			if (peg_fields[i] == peg) {

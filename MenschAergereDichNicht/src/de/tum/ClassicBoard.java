@@ -61,6 +61,12 @@ public class ClassicBoard extends Board {
 				p, layer_z), gray, null, 0));
 	}
 
+	/** {@inheritDoc} */
+	@Override
+	protected void action() {
+		return;
+	}
+
 	// just helping method for creating the static final fields
 	private static final TupleFloat[] createFields(float[] start, float[] path,
 			float[] end) {
@@ -115,14 +121,14 @@ public class ClassicBoard extends Board {
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
 		for (int i = 0; i < 4; ++i) {
-			Bitmap bitmap = Bitmap.createBitmap(40, 40, Config.ARGB_8888);
+			Bitmap bitmap = Bitmap.createBitmap(64, 64, Config.ARGB_8888);
 			Canvas canvas = new Canvas(bitmap);
 			canvas.drawRGB((int) (255 * gray[0]), (int) (255 * gray[1]),
 					(int) (255 * gray[2]));
 			float[] color = Team.values()[i].color;
 			paint.setARGB(255, (int) (255 * color[0]), (int) (255 * color[1]),
 					(int) (255 * color[2]));
-			canvas.drawCircle(20, 20, 20, paint);
+			canvas.drawCircle(32, 32, 29, paint);
 			textures[i] = Textures.addTexture(bitmap);
 		}
 	}

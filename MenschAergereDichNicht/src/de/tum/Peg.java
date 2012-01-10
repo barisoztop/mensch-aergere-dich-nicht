@@ -13,8 +13,12 @@ public abstract class Peg extends GameObject {
 	private final Team team;
 	/** the current position of this peg */
 	private int pos_current;
-	/** the next possible position of this peg */
-	private int pos_next;
+	/** the next position of this peg */
+	private TupleFloat pos_next;
+	/** the final possible position of this peg */
+	private int pos_final;
+	/** true if moving */
+	private boolean moving;
 
 	/**
 	 * creating a peg
@@ -30,6 +34,24 @@ public abstract class Peg extends GameObject {
 		super(visible);
 		this.team = team;
 		this.pos_start = pos_current = pos_start;
+		pos_next = new TupleFloat(0, 0);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	protected final void action() {
+		if (moving) {
+			
+			
+//			// setting the next position
+//			pos_current = pos_final;
+//			// getting the next coordinates
+//			TupleFloat position = Board.getPosition(this);
+//			// moving this peg
+//			transfer(position.x - x, position.y - y, 0);
+			moving = false;
+		Player.pegMoved();
+		}
 	}
 
 	/**
@@ -39,13 +61,8 @@ public abstract class Peg extends GameObject {
 	 *            amount of fields to move. Typically the number the dice shows
 	 */
 	public final void move() {
-		// getting the next position
-		pos_current = pos_next;
-		// getting the next coordinates
-		TupleFloat position = Board.getPosition(this);
-		// moving this peg
-		transfer(position.x - x, position.y - y, 0);
-		Player.pegMoved();
+		moving = true;
+		pos_next.set(x, y);
 	}
 
 	/**
@@ -54,7 +71,7 @@ public abstract class Peg extends GameObject {
 	public final void reset() {
 		pos_current = pos_start;
 		// getting the coordinates
-		TupleFloat position = Board.getPosition(this);
+		TupleFloat position = Board.getPosition(this, pos_current);
 		// moving this peg
 		transfer(position.x - x, position.y - y, 0);
 	}
@@ -67,7 +84,7 @@ public abstract class Peg extends GameObject {
 	 * @return true if this peg can move
 	 */
 	public final boolean checkMove(int fields) {
-		return (pos_next = Board.getPositionNext(team, pos_current, fields)) != -1;
+		return (pos_final = Board.getPositionNext(team, pos_current, fields)) != -1;
 	}
 
 	/**
