@@ -10,6 +10,6 @@ public class Dice {
 	 * throws the dice. Calculates a random number from 1 to 6
 	 */	
 	public static void throwIt() {
-		Player.diceThrown(1 + (int) (Math.random() * 5));
+		Player.diceThrown(6);//1 + (int) (Math.random() * 5));
 	}
 }

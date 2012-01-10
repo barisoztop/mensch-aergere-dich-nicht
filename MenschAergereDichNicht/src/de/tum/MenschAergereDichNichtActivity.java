@@ -49,7 +49,7 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
       view.setOnTouchListener(this);
       setContentView(view);
       
-//      players[0].makeTurn();
+      players[0].makeTurn();
     }
     
 	/**

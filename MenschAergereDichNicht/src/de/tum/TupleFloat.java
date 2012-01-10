@@ -5,9 +5,9 @@ package de.tum;
  */
 public class TupleFloat {
 	/** the x-coordinate */
-	public final float x;
+	public float x;
 	/** the y-coordinate */
-	public final float y;
+	public float y;
 
 	/**
 	 * this object has to be initialized with two floats that cannot be changed
@@ -19,6 +19,11 @@ public class TupleFloat {
 	 *            the y-coordinate
 	 */
 	public TupleFloat(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	public final void set(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}

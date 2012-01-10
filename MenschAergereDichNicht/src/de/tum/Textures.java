@@ -22,13 +22,25 @@ public class Textures {
 		textures = new int[bitmaps.size()];
 		// Generate texture-ID array
 		gl.glGenTextures(textures.length, textures, 0);
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER,
-				GL10.GL_NEAREST);
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER,
-				GL10.GL_LINEAR);
 		for (int i = 0; i < textures.length; ++i) {
 			// Bind to texture ID
 			gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[i]);
+
+			gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER,
+//                    GL10.GL_LINEAR);
+                    GL10.GL_NEAREST);
+            gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER,
+                    GL10.GL_NEAREST);
+//                    GL10.GL_LINEAR);
+
+            gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S,
+                    GL10.GL_REPEAT);
+            gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T,
+                    GL10.GL_REPEAT);
+
+            gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE,
+                    GL10.GL_REPLACE);
+
 			// Build Texture from loaded bitmap for the currently-bind texture
 			// ID
 			GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmaps.get(i), 0);
