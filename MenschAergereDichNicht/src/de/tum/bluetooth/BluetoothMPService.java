@@ -26,14 +26,14 @@ import android.util.Log;
  */
 public class BluetoothMPService {
     // Debugging
-    private static final String TAG = "BluetoothChatService";
+    private static final String TAG = "BluetoothMPService";
     private static final boolean D = true;
 
     // Name for the SDP record when creating server socket
-    private static final String NAME = "BluetoothChat";
+    private static final String NAME = "MenschAergereDichNicht";
 
     // Unique UUID for this application
-    private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
+    private static final UUID MY_UUID = UUID.fromString("c0a8648d-7382-457a-8de3-6c5aca4d922e");
 
     // Member fields
     private final BluetoothAdapter mAdapter;
