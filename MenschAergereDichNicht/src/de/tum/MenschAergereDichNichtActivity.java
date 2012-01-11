@@ -26,7 +26,7 @@ import android.widget.Toast;
 public class MenschAergereDichNichtActivity extends Activity implements OnTouchListener {
 	
     // Debugging
-    private static final String TAG = "MenschADN";
+    private static final String TAG = "MenschAergereDichNicht";
     private static final boolean D = true;
     
     // Message types sent from the BluetoothMPService Handler
@@ -284,7 +284,7 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
         case REQUEST_ENABLE_BT:
             // When the request to enable Bluetooth returns
             if (resultCode == Activity.RESULT_OK) {
-                // Bluetooth is now enabled, so set up a chat session
+                // Bluetooth is now enabled, so set up a MP session
                 setupMultiPlayer();
             } else {
                 // User did not enable Bluetooth or an error occured
@@ -298,7 +298,7 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
 	private void setupMultiPlayer() {
 		// TODO Auto-generated method stub
 		
-        // Initialize the BluetoothChatService to perform bluetooth connections
+        // Initialize the BluetoothMPService to perform bluetooth connections
 		mBluetoothMPService = new BluetoothMPService(this, mHandler);
 
         // Initialize the buffer for outgoing messages
