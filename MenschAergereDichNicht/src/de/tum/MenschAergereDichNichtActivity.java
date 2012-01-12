@@ -2,6 +2,11 @@ package de.tum;
 
 import de.tum.bluetooth.BluetoothMPService;
 import de.tum.bluetooth.DeviceListActivity;
+import de.tum.models.Board;
+import de.tum.models.ClassicBoard;
+import de.tum.player.AIPlayer;
+import de.tum.player.HumanPlayer;
+import de.tum.player.Player;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;

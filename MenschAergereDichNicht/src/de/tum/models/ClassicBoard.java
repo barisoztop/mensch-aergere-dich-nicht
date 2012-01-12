@@ -1,5 +1,10 @@
-package de.tum;
+package de.tum.models;
 
+import de.tum.Helper;
+import de.tum.Team;
+import de.tum.TupleFloat;
+import de.tum.renderable.Textures;
+import de.tum.renderable.TriangleStripe;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;

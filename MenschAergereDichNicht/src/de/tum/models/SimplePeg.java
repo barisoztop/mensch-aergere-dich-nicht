@@ -1,4 +1,9 @@
-package de.tum;
+package de.tum.models;
+
+import de.tum.Helper;
+import de.tum.Team;
+import de.tum.TupleFloat;
+import de.tum.renderable.TriangleStripe;
 
 /**
  * a simple peg is a peg that is represented just by a cuboid. Like all pegs it

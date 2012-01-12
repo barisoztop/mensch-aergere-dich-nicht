@@ -1,5 +1,9 @@
-package de.tum;
+package de.tum.player;
 
+import de.tum.MenschAergereDichNichtActivity;
+import de.tum.Team;
+import de.tum.models.Board;
+import de.tum.models.Peg;
 import android.util.Log;
 
 /**

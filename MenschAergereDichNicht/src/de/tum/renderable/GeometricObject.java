@@ -1,4 +1,4 @@
-package de.tum;
+package de.tum.renderable;
 
 /**
  * a geometric object is a renderable, that can might be visible and can be

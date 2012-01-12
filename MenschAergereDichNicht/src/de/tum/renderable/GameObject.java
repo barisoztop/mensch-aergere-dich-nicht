@@ -1,8 +1,9 @@
-package de.tum;
+package de.tum.renderable;
 
 import java.util.ArrayList;
 
 import javax.microedition.khronos.opengles.GL10;
+
 
 /**
  * a game object is a geometric object, that represents a typical object of the
