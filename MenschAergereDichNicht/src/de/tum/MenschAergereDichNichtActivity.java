@@ -122,10 +122,25 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
     }    
     
     @Override
-    public void onPause() {
+    public synchronized void onPause() {
       super.onPause();
       view.onPause();
+      if(D) Log.e(TAG, "- ON PAUSE -");      
     }
+    
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(D) Log.e(TAG, "-- ON STOP --");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Stop the BluetoothMPService
+        if (mBluetoothMPService != null) mBluetoothMPService.stop();
+        if(D) Log.e(TAG, "--- ON DESTROY ---");
+    }    
 
     @Override
     public void onResume() {
@@ -295,8 +310,13 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
         }
     }
 
+    /**
+     * 
+     * Set the action listeners in here !!!!!!!!!!
+     * use sendMessage() to send your new object in here 
+     */
 	private void setupMultiPlayer() {
-		// TODO Auto-generated method stub
+		// TODO Modify
 		
         // Initialize the BluetoothMPService to perform bluetooth connections
 		mBluetoothMPService = new BluetoothMPService(this, mHandler);
@@ -305,4 +325,30 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
 //        mOutStringBuffer = new StringBuffer("");
 		
 	}
+	
+    /**
+     * Sends a message. This will be converted to any object that
+     * we wanna send !!!!!!!!
+     * @param message  A string of text to send.
+     */
+    private void sendMessage(String message) {
+    	// TODO Modify
+    	
+        // Check that we're actually connected before trying anything
+        if (mBluetoothMPService.getState() != BluetoothMPService.STATE_CONNECTED) {
+            Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Check that there's actually something to send
+        if (message.length() > 0) {
+            // Get the message bytes and tell the BluetoothChatService to write
+            byte[] send = message.getBytes();
+            mBluetoothMPService.write(send);
+
+            // Reset out string buffer to zero and clear the edit text field
+//            mOutStringBuffer.setLength(0);
+//            mOutEditText.setText(mOutStringBuffer);
+        }
+    }	
 }
