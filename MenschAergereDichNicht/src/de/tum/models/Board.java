@@ -1,4 +1,9 @@
-package de.tum;
+package de.tum.models;
+
+import de.tum.Room;
+import de.tum.Team;
+import de.tum.TupleFloat;
+import de.tum.renderable.GameObject;
 
 /**
  * a board is a game object. The pegs are moving on the board.

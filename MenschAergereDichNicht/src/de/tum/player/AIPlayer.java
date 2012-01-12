@@ -1,4 +1,8 @@
-package de.tum;
+package de.tum.player;
+
+import de.tum.Team;
+import de.tum.models.Dice;
+import de.tum.models.Peg;
 
 /**
  * this player is an artificial intelligence. All moves are calculated by this AI.

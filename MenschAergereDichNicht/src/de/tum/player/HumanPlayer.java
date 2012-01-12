@@ -1,4 +1,8 @@
-package de.tum;
+package de.tum.player;
+
+import de.tum.Team;
+import de.tum.models.Dice;
+import de.tum.models.Peg;
 
 /**
  * this player is a human player. All moves are chosen by a human

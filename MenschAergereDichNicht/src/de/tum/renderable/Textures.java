@@ -1,4 +1,4 @@
-package de.tum;
+package de.tum.renderable;
 
 import java.util.LinkedList;
 import java.util.List;

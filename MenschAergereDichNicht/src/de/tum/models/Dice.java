@@ -1,4 +1,6 @@
-package de.tum;
+package de.tum.models;
+
+import de.tum.player.Player;
 
 /**
  * a dice can be used for generating a random number from 1 to 6. Usually there

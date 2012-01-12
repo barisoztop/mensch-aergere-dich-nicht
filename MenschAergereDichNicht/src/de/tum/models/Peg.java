@@ -1,4 +1,9 @@
-package de.tum;
+package de.tum.models;
+
+import de.tum.Team;
+import de.tum.TupleFloat;
+import de.tum.player.Player;
+import de.tum.renderable.GameObject;
 
 /**
  * a peg is a game object that moves on the board. Every player has typically

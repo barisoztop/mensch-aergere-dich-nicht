@@ -1,4 +1,4 @@
-package de.tum;
+package de.tum.renderable;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

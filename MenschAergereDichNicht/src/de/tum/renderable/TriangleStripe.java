@@ -1,4 +1,4 @@
-package de.tum;
+package de.tum.renderable;
 
 import javax.microedition.khronos.opengles.GL10;
 

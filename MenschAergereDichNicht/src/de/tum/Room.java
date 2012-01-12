@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.microedition.khronos.opengles.GL10;
 
+import de.tum.renderable.Renderable;
+
 /**
  * a room manages all renderables of the game in one list and prevents other
  * threads from interacting during a rendering
