@@ -15,6 +15,7 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.FloatMath;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -55,6 +56,18 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
     private BluetoothAdapter mBluetoothAdapter = null;
     // Member object for the chat services
     private BluetoothMPService mBluetoothMPService = null;
+    
+    /* Touch Events*/
+    // Minimum distance between two fingers
+    private final static float MIN_DIST = 50;
+    // Distance between two fingers
+    private static float eventDistance = 0;
+    // possible touch states
+    private final static int NONE = 0;
+    private final static int DRAG = 1;
+    private final static int ZOOM = 2;
+    // current touch state
+    private int touchState = NONE;
 	
 	
 	
@@ -71,11 +84,66 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
 //    private Board board;
     private static Player[] players;
 
+    /**
+     * Handle touch events
+     */
     public boolean onTouch(View view, MotionEvent event) {
-      hz = f * event.getY() / height - f / 2;
-      hz *= hz * Math.signum(hz);
-      return true;
+    	
+    	switch (event.getAction() & MotionEvent.ACTION_MASK) {
+        case MotionEvent.ACTION_DOWN:
+            Log.d(TAG, "ACTION_DOWN");
+            //primary touch event starts
+            touchState = DRAG;
+            break;
+
+        case MotionEvent.ACTION_POINTER_DOWN:
+            Log.d(TAG, "ACTION_POINTER_DOWN");        	
+            //secondary touch event starts: remember distance and center
+            eventDistance = calcDistance(event);
+            if (eventDistance > MIN_DIST) {
+                touchState = ZOOM;
+            }
+            break;
+
+        case MotionEvent.ACTION_MOVE:
+            Log.d(TAG, "ACTION_MOVE");         	
+            if (touchState == DRAG) {      
+                //single finger drag, use it when needed
+
+            } else if (touchState == ZOOM) {
+                //multi-finger zoom, scale accordingly around center?
+                float dist = calcDistance(event);
+
+                if (dist > MIN_DIST) {
+                    float scale = dist / eventDistance;
+                    
+//                  hz = f * event.getY() / height - f / 2;
+//                  hz *= hz * Math.signum(hz);
+                    hz = scale;
+                    hz *= hz * Math.signum(hz);             
+                }
+            }
+            break;
+
+        case MotionEvent.ACTION_UP:
+        case MotionEvent.ACTION_POINTER_UP:
+            touchState = NONE;
+            break;
+        }       
+
+        return true; 
     }
+    
+    /**
+     * Calculate distance between two fingers for touch events
+     * @param event
+     * @return
+     */
+    private float calcDistance(MotionEvent event) {
+        float x = event.getX(0) - event.getX(1);
+        float y = event.getY(0) - event.getY(1);
+        return FloatMath.sqrt(x * x + y * y);
+    }    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
