@@ -1,12 +1,5 @@
 package de.tum;
 
-import de.tum.bluetooth.BluetoothMPService;
-import de.tum.bluetooth.DeviceListActivity;
-import de.tum.models.Board;
-import de.tum.models.ClassicBoard;
-import de.tum.player.AIPlayer;
-import de.tum.player.HumanPlayer;
-import de.tum.player.Player;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -15,59 +8,52 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.FloatMath;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.Toast;
+import de.tum.bluetooth.BluetoothMPService;
+import de.tum.bluetooth.DeviceListActivity;
+import de.tum.models.Board;
+import de.tum.models.ClassicBoard;
+import de.tum.player.AIPlayer;
+import de.tum.player.HumanPlayer;
+import de.tum.player.Player;
 
 /**
  * main activity for controlling the game
  */
-public class MenschAergereDichNichtActivity extends Activity implements OnTouchListener {
+public class MenschAergereDichNichtActivity extends Activity {
 	
     // Debugging
     private static final String TAG = "MenschAergereDichNicht";
     private static final boolean D = true;
     
+    /* Bluetooth communication */
     // Message types sent from the BluetoothMPService Handler
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_READ = 2;
     public static final int MESSAGE_WRITE = 3;
     public static final int MESSAGE_DEVICE_NAME = 4;
-    public static final int MESSAGE_TOAST = 5;    
+    public static final int MESSAGE_TOAST = 5;
     
     // Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";    
-	
     // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
 
-    // Name of the connected device
-    private String mConnectedDeviceName = null;    
     // Local Bluetooth adapter
     private BluetoothAdapter mBluetoothAdapter = null;
     // Member object for the chat services
     private BluetoothMPService mBluetoothMPService = null;
+    // Name of the connected device
+    private String mConnectedDeviceName = null;
     
-    /* Touch Events*/
-    // Minimum distance between two fingers
-    private final static float MIN_DIST = 50;
-    // Distance between two fingers
-    private static float eventDistance = 0;
-    // possible touch states
-    private final static int NONE = 0;
-    private final static int DRAG = 1;
-    private final static int ZOOM = 2;
-    // current touch state
-    private int touchState = NONE;
+
 	
 	
 	
@@ -84,66 +70,7 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
 //    private Board board;
     private static Player[] players;
 
-    /**
-     * Handle touch events
-     */
-    public boolean onTouch(View view, MotionEvent event) {
-    	
-    	switch (event.getAction() & MotionEvent.ACTION_MASK) {
-        case MotionEvent.ACTION_DOWN:
-            Log.d(TAG, "ACTION_DOWN");
-            //primary touch event starts
-            touchState = DRAG;
-            break;
 
-        case MotionEvent.ACTION_POINTER_DOWN:
-            Log.d(TAG, "ACTION_POINTER_DOWN");        	
-            //secondary touch event starts: remember distance and center
-            eventDistance = calcDistance(event);
-            if (eventDistance > MIN_DIST) {
-                touchState = ZOOM;
-            }
-            break;
-
-        case MotionEvent.ACTION_MOVE:
-            Log.d(TAG, "ACTION_MOVE");         	
-            if (touchState == DRAG) {      
-                //single finger drag, use it when needed
-
-            } else if (touchState == ZOOM) {
-                //multi-finger zoom, scale accordingly around center?
-                float dist = calcDistance(event);
-
-                if (dist > MIN_DIST) {
-                    float scale = dist / eventDistance;
-                    
-//                  hz = f * event.getY() / height - f / 2;
-//                  hz *= hz * Math.signum(hz);
-                    hz = scale;
-                    hz *= hz * Math.signum(hz);             
-                }
-            }
-            break;
-
-        case MotionEvent.ACTION_UP:
-        case MotionEvent.ACTION_POINTER_UP:
-            touchState = NONE;
-            break;
-        }       
-
-        return true; 
-    }
-    
-    /**
-     * Calculate distance between two fingers for touch events
-     * @param event
-     * @return
-     */
-    private float calcDistance(MotionEvent event) {
-        float x = event.getX(0) - event.getX(1);
-        float y = event.getY(0) - event.getY(1);
-        return FloatMath.sqrt(x * x + y * y);
-    }    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -172,7 +99,7 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
       renderer = new GameRenderer(room, this);
       view = new GLSurfaceView(this);
       view.setRenderer(renderer);
-      view.setOnTouchListener(this);
+      view.setOnTouchListener(new GameTouchListener());
       setContentView(view);
       
       players[0].makeTurn();
@@ -257,7 +184,7 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
      *  The Handler that gets information back from the BluetoothMPService
      */
     private final Handler mHandler = new Handler() {
-        @Override
+    	@Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
             case MESSAGE_STATE_CHANGE:
@@ -307,7 +234,7 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
                 break;
             }
         }
-    };    
+    };
     
     /**
      *  create menu when user click menu button
@@ -389,6 +316,7 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
      * use sendMessage() to send your new object in here 
      */
 	private void setupMultiPlayer() {
+        Log.d(TAG, "setupMultiPlayer()");
 		// TODO Modify
 		
         // Initialize the BluetoothMPService to perform bluetooth connections
@@ -423,5 +351,5 @@ public class MenschAergereDichNichtActivity extends Activity implements OnTouchL
 //            mOutStringBuffer.setLength(0);
 //            mOutEditText.setText(mOutStringBuffer);
         }
-    }	
+    }
 }
