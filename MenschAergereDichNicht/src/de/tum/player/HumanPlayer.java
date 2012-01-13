@@ -26,7 +26,13 @@ public class HumanPlayer extends Player {
 
 	/** {@inheritDoc} */
 	protected void choosePegForMove(Peg[] movables) {
-		pegChosen(movables[0]);
+		Peg chosen = null;
+		for (Peg peg : movables)
+			if (chosen == null)
+				chosen = peg;
+			else if (peg != null && peg.getCurrentField() > chosen.getCurrentField())
+				chosen = peg;
+		pegChosen(chosen);
 		// ############################### needs some change
 	}
 }

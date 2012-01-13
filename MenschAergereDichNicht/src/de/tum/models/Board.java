@@ -14,6 +14,8 @@ public abstract class Board extends GameObject {
 	public static int path_length;
 	// the coordinates of the fields
 	private static TupleFloat[] fields;
+	// matching current position of pegs to a direction for stepping beside
+	private static TupleFloat[] besides;
 	// matching current position of pegs to fields
 	private static Peg[] peg_fields;
 	// maximum amount players allowed for that board
@@ -37,9 +39,9 @@ public abstract class Board extends GameObject {
 	 * @param players
 	 *            the amount of players that actually play
 	 */
-	public Board(boolean visible, TupleFloat[] fields, int teams, int players) {
+	public Board(boolean visible, TupleFloat[] fields, TupleFloat[] besides, int teams, int players) {
 		super(visible);
-		set(fields, teams, players);
+		set(fields, besides, teams, players);
 		createPegs();
 	}
 
@@ -68,18 +70,28 @@ public abstract class Board extends GameObject {
 	 *            the team of this peg
 	 * @param fieldPos
 	 *            the current position for this peg
+	 * @param permanent
+	 *            true if the pegs is there permanent (false if peg is just crossing the field)
 	 * @return a pair of floats representing the location on the board
 	 */
-	public static final TupleFloat getPosition(Peg peg, int position) {
-		int position_abs = position < start_pegs ? position + peg.getTeam().id * start_pegs : getAbsolutePositionOnPathOrEnd(peg.getTeam(), position);
-		// updating current position
-		for (int i = 0; i < peg_fields.length; ++i)
-			if (peg_fields[i] == peg) {
-				peg_fields[i] = null;
-				break;
-			}
-		peg_fields[position_abs] = peg;
-		return fields[position_abs];
+	public static final TupleFloat getPosition(Peg peg, int position, boolean permanent) {
+		int position_abs = position < start_pegs ? position + peg.getTeam().id
+				* start_pegs : getAbsolutePositionOnPathOrEnd(peg.getTeam(),
+				position);
+		if (permanent) {
+			// updating current position
+			for (int i = 0; i < peg_fields.length; ++i)
+				if (peg_fields[i] == peg) {
+					peg_fields[i] = null;
+					break;
+				}
+			if (peg_fields[position_abs] != null)
+				peg_fields[position_abs].reset();
+			peg_fields[position_abs] = peg;
+		}
+		else if (peg_fields[position_abs] != null) // moving peg beside that field
+			peg_fields[position_abs].giveWay(besides[position_abs - start_length].x, besides[position_abs - start_length].y);
+		return new TupleFloat(fields[position_abs].x, fields[position_abs].y);
 	}
 
 	/**
@@ -145,8 +157,9 @@ public abstract class Board extends GameObject {
 	}
 
 	// just for setting and calculating some helping values
-	private static final void set(TupleFloat[] fields, int teams, int players) {
+	private static final void set(TupleFloat[] fields, TupleFloat[] besides, int teams, int players) {
 		Board.fields = fields;
+		Board.besides = besides;
 		Board.teams = teams;
 		Board.players = players;
 		start_length = teams * start_pegs;
