@@ -11,7 +11,11 @@ import de.tum.renderable.GameObject;
  */
 public abstract class Peg extends GameObject {
 	/** the final bottom layer for pegs has his z-coordinate at 0.1 */
-	protected static final float bottom = 0.1f * p;
+	protected static final float bottom = 0.01f * p;
+	/** the amount of frames a peg needs to reach the next field */
+	private static final int frames = 20;
+	/** the current frame of a move */
+	private int frame_current;
 	/** the final position where the peg starts */
 	private final int pos_start;
 	/** the final team of this peg */
@@ -20,6 +24,8 @@ public abstract class Peg extends GameObject {
 	private int pos_current;
 	/** the next position of this peg */
 	private TupleFloat pos_next;
+	/** the offset for the current move */
+	private final TupleFloat pos_offset;
 	/** the final possible position of this peg */
 	private int pos_final;
 	/** true if moving */
@@ -40,34 +46,56 @@ public abstract class Peg extends GameObject {
 		this.team = team;
 		this.pos_start = pos_current = pos_start;
 		pos_next = new TupleFloat(0, 0);
+		pos_offset = new TupleFloat(0, 0);
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	protected final void action() {
-		if (moving) {
-			
-			
-//			// setting the next position
-//			pos_current = pos_final;
-//			// getting the next coordinates
-//			TupleFloat position = Board.getPosition(this);
-//			// moving this peg
-//			transfer(position.x - x, position.y - y, 0);
-			moving = false;
-		Player.pegMoved();
-		}
+		if (moving)
+			if (frames == frame_current++) {
+				frame_current = 0;
+				if (pos_current < pos_final) {
+//					getting the next coordinates
+					pos_next = Board.getPosition(this, pos_final == Board.start_pegs ? pos_current = pos_final : ++pos_current, pos_current == pos_final);
+//					calculating difference
+					pos_offset.set((pos_next.x - x) / frames, (pos_next.y - y) / frames);
+//					resetting the current frame
+				}
+				else if (pos_final == 0) {
+					pos_offset.set(pos_offset.x * -1, pos_offset.y * -1);
+					pos_final = -1;
+				}
+				else {
+					moving = false;
+					if (pos_final > 0)
+					  Player.pegMoved();					
+				}
+			}
+			else
+//				moving this peg
+				transfer(pos_offset.x, pos_offset.y, 0);
+	}
+
+	/** method for moving the peg */
+	public final void move() {
+		moving = true;
+		frame_current = frames;
+		pos_next.set(x, y);
 	}
 
 	/**
-	 * method for moving the peg
+	 * method for moving the peg away
 	 * 
-	 * @param fields
-	 *            amount of fields to move. Typically the number the dice shows
+	 * @param dx
+	 *            the offset in x-direction
+	 * @param dy
+	 *            the offset in y-direction
 	 */
-	public final void move() {
+	public final void giveWay(float dx, float dy) {
 		moving = true;
-		pos_next.set(x, y);
+		pos_final = 0;
+		pos_offset.set(dx / frames, dy / frames);
 	}
 
 	/**
@@ -76,7 +104,7 @@ public abstract class Peg extends GameObject {
 	public final void reset() {
 		pos_current = pos_start;
 		// getting the coordinates
-		TupleFloat position = Board.getPosition(this, pos_current);
+		TupleFloat position = Board.getPosition(this, pos_current, true);
 		// moving this peg
 		transfer(position.x - x, position.y - y, 0);
 	}
@@ -116,7 +144,7 @@ public abstract class Peg extends GameObject {
 	 * @return true if this peg is in a finish field
 	 */
 	public final boolean hasFinished() {
-		return pos_current > Board.path_length + Board.start_pegs;
+		return pos_current >= Board.path_length + Board.start_pegs;
 	}
 
 	/**
@@ -125,6 +153,6 @@ public abstract class Peg extends GameObject {
 	 * @return true if this peg has already started
 	 */
 	public final boolean hasStarted() {
-		return pos_current < Board.start_pegs;
+		return pos_current >= Board.start_pegs;
 	}
 }

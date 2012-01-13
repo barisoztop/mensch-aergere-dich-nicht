@@ -5,8 +5,8 @@ import de.tum.models.Dice;
 import de.tum.models.Peg;
 
 /**
- * this player is an artificial intelligence. All moves are calculated by this AI.
- * There is no direct interaction with any human player
+ * this player is an artificial intelligence. All moves are calculated by this
+ * AI. There is no direct interaction with any human player
  */
 public class AIPlayer extends Player {
 	/**
@@ -26,7 +26,14 @@ public class AIPlayer extends Player {
 
 	/** {@inheritDoc} */
 	protected void choosePegForMove(Peg[] movables) {
-		pegChosen(movables[0]);
-		// ############################### needs some change
+		Peg chosen = null;
+		for (Peg peg : movables)
+			if (chosen == null)
+				chosen = peg;
+			else if (peg != null
+			// peg with biggest field position is chosen
+					&& peg.getCurrentField() > chosen.getCurrentField())
+				chosen = peg;
+		pegChosen(chosen);
 	}
 }

@@ -79,12 +79,18 @@ public abstract class Player {
 	 */
 	public static final void diceThrown(int number) {
 		Player.number = number;
-		int movable = 0, index = 0, found1st = 0;
+		int movable = 0, index = 0, found1st = -1;
 		for (Peg peg : player.pegs) // calculates which pegs can be moved
 			if (peg.checkMove(number)) {
 				++movable;
-				found1st = index;
+				if (found1st == -1)
+					found1st = index;
 				movables[index++] = peg;
+				if (!peg.hasStarted()) { // peg has to move out
+					movable = 1;
+					found1st = --index;
+					break;
+				}
 			} else
 				movables[index++] = null;
 		if (movable == 1) // just one peg - no options for the player

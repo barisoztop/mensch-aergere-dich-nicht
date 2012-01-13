@@ -23,8 +23,9 @@ public class ClassicBoard extends Board {
 	private static final int[] middle = { -1, 1, 1, 1, -1, -1, 1, -1 };
 	private static final int[] path_start = { -11, 1, -11, 3, -9, 1, -9, 3 };
 	private static final int[] path = { -9, 1, -9, 3, -1, 1, -3, 3, -1, 9, -3,
-			11, 1, 9, 1, 11 };
+		11, 1, 9, 1, 11 };
 	private static final TupleFloat[] fields;
+	private static final TupleFloat[] besides;
 	/** texture values */
 	private static final short[] player_start_texture = { 0, 0, 2, 0, 0, 2, 2,
 			2 };
@@ -38,11 +39,14 @@ public class ClassicBoard extends Board {
 	/** float array for color for the path */
 	private static float[] path_color = { 0.8f, 0.8f, 0.8f, 1 };
 	static {
-		final float[] fields_start = { -10, 10, -8, 10, -10, 8, -8, 8 };
+		final float[] fields_start = { -10, 8, -8, 8, -8, 10, -10, 10 };
 		final float[] fields_path = { -10, 2, -8, 2, -6, 2, -4, 2, -2, 2, -2,
 				4, -2, 6, -2, 8, -2, 10, 0, 10 };
+		final float[] fields_path_beside = { -2, 2, 0, 2, 0, 2, 0, 2, 2, -2, -2,
+				0, -2, 0, -2, 0, -2, 2, 0, 2 };
 		final float[] fields_end = { -8, 0, -6, 0, -4, 0, -2, 0 };
 		fields = createFields(fields_start, fields_path, fields_end);
+		besides = createFields(fields_path_beside);
 		calculateTextures();
 	}
 
@@ -55,7 +59,7 @@ public class ClassicBoard extends Board {
 	 *            the amount of players that really play
 	 */
 	public ClassicBoard(boolean visible, int players) {
-		super(true, fields, 4, players);
+		super(true, fields, besides, 4, players);
 		// adding board components
 		add4Parts(basicSquare, gray, null);
 		add4Parts(player_start, null, player_start_texture);
@@ -87,6 +91,20 @@ public class ClassicBoard extends Board {
 			}
 			start = i1 == 0 ? path : end;
 		}
+		return fields;
+	}
+
+	// just helping method for creating the static final fields beside the path
+	private static final TupleFloat[] createFields(float[] besides) {
+		TupleFloat[] fields = new TupleFloat[(besides.length) * 2];
+			for (int index = 0, i2 = 0; i2 < 4; ++i2) {
+				for (int i3 = 0; i3 < besides.length; ++i3, ++index)
+					fields[index] = new TupleFloat(p * besides[i3], p
+							* besides[++i3]);
+				if (i2 == 3)
+					break;
+				Helper.rotate90(besides, 2);
+			}
 		return fields;
 	}
 
