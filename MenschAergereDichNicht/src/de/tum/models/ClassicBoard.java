@@ -26,6 +26,7 @@ public class ClassicBoard extends Board {
 		11, 1, 9, 1, 11 };
 	private static final TupleFloat[] fields;
 	private static final TupleFloat[] besides;
+	private static final TupleFloat[] dice_fields;
 	/** texture values */
 	private static final short[] player_start_texture = { 0, 0, 2, 0, 0, 2, 2,
 			2 };
@@ -39,14 +40,16 @@ public class ClassicBoard extends Board {
 	/** float array for color for the path */
 	private static float[] path_color = { 0.8f, 0.8f, 0.8f, 1 };
 	static {
-		final float[] fields_start = { -10, 8, -8, 8, -8, 10, -10, 10 };
-		final float[] fields_path = { -10, 2, -8, 2, -6, 2, -4, 2, -2, 2, -2,
+		float[] fields_start = { -10, 8, -8, 8, -8, 10, -10, 10 };
+		float[] fields_path = { -10, 2, -8, 2, -6, 2, -4, 2, -2, 2, -2,
 				4, -2, 6, -2, 8, -2, 10, 0, 10 };
-		final float[] fields_path_beside = { -2, 2, 0, 2, 0, 2, 0, 2, 2, -2, -2,
+		float[] fields_path_beside = { -2, 2, 0, 2, 0, 2, 0, 2, 2, -2, -2,
 				0, -2, 0, -2, 0, -2, 2, 0, 2 };
-		final float[] fields_end = { -8, 0, -6, 0, -4, 0, -2, 0 };
+		float[] fields_end = { -8, 0, -6, 0, -4, 0, -2, 0 };
+		float[] fields_dice = { -9, 5, -5, 9};
 		fields = createFields(fields_start, fields_path, fields_end);
 		besides = createFields(fields_path_beside);
+		dice_fields = createFields(fields_dice);
 		calculateTextures();
 	}
 
@@ -59,7 +62,7 @@ public class ClassicBoard extends Board {
 	 *            the amount of players that really play
 	 */
 	public ClassicBoard(boolean visible, int players) {
-		super(true, fields, besides, 4, players);
+		super(true, fields, besides, dice_fields, 4, players);
 		// adding board components
 		add4Parts(basicSquare, gray, null);
 		add4Parts(player_start, null, player_start_texture);
@@ -149,9 +152,11 @@ public class ClassicBoard extends Board {
 			canvas.drawRGB((int) (255 * gray[0]), (int) (255 * gray[1]),
 					(int) (255 * gray[2]));
 			float[] color = Team.values()[i].color;
+			paint.setARGB(255, 0, 0, 0);
+			canvas.drawCircle(32, 32, 29, paint);
 			paint.setARGB(255, (int) (255 * color[0]), (int) (255 * color[1]),
 					(int) (255 * color[2]));
-			canvas.drawCircle(32, 32, 29, paint);
+			canvas.drawCircle(32, 32, 23, paint);
 			textures[i] = Textures.addTexture(bitmap);
 		}
 	}

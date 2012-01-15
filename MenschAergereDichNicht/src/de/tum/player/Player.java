@@ -21,7 +21,7 @@ public abstract class Player {
 	private static final Peg[] movables = new Peg[Board.start_pegs];
 
 	/** the team of this player */
-	private Team team;
+	protected Team team;
 
 	/** is true if a player has won */
 	private boolean won;
@@ -93,12 +93,11 @@ public abstract class Player {
 				}
 			} else
 				movables[index++] = null;
-		if (movable == 1) // just one peg - no options for the player
-			player.pegChosen(player.pegs[found1st]);
-		else if (movable == 0) // no peg can be moved
+		if (movable == 0) // no peg can be moved
 			player.checkForMoreTurns();
-		else // player has to select one of two or more pegs
-			player.choosePegForMove(movables);
+		else // just one peg - no options for the player or
+			//player has to select one of two or more pegs
+			player.choosePegForMove(movables, movable == 1 ? found1st : -1);
 	}
 
 	// checks whether this player can throw again. E.g. when a player has all
@@ -127,7 +126,7 @@ public abstract class Player {
 	 * @param movables
 	 *            the current movable pegs
 	 */
-	protected abstract void choosePegForMove(Peg[] movables);
+	protected abstract void choosePegForMove(Peg[] movables, int movable);
 
 	/**
 	 * peg is chosen

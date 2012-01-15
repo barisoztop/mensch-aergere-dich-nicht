@@ -1,5 +1,6 @@
 package de.tum.models;
 
+import android.util.Log;
 import de.tum.Team;
 import de.tum.TupleFloat;
 import de.tum.player.Player;
@@ -12,9 +13,7 @@ import de.tum.renderable.GameObject;
 public abstract class Peg extends GameObject {
 	/** the final bottom layer for pegs has his z-coordinate at 0.1 */
 	protected static final float bottom = 0.01f * p;
-	/** the amount of frames a peg needs to reach the next field */
-	private static final int frames = 20;
-	/** the current frame of a move */
+	/** the current frame of an action */
 	private int frame_current;
 	/** the final position where the peg starts */
 	private final int pos_start;
@@ -26,10 +25,12 @@ public abstract class Peg extends GameObject {
 	private TupleFloat pos_next;
 	/** the offset for the current move */
 	private final TupleFloat pos_offset;
+	/** the z-offset for the current move */
+	private float pos_offset_z;
 	/** the final possible position of this peg */
 	private int pos_final;
-	/** true if moving */
-	private boolean moving;
+	/** true if action */
+	private boolean action;
 
 	/**
 	 * creating a peg
@@ -52,36 +53,46 @@ public abstract class Peg extends GameObject {
 	/** {@inheritDoc} */
 	@Override
 	protected final void action() {
-		if (moving)
-			if (frames == frame_current++) {
-				frame_current = 0;
-				if (pos_current < pos_final) {
+		if (!action)
+			return;
+		if (frames == frame_current++) {
+			frame_current = 0;
+			if (pos_current < pos_final) {
 //					getting the next coordinates
-					pos_next = Board.getPosition(this, pos_final == Board.start_pegs ? pos_current = pos_final : ++pos_current, pos_current == pos_final);
+				pos_next = Board.getPosition(this, pos_final == Board.start_pegs ? pos_current = pos_final : ++pos_current, pos_current == pos_final);
 //					calculating difference
-					pos_offset.set((pos_next.x - x) / frames, (pos_next.y - y) / frames);
+				pos_offset.set((pos_next.x - x) / frames, (pos_next.y - y) / frames);
 //					resetting the current frame
-				}
-				else if (pos_final == 0) {
-					pos_offset.set(pos_offset.x * -1, pos_offset.y * -1);
-					pos_final = -1;
-				}
-				else {
-					moving = false;
-					if (pos_final > 0)
-					  Player.pegMoved();					
-				}
 			}
-			else
-//				moving this peg
-				transfer(pos_offset.x, pos_offset.y, 0);
+			else if (pos_final == -1) {
+				pos_offset.set(pos_offset.x * -1, pos_offset.y * -1);
+				pos_final = -2;
+			}
+			else {
+				action = false;
+				if (pos_final > 0)
+				  Player.pegMoved();					
+			}
+		} else {
+			// moving this peg
+			if (pos_final == -3) // just jumping to reset
+				if (frame_current == frames)
+					pos_offset_z = 0;
+				else
+					pos_offset_z -= 2 * p / frames;
+			transfer(pos_offset.x, pos_offset.y, pos_offset_z);
+		}
 	}
 
 	/** method for moving the peg */
 	public final void move() {
-		moving = true;
+		if (action)	
+			Log.d("peg",
+					"move: already moving ######	################!!!!+++++++++++++++++++++++");
+		action = true;
 		frame_current = frames;
 		pos_next.set(x, y);
+		pos_offset_z = 0x00;
 	}
 
 	/**
@@ -93,20 +104,29 @@ public abstract class Peg extends GameObject {
 	 *            the offset in y-direction
 	 */
 	public final void giveWay(float dx, float dy) {
-		moving = true;
-		pos_final = 0;
+		if (action)	
+			Log.d("peg",
+					"giveWay: already moving ######	################!!!!+++++++++++++++++++++++");
+		action = true;
+		pos_final = -1;
 		pos_offset.set(dx / frames, dy / frames);
+		pos_offset_z = 0x00;
 	}
 
 	/**
 	 * resetting this peg will move it back to its start position
 	 */
 	public final void reset() {
+		if (action)	
+			Log.d("peg",
+					"reset: already moving ######	################!!!!+++++++++++++++++++++++");
+		action = true;
 		pos_current = pos_start;
-		// getting the coordinates
-		TupleFloat position = Board.getPosition(this, pos_current, true);
-		// moving this peg
-		transfer(position.x - x, position.y - y, 0);
+//		// getting the coordinates
+		pos_next = Board.getPosition(this, pos_current, true);
+		pos_offset.set((pos_next.x - x) / frames, (pos_next.y - y) / frames);
+		pos_offset_z = p;
+		pos_final = -3;
 	}
 
 	/**
@@ -119,6 +139,14 @@ public abstract class Peg extends GameObject {
 	public final boolean checkMove(int fields) {
 		return (pos_final = Board.getPositionNext(team, pos_current, fields)) != -1;
 	}
+
+	/**
+	 * selecting this peg
+	 * 
+	 * @param selected
+	 *            true if selected
+	 */
+	public abstract void setSelection(boolean selected);
 
 	/**
 	 * getting the current field on the board
