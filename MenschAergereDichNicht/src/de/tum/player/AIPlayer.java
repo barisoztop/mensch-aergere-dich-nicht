@@ -21,11 +21,15 @@ public class AIPlayer extends Player {
 
 	/** {@inheritDoc} */
 	protected void throwDice() {
-		Dice.throwIt();
+		Dice.throwIt(team);
 	}
 
 	/** {@inheritDoc} */
-	protected void choosePegForMove(Peg[] movables) {
+	protected void choosePegForMove(Peg[] movables, int movable) {
+		if (movable != -1) { // just one peg - no options for the player
+			pegChosen(movables[movable]);
+			return;
+		}
 		Peg chosen = null;
 		for (Peg peg : movables)
 			if (chosen == null)

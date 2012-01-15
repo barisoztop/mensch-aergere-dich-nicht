@@ -16,6 +16,8 @@ public abstract class Board extends GameObject {
 	private static TupleFloat[] fields;
 	// matching current position of pegs to a direction for stepping beside
 	private static TupleFloat[] besides;
+	// the coordinates for the dice to start
+	private static TupleFloat[] dice_fields;
 	// matching current position of pegs to fields
 	private static Peg[] peg_fields;
 	// maximum amount players allowed for that board
@@ -39,9 +41,9 @@ public abstract class Board extends GameObject {
 	 * @param players
 	 *            the amount of players that actually play
 	 */
-	public Board(boolean visible, TupleFloat[] fields, TupleFloat[] besides, int teams, int players) {
+	public Board(boolean visible, TupleFloat[] fields, TupleFloat[] besides, TupleFloat[] dice_fields, int teams, int players) {
 		super(visible);
-		set(fields, besides, teams, players);
+		set(fields, besides, dice_fields, teams, players);
 		createPegs();
 	}
 
@@ -116,6 +118,17 @@ public abstract class Board extends GameObject {
 		return isFree(team, getAbsolutePositionOnPathOrEnd(team, posNext)) ? posNext : -1;
 	}
 	
+	/**
+	 * getting the current start field for the dice
+	 * 
+	 * @param team
+	 *            the current team
+	 * @return the coordinates of the current start field
+	 */
+	public static final TupleFloat getPositionForDice(Team team) {
+		return dice_fields[team.id * 2 + (int) (Math.random() * 2)];
+	}
+	
 	// just for checking whether the given field is free or a different team is there	
 	private static final boolean isFree(Team team, int absolute_pos) {
 		return peg_fields[absolute_pos] == null
@@ -157,9 +170,10 @@ public abstract class Board extends GameObject {
 	}
 
 	// just for setting and calculating some helping values
-	private static final void set(TupleFloat[] fields, TupleFloat[] besides, int teams, int players) {
+	private static final void set(TupleFloat[] fields, TupleFloat[] besides, TupleFloat[] dice_fields, int teams, int players) {
 		Board.fields = fields;
 		Board.besides = besides;
+		Board.dice_fields = dice_fields;
 		Board.teams = teams;
 		Board.players = players;
 		start_length = teams * start_pegs;

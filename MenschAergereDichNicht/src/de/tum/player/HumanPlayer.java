@@ -1,5 +1,6 @@
 package de.tum.player;
 
+import android.util.Log;
 import de.tum.Team;
 import de.tum.models.Dice;
 import de.tum.models.Peg;
@@ -20,18 +21,19 @@ public class HumanPlayer extends Player {
 
 	/** {@inheritDoc} */
 	protected void throwDice() {
-		Dice.throwIt();
+		Dice.throwIt(team);
 		// ############################### needs some change
 	}
 
 	/** {@inheritDoc} */
-	protected void choosePegForMove(Peg[] movables) {
+	protected void choosePegForMove(Peg[] movables, int movable) {
+	Log.d("human player", "movable=" + movable);
 		Peg chosen = null;
 		for (Peg peg : movables)
-			if (chosen == null)
+			if (peg != null) {
+				peg.setSelection(true);
 				chosen = peg;
-			else if (peg != null && peg.getCurrentField() > chosen.getCurrentField())
-				chosen = peg;
+			}
 		pegChosen(chosen);
 		// ############################### needs some change
 	}
