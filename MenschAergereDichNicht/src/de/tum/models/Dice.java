@@ -29,7 +29,7 @@ public class Dice extends GameObject {
 	/** texture values */
 	private static final short[] texture = { 0, 0, 1, 0, 0, 1, 1, 1 };
 	/** float array for a red dice color */
-	private static float[] dice_red = { 0.7f, 0.2f, 0.2f, 1 };
+	private static float[] dice_red = { 0.5f, 0.2f, 0.2f, 1 };
 	/** texture IDs */
 	private static final int[] textures = new int[6];
 	/** the current frame of an action */
