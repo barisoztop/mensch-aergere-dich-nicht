@@ -18,6 +18,7 @@ import de.tum.bluetooth.BluetoothMPService;
 import de.tum.bluetooth.DeviceListActivity;
 import de.tum.models.Board;
 import de.tum.models.ClassicBoard;
+import de.tum.models.Dice;
 import de.tum.player.AIPlayer;
 import de.tum.player.HumanPlayer;
 import de.tum.player.Player;
@@ -30,6 +31,7 @@ public class MenschAergereDichNichtActivity extends Activity {
     // Debugging
     private static final String TAG = "MenschAergereDichNicht";
     private static final boolean D = true;
+    private static final boolean BLUETOOTH = true;
     
     /* Bluetooth communication */
     // Message types sent from the BluetoothMPService Handler
@@ -41,7 +43,7 @@ public class MenschAergereDichNichtActivity extends Activity {
     
     // Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
-    public static final String TOAST = "toast";    
+    public static final String TOAST = "toast";
     // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
@@ -52,10 +54,12 @@ public class MenschAergereDichNichtActivity extends Activity {
     private BluetoothMPService mBluetoothMPService = null;
     // Name of the connected device
     private String mConnectedDeviceName = null;
-    
+    // Name of the connected device
+    private String mConnectedServerName = null;
+    private String mConnectedDeviceName1 = null;
+    private String mConnectedDeviceName2 = null;
+    private String mConnectedDeviceName3 = null;
 
-	
-	
 	
 	// just for testing
 	// ############################### needs
@@ -77,19 +81,22 @@ public class MenschAergereDichNichtActivity extends Activity {
       super.onCreate(savedInstanceState);
       if(D) Log.e(TAG, "+++ ON CREATE +++");      
       
-      // Get local Bluetooth adapter
-      mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-      // If the adapter is null, then Bluetooth is not supported
-      if (mBluetoothAdapter == null) {
-          Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
-          finish();
-          return;
+      if (BLUETOOTH) {
+	      // Get local Bluetooth adapter
+	      mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+	
+	      // If the adapter is null, then Bluetooth is not supported
+	      if (mBluetoothAdapter == null) {
+	          Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
+	          finish();
+	          return;
+	      }
       }
       
       room = new Room();
 
       Room.addRenderable(new ClassicBoard(true, 4));
+      Room.addRenderable(new Dice(true));
       players = new Player[Board.getPlayers()];
       players[0] = new HumanPlayer(Team.RED);
       players[1] = new AIPlayer(Team.YELLOW);
@@ -110,14 +117,16 @@ public class MenschAergereDichNichtActivity extends Activity {
         super.onStart();
         if(D) Log.e(TAG, "++ ON START ++");
 
-        // If BT is not on, request that it be enabled.
-        // setupChat() will then be called during onActivityResult
-        if (!mBluetoothAdapter.isEnabled()) {
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-        // Otherwise, setup the communication between devices
-        } else {
-            if (mBluetoothMPService == null) setupMultiPlayer();
+        if (BLUETOOTH) {
+	        // If BT is not on, request that it be enabled.
+	        // setupChat() will then be called during onActivityResult
+	        if (!mBluetoothAdapter.isEnabled()) {
+	            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+	            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+	        // Otherwise, setup the communication between devices
+	        } else {
+	            if (mBluetoothMPService == null) setupMultiPlayer();
+	        }
         }
     }    
     
@@ -190,19 +199,32 @@ public class MenschAergereDichNichtActivity extends Activity {
             case MESSAGE_STATE_CHANGE:
                 if(D) Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
                 switch (msg.arg1) {
-                case BluetoothMPService.STATE_CONNECTED:
+                case BluetoothMPService.STATE_ALL_CONNECTED:
 //                    mTitle.setText(R.string.title_connected_to);
 //                    mTitle.append(mConnectedDeviceName);
 //                    mConversationArrayAdapter.clear();
-                	Toast.makeText(getApplicationContext(), "Conntected to " + mConnectedDeviceName,
+                	Toast.makeText(getApplicationContext(), "Multiplayer Mode",
                             Toast.LENGTH_SHORT).show();
                     break;
+                case BluetoothMPService.STATE_CONNECTED:
+//                    mTitle.setText(R.string.title_connected_to);
+//                    mTitle.append(mChatService.connectedDevices + " Device(s)");
+                	Toast.makeText(getApplicationContext(), mBluetoothMPService.connectedDevices + " Device(s) connected",
+                            Toast.LENGTH_SHORT).show();
+                    break;                    
+                case BluetoothMPService.STATE_CONNECTED_TO_SERVER:
+//                    mTitle.setText(R.string.title_connected_to);
+//                    mTitle.append(mChatService.connectedDevices + " Device(s)");
+                	Toast.makeText(getApplicationContext(), "Connected to Server" + mConnectedServerName,
+                            Toast.LENGTH_SHORT).show();
+                    break;                    
                 case BluetoothMPService.STATE_CONNECTING:
 //                    mTitle.setText(R.string.title_connecting);
                 	Toast.makeText(getApplicationContext(), "Connecting...",
                             Toast.LENGTH_SHORT).show();  
                     break;
                 case BluetoothMPService.STATE_LISTEN:
+                	break;
                 case BluetoothMPService.STATE_NONE:
 //                    mTitle.setText(R.string.title_not_connected);
                 	Toast.makeText(getApplicationContext(), "Not Conntected",
@@ -220,13 +242,32 @@ public class MenschAergereDichNichtActivity extends Activity {
                 byte[] readBuf = (byte[]) msg.obj;
                 // construct a string from the valid bytes in the buffer
 //                String readMessage = new String(readBuf, 0, msg.arg1);
-//                mConversationArrayAdapter.add(mConnectedDeviceName+":  " + readMessage);
+//                int deviceID = msg.arg2;
+//                mConversationArrayAdapter.add("Device "+ deviceID + ": " + readMessage);
                 break;
             case MESSAGE_DEVICE_NAME:
                 // save the connected device's name
-                mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
-                Toast.makeText(getApplicationContext(), "Connected to "
-                               + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
+            	if (mBluetoothMPService.getState() == BluetoothMPService.STATE_CONNECTED) {
+	   	           	 if (mBluetoothMPService.connectedDevices == 1) {
+	 	           		mConnectedDeviceName1 = msg.getData().getString(DEVICE_NAME);
+	 	                   Toast.makeText(getApplicationContext(), "Connected to "
+	 	                                  + mConnectedDeviceName1, Toast.LENGTH_SHORT).show();
+	 	           	} else if ( mBluetoothMPService.connectedDevices == 2) {
+	 	           		mConnectedDeviceName2 = msg.getData().getString(DEVICE_NAME);
+	 	                Toast.makeText(getApplicationContext(), "Connected to "
+	 	                               + mConnectedDeviceName2, Toast.LENGTH_SHORT).show();
+	 	           	} else if ( mBluetoothMPService.connectedDevices == 3) {
+	 	           		mConnectedDeviceName3 = msg.getData().getString(DEVICE_NAME);
+	 	                Toast.makeText(getApplicationContext(), "Connected to "
+	 	                               + mConnectedDeviceName3, Toast.LENGTH_SHORT).show();
+	 	           	}
+            	}
+            	
+            	if (mBluetoothMPService.getState() == BluetoothMPService.STATE_CONNECTED_TO_SERVER) {
+	           		mConnectedServerName = msg.getData().getString(DEVICE_NAME);
+	                Toast.makeText(getApplicationContext(), "Connected to server "
+	                               + mConnectedServerName, Toast.LENGTH_SHORT).show();
+	           	}
                 break;
             case MESSAGE_TOAST:
                 Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
@@ -333,13 +374,22 @@ public class MenschAergereDichNichtActivity extends Activity {
      * @param message  A string of text to send.
      */
     private void sendMessage(String message) {
-    	// TODO Modify
-    	
-        // Check that we're actually connected before trying anything
-        if (mBluetoothMPService.getState() != BluetoothMPService.STATE_CONNECTED) {
+    	// Check if all devices connected to server
+        if (mBluetoothMPService.serverDevice && mBluetoothMPService.getState() != mBluetoothMPService.STATE_ALL_CONNECTED) {
+            Toast.makeText(this, R.string.waiting_others, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!mBluetoothMPService.serverDevice && mBluetoothMPService.getState() != mBluetoothMPService.STATE_CONNECTED_TO_SERVER) {
             Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT).show();
             return;
         }
+        
+        // Client connected to server but not all devices connected to server TODO transmission is possible even now
+//      if (!mChatService.serverDevice && mChatService.getState() != BluetoothChatService.STATE_CONNECTED_TO_SERVER) {
+//          Toast.makeText(this, R.string.waiting_others, Toast.LENGTH_SHORT).show();
+//          return;
+//      }
 
         // Check that there's actually something to send
         if (message.length() > 0) {
