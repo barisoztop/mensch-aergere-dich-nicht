@@ -11,6 +11,8 @@
     <string name="title_connecting">connecting...</string>
     <string name="title_connected_to">connected: </string>
     <string name="title_not_connected">not connected</string>
+    <string name="title_all_connected">Multiplayer Mode</string>
+    <string name="waiting_others">Waiting for other devices</string>
 
     <!--  DeviceListActivity -->
     <string name="scanning">scanning for devices...</string>
