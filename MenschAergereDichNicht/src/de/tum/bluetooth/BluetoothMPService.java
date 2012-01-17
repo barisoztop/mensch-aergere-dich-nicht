@@ -306,7 +306,7 @@ public class BluetoothMPService {
         msg.setData(bundle);
         mHandler.sendMessage(msg);
         // Make it possible to be server again
-        BluetoothMPService.this.start();        
+        BluetoothMPService.this.start();
     }
 
     /**
