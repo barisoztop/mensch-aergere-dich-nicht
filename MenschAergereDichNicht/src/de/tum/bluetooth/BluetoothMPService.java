@@ -248,6 +248,8 @@ public class BluetoothMPService {
         if (mConnectedThread3 != null) {mConnectedThread3.cancel(); mConnectedThread3 = null;}
         if (mConnectedClientThread != null) {mConnectedClientThread.cancel(); mConnectedClientThread = null;}
         if (mAcceptThread != null) {mAcceptThread.cancel(); mAcceptThread = null;}
+        connectedDevices = 0;
+        serverDevice = false;
         setState(STATE_NONE);
     }
 
@@ -319,7 +321,7 @@ public class BluetoothMPService {
         bundle.putString(MenschAergereDichNichtActivity.TOAST, "Device connection was lost");
         msg.setData(bundle);
         mHandler.sendMessage(msg);
-        if(serverDevice) connectedDevices--;
+        stop();
         // Make it possible to be server again
         BluetoothMPService.this.start();
     }

@@ -53,8 +53,6 @@ public class MenschAergereDichNichtActivity extends Activity {
     // Member object for the chat services
     private BluetoothMPService mBluetoothMPService = null;
     // Name of the connected device
-    private String mConnectedDeviceName = null;
-    // Name of the connected device
     private String mConnectedServerName = null;
     private String mConnectedDeviceName1 = null;
     private String mConnectedDeviceName2 = null;
