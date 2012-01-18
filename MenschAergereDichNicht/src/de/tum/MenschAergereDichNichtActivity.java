@@ -65,7 +65,7 @@ public class MenschAergereDichNichtActivity extends Activity {
     private static final float f = 8;
     public static int width;
     public static int height;
-    public static float hz;
+    public static float hz = 4;
     private GLSurfaceView view;
     private GameRenderer renderer;
     private Room room;
