@@ -21,9 +21,11 @@ public class SimplePeg extends Peg {
 			1, 0 };
 	/** an array representing the color black */
 	private static final float[] black = { 0, 0, 0, 1 };
-	/** an array representing the normal color */
-	private final float[] color_normal;
-	/** an array representing the selection color */
+	/** an array representing the color white */
+	private static final float[] white = { 1, 1, 1, 1 };
+	/** an array representing the final color mesh */
+	private final float[] color;
+	/** an array representing the final color mesh for selection 11*/
 	private final float[] color_selection;
 
 	/**
@@ -39,11 +41,9 @@ public class SimplePeg extends Peg {
 	public SimplePeg(boolean visible, Team team, int pos_start) {
 		super(visible, team, pos_start);
 		// creating the real mesh
-		TriangleStripe cuboid = new TriangleStripe(visible, convert(vertices,
-				team), color_normal = createColor(new float[][] { team.color, black }, 0), null, 0);
-		sgobjects.add(cuboid);
-		color_selection = createColor(new float[][] { team.color, black }, 0.4f);
-		// getting the position
+		sgobjects.add(new TriangleStripe(visible, convert(vertices,
+				team), color = createColor(new float[][] { team.color, black }), null, 0));
+		color_selection = createColor(new float[][] { team.color, white }); 
 		TupleFloat position = Board.getPosition(this, pos_start, true);
 		// moving this peg to its start position
 		transfer(position.x, position.y, layer_z + bottom);
@@ -52,7 +52,7 @@ public class SimplePeg extends Peg {
 	/** {@inheritDoc} */
 	@Override
 	public void setSelection(boolean selected) {
-		setColor(selected ? color_selection : color_normal);
+		setColor(selected ? color_selection : color);
 	}
 
 	// just for creating the real vertex mesh
@@ -66,11 +66,11 @@ public class SimplePeg extends Peg {
 	}
 
 	// just or creating the real color mesh
-	private static float[] createColor(float[][] set, float highlight) {
+	private static float[] createColor(float[][] set) {
 		float[] colors = new float[56];
 		for (int i1 = 0; i1 < colors.length; i1 += 4)
 			for (int i2 = 0; i2 < 4; ++i2)
-				colors[i1 + i2] = Math.min(1, set[SimplePeg.colors[i1 / 4]][i2] + highlight);
+				colors[i1 + i2] = set[SimplePeg.colors[i1 / 4]][i2];
 		return colors;
 	}
 }
