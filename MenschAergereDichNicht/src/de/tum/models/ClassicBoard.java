@@ -22,8 +22,9 @@ public class ClassicBoard extends Board {
 	private static final int[] player_end = { -9, 1, -1, 1, -9, -1, -1, -1 };
 	private static final int[] middle = { -1, 1, 1, 1, -1, -1, 1, -1 };
 	private static final int[] path_start = { -11, 1, -11, 3, -9, 1, -9, 3 };
-	private static final int[] path = { -9, 1, -9, 3, -1, 1, -3, 3, -1, 9, -3,
-		11, 1, 9, 1, 11 };
+	private static final int[] path1 = { -9, 1, -1, 1, -9, 3, -1, 3};
+	private static final int[] path2 = { -3, 3, -3, 11, -1, 3, -1, 11};
+	private static final int[] path3 = { -1, 9, -1, 11, 1, 9, 1, 11};
 	private static final TupleFloat[] fields;
 	private static final TupleFloat[] besides;
 	private static final TupleFloat[] dice_fields;
@@ -31,14 +32,13 @@ public class ClassicBoard extends Board {
 	private static final short[] player_start_texture = { 0, 0, 2, 0, 0, 2, 2,
 			2 };
 	private static final short[] player_end_texture = { 0, 0, 4, 0, 0, 1, 4, 1 };
+	private static final short[] singleSquare = { 0, 0, 1, 0, 0, 1, 1, 1 };
 	/** texture IDs */
-	private static final int[] textures = new int[4];
+	private static final int[] textures = new int[6];
 	/** float array for a gray color */
-	private static float[] gray = { 0.5f, 0.5f, 0.5f, 1 };
-	/** float array for color for the four first field on the path */
-	private static float[] path_start_color = { 0.9f, 0.9f, 0.9f, 1 };
-	/** float array for color for the path */
-	private static float[] path_color = { 0.8f, 0.8f, 0.8f, 1 };
+	private static float[] gray = { 0.5f, 0.5f, 0.5f, 1};
+	/** an array representing the color white */
+	private static final float[] circle_white = { 0.9f, 0.9f, 0.9f};
 	static {
 		float[] fields_start = { -10, 8, -8, 8, -8, 10, -10, 10 };
 		float[] fields_path = { -10, 2, -8, 2, -6, 2, -4, 2, -2, 2, -2,
@@ -64,13 +64,15 @@ public class ClassicBoard extends Board {
 	public ClassicBoard(boolean visible, int players) {
 		super(true, fields, besides, dice_fields, 4, players);
 		// adding board components
-		add4Parts(basicSquare, gray, null);
-		add4Parts(player_start, null, player_start_texture);
-		add4Parts(player_end, null, player_end_texture);
-		add4Parts(path_start, path_start_color, null);
-		add4Parts(path, path_color, null);
+		add4Parts(basicSquare, null, singleSquare, textures[5]);
+		add4Parts(player_start, null, player_start_texture, -1);
+		add4Parts(player_end, null, player_end_texture, -1);
+		add4Parts(path_start, null, player_start_texture, -1);
+		add4Parts(path1, null, player_end_texture, textures[4]);
+		add4Parts(path2, null, player_end_texture, textures[4]);
+		add4Parts(path3, null, singleSquare, textures[4]);
 		sgobjects.add(new TriangleStripe(visible, calculateVertices(middle, p,
-				p, layer_z), gray, null, 0));
+				p, layer_z), null, singleSquare, textures[5]));
 	}
 
 	/** {@inheritDoc} */
@@ -112,21 +114,21 @@ public class ClassicBoard extends Board {
 	}
 
 	// just helping method for adding a mesh four times with four rotations
-	private final void add4Parts(int[] vertices, float[] color, short[] textures) {
+	private final void add4Parts(int[] vertices, float[] color, short[] textures, int id) {
 		sgobjects.add(new TriangleStripe(visible, calculateVertices(vertices,
 				p, p, layer_z), textures == null ? color != null ? color
-				: Team.RED.color : null, textures, ClassicBoard.textures[0]));
+				: Team.RED.color : null, textures, id == -1 ? ClassicBoard.textures[0] : id));
 		sgobjects.add(new TriangleStripe(visible, Helper.rotate90(
 				calculateVertices(vertices, p, p, layer_z), 3),
 				textures == null ? color != null ? color : Team.YELLOW.color
-						: null, textures, ClassicBoard.textures[1]));
+						: null, textures, id == -1 ? ClassicBoard.textures[1] : id));
 		sgobjects.add(new TriangleStripe(visible, calculateVertices(vertices,
 				-p, -p, layer_z), textures == null ? color != null ? color
-				: Team.GREEN.color : null, textures, ClassicBoard.textures[2]));
+				: Team.GREEN.color : null, textures, id == -1 ? ClassicBoard.textures[2] : id));
 		sgobjects.add(new TriangleStripe(visible, Helper.rotate90(
 				calculateVertices(vertices, -p, -p, layer_z), 3),
 				textures == null ? color != null ? color : Team.BLUE.color
-						: null, textures, ClassicBoard.textures[3]));
+						: null, textures, id == -1 ? ClassicBoard.textures[3] : id));
 	}
 
 	// just helping method for calculating mesh
@@ -146,17 +148,19 @@ public class ClassicBoard extends Board {
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
-		for (int i = 0; i < 4; ++i) {
+		for (int i = 0; i < 6; ++i) {
 			Bitmap bitmap = Bitmap.createBitmap(64, 64, Config.ARGB_8888);
 			Canvas canvas = new Canvas(bitmap);
 			canvas.drawRGB((int) (255 * gray[0]), (int) (255 * gray[1]),
 					(int) (255 * gray[2]));
-			float[] color = Team.values()[i].color;
-			paint.setARGB(255, 0, 0, 0);
-			canvas.drawCircle(32, 32, 29, paint);
-			paint.setARGB(255, (int) (255 * color[0]), (int) (255 * color[1]),
-					(int) (255 * color[2]));
-			canvas.drawCircle(32, 32, 23, paint);
+			if (i != 5) {
+				float[] color = i != 4 ? Team.values()[i].color : circle_white;
+				paint.setARGB(255, 0, 0, 0);
+				canvas.drawCircle(32, 32, 29, paint);
+				paint.setARGB(255, (int) (255 * color[0]), (int) (255 * color[1]),
+						(int) (255 * color[2]));
+				canvas.drawCircle(32, 32, 23, paint);
+			}
 			textures[i] = Textures.addTexture(bitmap);
 		}
 	}

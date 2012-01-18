@@ -34,6 +34,12 @@ public class Dice extends GameObject {
 	private static final int[] textures = new int[6];
 	/** the current frame of an action */
 	private static int frame_current;
+	/** the current x- and y-speed */
+	private static TupleFloat speed;
+	/** the current z-speed */
+	private static float speed_z;
+	/** the current angle difference */
+	private static float angle_diff;
 	/** true if action */
 	private static boolean action;
 	/** dice object */
@@ -59,6 +65,7 @@ public class Dice extends GameObject {
 		poppushtranslationrotation = true;
 		transfer(0, 0, side / 2);
 		dice = this;
+		speed = new TupleFloat(0, 0);
 	}
 
 	/** {@inheritDoc} */
@@ -66,13 +73,24 @@ public class Dice extends GameObject {
 	protected void action() {
 		if (!action)
 			return;
-		if (++frame_current == frames * 3) {
+		if (++frame_current == 5 * frames) {
 			frame_current = 0;
 			action = false;
 			Player.diceThrown(1 + (int) (Math.random() * 6));
 			return;
 		}
-		angle += 5;
+		angle += angle_diff;
+		transfer(speed.x, speed.y, speed_z);
+		speed_z -= side / 8;
+		if (z < side && speed_z < 0) {
+			speed_z *= -0.6;
+			speed.set(speed.x * 0.75f, speed.y * 0.75f);
+			if (speed_z < side / 6) {
+				angle_diff = 0;
+				speed.set(0, 0);
+				speed_z = 0;
+			}
+		}
 	}
 
 	/**
@@ -84,7 +102,10 @@ public class Dice extends GameObject {
 	public static void throwIt(Team team) {
 		action = true;
 		TupleFloat start = Board.getPositionForDice(team);
-		dice.transfer(start.x - dice.x, start.y - dice.y, 0);
+		dice.transfer(start.x - dice.x, start.y - dice.y, 7 * side - dice.z);
+		speed.set(-dice.x / frames / 0.9f, -dice.y / frames / 0.9f);
+		speed_z = 0;
+		angle_diff = 15;
 	}
 	
 	// just helping method for calculating textures
