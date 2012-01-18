@@ -5,9 +5,10 @@ import android.util.FloatMath;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 
-public class GameTouchListener  implements OnTouchListener{
+public class GameTouchListener  implements OnTouchListener, OnLongClickListener {
 	
     // Debugging
     private static final String TAG = "GameTouchListener";
@@ -26,9 +27,11 @@ public class GameTouchListener  implements OnTouchListener{
 
     private static boolean waitingForInput;
     public static final int waitingForDice = 0;
-    public static final int waitingForPegSelected = 1;
+    public static final int waitingForPegSelection = 1;
+    public static final int waitingForPegChosen = 2;
     private static int waitingFor;
     private static HumanPlayer player;
+    private static boolean long_press;
     
     public synchronized static final void waitForInput(HumanPlayer player, int waitingFor) {
 		waitingForInput = true;
@@ -81,15 +84,17 @@ public class GameTouchListener  implements OnTouchListener{
             break;
 
         case MotionEvent.ACTION_UP:
-            Log.d("listener", "tapp");
+        	if (long_press)
+        		return long_press = !long_press;
+//            Log.d("listener", "tapp");
     		if (isWaitingForInput())
     			player.waitedForInput(waitingFor);
         case MotionEvent.ACTION_POINTER_UP:
             touchState = NONE;
-            break;
+            return false;
         }       
 
-        return true; 
+        return !waitingForInput; 
 	}
 	
     /**
@@ -102,5 +107,16 @@ public class GameTouchListener  implements OnTouchListener{
         float y = event.getY(0) - event.getY(1);
         return FloatMath.sqrt(x * x + y * y);
     }
+
+	@Override
+	public boolean onLongClick(View v) {
+//        Log.d("listener", "long tap");
+		if (isWaitingForInput() && waitingFor != waitingForDice) {
+			player.waitedForInput(waitingForPegChosen);
+			return long_press = true;
+		}
+		else
+			return false;
+	}
 
 }
