@@ -1,6 +1,7 @@
 package de.tum.player;
 
 import de.tum.GameTouchListener;
+import de.tum.MenschAergereDichNichtActivity;
 import de.tum.Team;
 import de.tum.models.Dice;
 import de.tum.models.Peg;
@@ -23,7 +24,7 @@ public class HumanPlayer extends Player {
 
 	/** {@inheritDoc} */
 	protected void throwDice() {
-//		MenschAergereDichNichtActivity.showMessage("touch to throw the dice", false);
+		MenschAergereDichNichtActivity.showMessage("touch to throw the dice");
 		GameTouchListener.waitForInput(this, GameTouchListener.waitingForDice);
 	}
 
@@ -39,7 +40,7 @@ public class HumanPlayer extends Player {
 					pegs[this.peg = i].setSelection(true);
 					break;
 				}
-//		MenschAergereDichNichtActivity.showMessage("touch to select next peg", false);
+		MenschAergereDichNichtActivity.showMessage("touch to select next peg");
 		GameTouchListener.waitForInput(this, GameTouchListener.waitingForPegSelection);
 	}
 	
