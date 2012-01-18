@@ -65,7 +65,7 @@ public class GameRenderer implements Renderer {
 		GLU.gluLookAt(gl, (float) (r * Math.sin(degree)),
 				(float) (r * Math.cos(degree)),
 				MenschAergereDichNichtActivity.hz, 0, 0,
-				MenschAergereDichNichtActivity.hz / 2, 0, 0, 1);
+				1, 0, 0, 1);
 		room.render(gl);
 	}
 
