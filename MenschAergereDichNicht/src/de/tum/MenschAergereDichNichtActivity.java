@@ -106,7 +106,9 @@ public class MenschAergereDichNichtActivity extends Activity {
       renderer = new GameRenderer(room, this);
       view = new GLSurfaceView(this);
       view.setRenderer(renderer);
-      view.setOnTouchListener(new GameTouchListener());
+      GameTouchListener listener = new GameTouchListener(); 
+      view.setOnTouchListener(listener);
+      view.setOnLongClickListener(listener);
       setContentView(view);
       
       players[0].makeTurn();
