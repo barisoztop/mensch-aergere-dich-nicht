@@ -71,12 +71,14 @@ public class MenschAergereDichNichtActivity extends Activity {
     private Room room;
 //    private Board board;
     private static Player[] players;
+    private static MenschAergereDichNichtActivity context;
 
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
+      context = this;
       if(D) Log.e(TAG, "+++ ON CREATE +++");      
       
       if (BLUETOOTH) {
@@ -176,6 +178,14 @@ public class MenschAergereDichNichtActivity extends Activity {
 	 */
     public static final void nextTurn(Team team) {
     	players[(team.id + 1) % players.length].makeTurn();
+    }
+
+    public static final void showMessage(String message, boolean show_long) {
+		context.makeToast(message, show_long);
+    }
+    
+    private final void makeToast(String message, boolean show_long) {
+    	Toast.makeText(getApplicationContext(), message, show_long ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
     }
 
     @Override
