@@ -1,5 +1,6 @@
 package de.tum;
 
+import de.tum.player.HumanPlayer;
 import android.util.FloatMath;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -23,7 +24,27 @@ public class GameTouchListener  implements OnTouchListener{
     // current touch state
     private int touchState = NONE;
 
-	@Override
+    private static boolean waitingForInput;
+    public static final int waitingForDice = 0;
+    public static final int waitingForPegSelected = 1;
+    private static int waitingFor;
+    private static HumanPlayer player;
+    
+    public synchronized static final void waitForInput(HumanPlayer player, int waitingFor) {
+		waitingForInput = true;
+		GameTouchListener.waitingFor = waitingFor;
+		GameTouchListener.player = player;
+    }
+    
+    public synchronized static final boolean isWaitingForInput() {
+    	return waitingForInput;
+    }
+    
+    public synchronized static final void stopWaiting() {
+    	waitingForInput = false;
+    }
+
+    @Override
 	public boolean onTouch(View v, MotionEvent event) {
     	switch (event.getAction() & MotionEvent.ACTION_MASK) {
         case MotionEvent.ACTION_DOWN:
@@ -60,6 +81,9 @@ public class GameTouchListener  implements OnTouchListener{
             break;
 
         case MotionEvent.ACTION_UP:
+            Log.d("listener", "tapp");
+    		if (isWaitingForInput())
+    			player.waitedForInput(waitingFor);
         case MotionEvent.ACTION_POINTER_UP:
             touchState = NONE;
             break;
