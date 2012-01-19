@@ -13,6 +13,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.bluetooth.BluetoothMPService;
 import de.tum.bluetooth.DeviceListActivity;
@@ -40,10 +42,12 @@ public class MultiplayerActivity extends Activity {
     public static final int MESSAGE_WRITE = 3;
     public static final int MESSAGE_DEVICE_NAME = 4;
     public static final int MESSAGE_TOAST = 5;
+    public static final int MESSAGE_TITLE = 6;
     
     // Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";
+    public static final String TITLE = "title";
     // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
@@ -57,6 +61,9 @@ public class MultiplayerActivity extends Activity {
     private String mConnectedDeviceName1 = null;
     private String mConnectedDeviceName2 = null;
     private String mConnectedDeviceName3 = null;
+    
+    // Layout Views
+    private TextView titleBar;
 
 	
 	// just for testing
@@ -71,15 +78,13 @@ public class MultiplayerActivity extends Activity {
     private Room room;
 //    private Board board;
     private static Player[] players;
-    private static MultiplayerActivity context;
 
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      context = this;
-      if(D) Log.e(TAG, "+++ ON CREATE +++");      
+      if(D) Log.e(TAG, "+++ ON CREATE +++");
       
       if (BLUETOOTH) {
 	      // Get local Bluetooth adapter
@@ -109,7 +114,17 @@ public class MultiplayerActivity extends Activity {
       GameTouchListener listener = new GameTouchListener(); 
       view.setOnTouchListener(listener);
       view.setOnLongClickListener(listener);
+      
+      // Set up the window layout
+      requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
       setContentView(view);
+      getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
+      
+      // Set up the custom title
+      titleBar = (TextView) findViewById(R.id.title_left_text);
+      titleBar.setText(R.string.app_name);
+      titleBar = (TextView) findViewById(R.id.title_right_text);
+      titleBar.setText("Text goes here!");
       
       players[0].makeTurn();
     }
@@ -181,19 +196,6 @@ public class MultiplayerActivity extends Activity {
     public static final void nextTurn(Team team) {
     	players[(team.id + 1) % players.length].makeTurn();
     }
-
-//    public static final void showMessage(String message) {
-////		context.makeToast(message, show_long);
-//		Message msg = context.mHandler.obtainMessage(MultiplayerActivity.MESSAGE_TOAST);
-//        Bundle bundle = new Bundle();
-//        bundle.putString(MultiplayerActivity.TOAST, message);
-//        msg.setData(bundle);
-//        context.mHandler.sendMessage(msg);
-//    }
-//    
-//    private final void makeToast(String message, boolean show_long) {
-//    	Toast.makeText(getApplicationContext(), message, show_long ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
-//    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -288,6 +290,9 @@ public class MultiplayerActivity extends Activity {
                 Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
                                Toast.LENGTH_SHORT).show();
                 break;
+            case MESSAGE_TITLE:
+            	titleBar.setText(msg.getData().getString(TITLE));
+                break;                
             }
         }
     };

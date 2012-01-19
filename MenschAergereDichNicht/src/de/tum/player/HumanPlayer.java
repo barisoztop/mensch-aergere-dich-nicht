@@ -36,14 +36,19 @@ public class HumanPlayer extends Player {
 
 	/** {@inheritDoc} */
 	protected void throwDice() {
-		// MenschAergereDichNichtActivity.showMessage("touch to throw the dice");
-		Message msg = mHandler
-				.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
-		Bundle bundle = new Bundle();
-		bundle.putString(MenschAergereDichNichtActivity.TOAST,
-				"touch to throw the dice");
-		msg.setData(bundle);
-		mHandler.sendMessage(msg);
+//		MenschAergereDichNichtActivity.showMessage("touch to throw the dice");
+		/*Show the message at the title bar*/
+//		Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TITLE);
+//		Bundle bundle = new Bundle();
+//		bundle.putString(MenschAergereDichNichtActivity.TITLE, "touch to throw the dice");
+//		msg.setData(bundle);
+//		mHandler.sendMessage(msg);
+		/*Toast the message*/
+        Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+        Bundle bundle = new Bundle();
+        bundle.putString(MenschAergereDichNichtActivity.TOAST, "touch to throw the dice");
+        msg.setData(bundle);
+        mHandler.sendMessage(msg);
 		GameTouchListener.waitForInput(this, GameTouchListener.waitingForDice);
 	}
 
@@ -59,17 +64,21 @@ public class HumanPlayer extends Player {
 					pegs[this.peg = i].setSelection(true);
 					break;
 				}
-			// MenschAergereDichNichtActivity.showMessage("touch to select next peg");
-			Message msg = mHandler
-					.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
-			Bundle bundle = new Bundle();
-			bundle.putString(MenschAergereDichNichtActivity.TOAST,
-					"touch to select next peg");
-			msg.setData(bundle);
-			mHandler.sendMessage(msg);
+//			MenschAergereDichNichtActivity.showMessage("touch to select next peg");
+			/*Show the message at the title bar*/
+//			Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TITLE);
+//			Bundle bundle = new Bundle();
+//			bundle.putString(MenschAergereDichNichtActivity.TITLE, "touch to select next peg");
+//			msg.setData(bundle);
+//			mHandler.sendMessage(msg);
+			/*Toast the message*/
+	        Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+	        Bundle bundle = new Bundle();
+	        bundle.putString(MenschAergereDichNichtActivity.TOAST, "touch to select next peg");
+	        msg.setData(bundle);
+	        mHandler.sendMessage(msg);
 		}
-		GameTouchListener.waitForInput(this,
-				GameTouchListener.waitingForPegSelection);
+		GameTouchListener.waitForInput(this, GameTouchListener.waitingForPegSelection);
 	}
 
 	public final void waitedForInput(int waitingFor) {
