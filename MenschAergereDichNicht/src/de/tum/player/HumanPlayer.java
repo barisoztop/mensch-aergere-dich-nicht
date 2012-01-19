@@ -1,5 +1,8 @@
 package de.tum.player;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import de.tum.GameTouchListener;
 import de.tum.MenschAergereDichNichtActivity;
 import de.tum.Team;
@@ -12,6 +15,7 @@ import de.tum.models.Peg;
 public class HumanPlayer extends Player {
 	private Peg[] pegs;
 	private int peg;
+	private final Handler mHandler;
 	/**
 	 * creating a player
 	 * 
@@ -20,11 +24,22 @@ public class HumanPlayer extends Player {
 	 */
 	public HumanPlayer(Team team) {
 		super(team);
+		mHandler = null;
+	}
+	
+	public HumanPlayer(Team team, Handler handler) {
+		super(team);
+		mHandler = handler;
 	}
 
 	/** {@inheritDoc} */
 	protected void throwDice() {
-		MenschAergereDichNichtActivity.showMessage("touch to throw the dice");
+//		MenschAergereDichNichtActivity.showMessage("touch to throw the dice");
+        Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+        Bundle bundle = new Bundle();
+        bundle.putString(MenschAergereDichNichtActivity.TOAST, "touch to throw the dice");
+        msg.setData(bundle);
+        mHandler.sendMessage(msg);
 		GameTouchListener.waitForInput(this, GameTouchListener.waitingForDice);
 	}
 
@@ -40,7 +55,12 @@ public class HumanPlayer extends Player {
 					pegs[this.peg = i].setSelection(true);
 					break;
 				}
-		MenschAergereDichNichtActivity.showMessage("touch to select next peg");
+//		MenschAergereDichNichtActivity.showMessage("touch to select next peg");
+        Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+        Bundle bundle = new Bundle();
+        bundle.putString(MenschAergereDichNichtActivity.TOAST, "touch to select next peg");
+        msg.setData(bundle);
+        mHandler.sendMessage(msg);	
 		GameTouchListener.waitForInput(this, GameTouchListener.waitingForPegSelection);
 	}
 	

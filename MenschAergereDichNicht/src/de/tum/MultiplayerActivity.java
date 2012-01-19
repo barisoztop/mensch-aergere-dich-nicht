@@ -98,7 +98,7 @@ public class MultiplayerActivity extends Activity {
       Room.addRenderable(new ClassicBoard(true, 4));
       Room.addRenderable(new Dice(true));
       players = new Player[Board.getPlayers()];
-      players[0] = new HumanPlayer(Team.RED);
+      players[0] = new HumanPlayer(Team.RED, mHandler);
       players[1] = new AIPlayer(Team.YELLOW);
       players[2] = new AIPlayer(Team.GREEN);
       players[3] = new AIPlayer(Team.BLUE);
@@ -182,18 +182,18 @@ public class MultiplayerActivity extends Activity {
     	players[(team.id + 1) % players.length].makeTurn();
     }
 
-    public static final void showMessage(String message) {
-//		context.makeToast(message, show_long);
-		Message msg = context.mHandler.obtainMessage(MultiplayerActivity.MESSAGE_TOAST);
-        Bundle bundle = new Bundle();
-        bundle.putString(MultiplayerActivity.TOAST, message);
-        msg.setData(bundle);
-        context.mHandler.sendMessage(msg);
-    }
-    
-    private final void makeToast(String message, boolean show_long) {
-    	Toast.makeText(getApplicationContext(), message, show_long ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
-    }
+//    public static final void showMessage(String message) {
+////		context.makeToast(message, show_long);
+//		Message msg = context.mHandler.obtainMessage(MultiplayerActivity.MESSAGE_TOAST);
+//        Bundle bundle = new Bundle();
+//        bundle.putString(MultiplayerActivity.TOAST, message);
+//        msg.setData(bundle);
+//        context.mHandler.sendMessage(msg);
+//    }
+//    
+//    private final void makeToast(String message, boolean show_long) {
+//    	Toast.makeText(getApplicationContext(), message, show_long ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+//    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
