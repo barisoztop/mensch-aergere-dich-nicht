@@ -20,7 +20,7 @@
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity
             android:label="@string/app_name"
-            android:name=".MenschAergereDichNichtActivity"
+            android:name=".WelcomeActivity"
             android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
@@ -28,10 +28,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MenschAergereDichNichtActivity"
+                  android:label="@string/app_name"
+                 android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".MultiplayerActivity"
+                  android:label="@string/app_name"
+                 android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="de.tum.bluetooth.DeviceListActivity"
                   android:label="@string/select_device"
                   android:theme="@android:style/Theme.Dialog"
-                  android:configChanges="orientation|keyboardHidden" />        
+                  android:configChanges="orientation|keyboardHidden" />      
     </application>
 
 </manifest>
