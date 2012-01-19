@@ -26,12 +26,12 @@ import de.tum.player.Player;
 /**
  * main activity for controlling the game
  */
-public class MenschAergereDichNichtActivity extends Activity {
+public class MultiplayerActivity extends Activity {
 	
     // Debugging
-    private static final String TAG = "MenschAergereDichNicht";
+    private static final String TAG = "MultiplayerActivity";
     private static final boolean D = true;
-    private static final boolean BLUETOOTH = false;
+    private static final boolean BLUETOOTH = true;
     
     /* Bluetooth communication */
     // Message types sent from the BluetoothMPService Handler
@@ -71,7 +71,7 @@ public class MenschAergereDichNichtActivity extends Activity {
     private Room room;
 //    private Board board;
     private static Player[] players;
-    private static MenschAergereDichNichtActivity context;
+    private static MultiplayerActivity context;
 
 
 
@@ -184,9 +184,9 @@ public class MenschAergereDichNichtActivity extends Activity {
 
     public static final void showMessage(String message) {
 //		context.makeToast(message, show_long);
-		Message msg = context.mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+		Message msg = context.mHandler.obtainMessage(MultiplayerActivity.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(MenschAergereDichNichtActivity.TOAST, message);
+        bundle.putString(MultiplayerActivity.TOAST, message);
         msg.setData(bundle);
         context.mHandler.sendMessage(msg);
     }
