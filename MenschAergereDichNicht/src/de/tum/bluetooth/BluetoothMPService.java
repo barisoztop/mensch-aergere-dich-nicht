@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.util.UUID;
 
 import de.tum.MenschAergereDichNichtActivity;
+import de.tum.MultiplayerActivity;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -79,7 +80,7 @@ public class BluetoothMPService {
         mState = state;
 
         // Give the new state to the Handler so the UI Activity can update
-        mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
+        mHandler.obtainMessage(MultiplayerActivity.MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
     }
 
     /**
@@ -157,9 +158,9 @@ public class BluetoothMPService {
         mConnectedClientThread.start();
 
         // Send the name of the connected Server back to the UI Activity
-        Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_DEVICE_NAME);
+        Message msg = mHandler.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
         Bundle bundle = new Bundle();
-        bundle.putString(MenschAergereDichNichtActivity.DEVICE_NAME, device.getName());
+        bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
@@ -199,9 +200,9 @@ public class BluetoothMPService {
             mConnectedThread1.start();
             
             // Send the name of the connected device back to the UI Activity
-            Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_DEVICE_NAME);
+            Message msg = mHandler.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
             Bundle bundle = new Bundle();
-            bundle.putString(MenschAergereDichNichtActivity.DEVICE_NAME, device.getName());
+            bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
             msg.setData(bundle);
             mHandler.sendMessage(msg);
             
@@ -210,9 +211,9 @@ public class BluetoothMPService {
             mConnectedThread2.start();
             
             // Send the name of the connected device back to the UI Activity
-            Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_DEVICE_NAME);
+            Message msg = mHandler.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
             Bundle bundle = new Bundle();
-            bundle.putString(MenschAergereDichNichtActivity.DEVICE_NAME, device.getName());
+            bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
             msg.setData(bundle);
             mHandler.sendMessage(msg);
         } else if (connectedDevices == 3){
@@ -220,9 +221,9 @@ public class BluetoothMPService {
             mConnectedThread3.start();
             
             // Send the name of the connected device back to the UI Activity
-            Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_DEVICE_NAME);
+            Message msg = mHandler.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
             Bundle bundle = new Bundle();
-            bundle.putString(MenschAergereDichNichtActivity.DEVICE_NAME, device.getName());
+            bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
             msg.setData(bundle);
             mHandler.sendMessage(msg);
         }
@@ -490,7 +491,7 @@ public class BluetoothMPService {
 //                    if (serverDevice) write(buffer); // TODO don't send to your self
 
                     // Send the obtained bytes to the UI Activity
-                    mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_READ, bytes, DeviceNo, buffer).sendToTarget();
+                    mHandler.obtainMessage(MultiplayerActivity.MESSAGE_READ, bytes, DeviceNo, buffer).sendToTarget();
 
                 } catch (IOException e) {
                     Log.e(TAG, "disconnected", e);
@@ -509,7 +510,7 @@ public class BluetoothMPService {
                 mmOutStream.write(buffer);
 
                 // Share the sent message back to the UI Activity
-                mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_WRITE, -1, -1, buffer)
+                mHandler.obtainMessage(MultiplayerActivity.MESSAGE_WRITE, -1, -1, buffer)
                         .sendToTarget();
             } catch (IOException e) {
                 Log.e(TAG, "Exception during write", e);
