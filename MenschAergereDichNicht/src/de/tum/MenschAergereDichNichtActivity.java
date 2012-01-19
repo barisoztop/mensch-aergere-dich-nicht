@@ -13,6 +13,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.bluetooth.BluetoothMPService;
 import de.tum.bluetooth.DeviceListActivity;
@@ -33,7 +35,9 @@ public class MenschAergereDichNichtActivity extends Activity {
     private static final boolean D = true;
     
     public static final int MESSAGE_TOAST = 5;
+    public static final int MESSAGE_TITLE = 6;    
     public static final String TOAST = "toast";
+    public static final String TITLE = "title";
 	
 	// just for testing
 	// ############################### needs
@@ -48,7 +52,9 @@ public class MenschAergereDichNichtActivity extends Activity {
 //    private Board board;
     private static Player[] players;
     private static MenschAergereDichNichtActivity context;
-
+    
+    // Layout Views
+    private TextView titleBar;
 
 
     @Override
@@ -73,7 +79,16 @@ public class MenschAergereDichNichtActivity extends Activity {
       GameTouchListener listener = new GameTouchListener(); 
       view.setOnTouchListener(listener);
       view.setOnLongClickListener(listener);
+      // Set up the window layout
+      requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
       setContentView(view);
+      getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
+      
+      // Set up the custom title
+      titleBar = (TextView) findViewById(R.id.title_left_text);
+      titleBar.setText(R.string.app_name);
+      titleBar = (TextView) findViewById(R.id.title_right_text);
+      titleBar.setText("Text goes here!");
       
       players[0].makeTurn();
     }
@@ -153,6 +168,9 @@ public class MenschAergereDichNichtActivity extends Activity {
                 Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
                                Toast.LENGTH_SHORT).show();
                 break;
+            case MESSAGE_TITLE:
+            	titleBar.setText(msg.getData().getString(TITLE));
+                break;                 
             }
         }
     };
