@@ -14,8 +14,10 @@ import de.tum.models.Peg;
  */
 public class HumanPlayer extends Player {
 	private Peg[] pegs;
+	private int movable;
 	private int peg;
 	private final Handler mHandler;
+
 	/**
 	 * creating a player
 	 * 
@@ -26,7 +28,7 @@ public class HumanPlayer extends Player {
 		super(team);
 		mHandler = null;
 	}
-	
+
 	public HumanPlayer(Team team, Handler handler) {
 		super(team);
 		mHandler = handler;
@@ -34,50 +36,59 @@ public class HumanPlayer extends Player {
 
 	/** {@inheritDoc} */
 	protected void throwDice() {
-//		MenschAergereDichNichtActivity.showMessage("touch to throw the dice");
-        Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
-        Bundle bundle = new Bundle();
-        bundle.putString(MenschAergereDichNichtActivity.TOAST, "touch to throw the dice");
-        msg.setData(bundle);
-        mHandler.sendMessage(msg);
+		// MenschAergereDichNichtActivity.showMessage("touch to throw the dice");
+		Message msg = mHandler
+				.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+		Bundle bundle = new Bundle();
+		bundle.putString(MenschAergereDichNichtActivity.TOAST,
+				"touch to throw the dice");
+		msg.setData(bundle);
+		mHandler.sendMessage(msg);
 		GameTouchListener.waitForInput(this, GameTouchListener.waitingForDice);
 	}
 
 	/** {@inheritDoc} */
 	protected void choosePegForMove(Peg[] movables, int movable) {
-//	Log.d("human player", "movable=" + movable);
+		this.movable = movable;
 		pegs = movables;
 		if (movable != -1)
 			pegs[this.peg = movable].setSelection(true);
-		else
+		else {
 			for (int i = 0; i < pegs.length; ++i)
 				if (pegs[i] != null) {
 					pegs[this.peg = i].setSelection(true);
 					break;
 				}
-//		MenschAergereDichNichtActivity.showMessage("touch to select next peg");
-        Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
-        Bundle bundle = new Bundle();
-        bundle.putString(MenschAergereDichNichtActivity.TOAST, "touch to select next peg");
-        msg.setData(bundle);
-        mHandler.sendMessage(msg);	
-		GameTouchListener.waitForInput(this, GameTouchListener.waitingForPegSelection);
+			// MenschAergereDichNichtActivity.showMessage("touch to select next peg");
+			Message msg = mHandler
+					.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+			Bundle bundle = new Bundle();
+			bundle.putString(MenschAergereDichNichtActivity.TOAST,
+					"touch to select next peg");
+			msg.setData(bundle);
+			mHandler.sendMessage(msg);
+		}
+		GameTouchListener.waitForInput(this,
+				GameTouchListener.waitingForPegSelection);
 	}
-	
+
 	public final void waitedForInput(int waitingFor) {
-		switch (waitingFor) {
+		x: switch (waitingFor) {
 		case GameTouchListener.waitingForDice:
 			GameTouchListener.stopWaiting();
 			Dice.throwIt(team);
 			break;
 		case GameTouchListener.waitingForPegSelection:
-			if (peg != -1)
+			// Log.d("touch", "tap");
+			if (movable != -1)
 				break;
+			// Log.d("touch", "peg=" + peg);
+			// Log.d("touch", "selecting next peg");
 			pegs[peg].setSelection(false);
-			for (int i = 0; i < pegs.length; ++i)
+			for (int i = 1; i < pegs.length; ++i)
 				if (pegs[(peg + i) % pegs.length] != null) {
-					pegs[peg = i].setSelection(true);
-					break;
+					pegs[peg = (peg + i) % pegs.length].setSelection(true);
+					break x;
 				}
 		case GameTouchListener.waitingForPegChosen:
 			GameTouchListener.stopWaiting();
