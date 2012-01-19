@@ -29,6 +29,9 @@ public abstract class Player {
 	/** the current try in a round */
 	private int current_try;
 
+	/** is true if the dice's number is a six at the 1st try in a player's turn */
+	private boolean is1st6;
+
 	/** the pegs of this player */
 	protected Peg[] pegs;
 
@@ -89,6 +92,10 @@ public abstract class Player {
 				if (!peg.hasStarted()) { // peg has to move out
 					movable = 1;
 					found1st = --index;
+					if (player.current_try == 1)
+						player.is1st6 = true;
+					else if (player.current_try == 3 && !player.is1st6)
+						player.current_try = 2;
 					break;
 				}
 			} else
@@ -107,6 +114,7 @@ public abstract class Player {
 			makeTurn();
 		else {
 			current_try = 0;
+			is1st6 = false;
 			MenschAergereDichNichtActivity.nextTurn(team);
 		}
 	}
