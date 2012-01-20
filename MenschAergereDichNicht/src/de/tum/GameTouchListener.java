@@ -12,10 +12,9 @@ public class GameTouchListener  implements OnTouchListener, OnLongClickListener 
 	
     // Debugging
     private static final String TAG = "GameTouchListener";
-    private static final boolean D = true;
 	
     // Minimum distance between two fingers
-    private final static float MIN_DIST = 50;
+    private final static float MIN_DIST = 40;
     // Distance between two fingers
     private static float eventDistance = 0;
     // possible touch states
@@ -32,6 +31,9 @@ public class GameTouchListener  implements OnTouchListener, OnLongClickListener 
     private static int waitingFor;
     private static HumanPlayer player;
     private static boolean long_press;
+    
+    private float down_x;
+    private float down_y;
     
     public synchronized static final void waitForInput(HumanPlayer player, int waitingFor) {
 		waitingForInput = true;
@@ -52,41 +54,35 @@ public class GameTouchListener  implements OnTouchListener, OnLongClickListener 
     	switch (event.getAction() & MotionEvent.ACTION_MASK) {
         case MotionEvent.ACTION_DOWN:
             //primary touch event starts
+        	down_x = event.getX();
+        	down_y = event.getY();
             touchState = DRAG;
             break;
 
         case MotionEvent.ACTION_POINTER_DOWN:     	
             //secondary touch event starts: remember distance and center
             eventDistance = calcDistance(event);
-            if (eventDistance > MIN_DIST) {
+            if (eventDistance > MIN_DIST)
                 touchState = ZOOM;
-            }
             break;
 
         case MotionEvent.ACTION_MOVE:       	
             if (touchState == DRAG) {
-                //single finger drag, use it when needed
+            	GameRenderer.tranfer(event.getX() - down_x, event.getY() - down_y);
+            	down_x = event.getX();
+            	down_y = event.getY();
 
             } else if (touchState == ZOOM) {
             	Log.d(TAG, "ZOOM");
-                //multi-finger zoom, scale accordingly around center?
                 float dist = calcDistance(event);
-
-                if (dist > MIN_DIST) {
-                    float scale = dist / eventDistance;
-                    
-//                  hz = f * event.getY() / height - f / 2;
-//                  hz *= hz * Math.signum(hz);
-                    MenschAergereDichNichtActivity.hz = scale;
-                    MenschAergereDichNichtActivity.hz *= MenschAergereDichNichtActivity.hz * Math.signum(MenschAergereDichNichtActivity.hz);             
-                }
+				GameRenderer.zoom(1 + ((eventDistance / dist) - 1));
+				eventDistance = dist;
             }
             break;
 
         case MotionEvent.ACTION_UP:
         	if (long_press)
         		return long_press = !long_press;
-//            Log.d("listener", "tapp");
     		if (isWaitingForInput())
     			player.waitedForInput(waitingFor);
         case MotionEvent.ACTION_POINTER_UP:
@@ -110,7 +106,6 @@ public class GameTouchListener  implements OnTouchListener, OnLongClickListener 
 
 	@Override
 	public boolean onLongClick(View v) {
-//        Log.d("listener", "long tap");
 		if (isWaitingForInput() && waitingFor != waitingForDice) {
 			player.waitedForInput(waitingForPegChosen);
 			return long_press = true;

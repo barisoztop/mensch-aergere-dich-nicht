@@ -5,9 +5,9 @@ import javax.microedition.khronos.opengles.GL10;
 
 import de.tum.renderable.Textures;
 
-import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
+import android.util.Log;
 
 /**
  * with the game renderer the game is rendered, meaning that the individual
@@ -15,14 +15,18 @@ import android.opengl.GLU;
  */
 public class GameRenderer implements Renderer {
 	/** the room containing all renderable objects */
-	private Room room;
-
-	// just for testing
-	// ############################### needs
-	// some change
-	private static final float r = 2;
-	private float degree;
-	Context context;
+	private static final float degree_90 = (float) Math.PI / 2 - 0.001f;
+	private static final float distance_min = 0.001f;
+	private static final float distance_max = 70;
+	private static float width;
+	private static float height;
+	private static float radius;
+	private static float degree_horizontal;
+	private static float degree_vertical;
+	private static float center_x;
+	private static float center_y;
+	private static float center_z;
+	private static float up_z;
 	
 	/**
 	 * creating the game renderer. Usual only one renderer is created
@@ -30,8 +34,41 @@ public class GameRenderer implements Renderer {
 	 * @param room
 	 *            the room containing the renderable objects
 	 */
-	public GameRenderer(Room room, Context context) {
-		this.room = room;this.context = context;
+	public GameRenderer() {
+		radius = 2;
+		tranfer(0, degree_90 * 70);
+	}
+	
+	public static final void tranfer(float dx, float dy) {
+		dx /= 140;
+		dy /= 140;
+		// calculating vectors	
+		degree_horizontal += dx;
+		degree_vertical += dy;
+		if (degree_vertical < 0)
+			degree_vertical = 0;
+		else if (degree_vertical > degree_90)
+			degree_vertical = degree_90;
+		center_x = (float) (radius * Math.sin(degree_horizontal));
+		center_y = (float) (radius * Math.cos(degree_horizontal));
+		center_z = (float) (radius * Math.sin(degree_vertical));
+		up_z = (float) Math.cos(degree_vertical);
+		center_x *= up_z;
+		center_y *= up_z;
+	}
+
+	public static final void zoom(float zoom) {
+		Log.d("zoom", "" + zoom);
+		zoom *= radius;
+		if (zoom > 20)
+			zoom = 20;
+		if (zoom < distance_min * 2)
+			zoom = distance_min * 2;
+		center_x *= zoom / radius;
+		center_y *= zoom / radius;
+		center_z *= zoom / radius;
+		radius = zoom;
+		Log.d("radius", "" + radius);
 	}
 
 	/**
@@ -53,20 +90,14 @@ public class GameRenderer implements Renderer {
 	 *            the GL10 for rendering
 	 */
 	public void onDrawFrame(GL10 gl) {
-		// just for testing
-		// ############################### needs
-		// some change
-		degree += 0.01;
 		gl.glClearColor(0, 0, 0, 0);
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
-		GLU.gluPerspective(gl, 67, (float) MenschAergereDichNichtActivity.width
-				/ MenschAergereDichNichtActivity.height, 0.01f, 20);
-		GLU.gluLookAt(gl, (float) (r * Math.sin(degree)),
-				(float) (r * Math.cos(degree)),
-				MenschAergereDichNichtActivity.hz, 0, 0,
-				1, 0, 0, 1);
-		room.render(gl);
+		gl.glEnable(GL10.GL_DITHER);
+		gl.glEnable(GL10.GL_BLEND);
+		GLU.gluPerspective(gl, 67, width / height, distance_min, distance_max);
+		GLU.gluLookAt(gl, center_x, center_y, center_z, 0, 0, 0, 0, 0, 1);
+		Room.render(gl);
 	}
 
 	/**
@@ -81,17 +112,12 @@ public class GameRenderer implements Renderer {
 	 *            the height of the surface
 	 */
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
-		// testing -// ############################### needs
-		// some change
-		MenschAergereDichNichtActivity.width = width;
-		MenschAergereDichNichtActivity.height = height;
+		GameRenderer.width = width;
+		GameRenderer.height = height;
 		gl.glViewport(0, 0, width, height);
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		gl.glLoadIdentity();
-		GLU.gluPerspective(gl, 67, (float) MenschAergereDichNichtActivity.width
-				/ MenschAergereDichNichtActivity.height, 0.01f, 20);
-		GLU.gluLookAt(gl, r, r, r, 0, 0, 0, 0, 0, 1);
-		gl.glDisable(GL10.GL_DITHER);
+//		gl.glDisable(GL10.GL_DITHER);
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glEnable(GL10.GL_COLOR_MATERIAL);
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);

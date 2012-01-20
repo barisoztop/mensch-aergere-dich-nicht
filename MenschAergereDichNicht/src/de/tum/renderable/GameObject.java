@@ -12,7 +12,7 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public abstract class GameObject extends GeometricObject {
 	/** p is a factor for scaling a game object */
-	protected static final float p = 0.16f;
+	protected static final float p = 0.08f;
 
 	/** the amount of frames a peg needs to reach the next field */
 	protected static final int frames = 20;
