@@ -1,4 +1,4 @@
-package de.tum;
+package de.tum.multiplayer;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -16,6 +16,12 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
+import de.tum.GameRenderer;
+import de.tum.GameTouchListener;
+import de.tum.R;
+import de.tum.Room;
+import de.tum.Team;
+import de.tum.WelcomeActivity;
 import de.tum.bluetooth.BluetoothMPService;
 import de.tum.bluetooth.DeviceListActivity;
 import de.tum.models.Board;
@@ -51,6 +57,7 @@ public class MultiplayerActivity extends Activity {
     // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
+    private static final int REQUEST_MODE_TYPE = 3;
 
     // Local Bluetooth adapter
     private BluetoothAdapter mBluetoothAdapter = null;
@@ -92,28 +99,30 @@ public class MultiplayerActivity extends Activity {
 	
 	      // If the adapter is null, then Bluetooth is not supported
 	      if (mBluetoothAdapter == null) {
-	          Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
-	          finish();
+	          Toast.makeText(this, "Bluetooth is not available, try New Game", Toast.LENGTH_LONG).show();
+	          Intent goToBack = new Intent(getApplicationContext(), WelcomeActivity.class);
+	          startActivity(goToBack);
 	          return;
 	      }
       }
       
+      /* setup game */
       room = new Room();
 
       Room.addRenderable(new ClassicBoard(true, 4));
       Room.addRenderable(new Dice(true));
-      players = new Player[Board.getPlayers()];
-      players[0] = new HumanPlayer(Team.RED, mHandler);
-      players[1] = new AIPlayer(Team.YELLOW);
-      players[2] = new AIPlayer(Team.GREEN);
-      players[3] = new AIPlayer(Team.BLUE);
-      
+//      players = new Player[Board.getPlayers()];
+//      players[0] = new HumanPlayer(Team.RED, mHandler);
+//      players[1] = new AIPlayer(Team.YELLOW);
+//      players[2] = new AIPlayer(Team.GREEN);
+//      players[3] = new AIPlayer(Team.BLUE);
+//      
       renderer = new GameRenderer(room, this);
       view = new GLSurfaceView(this);
       view.setRenderer(renderer);
-      GameTouchListener listener = new GameTouchListener(); 
-      view.setOnTouchListener(listener);
-      view.setOnLongClickListener(listener);
+//      GameTouchListener listener = new GameTouchListener(); 
+//      view.setOnTouchListener(listener);
+//      view.setOnLongClickListener(listener);
       
       // Set up the window layout
       requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -124,9 +133,10 @@ public class MultiplayerActivity extends Activity {
       titleBar = (TextView) findViewById(R.id.title_left_text);
       titleBar.setText(R.string.app_name);
       titleBar = (TextView) findViewById(R.id.title_right_text);
-      titleBar.setText("Text goes here!");
+      titleBar.setText("Multiplayer Mode");
       
-      players[0].makeTurn();
+//      players[0].makeTurn();
+      
     }
     
     @Override
@@ -145,6 +155,8 @@ public class MultiplayerActivity extends Activity {
 	            if (mBluetoothMPService == null) setupMultiPlayer();
 	        }
         }
+  		Intent serverIntent = new Intent(this, ModeSelectionActivity.class);
+		startActivityForResult(serverIntent, REQUEST_MODE_TYPE);
     }    
     
     @Override
@@ -368,6 +380,20 @@ public class MultiplayerActivity extends Activity {
                 Toast.makeText(this, R.string.bt_not_enabled_leaving, Toast.LENGTH_SHORT).show();
                 finish();
             }
+        case REQUEST_MODE_TYPE:
+            // When DeviceListActivity returns with a device to connect
+            if (resultCode == Activity.RESULT_OK) {
+                // Get the device MAC address
+//                String address = data.getExtras()
+//                                     .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+//                // Get the BLuetoothDevice object
+//                BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+//                // Attempt to connect to the device
+//                mBluetoothMPService.connect(device);
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+            	finish();
+            }
+            break;
         }
     }
 
@@ -380,7 +406,7 @@ public class MultiplayerActivity extends Activity {
         Log.d(TAG, "setupMultiPlayer()");
 		// TODO Modify
 		
-        // Initialize the BluetoothMPService to perform bluetooth connections
+		// Initialize the BluetoothMPService to perform bluetooth connections
 		mBluetoothMPService = new BluetoothMPService(this, mHandler);
 
         // Initialize the buffer for outgoing messages

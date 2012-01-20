@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.util.UUID;
 
 import de.tum.MenschAergereDichNichtActivity;
-import de.tum.MultiplayerActivity;
+import de.tum.multiplayer.MultiplayerActivity;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
