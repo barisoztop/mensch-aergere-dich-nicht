@@ -17,18 +17,14 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.GameRenderer;
-import de.tum.GameTouchListener;
 import de.tum.R;
 import de.tum.Room;
 import de.tum.Team;
 import de.tum.WelcomeActivity;
 import de.tum.bluetooth.BluetoothMPService;
 import de.tum.bluetooth.DeviceListActivity;
-import de.tum.models.Board;
 import de.tum.models.ClassicBoard;
 import de.tum.models.Dice;
-import de.tum.player.AIPlayer;
-import de.tum.player.HumanPlayer;
 import de.tum.player.Player;
 
 /**
@@ -76,13 +72,11 @@ public class MultiplayerActivity extends Activity {
 	// just for testing
 	// ############################### needs
 	// some change
-    private static final float f = 8;
     public static int width;
     public static int height;
     public static float hz = 4;
     private GLSurfaceView view;
     private GameRenderer renderer;
-    private Room room;
 //    private Board board;
     private static Player[] players;
 
@@ -107,8 +101,7 @@ public class MultiplayerActivity extends Activity {
       }
       
       /* setup game */
-      room = new Room();
-
+      new Room();
       Room.addRenderable(new ClassicBoard(true, 4));
       Room.addRenderable(new Dice(true));
 //      players = new Player[Board.getPlayers()];
@@ -117,7 +110,7 @@ public class MultiplayerActivity extends Activity {
 //      players[2] = new AIPlayer(Team.GREEN);
 //      players[3] = new AIPlayer(Team.BLUE);
 //      
-      renderer = new GameRenderer(room, this);
+      renderer = new GameRenderer();
       view = new GLSurfaceView(this);
       view.setRenderer(renderer);
 //      GameTouchListener listener = new GameTouchListener(); 

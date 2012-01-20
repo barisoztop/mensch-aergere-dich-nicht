@@ -48,7 +48,6 @@ public class MenschAergereDichNichtActivity extends Activity {
     public static float hz = 4;
     private GLSurfaceView view;
     private GameRenderer renderer;
-    private Room room;
 //    private Board board;
     private static Player[] players;
     private static MenschAergereDichNichtActivity context;
@@ -63,8 +62,7 @@ public class MenschAergereDichNichtActivity extends Activity {
       context = this;
       if(D) Log.e(TAG, "+++ ON CREATE +++");      
       
-      room = new Room();
-
+      new Room();
       Room.addRenderable(new ClassicBoard(true, 4));
       Room.addRenderable(new Dice(true));
       players = new Player[Board.getPlayers()];
@@ -73,7 +71,7 @@ public class MenschAergereDichNichtActivity extends Activity {
       players[2] = new AIPlayer(Team.GREEN);
       players[3] = new AIPlayer(Team.BLUE);
       
-      renderer = new GameRenderer(room, this);
+      renderer = new GameRenderer();
       view = new GLSurfaceView(this);
       view.setRenderer(renderer);
       GameTouchListener listener = new GameTouchListener(); 

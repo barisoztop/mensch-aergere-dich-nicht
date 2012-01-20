@@ -30,13 +30,13 @@ public class Room {
 	 * @param gl
 	 *            the GL10 for rendering
 	 */
-	public synchronized void render(GL10 gl) {
+	public static synchronized void render(GL10 gl) {
 		for (Renderable renderable : renderables)
 			renderable.render(gl);
 	}
 
 	/** here you can clear the room. All objects will be deleted */
-	public synchronized void clear() {
+	public static synchronized void clear() {
 		renderables.clear();
 	}
 
@@ -45,7 +45,7 @@ public class Room {
 	 * 
 	 * @return returns true if the room is empty
 	 */
-	public boolean isEmpty() {
+	public static boolean isEmpty() {
 		return renderables.isEmpty();
 	}
 }
