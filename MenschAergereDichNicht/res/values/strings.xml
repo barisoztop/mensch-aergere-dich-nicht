@@ -14,6 +14,11 @@
     <string name="title_all_connected">Multiplayer Mode</string>
     <string name="waiting_others">Waiting for other devices</string>
 
+    <!--  ModeSelectionActivity -->
+    <string name="select_mode">select a mode</string>
+    <string name="button_servermode">Server Mode</string>
+    <string name="button_clientmode">Client Mode</string>    
+
     <!--  DeviceListActivity -->
     <string name="scanning">scanning for devices...</string>
     <string name="select_device">select a device to connect</string>
