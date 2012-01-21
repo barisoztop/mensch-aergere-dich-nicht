@@ -57,7 +57,7 @@ public class BluetoothMPService {
 	
     public int connectedDevices = 0;
     public boolean serverDevice = false;
-    public static final int MAX_DEVICE = 1;  // TODO "3 devices"
+    private int maxDeviceNumber = 1;
 	private static final int SERVER_ID = -1;
 
     /**
@@ -93,7 +93,7 @@ public class BluetoothMPService {
      * Start the chat service. Specifically start AcceptThread to begin a
      * session in listening (server) mode. Called by the Activity onResume() */
     public synchronized void start() {
-        if (D) Log.d(TAG, "start");
+        if (D) Log.d(TAG, "start Service (again)");
 
         // Cancel any thread attempting to make a connection
         if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
@@ -139,7 +139,7 @@ public class BluetoothMPService {
      * @param device  The BluetoothDevice that has been connected
      */
     public synchronized void connectedClient(BluetoothSocket socket, BluetoothDevice device) {
-        if (D) Log.d(TAG, "connected");
+        if (D) Log.d(TAG, "Client connected");
 
         // Cancel the thread that doing client connection
         if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
@@ -174,7 +174,7 @@ public class BluetoothMPService {
      * @param device  The BluetoothDevice that has been connected
      */
     public synchronized void connected(BluetoothSocket socket, BluetoothDevice device) {
-        if (D) Log.d(TAG, "connected");
+        if (D) Log.d(TAG, "Server is connected to client");
 
         // Cancel the thread for client connection
         if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
@@ -186,13 +186,18 @@ public class BluetoothMPService {
 //        if (mAcceptThread != null) {mAcceptThread.cancel(); mAcceptThread = null;}
         
         // TODO restart AcceptThread
-        mAcceptThread.cancel(); mAcceptThread = null; BluetoothMPService.this.start();
+        if (D) Log.d(TAG, "Cancel mAcceptThread and Restart it with BluetoothMPService.this.start()");
+        mAcceptThread.cancel(); mAcceptThread = null; start();
         
 
         
-        if (connectedDevices < MAX_DEVICE) connectedDevices++;
+        if (connectedDevices < maxDeviceNumber)  {
+        	Log.d(TAG,"connectedDevices++");
+        	connectedDevices++;
+        }
         setState(STATE_CONNECTED); // TODO state for each device
-        if (!serverDevice) serverDevice = true; // TODO put it under connectedDevices == 1
+        
+        serverDevice = true; // TODO put it under connectedDevices == 1
         
         // Start the thread to manage the connection and perform transmissions
         if (connectedDevices == 1) {        	
@@ -229,12 +234,15 @@ public class BluetoothMPService {
         }
         
         // Cancel the accept thread for more than MAX_DEVICE
-        if (connectedDevices == MAX_DEVICE)
+        if (connectedDevices == maxDeviceNumber){
         	if (mAcceptThread != null) {
         		mAcceptThread.cancel();
         		mAcceptThread = null;
         		setState(STATE_ALL_CONNECTED);
+        		Log.d(TAG, "mAcceptThread.cancel()");
         	}
+        }
+
 
     }
     
@@ -327,7 +335,15 @@ public class BluetoothMPService {
         BluetoothMPService.this.start();
     }
 
-    /**
+    public int getMaxDeviceNumber() {
+		return maxDeviceNumber;
+	}
+
+	public void setMaxDeviceNumber(int maxDeviceNumber) {
+		this.maxDeviceNumber = maxDeviceNumber;
+	}
+
+	/**
      * This thread runs while listening for incoming connections. It behaves
      * like a server-side client. It runs until a connection is accepted
      * (or until cancelled).
@@ -360,13 +376,13 @@ public class BluetoothMPService {
                     // successful connection or an exception
                     socket = mmServerSocket.accept();
                 } catch (IOException e) {
-                    Log.e(TAG, "accept() failed", e);
+                    Log.e(TAG, "Server's AcceptThread's accept() failed", e);
                     break;
                 }
 
                 // If a connection was accepted
                 if (socket != null) {
-                	Log.i(TAG, "socket != null");
+                	Log.i(TAG, "A connection is accepted by client, socket != null");
                 	connected(socket, socket.getRemoteDevice());
                 }
             }
@@ -407,7 +423,7 @@ public class BluetoothMPService {
         }
 
         public void run() {
-            Log.i(TAG, "BEGIN mConnectThread");
+            Log.i(TAG, "BEGIN ConnectThread: Client connectiong to server");
             setName("ConnectThread");
 
             // Cancel discovery in case it's still running
@@ -420,6 +436,7 @@ public class BluetoothMPService {
                 mmSocket.connect();
             } catch (IOException e) {
                 connectionFailed();
+                Log.d(TAG, "Client couldn't connect to server via mmSocket.connect()");
                 // Close the socket
                 try {
                     mmSocket.close();
@@ -427,6 +444,7 @@ public class BluetoothMPService {
                     Log.e(TAG, "unable to close() socket during connection failure", e2);
                 }
                 // Exception occurred so start the service again
+                Log.e(TAG,"Exception occurred so start the service again");
                 BluetoothMPService.this.start();
                 return;
             }
@@ -437,7 +455,7 @@ public class BluetoothMPService {
             }
 
             // Start the connected thread
-            connected(mmSocket, mmDevice);
+            connectedClient(mmSocket, mmDevice);
         }
 
         public void cancel() {
@@ -460,7 +478,7 @@ public class BluetoothMPService {
         private final int DeviceNo;
 
         public ConnectedThread(BluetoothSocket socket, int DeviceNo) {
-            Log.d(TAG, "create ConnectedThread");
+            Log.d(TAG, "create ConnectedThread for Client or Server");
             mmSocket = socket;
             InputStream tmpIn = null;
             OutputStream tmpOut = null;

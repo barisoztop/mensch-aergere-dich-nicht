@@ -60,7 +60,6 @@ public class MultiplayerActivity extends Activity {
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
 	private static final int REQUEST_MODE_TYPE = 3;
-	private static final int REQUEST_SET_NUMBER_OF_CLIENTS = 4;
 	
 	
 	public static final int RESULT_CLIENT_MODE = 1;
@@ -137,21 +136,28 @@ public class MultiplayerActivity extends Activity {
 		// view.setOnLongClickListener(listener);
 
 		// Set up the window layout
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+//		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+	    requestWindowFeature(Window.FEATURE_PROGRESS);
+		Log.d(TAG, "requestWindowFeature");
 		setContentView(view);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-				R.layout.custom_title);
+		
+//		getWindow().addContentView(view, params)
+//		getWindow().setFeatureInt(Window.FEATURE_PROGRESS, 0);
+
+//		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 
 		// Set up the custom title
-		titleBar = (TextView) findViewById(R.id.title_left_text);
-		titleBar.setText(R.string.app_name);
-		titleBar = (TextView) findViewById(R.id.title_right_text);
-		titleBar.setText("Multiplayer Mode Activity");
+//		titleBar = (TextView) findViewById(R.id.title_left_text);
+//		titleBar.setText(R.string.app_name);
+//		titleBar = (TextView) findViewById(R.id.title_right_text);
+//		titleBar.setText("Multiplayer Mode Activity");
 
 		// players[0].makeTurn();
-		
+		Log.d(TAG, "modeSelectionIntent");
 		modeSelectionIntent = new Intent(this, ModeSelectionActivity.class);
 		startActivityForResult(modeSelectionIntent, REQUEST_MODE_TYPE);
+		Log.d(TAG, "modeSelectionIntent DONE");
 	}
 
 	@Override
@@ -300,6 +306,7 @@ public class MultiplayerActivity extends Activity {
 				break;
 			case MESSAGE_DEVICE_NAME:
 				// save the connected device's name
+				Log.d(TAG, "MESSAGE_DEVICE_NAME arrived: " + mBluetoothMPService.connectedDevices + " Devices and" + " Service State: " + BluetoothMPService.STATE_CONNECTED);
 				if (mBluetoothMPService.getState() == BluetoothMPService.STATE_CONNECTED) {
 					if (mBluetoothMPService.connectedDevices == 1) {
 						mConnectedDeviceName1 = msg.getData().getString(
@@ -307,11 +314,8 @@ public class MultiplayerActivity extends Activity {
 						Toast.makeText(getApplicationContext(),
 								"Connected to " + mConnectedDeviceName1,
 								Toast.LENGTH_SHORT).show();
-						int progress = mBluetoothMPService.connectedDevices * 25;
-						serverWaitingDialog.setProgress(progress);
-			            if ( progress >= BluetoothMPService.MAX_DEVICE * 25){
-			                dismissDialog(SERVER_WAITING_DIALOG);
-			            }
+						Log.d(TAG, "case MESSAGE_DEVICE_NAME & now setProgressValue");
+						setProgessValue(1);
 
 						
 					} else if (mBluetoothMPService.connectedDevices == 2) {
@@ -439,11 +443,21 @@ public class MultiplayerActivity extends Activity {
 					clientNumberPickerIntent.putExtra("numberOfClients", numberOfClients);
 					startActivityForResult(clientNumberPickerIntent, REQUEST_MODE_TYPE);
 				} else {
-					Log.d(TAG, "clientNumberPickerIntent !!!= null");
+					Log.d(TAG, "clientNumberPickerIntent != null");
 					Log.d(TAG, "Old numberOfClients: " + numberOfClients);
+					clientNumberPickerIntent = null;
 					numberOfClients = data.getExtras().getInt("numberOfClients");
+					mBluetoothMPService.setMaxDeviceNumber(numberOfClients);
 					Log.d(TAG, "New numberOfClients: " + numberOfClients);
-					showDialog(SERVER_WAITING_DIALOG);
+//					showDialog(SERVER_WAITING_DIALOG);
+					setProgressBarIndeterminateVisibility(true);
+				    setProgressBarVisibility(true);
+
+
+//					serverWaitingDialog = new ProgressDialog(getApplicationContext());
+//		        	serverWaitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//		        	serverWaitingDialog.setMessage("Waiting for others...");
+//		        	showDialog(SERVER_WAITING_DIALOG);
 				}
 
 			} else if (resultCode == RESULT_CANCELED) {
@@ -453,10 +467,6 @@ public class MultiplayerActivity extends Activity {
 				Log.d(TAG, "REQUEST_MODE_TYPE: RESULT_GOBACK");
 				finish(); // TODO create MultiPlayer activity again
 			}
-			break;
-		case REQUEST_SET_NUMBER_OF_CLIENTS:
-			
-			break;
 		}
 	}
 
@@ -525,22 +535,47 @@ public class MultiplayerActivity extends Activity {
     protected Dialog onCreateDialog(int id) {
         switch(id) {
         case SERVER_WAITING_DIALOG:
-        	serverWaitingDialog = new ProgressDialog(MultiplayerActivity.this);
+        	serverWaitingDialog = new ProgressDialog(getApplicationContext());
         	serverWaitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         	serverWaitingDialog.setMessage("Waiting for others...");
+        	Log.d(TAG, "onCreateDialog()");
             return serverWaitingDialog;
         default:
             return null;
         }
     }
 	
-    @Override
-    protected void onPrepareDialog(int id, Dialog dialog) {
-        switch(id) {
-        case SERVER_WAITING_DIALOG:
-        	serverWaitingDialog.setProgress(0);
+//    @Override
+//    protected void onPrepareDialog(int id, Dialog dialog) {
+//        switch(id) {
+//        case SERVER_WAITING_DIALOG:
+//        	serverWaitingDialog.setProgress(0);
+//        	Log.d(TAG, "onPrepareDialog()");
+//        }
+//    }
+    
+    
+//    private void setProgessValue(int value) {
+//    	Log.d(TAG, "setProgessValue()");
+//    	int barValue = (100 / mBluetoothMPService.getMaxDeviceNumber()) * value;
+//		serverWaitingDialog.setProgress(barValue);
+//        if ( barValue >= 100){
+//            dismissDialog(SERVER_WAITING_DIALOG);
+//        }
+//    	
+//    }
+    
+    private void setProgessValue(int value) {
+    	Log.d(TAG, "setProgessValue()");
+    	int barValue = (100 / mBluetoothMPService.getMaxDeviceNumber()) * value;
+		setProgress(barValue);
+        if ( barValue >= 100){
+        	setProgressBarIndeterminateVisibility(false);
+            setProgressBarVisibility(false);
         }
+    	
     }
+
 
 
 }
