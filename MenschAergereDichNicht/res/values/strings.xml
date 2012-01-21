@@ -17,9 +17,8 @@
     <string name="select_mode">select a mode</string>
     <string name="button_servermode">Server Mode</string>
     <string name="button_clientmode">Client Mode</string>
-	<string name="button_discovery">Make discoverable</string>    
+	<string name="button_discovery">Make This Device Discoverable</string>    
     <string name="waiting_others">Waiting for other devices...</string>
-    <string name="title_connected_devices">Connected Devices:</string>
 
     <!--  DeviceListActivity -->
     <string name="scanning">scanning for devices...</string>
