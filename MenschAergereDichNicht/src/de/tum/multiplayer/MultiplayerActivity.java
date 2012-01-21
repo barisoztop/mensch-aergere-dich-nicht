@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.GameRenderer;
@@ -56,8 +58,9 @@ public class MultiplayerActivity extends Activity {
 	public static final String DEVICE_NAME = "device_name";
 	public static final String TOAST = "toast";
 	public static final String TITLE = "title";
+	public static final String MAX_CLIENTS = "numberOfClients";
 	// Intent request codes
-	private static final int REQUEST_CONNECT_DEVICE = 1;
+	private static final int REQUEST_CONNECT_SERVER = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
 	private static final int REQUEST_MODE_TYPE = 3;
 	
@@ -85,6 +88,8 @@ public class MultiplayerActivity extends Activity {
 	private Intent clientNumberPickerIntent = null;
 	public Handler modeSelectionHandler;
 	private Bundle savedInstanceState;
+	
+	private GameView gameView;
 	
 	private int numberOfClients = 0;
 
@@ -135,11 +140,27 @@ public class MultiplayerActivity extends Activity {
 		// view.setOnTouchListener(listener);
 		// view.setOnLongClickListener(listener);
 
+//		gameView = new GameView(getApplicationContext());
+//		gameView.setRenderer(renderer);
 		// Set up the window layout
 //		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-	    requestWindowFeature(Window.FEATURE_PROGRESS);
-		Log.d(TAG, "requestWindowFeature");
+//		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+//	    requestWindowFeature(Window.FEATURE_PROGRESS);
+		
+//		final RelativeLayout rLayout = new RelativeLayout(this);
+//		rLayout.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT, 
+//				LayoutParams.FILL_PARENT));
+//		
+//		RelativeLayout.LayoutParams gameView = new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT, 
+//				LayoutParams.FILL_PARENT);
+//		
+//		rLayout.addView(view, gameView);
+		
+//		serverWaitingDialog =  (ProgressDialog) findViewById(R.id.serverWaitingDialog);
+//    	serverWaitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//    	serverWaitingDialog.setMessage("Waiting for others...");
+		
+		
 		setContentView(view);
 		
 //		getWindow().addContentView(view, params)
@@ -211,14 +232,14 @@ public class MultiplayerActivity extends Activity {
 		// not enabled during onStart(), so we were paused to enable it...
 		// onResume() will be called when ACTION_REQUEST_ENABLE activity
 		// returns.
-		if (mBluetoothMPService != null) {
-			// Only if the state is STATE_NONE, do we know that we haven't
-			// started already
-			if (mBluetoothMPService.getState() == BluetoothMPService.STATE_NONE) {
-				// Start the Bluetooth chat services
-				mBluetoothMPService.start();
-			}
-		}
+//		if (mBluetoothMPService != null) {
+//			// Only if the state is STATE_NONE, do we know that we haven't
+//			// started already
+//			if (mBluetoothMPService.getState() == BluetoothMPService.STATE_NONE) {
+//				// Start the Bluetooth chat services
+//				mBluetoothMPService.start();
+//			}
+//		}
 	}
 
 	/**
@@ -276,7 +297,7 @@ public class MultiplayerActivity extends Activity {
 							"Connected to Server" + mConnectedServerName,
 							Toast.LENGTH_SHORT).show();
 					break;
-				case BluetoothMPService.STATE_CONNECTING:
+				case BluetoothMPService.STATE_CONNECTING_TO_SERVER:
 					// mTitle.setText(R.string.title_connecting);
 					Toast.makeText(getApplicationContext(), "Connecting...",
 							Toast.LENGTH_SHORT).show();
@@ -315,7 +336,7 @@ public class MultiplayerActivity extends Activity {
 								"Connected to " + mConnectedDeviceName1,
 								Toast.LENGTH_SHORT).show();
 						Log.d(TAG, "case MESSAGE_DEVICE_NAME & now setProgressValue");
-						setProgessValue(1);
+//						setProgessValue(1);
 
 						
 					} else if (mBluetoothMPService.connectedDevices == 2) {
@@ -371,7 +392,7 @@ public class MultiplayerActivity extends Activity {
 		case R.id.scan:
 			// Launch the DeviceListActivity to see devices and do scan
 			Intent serverIntent = new Intent(this, DeviceListActivity.class);
-			startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+			startActivityForResult(serverIntent, REQUEST_CONNECT_SERVER);
 			return true;
 		case R.id.discoverable:
 			// Ensure this device is discoverable by others
@@ -403,7 +424,7 @@ public class MultiplayerActivity extends Activity {
 		if (D)
 			Log.d(TAG, "onActivityResult " + resultCode);
 		switch (requestCode) {
-		case REQUEST_CONNECT_DEVICE:
+		case REQUEST_CONNECT_SERVER:
 			// When DeviceListActivity returns with a device to connect
 			if (resultCode == Activity.RESULT_OK) {
 				// Get the device MAC address
@@ -413,7 +434,7 @@ public class MultiplayerActivity extends Activity {
 				BluetoothDevice device = mBluetoothAdapter
 						.getRemoteDevice(address);
 				// Attempt to connect to the device
-				mBluetoothMPService.connect(device);
+				mBluetoothMPService.connectServer(device);
 			}
 			break;
 		case REQUEST_ENABLE_BT:
@@ -433,25 +454,33 @@ public class MultiplayerActivity extends Activity {
 				Log.d(TAG, "REQUEST_MODE_TYPE: RESULT_CLIENT_MODE");
 				// Launch the DeviceListActivity to see devices and do scan
 				Intent connectServerIntent = new Intent(this, DeviceListActivity.class);
-				startActivityForResult(connectServerIntent, REQUEST_CONNECT_DEVICE);
+				startActivityForResult(connectServerIntent, REQUEST_CONNECT_SERVER);
 			} else if (resultCode == RESULT_SERVER_MODE){
 				Log.d(TAG, "REQUEST_MODE_TYPE: RESULT_SERVER_MODE");
 
 				if (clientNumberPickerIntent == null) {
 					Log.d(TAG, "clientNumberPickerIntent == null");
 					clientNumberPickerIntent = new Intent(this, ClientNumberPicker.class);
-					clientNumberPickerIntent.putExtra("numberOfClients", numberOfClients);
+					clientNumberPickerIntent.putExtra(MAX_CLIENTS, numberOfClients);
 					startActivityForResult(clientNumberPickerIntent, REQUEST_MODE_TYPE);
 				} else {
 					Log.d(TAG, "clientNumberPickerIntent != null");
 					Log.d(TAG, "Old numberOfClients: " + numberOfClients);
 					clientNumberPickerIntent = null;
-					numberOfClients = data.getExtras().getInt("numberOfClients");
+					numberOfClients = data.getExtras().getInt(MAX_CLIENTS);
 					mBluetoothMPService.setMaxDeviceNumber(numberOfClients);
 					Log.d(TAG, "New numberOfClients: " + numberOfClients);
+					
+					if (mBluetoothMPService != null) {
+						// Only if the state is STATE_NONE, do we know that we haven't
+						// started already
+						if (mBluetoothMPService.getState() == BluetoothMPService.STATE_NONE) {
+							// Start the Bluetooth chat services
+							mBluetoothMPService.startServer();
+						}
+					}
+					
 //					showDialog(SERVER_WAITING_DIALOG);
-					setProgressBarIndeterminateVisibility(true);
-				    setProgressBarVisibility(true);
 
 
 //					serverWaitingDialog = new ProgressDialog(getApplicationContext());
@@ -545,36 +574,36 @@ public class MultiplayerActivity extends Activity {
         }
     }
 	
-//    @Override
-//    protected void onPrepareDialog(int id, Dialog dialog) {
-//        switch(id) {
-//        case SERVER_WAITING_DIALOG:
-//        	serverWaitingDialog.setProgress(0);
-//        	Log.d(TAG, "onPrepareDialog()");
-//        }
-//    }
+    @Override
+    protected void onPrepareDialog(int id, Dialog dialog) {
+        switch(id) {
+        case SERVER_WAITING_DIALOG:
+        	serverWaitingDialog.setProgress(0);
+        	Log.d(TAG, "onPrepareDialog()");
+        }
+    }
     
-    
-//    private void setProgessValue(int value) {
-//    	Log.d(TAG, "setProgessValue()");
-//    	int barValue = (100 / mBluetoothMPService.getMaxDeviceNumber()) * value;
-//		serverWaitingDialog.setProgress(barValue);
-//        if ( barValue >= 100){
-//            dismissDialog(SERVER_WAITING_DIALOG);
-//        }
-//    	
-//    }
     
     private void setProgessValue(int value) {
     	Log.d(TAG, "setProgessValue()");
     	int barValue = (100 / mBluetoothMPService.getMaxDeviceNumber()) * value;
-		setProgress(barValue);
+		serverWaitingDialog.setProgress(50);
         if ( barValue >= 100){
-        	setProgressBarIndeterminateVisibility(false);
-            setProgressBarVisibility(false);
+            dismissDialog(SERVER_WAITING_DIALOG);
         }
     	
     }
+    
+//    private void setProgessValue(int value) {
+//    	Log.d(TAG, "setProgessValue()");
+//    	int barValue = (100 / mBluetoothMPService.getMaxDeviceNumber()) * value;
+//		setProgress(barValue);
+////        if ( barValue >= 100){
+////        	setProgressBarIndeterminateVisibility(false);
+////            setProgressBarVisibility(false);
+////        }
+//    	
+//    }
 
 
 

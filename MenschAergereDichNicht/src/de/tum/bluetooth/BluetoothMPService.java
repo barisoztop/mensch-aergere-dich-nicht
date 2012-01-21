@@ -39,8 +39,8 @@ public class BluetoothMPService {
     // Member fields
     private final BluetoothAdapter mAdapter;
     private final Handler mHandler;
-    private AcceptThread mAcceptThread;
-    private ConnectThread mConnectThread;
+    private AcceptClientThread mAcceptThread;
+    private ConnectToServerThread mConnectThread;
     private ConnectedThread mConnectedClientThread;
     private ConnectedThread mConnectedThread1;
     private ConnectedThread mConnectedThread2;
@@ -50,7 +50,7 @@ public class BluetoothMPService {
     // Constants that indicate the current connection state
     public static final int STATE_NONE = 0;       // we're doing nothing
     public static final int STATE_LISTEN = 1;     // now listening for incoming connections
-    public static final int STATE_CONNECTING = 2; 		// connecting to the server device
+    public static final int STATE_CONNECTING_TO_SERVER = 2; 		// connecting to the server device
     public static final int STATE_CONNECTED = 3;  // now connected to a remote device
     public static final int STATE_ALL_CONNECTED = 4;	// all the devices connected to the server
 	public static final int STATE_CONNECTED_TO_SERVER = 5;
@@ -92,7 +92,7 @@ public class BluetoothMPService {
     /**
      * Start the chat service. Specifically start AcceptThread to begin a
      * session in listening (server) mode. Called by the Activity onResume() */
-    public synchronized void start() {
+    public synchronized void startServer() {
         if (D) Log.d(TAG, "start Service (again)");
 
         // Cancel any thread attempting to make a connection
@@ -103,21 +103,21 @@ public class BluetoothMPService {
 
         // Start the thread to listen on a BluetoothServerSocket
         if (mAcceptThread == null) {
-            mAcceptThread = new AcceptThread();
+            mAcceptThread = new AcceptClientThread();
             mAcceptThread.start();
         }
         setState(STATE_LISTEN);
     }
 
     /**
-     * Start the ConnectThread to initiate a connection to Server
+     * Clients connects to Server
      * @param device  The BluetoothDevice to connect
      */
-    public synchronized void connect(BluetoothDevice device) {
-        if (D) Log.d(TAG, "connect to: " + device);
+    public synchronized void connectServer(BluetoothDevice device) {
+        if (D) Log.d(TAG, "connect to server: " + device);
 
         // Cancel any thread attempting to make a connection
-        if (mState == STATE_CONNECTING) {
+        if (mState == STATE_CONNECTING_TO_SERVER) {
             if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
         }
 
@@ -128,9 +128,9 @@ public class BluetoothMPService {
         if (mConnectedClientThread != null) {mConnectedClientThread.cancel(); mConnectedClientThread = null;}
 
         // Start the thread to connect with the given device
-        mConnectThread = new ConnectThread(device);
+        mConnectThread = new ConnectToServerThread(device);
         mConnectThread.start();
-        setState(STATE_CONNECTING);
+        setState(STATE_CONNECTING_TO_SERVER);
     }
 
     /**
@@ -187,8 +187,6 @@ public class BluetoothMPService {
         
         // TODO restart AcceptThread
         if (D) Log.d(TAG, "Cancel mAcceptThread and Restart it with BluetoothMPService.this.start()");
-        mAcceptThread.cancel(); mAcceptThread = null; start();
-        
 
         
         if (connectedDevices < maxDeviceNumber)  {
@@ -235,15 +233,20 @@ public class BluetoothMPService {
         
         // Cancel the accept thread for more than MAX_DEVICE
         if (connectedDevices == maxDeviceNumber){
+        	if (D) Log.d(TAG, "connectedDevices == maxDeviceNumber so mAcceptThread.cancel()");
         	if (mAcceptThread != null) {
         		mAcceptThread.cancel();
         		mAcceptThread = null;
         		setState(STATE_ALL_CONNECTED);
         		Log.d(TAG, "mAcceptThread.cancel()");
         	}
+        } else {
+            if (D) Log.d(TAG, "Restart mAcceptThread with BluetoothMPService.this.start()");
+//            mAcceptThread.cancel();
+//            mAcceptThread = null;
+//            BluetoothMPService.this.startServer();
+            setState(STATE_LISTEN);
         }
-
-
     }
     
     /**
@@ -315,7 +318,7 @@ public class BluetoothMPService {
         msg.setData(bundle);
         mHandler.sendMessage(msg);
         // Make it possible to be server again
-        BluetoothMPService.this.start();
+        BluetoothMPService.this.startServer();
     }
 
     /**
@@ -332,7 +335,7 @@ public class BluetoothMPService {
         mHandler.sendMessage(msg);
         stop();
         // Make it possible to be server again
-        BluetoothMPService.this.start();
+        BluetoothMPService.this.startServer();
     }
 
     public int getMaxDeviceNumber() {
@@ -348,11 +351,11 @@ public class BluetoothMPService {
      * like a server-side client. It runs until a connection is accepted
      * (or until cancelled).
      */
-    private class AcceptThread extends Thread {
+    private class AcceptClientThread extends Thread {
         // The local server socket
         private final BluetoothServerSocket mmServerSocket;
 
-        public AcceptThread() {
+        public AcceptClientThread() {
             BluetoothServerSocket tmp = null;
 
             // Create a new listening server socket
@@ -365,8 +368,8 @@ public class BluetoothMPService {
         }
 
         public void run() {
-            if (D) Log.d(TAG, "BEGIN mAcceptThread" + this);
-            setName("AcceptThread");
+            if (D) Log.d(TAG, "BEGIN AcceptClientThread" + this);
+            setName("AcceptClientThread");
             BluetoothSocket socket = null;
 
             // Listen to the server socket if we're not connected
@@ -376,7 +379,7 @@ public class BluetoothMPService {
                     // successful connection or an exception
                     socket = mmServerSocket.accept();
                 } catch (IOException e) {
-                    Log.e(TAG, "Server's AcceptThread's accept() failed", e);
+                    Log.e(TAG, "Server's accept() failed", e);
                     break;
                 }
 
@@ -404,11 +407,11 @@ public class BluetoothMPService {
      * with a device. It runs straight through; the connection either
      * succeeds or fails.
      */
-    private class ConnectThread extends Thread {
+    private class ConnectToServerThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final BluetoothDevice mmDevice;
 
-        public ConnectThread(BluetoothDevice device) {
+        public ConnectToServerThread(BluetoothDevice device) {
             mmDevice = device;
             BluetoothSocket tmp = null;
 
@@ -417,13 +420,13 @@ public class BluetoothMPService {
             try {
                 tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
             } catch (IOException e) {
-                Log.e(TAG, "create() failed", e);
+                Log.e(TAG, "client couldn't get socket", e);
             }
             mmSocket = tmp;
         }
 
         public void run() {
-            Log.i(TAG, "BEGIN ConnectThread: Client connectiong to server");
+            Log.i(TAG, "BEGIN ConnectToServerThread");
             setName("ConnectThread");
 
             // Cancel discovery in case it's still running
@@ -444,8 +447,8 @@ public class BluetoothMPService {
                     Log.e(TAG, "unable to close() socket during connection failure", e2);
                 }
                 // Exception occurred so start the service again
-                Log.e(TAG,"Exception occurred so start the service again");
-                BluetoothMPService.this.start();
+                Log.e(TAG,"Exception occurred at ConnectToServerThread");
+                setState(STATE_NONE);
                 return;
             }
 
