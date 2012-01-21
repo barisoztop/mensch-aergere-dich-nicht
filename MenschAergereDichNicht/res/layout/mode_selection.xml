@@ -5,14 +5,37 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
+    <TextView android:id="@+id/title_connected_devices"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_connected_devices"
+        android:visibility="gone"
+        android:background="#666"
+        android:textColor="#fff"
+        android:paddingLeft="5dp"
+    />
+    <ListView android:id="@+id/connected_devices"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:stackFromBottom="true"
+        android:layout_weight="1"
+    />
     <Button android:id="@+id/button_servermode"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_menu_forward"
         android:text="@string/button_servermode"
     />    
     <Button android:id="@+id/button_clientmode"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_menu_back"
         android:text="@string/button_clientmode"
     />
+    <Button android:id="@+id/button_discovery"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_menu_share"
+        android:text="@string/button_discovery"
+    />    
 </LinearLayout>
