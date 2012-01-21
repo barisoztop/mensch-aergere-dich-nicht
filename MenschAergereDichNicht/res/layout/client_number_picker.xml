@@ -22,7 +22,6 @@
         android:id="@+id/button_clientnumber"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_menu_share"
         android:text="@string/button_clientnumber" />
 
 </LinearLayout>
