@@ -57,7 +57,7 @@ public class BluetoothMPService {
 	
     public int connectedDevices = 0;
     public boolean serverDevice = false;
-    public static final int MAX_DEVICE = 2;  // TODO "3 devices"
+    public static final int MAX_DEVICE = 1;  // TODO "3 devices"
 	private static final int SERVER_ID = -1;
 
     /**

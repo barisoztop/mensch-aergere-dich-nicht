@@ -2,6 +2,8 @@ package de.tum.multiplayer;
 
 import android.app.Activity;
 import android.app.ActivityGroup;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -58,6 +60,10 @@ public class MultiplayerActivity extends Activity {
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
 	private static final int REQUEST_MODE_TYPE = 3;
+	
+	
+	public static final int RESULT_CLIENT_MODE = 1;
+	public static final int RESULT_SERVER_MODE = 2;
 
 	// Local Bluetooth adapter
 	private BluetoothAdapter mBluetoothAdapter = null;
@@ -71,6 +77,8 @@ public class MultiplayerActivity extends Activity {
 
 	// Layout Views
 	private TextView titleBar;
+	private ProgressDialog serverWaitingDialog;
+	private static final int SERVER_WAITING_DIALOG = 0;
 	
 	private Intent modeSelectionIntent;
 	public Handler modeSelectionHandler;
@@ -78,21 +86,20 @@ public class MultiplayerActivity extends Activity {
 	// just for testing
 	// ############################### needs
 	// some change
-//	private static final float f = 8;
+	private static final float f = 8;
 	public static int width;
 	public static int height;
 	public static float hz = 4;
 	private GLSurfaceView view;
 	private GameRenderer renderer;
-//	private Room room;
+	private Room room;
 	// private Board board;
 	private static Player[] players;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (D)
-			Log.e(TAG, "+++ ON CREATE +++");
+		if (D) Log.e(TAG, "+++ ON CREATE +++");
 
 		// Get local Bluetooth adapter
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -107,7 +114,6 @@ public class MultiplayerActivity extends Activity {
 
 		/* setup game */
 		room = new Room();
-
 		Room.addRenderable(new ClassicBoard(true, 4));
 		Room.addRenderable(new Dice(true));
 		// players = new Player[Board.getPlayers()];
@@ -115,8 +121,8 @@ public class MultiplayerActivity extends Activity {
 		// players[1] = new AIPlayer(Team.YELLOW);
 		// players[2] = new AIPlayer(Team.GREEN);
 		// players[3] = new AIPlayer(Team.BLUE);
-		//
-		renderer = new GameRenderer(room, this);
+		
+		renderer = new GameRenderer();
 		view = new GLSurfaceView(this);
 		view.setRenderer(renderer);
 		// GameTouchListener listener = new GameTouchListener();
@@ -133,20 +139,18 @@ public class MultiplayerActivity extends Activity {
 		titleBar = (TextView) findViewById(R.id.title_left_text);
 		titleBar.setText(R.string.app_name);
 		titleBar = (TextView) findViewById(R.id.title_right_text);
-		titleBar.setText("Multiplayer Mode");
+		titleBar.setText("Multiplayer Mode Activity");
 
 		// players[0].makeTurn();
 
 		modeSelectionIntent = new Intent(this, ModeSelectionActivity.class);
-		modeSelectionIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		startActivityForResult(modeSelectionIntent, REQUEST_MODE_TYPE);
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
-		if (D)
-			Log.e(TAG, "++ ON START ++");
+		if (D) Log.e(TAG, "++ ON START ++");
 
 		// If BT is not on, request that it be enabled.
 		// setupChat() will then be called during onActivityResult
@@ -165,15 +169,13 @@ public class MultiplayerActivity extends Activity {
 	public synchronized void onPause() {
 		super.onPause();
 //		view.onPause();
-		if (D)
-			Log.e(TAG, "- ON PAUSE -");
+		if (D) Log.e(TAG, "- ON PAUSE -");
 	}
 
 	@Override
 	public void onStop() {
 		super.onStop();
-		if (D)
-			Log.e(TAG, "-- ON STOP --");
+		if (D) Log.e(TAG, "-- ON STOP --");
 	}
 
 	@Override
@@ -182,8 +184,7 @@ public class MultiplayerActivity extends Activity {
 		// Stop the BluetoothMPService
 		if (mBluetoothMPService != null)
 			mBluetoothMPService.stop();
-		if (D)
-			Log.e(TAG, "--- ON DESTROY ---");
+		if (D) Log.e(TAG, "--- ON DESTROY ---");
 	}
 
 	@Override
@@ -191,8 +192,7 @@ public class MultiplayerActivity extends Activity {
 		super.onResume();
 		view.onResume();
 
-		if (D)
-			Log.e(TAG, "+ ON RESUME +");
+		if (D) Log.e(TAG, "+ ON RESUME +");
 
 		// Performing this check in onResume() covers the case in which BT was
 		// not enabled during onStart(), so we were paused to enable it...
@@ -242,7 +242,7 @@ public class MultiplayerActivity extends Activity {
 					// mTitle.setText(R.string.title_connected_to);
 					// mTitle.append(mConnectedDeviceName);
 					// mConversationArrayAdapter.clear();
-					Toast.makeText(getApplicationContext(), "Multiplayer Mode",
+					Toast.makeText(getApplicationContext(), "STATE_ALL_CONNECTED",
 							Toast.LENGTH_SHORT).show();
 					break;
 				case BluetoothMPService.STATE_CONNECTED:
@@ -300,12 +300,12 @@ public class MultiplayerActivity extends Activity {
 						Toast.makeText(getApplicationContext(),
 								"Connected to " + mConnectedDeviceName1,
 								Toast.LENGTH_SHORT).show();
-			            
-//						Message modeMessage = mHandler.obtainMessage(ModeSelectionActivity.MESSAGE_DEVICE_NAME);
-//			            Bundle bundle = new Bundle();
-//			            bundle.putString(ModeSelectionActivity.DEVICE_NAME, mConnectedDeviceName1);
-//			            modeMessage.setData(bundle);
-//			            modeSelectionHandler.sendMessage(modeMessage);
+						int progress = mBluetoothMPService.connectedDevices * 25;
+						serverWaitingDialog.setProgress(progress);
+			            if ( progress >= BluetoothMPService.MAX_DEVICE * 25){
+			                dismissDialog(SERVER_WAITING_DIALOG);
+			            }
+
 						
 					} else if (mBluetoothMPService.connectedDevices == 2) {
 						mConnectedDeviceName2 = msg.getData().getString(
@@ -418,19 +418,18 @@ public class MultiplayerActivity extends Activity {
 				finish();
 			}
 		case REQUEST_MODE_TYPE:
-			// When DeviceListActivity returns with a device to connect
-//			if (resultCode == Activity.RESULT_OK) {
-//				// Get the device MAC address
-//				// String address = data.getExtras()
-//				// .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-//				// // Get the BLuetoothDevice object
-//				// BluetoothDevice device =
-//				// mBluetoothAdapter.getRemoteDevice(address);
-//				// // Attempt to connect to the device
-//				// mBluetoothMPService.connect(device);
-//			} else if (resultCode == Activity.RESULT_CANCELED) {
-//				finish();
-//			}
+			if (resultCode == RESULT_CLIENT_MODE) {
+				Log.d(TAG, "REQUEST_MODE_TYPE: RESULT_CLIENT_MODE");
+				// Launch the DeviceListActivity to see devices and do scan
+				Intent connectServerIntent = new Intent(this, DeviceListActivity.class);
+				startActivityForResult(connectServerIntent, REQUEST_CONNECT_DEVICE);
+			} else if (resultCode == RESULT_SERVER_MODE){
+				Log.d(TAG, "REQUEST_MODE_TYPE: RESULT_SERVER_MODE");
+				showDialog(SERVER_WAITING_DIALOG);
+
+			} else if (resultCode == RESULT_CANCELED) {
+				Log.d(TAG, "REQUEST_MODE_TYPE: RESULT_CANCELED");
+			}
 			break;
 		}
 	}
@@ -496,8 +495,26 @@ public class MultiplayerActivity extends Activity {
 		}
 	}
 	
-	void setModeSelectorHandler(Handler handler) {
-		modeSelectionHandler = handler;
-		
-	}
+	@Override
+    protected Dialog onCreateDialog(int id) {
+        switch(id) {
+        case SERVER_WAITING_DIALOG:
+        	serverWaitingDialog = new ProgressDialog(MultiplayerActivity.this);
+        	serverWaitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        	serverWaitingDialog.setMessage("Waiting for others...");
+            return serverWaitingDialog;
+        default:
+            return null;
+        }
+    }
+	
+    @Override
+    protected void onPrepareDialog(int id, Dialog dialog) {
+        switch(id) {
+        case SERVER_WAITING_DIALOG:
+        	serverWaitingDialog.setProgress(0);
+        }
+    }
+
+
 }
