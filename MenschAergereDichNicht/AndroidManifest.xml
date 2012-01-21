@@ -56,8 +56,13 @@
         <activity
             android:name=".multiplayer.ModeSelectionActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/select_mode"
+            android:label="@string/select_mode_title"
             android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".multiplayer.ClientNumberPicker"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/select_client_numbers_title"
+            android:theme="@android:style/Theme.Dialog" />        
     </application>
 
 </manifest>
