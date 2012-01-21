@@ -18,7 +18,7 @@ public class ClientNumberPicker extends Activity {
 	// Debugging
 	private static final String TAG = "ClientNumberPicker";
 	private static final boolean D = true;
-	private int numberOfClients = 0;
+	private int numberOfClients;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,9 @@ public class ClientNumberPicker extends Activity {
 		// Setup the window
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.client_number_picker);
+		
+		Intent intent = getIntent();
+		numberOfClients = intent.getIntExtra(MultiplayerActivity.MAX_CLIENTS, 0);
 
 		Button clientNumberButton = (Button) findViewById(R.id.button_clientnumber);
 		clientNumberButton.setOnClickListener(new OnClickListener() {
@@ -35,7 +38,7 @@ public class ClientNumberPicker extends Activity {
 				Log.d(TAG, "numberOfClients: " + numberOfClients);
 
 				Intent intent = getIntent();
-				intent.putExtra("numberOfClients", numberOfClients);
+				intent.putExtra(MultiplayerActivity.MAX_CLIENTS, numberOfClients);
 				setResult(MultiplayerActivity.RESULT_SERVER_MODE, intent);
 
 				finish();
