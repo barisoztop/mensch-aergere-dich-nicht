@@ -3,8 +3,8 @@
 
     <string name="hello">Hello World, MenschAergereDichNichtActivity!</string>
     <string name="app_name">MenschAergereDichNicht</string>
-    
-    <!--  Bluetooth -->
+
+    <!-- Bluetooth -->
     <string name="send">Send</string>
     <string name="not_connected">You are not connected to a device</string>
     <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving the application.</string>
@@ -13,14 +13,25 @@
     <string name="title_not_connected">not connected</string>
     <string name="title_all_connected">Multiplayer Mode</string>
 
-    <!--  ModeSelectionActivity -->
-    <string name="select_mode">select a mode</string>
+    <!-- ModeSelectionActivity -->
+    <string name="select_mode_title">select a mode</string>
     <string name="button_servermode">Server Mode</string>
     <string name="button_clientmode">Client Mode</string>
-	<string name="button_discovery">Make This Device Discoverable</string>    
+    <string name="button_discovery">Make This Device Discoverable</string>
     <string name="waiting_others">Waiting for other devices...</string>
 
-    <!--  DeviceListActivity -->
+    <!-- ClientNumberPicker -->
+    <string name="button_clientnumber">Select</string>
+    <string name="select_client_numbers_title">Number of Clients</string>
+    <string name="select_client_numbers">Please select the number of clients:</string>
+
+    <string-array name="client_numbers_array">
+        <item>1 Client</item>
+        <item>2 Clients</item>
+        <item>3 Clients</item>
+    </string-array>
+
+    <!-- DeviceListActivity -->
     <string name="scanning">scanning for devices...</string>
     <string name="select_device">select a device to connect</string>
     <string name="none_paired">No devices have been paired</string>
@@ -32,7 +43,7 @@
     <!-- Options Menu -->
     <string name="connect">Connect a device</string>
     <string name="discoverable">Make discoverable</string>
-    
+
     <!-- Welcome Screen -->
     <string name="button_newgame">New Game</string>
     <string name="button_multiplayer">Multiplayer Game</string>

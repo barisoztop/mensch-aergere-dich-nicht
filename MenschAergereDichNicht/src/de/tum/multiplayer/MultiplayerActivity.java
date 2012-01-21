@@ -60,10 +60,12 @@ public class MultiplayerActivity extends Activity {
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
 	private static final int REQUEST_MODE_TYPE = 3;
+	private static final int REQUEST_SET_NUMBER_OF_CLIENTS = 4;
 	
 	
 	public static final int RESULT_CLIENT_MODE = 1;
 	public static final int RESULT_SERVER_MODE = 2;
+	public static final int RESULT_GOBACK = 3;
 
 	// Local Bluetooth adapter
 	private BluetoothAdapter mBluetoothAdapter = null;
@@ -81,7 +83,11 @@ public class MultiplayerActivity extends Activity {
 	private static final int SERVER_WAITING_DIALOG = 0;
 	
 	private Intent modeSelectionIntent;
+	private Intent clientNumberPickerIntent = null;
 	public Handler modeSelectionHandler;
+	private Bundle savedInstanceState;
+	
+	private int numberOfClients = 0;
 
 	// just for testing
 	// ############################### needs
@@ -99,6 +105,7 @@ public class MultiplayerActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.savedInstanceState = savedInstanceState;
 		if (D) Log.e(TAG, "+++ ON CREATE +++");
 
 		// Get local Bluetooth adapter
@@ -142,7 +149,7 @@ public class MultiplayerActivity extends Activity {
 		titleBar.setText("Multiplayer Mode Activity");
 
 		// players[0].makeTurn();
-
+		
 		modeSelectionIntent = new Intent(this, ModeSelectionActivity.class);
 		startActivityForResult(modeSelectionIntent, REQUEST_MODE_TYPE);
 	}
@@ -425,11 +432,30 @@ public class MultiplayerActivity extends Activity {
 				startActivityForResult(connectServerIntent, REQUEST_CONNECT_DEVICE);
 			} else if (resultCode == RESULT_SERVER_MODE){
 				Log.d(TAG, "REQUEST_MODE_TYPE: RESULT_SERVER_MODE");
-				showDialog(SERVER_WAITING_DIALOG);
+
+				if (clientNumberPickerIntent == null) {
+					Log.d(TAG, "clientNumberPickerIntent == null");
+					clientNumberPickerIntent = new Intent(this, ClientNumberPicker.class);
+					clientNumberPickerIntent.putExtra("numberOfClients", numberOfClients);
+					startActivityForResult(clientNumberPickerIntent, REQUEST_MODE_TYPE);
+				} else {
+					Log.d(TAG, "clientNumberPickerIntent !!!= null");
+					Log.d(TAG, "Old numberOfClients: " + numberOfClients);
+					numberOfClients = data.getExtras().getInt("numberOfClients");
+					Log.d(TAG, "New numberOfClients: " + numberOfClients);
+					showDialog(SERVER_WAITING_DIALOG);
+				}
 
 			} else if (resultCode == RESULT_CANCELED) {
 				Log.d(TAG, "REQUEST_MODE_TYPE: RESULT_CANCELED");
+				finish();
+			} else if (resultCode == RESULT_GOBACK) {
+				Log.d(TAG, "REQUEST_MODE_TYPE: RESULT_GOBACK");
+				finish(); // TODO create MultiPlayer activity again
 			}
+			break;
+		case REQUEST_SET_NUMBER_OF_CLIENTS:
+			
 			break;
 		}
 	}
