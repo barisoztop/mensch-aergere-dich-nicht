@@ -1,5 +1,7 @@
 package de.tum.multiplayer;
 
-public class DataClient {
+import java.io.Serializable;
+
+public class DataClient implements Serializable{
 
 }
