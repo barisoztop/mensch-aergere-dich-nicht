@@ -1,8 +1,6 @@
 package de.tum.multiplayer;
 
 import android.app.Activity;
-import android.app.ActivityGroup;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -17,8 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.GameRenderer;
@@ -26,7 +22,6 @@ import de.tum.GameTouchListener;
 import de.tum.R;
 import de.tum.Room;
 import de.tum.Team;
-import de.tum.WelcomeActivity;
 import de.tum.bluetooth.BluetoothMPService;
 import de.tum.bluetooth.DeviceListActivity;
 import de.tum.models.Board;
@@ -34,6 +29,7 @@ import de.tum.models.ClassicBoard;
 import de.tum.models.Dice;
 import de.tum.player.AIPlayer;
 import de.tum.player.HumanPlayer;
+import de.tum.player.NetworkPlayer;
 import de.tum.player.Player;
 
 /**
@@ -88,8 +84,6 @@ public class MultiplayerActivity extends Activity {
 	private Intent clientNumberPickerIntent = null;
 	public Handler modeSelectionHandler;
 	private Bundle savedInstanceState;
-	
-	private GameView gameView;
 	
 	private int numberOfClients = 0;
 
@@ -254,10 +248,10 @@ public class MultiplayerActivity extends Activity {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK)
-			System.exit(0);
-		else
-			return false;
+//		if (keyCode == KeyEvent.KEYCODE_BACK)
+//			System.exit(0);
+//		else
+//			return false;
 		return true;
 	}
 
@@ -297,7 +291,7 @@ public class MultiplayerActivity extends Activity {
 					// mTitle.append(mChatService.connectedDevices +
 					// " Device(s)");
 					Toast.makeText(getApplicationContext(),
-							"Connected to Server" + mConnectedServerName,
+							"Connected to Server: " + mConnectedServerName,
 							Toast.LENGTH_SHORT).show();
 					break;
 				case BluetoothMPService.STATE_CONNECTING_TO_SERVER:
@@ -574,30 +568,6 @@ public class MultiplayerActivity extends Activity {
 		}
 	}
 	
-//	@Override
-//    protected Dialog onCreateDialog(int id) {
-//        switch(id) {
-//        case SERVER_WAITING_DIALOG:
-//        	serverWaitingDialog = new ProgressDialog(getApplicationContext());
-//        	serverWaitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-//        	serverWaitingDialog.setMessage("Waiting for others...");
-//        	Log.d(TAG, "onCreateDialog()");
-//            return serverWaitingDialog;
-//        default:
-//            return null;
-//        }
-//    }
-//	
-//    @Override
-//    protected void onPrepareDialog(int id, Dialog dialog) {
-//        switch(id) {
-//        case SERVER_WAITING_DIALOG:
-//        	((ProgressDialog) dialog).setProgress(0);
-//        	Log.d(TAG, "onPrepareDialog()");
-//        }
-//    }
-//    
-//    
     private void setProgessValue(int value) {
     	
     	int barValue = (100 / mBluetoothMPService.getMaxDeviceNumber()) * value;
@@ -612,23 +582,9 @@ public class MultiplayerActivity extends Activity {
     	
     }
     
-//    private void setProgessValue(int value) {
-//    	Log.d(TAG, "setProgessValue()");
-//    	int barValue = (100 / mBluetoothMPService.getMaxDeviceNumber()) * value;
-//		setProgress(barValue);
-////        if ( barValue >= 100){
-////        	setProgressBarIndeterminateVisibility(false);
-////            setProgressBarVisibility(false);
-////        }
-//    	
-//    }
-    
 	private void startGame() {
 		
 		/* setup game */
-//		room = new Room();
-//		Room.addRenderable(new ClassicBoard(true, 4));
-//		Room.addRenderable(new Dice(true));
 		
 //		view.invalidate();
 //		view.refreshDrawableState();
@@ -636,7 +592,8 @@ public class MultiplayerActivity extends Activity {
 		players[0] = new HumanPlayer(Team.RED, mHandler, MultiplayerActivity.class);
 		players[1] = new AIPlayer(Team.YELLOW, MultiplayerActivity.class);
 		players[2] = new AIPlayer(Team.GREEN, MultiplayerActivity.class);
-		players[3] = new AIPlayer(Team.BLUE, MultiplayerActivity.class);
+//		players[3] = new AIPlayer(Team.BLUE, MultiplayerActivity.class);
+		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
 		
 //		renderer = new GameRenderer();
 //		view = new GLSurfaceView(this);
