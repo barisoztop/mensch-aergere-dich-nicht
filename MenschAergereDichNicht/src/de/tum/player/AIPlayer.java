@@ -16,8 +16,8 @@ public class AIPlayer extends Player {
 	 * @param team
 	 *            the team of this player
 	 */
-	public AIPlayer(Team team) {
-		super(team);
+	public AIPlayer(Team team, Class<?> staticAccess) {
+		super(team, staticAccess);
 	}
 
 	/** {@inheritDoc} */

@@ -4,6 +4,7 @@ import de.tum.MenschAergereDichNichtActivity;
 import de.tum.Team;
 import de.tum.models.Board;
 import de.tum.models.Peg;
+import de.tum.multiplayer.MultiplayerActivity;
 import android.util.Log;
 
 /**
@@ -35,7 +36,6 @@ public abstract class Player {
 	/** the pegs of this player */
 	protected Peg[] pegs;
 	
-	Class staticAccess;
 	private boolean isMenschAergereDichNichtActivity = true;
 
 	/**
@@ -44,14 +44,21 @@ public abstract class Player {
 	 * @param team
 	 *            the team of this player
 	 */
-	public Player(Team team, Class staticAccess) {
+	public Player(Team team) {
 		this.team = team;
 		pegs = Board.getPegs(team);
-		this.staticAccess = staticAccess;
-		if (staticAccess.getName().equals("MenschAergereDichNichtActivity")){
-			isMenschAergereDichNichtActivity = staticAccess.;
-		}
 	}
+	
+	public Player(Team team, Class<?> staticAccess) {
+		this.team = team;
+		pegs = Board.getPegs(team);
+		String className = staticAccess.getSimpleName();
+		if (className.equals("MenschAergereDichNichtActivity")){
+			isMenschAergereDichNichtActivity = true;
+		} else if (className.equals("MultiplayerActivity")) {
+			isMenschAergereDichNichtActivity = false;
+		}
+	}	
 
 	/**
 	 * resetting this player. All pegs of this player are reset.
@@ -71,7 +78,8 @@ public abstract class Player {
 		player = this;
 		++current_try;
 		if (won)
-			MenschAergereDichNichtActivity.nextTurn(team);
+			if (isMenschAergereDichNichtActivity) MenschAergereDichNichtActivity.nextTurn(team);
+			else MultiplayerActivity.nextTurn(team);
 		else
 			throwDice();
 	}
@@ -122,7 +130,8 @@ public abstract class Player {
 		else {
 			current_try = 0;
 			is1st6 = false;
-			MenschAergereDichNichtActivity.nextTurn(team);
+			if (isMenschAergereDichNichtActivity) MenschAergereDichNichtActivity.nextTurn(team);
+			else MultiplayerActivity.nextTurn(team);
 		}
 	}
 

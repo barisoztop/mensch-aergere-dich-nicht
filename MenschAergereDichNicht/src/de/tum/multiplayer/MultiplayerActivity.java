@@ -615,10 +615,10 @@ public class MultiplayerActivity extends Activity {
 //		view.invalidate();
 //		view.refreshDrawableState();
 		players = new Player[Board.getPlayers()];
-		players[0] = new HumanPlayer(Team.RED, mHandler);
-		players[1] = new AIPlayer(Team.YELLOW);
-		players[2] = new AIPlayer(Team.GREEN);
-		players[3] = new AIPlayer(Team.BLUE);
+		players[0] = new HumanPlayer(Team.RED, mHandler, MultiplayerActivity.class);
+		players[1] = new AIPlayer(Team.YELLOW, MultiplayerActivity.class);
+		players[2] = new AIPlayer(Team.GREEN, MultiplayerActivity.class);
+		players[3] = new AIPlayer(Team.BLUE, MultiplayerActivity.class);
 		
 //		renderer = new GameRenderer();
 //		view = new GLSurfaceView(this);
