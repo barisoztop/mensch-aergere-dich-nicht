@@ -33,6 +33,11 @@ public class HumanPlayer extends Player {
 		super(team);
 		mHandler = handler;
 	}
+	
+	public HumanPlayer(Team team, Handler handler, Class<?> staticAccess) {
+		super(team, staticAccess);
+		mHandler = handler;
+	}	
 
 	/** {@inheritDoc} */
 	protected void throwDice() {

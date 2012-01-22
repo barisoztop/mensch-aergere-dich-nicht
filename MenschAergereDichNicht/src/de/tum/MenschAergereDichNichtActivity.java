@@ -66,10 +66,10 @@ public class MenschAergereDichNichtActivity extends Activity {
       Room.addRenderable(new ClassicBoard(true, 4));
       Room.addRenderable(new Dice(true));
       players = new Player[Board.getPlayers()];
-      players[0] = new HumanPlayer(Team.RED, mHandler);
-      players[1] = new AIPlayer(Team.YELLOW);
-      players[2] = new AIPlayer(Team.GREEN);
-      players[3] = new AIPlayer(Team.BLUE);
+      players[0] = new HumanPlayer(Team.RED, mHandler, MenschAergereDichNichtActivity.class);
+      players[1] = new AIPlayer(Team.YELLOW, MenschAergereDichNichtActivity.class);
+      players[2] = new AIPlayer(Team.GREEN, MenschAergereDichNichtActivity.class);
+      players[3] = new AIPlayer(Team.BLUE, MenschAergereDichNichtActivity.class);
       
       renderer = new GameRenderer();
       view = new GLSurfaceView(this);
