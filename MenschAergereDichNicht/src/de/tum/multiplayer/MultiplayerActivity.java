@@ -102,7 +102,6 @@ public class MultiplayerActivity extends Activity {
 	public static float hz = 4;
 	private GLSurfaceView view;
 	private GameRenderer renderer;
-	private Room room;
 	// private Board board;
 	private static Player[] players;
 
@@ -124,7 +123,7 @@ public class MultiplayerActivity extends Activity {
 		}
 
 		/* setup game */
-		room = new Room();
+		new Room();
 		Room.addRenderable(new ClassicBoard(true, 4));
 		Room.addRenderable(new Dice(true));
 		// players = new Player[Board.getPlayers()];
@@ -278,6 +277,7 @@ public class MultiplayerActivity extends Activity {
 					// mConversationArrayAdapter.clear();
 					Toast.makeText(getApplicationContext(), "STATE_ALL_CONNECTED",
 							Toast.LENGTH_SHORT).show();
+					MultiplayerActivity.this.startGame();
 					break;
 				case BluetoothMPService.STATE_CONNECTED:
 					// mTitle.setText(R.string.title_connected_to);
@@ -604,6 +604,34 @@ public class MultiplayerActivity extends Activity {
 ////        }
 //    	
 //    }
+    
+	private void startGame() {
+		
+		/* setup game */
+//		room = new Room();
+//		Room.addRenderable(new ClassicBoard(true, 4));
+//		Room.addRenderable(new Dice(true));
+		
+//		view.invalidate();
+//		view.refreshDrawableState();
+		players = new Player[Board.getPlayers()];
+		players[0] = new HumanPlayer(Team.RED, mHandler);
+		players[1] = new AIPlayer(Team.YELLOW);
+		players[2] = new AIPlayer(Team.GREEN);
+		players[3] = new AIPlayer(Team.BLUE);
+		
+//		renderer = new GameRenderer();
+//		view = new GLSurfaceView(this);
+//		view.setRenderer(renderer);
+		GameTouchListener listener = new GameTouchListener();
+		view.setOnTouchListener(listener);
+		view.setOnLongClickListener(listener);
+//		setContentView(view);
+//		view.refreshDrawableState();
+
+		players[0].makeTurn();
+		
+	}
 
 
 

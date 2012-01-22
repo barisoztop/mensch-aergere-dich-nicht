@@ -3,6 +3,7 @@ package de.tum.player;
 import de.tum.Team;
 import de.tum.models.Dice;
 import de.tum.models.Peg;
+import de.tum.multiplayer.MultiplayerActivity;
 
 /**
  * this player is an artificial intelligence. All moves are calculated by this

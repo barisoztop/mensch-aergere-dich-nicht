@@ -325,7 +325,7 @@ public class BluetoothMPService {
      * Indicate that the connection was lost and notify the UI Activity.
      */
     private void connectionLost() {
-        setState(STATE_LISTEN);
+        setState(STATE_LISTEN); // TODO
 
         // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
@@ -333,9 +333,9 @@ public class BluetoothMPService {
         bundle.putString(MenschAergereDichNichtActivity.TOAST, "Device connection was lost");
         msg.setData(bundle);
         mHandler.sendMessage(msg);
-        stop();
+        stop(); // TODO
         // Make it possible to be server again
-        BluetoothMPService.this.startServer();
+//        BluetoothMPService.this.startServer();
     }
 
     public int getMaxDeviceNumber() {
