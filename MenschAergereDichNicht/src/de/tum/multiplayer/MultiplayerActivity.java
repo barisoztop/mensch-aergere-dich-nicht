@@ -553,14 +553,14 @@ public class MultiplayerActivity extends Activity {
 	private void sendMessage(Object data) {
 		// Check if all devices connected to server
 		if (mBluetoothMPService.serverDevice
-				&& mBluetoothMPService.getState() != mBluetoothMPService.STATE_ALL_CONNECTED) {
+				&& mBluetoothMPService.getState() != BluetoothMPService.STATE_ALL_CONNECTED) {
 			Toast.makeText(this, R.string.waiting_others, Toast.LENGTH_SHORT)
 					.show();
 			return;
 		}
 
 		if (!mBluetoothMPService.serverDevice
-				&& mBluetoothMPService.getState() != mBluetoothMPService.STATE_CONNECTED_TO_SERVER) {
+				&& mBluetoothMPService.getState() != BluetoothMPService.STATE_CONNECTED_TO_SERVER) {
 			Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT)
 					.show();
 			return;
@@ -584,22 +584,13 @@ public class MultiplayerActivity extends Activity {
 				bos = new ByteArrayOutputStream();
 				out = new ObjectOutputStream(bos);
 				out.writeObject(data);
+				out.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}   
 			byte[] send = bos.toByteArray();
-			mBluetoothMPService.write(send);
-
-			// Reset out string buffer to zero and clear the edit text field
-			// mOutStringBuffer.setLength(0);
-			// mOutEditText.setText(mOutStringBuffer);
 			
-			try {
-				if (out != null) out.close();
-				if (bos != null) bos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			mBluetoothMPService.write(send);
 		}
 	}
 	
@@ -644,37 +635,33 @@ public class MultiplayerActivity extends Activity {
 		DataServer dataServer = new DataServer();
 		dataServer.player = players;
 		
-		sendMessage(dataServer);
+//		sendMessage(dataServer);
+		sendMessage("MessageSENTisTHIS");
 		
 		
 		
 	}
 	
 	protected void convertArrivalData(byte[] readBuf) {
-		ByteArrayInputStream bis = new ByteArrayInputStream(readBuf);
+		Log.d(TAG, "convertArrivalData() --");
+		ByteArrayInputStream bis = null;
 		ObjectInput in = null;
 		Object o = null;
 		try {
+			bis = new ByteArrayInputStream(readBuf);
 			in = new ObjectInputStream(bis);
 			o = in.readObject();
+			in.close();
 		} catch (StreamCorruptedException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 
 		if (o != null && mBluetoothMPService.serverDevice) processArrivalClientData((DataClient) o);
-		if (o != null && !mBluetoothMPService.serverDevice) processArrivalServerData((DataServer) o);
-
-		try {
-			if (bis != null) bis.close();
-			if (in != null) in.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		if (o != null && !mBluetoothMPService.serverDevice) processArrivalServerData((String) o);
 		
 	}
 
@@ -683,14 +670,15 @@ public class MultiplayerActivity extends Activity {
 		
 	}
 	
-	private void processArrivalServerData(DataServer object) {
-		players = object.player;
-		GameTouchListener listener = new GameTouchListener();
-		view.setOnTouchListener(listener);
-		view.setOnLongClickListener(listener);
-		players[0].makeTurn();
+	private void processArrivalServerData(String object) {
+		Log.d(TAG, "processArrivalServerData() --");
+//		players = object.player;
+//		GameTouchListener listener = new GameTouchListener();
+//		view.setOnTouchListener(listener);
+//		view.setOnLongClickListener(listener);
+//		players[0].makeTurn();
 		Toast.makeText(getApplicationContext(),
-				"processArrivalServerData",
+				"processArrivalServerData: " + object,
 				Toast.LENGTH_SHORT).show();
 	}	
 
