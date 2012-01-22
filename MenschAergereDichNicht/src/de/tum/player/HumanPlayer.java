@@ -108,6 +108,13 @@ public class HumanPlayer extends Player {
 			GameTouchListener.stopWaiting();
 			pegs[peg].setSelection(false);
 			pegChosen(pegs[peg]);
+			break;
+		case GameTouchListener.waitingTimeOut:
+	        Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+	        Bundle bundle = new Bundle();
+	        bundle.putString(MenschAergereDichNichtActivity.TOAST, "hurry up !");
+	        msg.setData(bundle);
+	        mHandler.sendMessage(msg);			
 		}
 	}
 }

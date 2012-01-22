@@ -98,6 +98,7 @@ public class GameRenderer implements Renderer {
 		GLU.gluPerspective(gl, 67, width / height, distance_min, distance_max);
 		GLU.gluLookAt(gl, center_x, center_y, center_z, 0, 0, 0, 0, 0, 1);
 		Room.render(gl);
+		GameTouchListener.verifyWaiting();
 	}
 
 	/**
