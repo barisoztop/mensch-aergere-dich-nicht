@@ -1,5 +1,14 @@
 package de.tum.multiplayer;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -248,10 +257,10 @@ public class MultiplayerActivity extends Activity {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-//		if (keyCode == KeyEvent.KEYCODE_BACK)
-//			System.exit(0);
-//		else
-//			return false;
+		if (keyCode == KeyEvent.KEYCODE_BACK)
+			System.exit(0);
+		else
+			return false;
 		return true;
 	}
 
@@ -310,17 +319,25 @@ public class MultiplayerActivity extends Activity {
 				break;
 			case MESSAGE_WRITE:
 				byte[] writeBuf = (byte[]) msg.obj;
+				Log.d(TAG, "MESSAGE_WRITE - Message sent to other device(s)");
+				
 				// construct a string from the buffer
 				// String writeMessage = new String(writeBuf);
 				// mConversationArrayAdapter.add("Me:  " + writeMessage);
 				break;
 			case MESSAGE_READ:
+				Log.d(TAG, "MESSAGE_READ - Message came from other device(s)");
 				byte[] readBuf = (byte[]) msg.obj;
+				Toast.makeText(
+						getApplicationContext(),
+						"MESSAGE_READ - Message came from other device(s)",
+						Toast.LENGTH_SHORT).show();
 				// construct a string from the valid bytes in the buffer
 				// String readMessage = new String(readBuf, 0, msg.arg1);
 				// int deviceID = msg.arg2;
 				// mConversationArrayAdapter.add("Device "+ deviceID + ": " +
 				// readMessage);
+				MultiplayerActivity.this.convertArrivalData(readBuf);
 				break;
 			case MESSAGE_DEVICE_NAME:
 				// save the connected device's name
@@ -328,7 +345,8 @@ public class MultiplayerActivity extends Activity {
 				Log.d(TAG, "MESSAGE_DEVICE_NAME arrived: " + mBluetoothMPService.connectedDevices + " Devices and" + " Service State: " + currentState);
 				if (currentState == BluetoothMPService.STATE_CONNECTED_1 ||
 						currentState == BluetoothMPService.STATE_CONNECTED_2 ||
-								currentState == BluetoothMPService.STATE_CONNECTED_3) {
+							currentState == BluetoothMPService.STATE_CONNECTED_3 ||
+								currentState == BluetoothMPService.STATE_ALL_CONNECTED) {
 					if (mBluetoothMPService.connectedDevices == 1) {
 						Log.d(TAG, "mBluetoothMPService.connectedDevices == 1");
 						mConnectedDeviceName1 = msg.getData().getString(
@@ -385,6 +403,7 @@ public class MultiplayerActivity extends Activity {
 		inflater.inflate(R.menu.option_menu, menu);
 		return true;
 	}
+
 
 	/**
 	 * create menu options
@@ -531,7 +550,7 @@ public class MultiplayerActivity extends Activity {
 	 * @param message
 	 *            A string of text to send.
 	 */
-	private void sendMessage(String message) {
+	private void sendMessage(Object data) {
 		// Check if all devices connected to server
 		if (mBluetoothMPService.serverDevice
 				&& mBluetoothMPService.getState() != mBluetoothMPService.STATE_ALL_CONNECTED) {
@@ -557,14 +576,30 @@ public class MultiplayerActivity extends Activity {
 		// }
 
 		// Check that there's actually something to send
-		if (message.length() > 0) {
+		if (data != null) {
 			// Get the message bytes and tell the BluetoothChatService to write
-			byte[] send = message.getBytes();
+			ByteArrayOutputStream bos = null;
+			ObjectOutput out = null;
+			try {
+				bos = new ByteArrayOutputStream();
+				out = new ObjectOutputStream(bos);
+				out.writeObject(data);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}   
+			byte[] send = bos.toByteArray();
 			mBluetoothMPService.write(send);
 
 			// Reset out string buffer to zero and clear the edit text field
 			// mOutStringBuffer.setLength(0);
 			// mOutEditText.setText(mOutStringBuffer);
+			
+			try {
+				if (out != null) out.close();
+				if (bos != null) bos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -592,8 +627,8 @@ public class MultiplayerActivity extends Activity {
 		players[0] = new HumanPlayer(Team.RED, mHandler, MultiplayerActivity.class);
 		players[1] = new AIPlayer(Team.YELLOW, MultiplayerActivity.class);
 		players[2] = new AIPlayer(Team.GREEN, MultiplayerActivity.class);
-//		players[3] = new AIPlayer(Team.BLUE, MultiplayerActivity.class);
-		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
+		players[3] = new AIPlayer(Team.BLUE, MultiplayerActivity.class);
+//		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
 		
 //		renderer = new GameRenderer();
 //		view = new GLSurfaceView(this);
@@ -606,7 +641,58 @@ public class MultiplayerActivity extends Activity {
 
 		players[0].makeTurn();
 		
+		DataServer dataServer = new DataServer();
+		dataServer.player = players;
+		
+		sendMessage(dataServer);
+		
+		
+		
 	}
+	
+	protected void convertArrivalData(byte[] readBuf) {
+		ByteArrayInputStream bis = new ByteArrayInputStream(readBuf);
+		ObjectInput in = null;
+		Object o = null;
+		try {
+			in = new ObjectInputStream(bis);
+			o = in.readObject();
+		} catch (StreamCorruptedException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		if (o != null && mBluetoothMPService.serverDevice) processArrivalClientData((DataClient) o);
+		if (o != null && !mBluetoothMPService.serverDevice) processArrivalServerData((DataServer) o);
+
+		try {
+			if (bis != null) bis.close();
+			if (in != null) in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		
+	}
+
+	private void processArrivalClientData(DataClient object) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void processArrivalServerData(DataServer object) {
+		players = object.player;
+		GameTouchListener listener = new GameTouchListener();
+		view.setOnTouchListener(listener);
+		view.setOnLongClickListener(listener);
+		players[0].makeTurn();
+		Toast.makeText(getApplicationContext(),
+				"processArrivalServerData",
+				Toast.LENGTH_SHORT).show();
+	}	
 
 
 
