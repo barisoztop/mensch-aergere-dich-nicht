@@ -34,6 +34,9 @@ public abstract class Player {
 
 	/** the pegs of this player */
 	protected Peg[] pegs;
+	
+	Class staticAccess;
+	private boolean isMenschAergereDichNichtActivity = true;
 
 	/**
 	 * creating a player
@@ -41,9 +44,13 @@ public abstract class Player {
 	 * @param team
 	 *            the team of this player
 	 */
-	public Player(Team team) {
+	public Player(Team team, Class staticAccess) {
 		this.team = team;
 		pegs = Board.getPegs(team);
+		this.staticAccess = staticAccess;
+		if (staticAccess.getName().equals("MenschAergereDichNichtActivity")){
+			isMenschAergereDichNichtActivity = staticAccess.;
+		}
 	}
 
 	/**
