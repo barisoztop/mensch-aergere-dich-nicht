@@ -12,18 +12,9 @@ public class DataServer implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Player[] player;
-	private String message;
-	public Room room;
+	public String message;
 	
-	public DataServer(String message, Player[] player){
+	public DataServer(String message){
 		this.message = message;
-		this.player = player;
 	}
-
-	public DataServer(Room room) {
-		this.room = room;
-
-	}
-
 }
