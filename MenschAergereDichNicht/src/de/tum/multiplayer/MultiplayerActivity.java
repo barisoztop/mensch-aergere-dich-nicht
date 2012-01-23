@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.GameRenderer;
 import de.tum.GameTouchListener;
+import de.tum.MenschAergereDichNichtActivity;
 import de.tum.R;
 import de.tum.Room;
 import de.tum.Team;
@@ -108,11 +109,14 @@ public class MultiplayerActivity extends Activity {
 	// private Board board;
 	private static Player[] players;
 	private Room room;
+	
+	private static MultiplayerActivity activity;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.savedInstanceState = savedInstanceState;
+		activity = this;
 		if (D) Log.e(TAG, "+++ ON CREATE +++");
 
 		// Get local Bluetooth adapter
@@ -329,10 +333,10 @@ public class MultiplayerActivity extends Activity {
 			case MESSAGE_READ:
 				Log.d(TAG, "MESSAGE_READ - Message came from other device(s)");
 				byte[] readBuf = (byte[]) msg.obj;
-				Toast.makeText(
-						getApplicationContext(),
-						"MESSAGE_READ - Message came from other device(s)",
-						Toast.LENGTH_SHORT).show();
+//				Toast.makeText(
+//						getApplicationContext(),
+//						"MESSAGE_READ - Message came from other device(s)",
+//						Toast.LENGTH_SHORT).show();
 				// construct a string from the valid bytes in the buffer
 				// String readMessage = new String(readBuf, 0, msg.arg1);
 				// int deviceID = msg.arg2;
@@ -609,6 +613,11 @@ public class MultiplayerActivity extends Activity {
     	
     }
     
+    public static final void notifyPlayers(int[] tokens) {
+    	if (activity != null)
+		activity.sendMessage(new DataServer(tokens));
+    }
+    
 	private void startGame() {
 		
 		/* setup game */
@@ -630,13 +639,9 @@ public class MultiplayerActivity extends Activity {
 //		setContentView(view);
 //		view.refreshDrawableState();
 
-		String thisMessage = "server message:  HEY";
-		DataServer dataServer = new DataServer(thisMessage); 
+//		String thisMessage = "server message:  HEY";
+//		DataServer dataServer = new DataServer(thisMessage); 
 		players[0].makeTurn();		
-		
-		sendMessage(dataServer);		
-		
-		
 	}
 	
 	protected void convertArrivalData(byte[] readBuf) {
@@ -678,10 +683,18 @@ public class MultiplayerActivity extends Activity {
 //		Toast.makeText(getApplicationContext(),
 //				"processArrivalServerData: " + object,
 //				Toast.LENGTH_SHORT).show();
-		
-		Toast.makeText(getApplicationContext(),
-				"processArrivalServerData: " + object.message,
-				Toast.LENGTH_SHORT).show();
+		switch (object.tokens[0]) {
+		case NetworkPlayer.DICE_THROWN:
+			Dice.throwIt(Team.getById(object.tokens[1]), true, object.tokens[2]);
+			Toast.makeText(getApplicationContext(),
+					"processArrivalServerData: " +
+			"dice thrown:" + object.tokens[2],
+					Toast.LENGTH_SHORT).show();
+		}
+//		Toast.makeText(getApplicationContext(),
+//				"processArrivalServerData: " +
+//		(object.tokens[0] == NetworkPlayer.DICE_THROWN ? "dice thrown " + object.tokens[1] : "error"),
+//				Toast.LENGTH_SHORT).show();
 		
 	
 		GameTouchListener listener = new GameTouchListener();
