@@ -107,6 +107,7 @@ public class MultiplayerActivity extends Activity {
 	private GameRenderer renderer;
 	// private Board board;
 	private static Player[] players;
+	private Room room;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -126,7 +127,7 @@ public class MultiplayerActivity extends Activity {
 		}
 
 		/* setup game */
-		new Room();
+		room = new Room();
 		Room.addRenderable(new ClassicBoard(true, 4));
 		Room.addRenderable(new Dice(true));
 		// players = new Player[Board.getPlayers()];
@@ -619,7 +620,6 @@ public class MultiplayerActivity extends Activity {
 		players[1] = new AIPlayer(Team.YELLOW, MultiplayerActivity.class);
 		players[2] = new AIPlayer(Team.GREEN, MultiplayerActivity.class);
 		players[3] = new AIPlayer(Team.BLUE, MultiplayerActivity.class);
-//		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
 		
 //		renderer = new GameRenderer();
 //		view = new GLSurfaceView(this);
@@ -630,13 +630,11 @@ public class MultiplayerActivity extends Activity {
 //		setContentView(view);
 //		view.refreshDrawableState();
 
-		players[0].makeTurn();
+		DataServer dataServer = new DataServer(room); 
+		players[0].makeTurn();		
 		
-		DataServer dataServer = new DataServer();
-		dataServer.player = players;
-		
-//		sendMessage(dataServer);
-		sendMessage("MessageSENTisTHIS");
+		sendMessage(dataServer);
+//		sendMessage(message);
 		
 		
 		
@@ -649,7 +647,7 @@ public class MultiplayerActivity extends Activity {
 		Object o = null;
 		try {
 			bis = new ByteArrayInputStream(readBuf);
-			in = new ObjectInputStream(bis);
+			in = new ObjectInputStream(bis); // ERROR occuers TODO
 			o = in.readObject();
 			in.close();
 		} catch (StreamCorruptedException e) {
@@ -661,7 +659,8 @@ public class MultiplayerActivity extends Activity {
 		}
 
 		if (o != null && mBluetoothMPService.serverDevice) processArrivalClientData((DataClient) o);
-		if (o != null && !mBluetoothMPService.serverDevice) processArrivalServerData((String) o);
+		if (o != null && !mBluetoothMPService.serverDevice) processArrivalServerData((DataServer) o);
+//		if (o != null && !mBluetoothMPService.serverDevice) processArrivalServerData((String) o);
 		
 	}
 
@@ -670,7 +669,7 @@ public class MultiplayerActivity extends Activity {
 		
 	}
 	
-	private void processArrivalServerData(String object) {
+	private void processArrivalServerData(DataServer object) {
 		Log.d(TAG, "processArrivalServerData() --");
 //		players = object.player;
 //		GameTouchListener listener = new GameTouchListener();
@@ -680,8 +679,12 @@ public class MultiplayerActivity extends Activity {
 		Toast.makeText(getApplicationContext(),
 				"processArrivalServerData: " + object,
 				Toast.LENGTH_SHORT).show();
+		
+		room = object.room;
+		
+		GameTouchListener listener = new GameTouchListener();
+		view.setOnTouchListener(listener);
+		view.setOnLongClickListener(listener);
 	}	
-
-
 
 }

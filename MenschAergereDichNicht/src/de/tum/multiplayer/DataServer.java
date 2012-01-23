@@ -2,16 +2,28 @@ package de.tum.multiplayer;
 
 import java.io.Serializable;
 
-import de.tum.models.Board;
+import de.tum.Room;
 import de.tum.player.Player;
 
 public class DataServer implements Serializable{
 	
-	public Board board;
-	public Player[] player;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
-	public DataServer(){
-		
+	private Player[] player;
+	private String message;
+	public Room room;
+	
+	public DataServer(String message, Player[] player){
+		this.message = message;
+		this.player = player;
+	}
+
+	public DataServer(Room room) {
+		this.room = room;
+
 	}
 
 }
