@@ -6,6 +6,8 @@ import android.graphics.Paint;
 import android.graphics.Bitmap.Config;
 import de.tum.Team;
 import de.tum.TupleFloat;
+import de.tum.multiplayer.MultiplayerActivity;
+import de.tum.player.NetworkPlayer;
 import de.tum.player.Player;
 import de.tum.renderable.GameObject;
 import de.tum.renderable.Textures;
@@ -42,6 +44,10 @@ public class Dice extends GameObject {
 	private static float angle_diff;
 	/** true if action */
 	private static boolean action;
+	/** true if just notifying */
+	private static boolean notifying;
+	/** result of the dice */
+	private static int result;
 	/** dice object */
 	private static Dice dice;
 	static {
@@ -76,7 +82,8 @@ public class Dice extends GameObject {
 		if (++frame_current == 5 * frames) {
 			frame_current = 0;
 			action = false;
-			Player.diceThrown(1 + (int) (Math.random() * 6));
+			if (!notifying)
+				Player.diceThrown(result);
 			return;
 		}
 		angle += angle_diff;
@@ -100,12 +107,19 @@ public class Dice extends GameObject {
 	 *            the team of this peg
 	 */
 	public static void throwIt(Team team) {
-		action = true;
+		throwIt(team, false, 1 + (int) (Math.random() * 6));
+		MultiplayerActivity.notifyPlayers(new int[] {NetworkPlayer.DICE_THROWN, team.id, result});
+	}
+	
+	public static void throwIt(Team team, boolean notifying, int result) {
+		Dice.notifying = notifying;
+		Dice.result = result;
 		TupleFloat start = Board.getPositionForDice(team);
 		dice.transfer(start.x - dice.x, start.y - dice.y, 7 * side - dice.z);
 		speed.set(-dice.x / frames / 0.9f, -dice.y / frames / 0.9f);
 		speed_z = 0;
 		angle_diff = 15;
+		action = true;
 	}
 	
 	// just helping method for calculating textures
