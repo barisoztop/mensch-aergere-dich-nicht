@@ -630,12 +630,11 @@ public class MultiplayerActivity extends Activity {
 //		setContentView(view);
 //		view.refreshDrawableState();
 
-		DataServer dataServer = new DataServer(room); 
+		String thisMessage = "server message:  HEY";
+		DataServer dataServer = new DataServer(thisMessage); 
 		players[0].makeTurn();		
 		
-		sendMessage(dataServer);
-//		sendMessage(message);
-		
+		sendMessage(dataServer);		
 		
 		
 	}
@@ -660,7 +659,6 @@ public class MultiplayerActivity extends Activity {
 
 		if (o != null && mBluetoothMPService.serverDevice) processArrivalClientData((DataClient) o);
 		if (o != null && !mBluetoothMPService.serverDevice) processArrivalServerData((DataServer) o);
-//		if (o != null && !mBluetoothMPService.serverDevice) processArrivalServerData((String) o);
 		
 	}
 
@@ -676,12 +674,16 @@ public class MultiplayerActivity extends Activity {
 //		view.setOnTouchListener(listener);
 //		view.setOnLongClickListener(listener);
 //		players[0].makeTurn();
+		
+//		Toast.makeText(getApplicationContext(),
+//				"processArrivalServerData: " + object,
+//				Toast.LENGTH_SHORT).show();
+		
 		Toast.makeText(getApplicationContext(),
-				"processArrivalServerData: " + object,
+				"processArrivalServerData: " + object.message,
 				Toast.LENGTH_SHORT).show();
 		
-		room = object.room;
-		
+	
 		GameTouchListener listener = new GameTouchListener();
 		view.setOnTouchListener(listener);
 		view.setOnLongClickListener(listener);
