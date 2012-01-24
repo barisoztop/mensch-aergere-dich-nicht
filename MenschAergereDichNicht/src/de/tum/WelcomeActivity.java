@@ -43,9 +43,9 @@ public class WelcomeActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Intent newGame = new Intent(getApplicationContext(),
+				Intent singlePlayerGame = new Intent(getApplicationContext(),
 						MenschAergereDichNichtActivity.class);
-				startActivity(newGame);
+				startActivity(singlePlayerGame);
 
 			}
 		});
