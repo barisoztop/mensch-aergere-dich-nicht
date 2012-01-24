@@ -6,22 +6,20 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/logo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/tum_logo" />
+            android:src="@drawable/tum_logo" android:contentDescription="tum_logo"/>
 
         <TextView
             android:id="@+id/app_name_txt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_marginTop="20dp"
             android:text="@string/app_name" android:textStyle="bold"/>
 
@@ -29,33 +27,25 @@
             android:id="@+id/license_txt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/app_name_txt"
             android:text="@string/license" />
 
         <TextView
             android:id="@+id/authors_txt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/license_txt"
             android:text="@string/authors" />
 
         <TextView
             android:id="@+id/info_txt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/license_txt"
-            android:layout_marginTop="20dp"
-            android:text="@string/info_demo_txt" />
+            android:layout_marginTop="15dp"
+            android:text="@string/info_demo_txt" android:textSize="5pt"/>
 
         <TextView
             android:id="@+id/chair_info_txt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/info_txt"
             android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="@string/chair_info_txt" />
