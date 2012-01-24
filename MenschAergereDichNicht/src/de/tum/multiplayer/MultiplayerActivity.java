@@ -109,9 +109,10 @@ public class MultiplayerActivity extends Activity {
 	// private Board board;
 	private static Player[] players;
 	private Room room;
+	private static final LinkedList<int[]> tokens = new LinkedList<int[]>();
 	
 	private static MultiplayerActivity activity;
-	private static final LinkedList<int[]> tokens = new LinkedList<int[]>();
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -139,10 +140,13 @@ public class MultiplayerActivity extends Activity {
 //		 players[1] = new HumanPlayer(Team.YELLOW, mHandler, MultiplayerActivity.class);
 //		 players[2] = new HumanPlayer(Team.GREEN, mHandler, MultiplayerActivity.class);
 //		 players[3] = new AIPlayer(Team.BLUE, MultiplayerActivity.class);
+		 
+		 /* HERE STEFAN - 1
 			players[0] = new NetworkPlayer(Team.RED, MultiplayerActivity.class);
 			players[1] = new NetworkPlayer(Team.YELLOW, MultiplayerActivity.class);
 			players[2] = new NetworkPlayer(Team.GREEN, MultiplayerActivity.class);
 			players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
+		*/
 		
 		renderer = new GameRenderer();
 		view = new GLSurfaceView(this);
@@ -162,7 +166,9 @@ public class MultiplayerActivity extends Activity {
 //		titleBar = (TextView) findViewById(R.id.title_right_text);
 //		titleBar.setText("Multiplayer Mode Activity");
 
-		// players[0].makeTurn();
+		/* HERE STEFAN - 2
+		 players[0].makeTurn();
+		 */
 
 	}
 
@@ -356,14 +362,14 @@ public class MultiplayerActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.scan:
-			// Launch the DeviceListActivity to see devices and do scan
-			Intent serverIntent = new Intent(this, DeviceListActivity.class);
-			startActivityForResult(serverIntent, REQUEST_CONNECT_SERVER);
+		case R.id.menu_server_mode:
+			onActivityResult(REQUEST_MODE_TYPE, RESULT_SERVER_MODE, null);
 			return true;
-		case R.id.discoverable:
-			// Ensure this device is discoverable by others
-			ensureDiscoverable();
+		case R.id.menu_client_mode:
+			onActivityResult(REQUEST_MODE_TYPE, RESULT_CLIENT_MODE, null);
+			return true;			
+		case R.id.menu_discovery:
+			makeDiscoverable();
 			return true;
 		}
 		return false;
@@ -372,7 +378,7 @@ public class MultiplayerActivity extends Activity {
 	/**
 	 * Ensure if the device is discoverable by others for 300 sec
 	 */
-	private void ensureDiscoverable() {
+	private void makeDiscoverable() {
 		if (D)
 			Log.d(TAG, "ensure discoverable");
 		if (bluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
@@ -546,6 +552,7 @@ public class MultiplayerActivity extends Activity {
 //		players[1] = new NetworkPlayer(Team.YELLOW, MultiplayerActivity.class);
 //		players[2] = new NetworkPlayer(Team.GREEN, MultiplayerActivity.class);
 //		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
+		
 		 players[0] = new HumanPlayer(Team.RED, mHandler, MultiplayerActivity.class);
 		 players[1] = new HumanPlayer(Team.YELLOW, mHandler, MultiplayerActivity.class);
 		 players[2] = new HumanPlayer(Team.GREEN, mHandler, MultiplayerActivity.class);
@@ -558,7 +565,8 @@ public class MultiplayerActivity extends Activity {
 		Toast.makeText(getApplicationContext(), "server",
 				Toast.LENGTH_LONG).show();
 
-		players[0].makeTurn();		
+		players[0].makeTurn();
+			
 	}
 	
 	/**
