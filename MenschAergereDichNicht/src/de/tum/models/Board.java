@@ -77,8 +77,8 @@ public abstract class Board extends GameObject {
 	 * @return a pair of floats representing the location on the board
 	 */
 	public static final TupleFloat getPosition(Peg peg, int position, boolean permanent) {
-		int position_abs = position < start_pegs ? position + peg.getTeam().id
-				* start_pegs : getAbsolutePositionOnPathOrEnd(peg.getTeam(),
+		int position_abs = position < start_pegs ? position + peg.team.id
+				* start_pegs : getAbsolutePositionOnPathOrEnd(peg.team,
 				position);
 		if (permanent) {
 			// updating current position
@@ -132,7 +132,7 @@ public abstract class Board extends GameObject {
 	// just for checking whether the given field is free or a different team is there	
 	private static final boolean isFree(Team team, int absolute_pos) {
 		return peg_fields[absolute_pos] == null
-				|| peg_fields[absolute_pos].getTeam() != team;
+				|| peg_fields[absolute_pos].team != team;
 	}
 
 	// just for calculating the absolute field on board

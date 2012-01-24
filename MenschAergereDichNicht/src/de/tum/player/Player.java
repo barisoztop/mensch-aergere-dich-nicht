@@ -16,10 +16,10 @@ public abstract class Player {
 	private static int number;
 
 	/** the current player */
-	private static Player player;
+	protected static Player player;
 
 	/** the current movable pegs for the current player */
-	private static final Peg[] movables = new Peg[Board.start_pegs];
+	protected static final Peg[] movables = new Peg[Board.start_pegs];
 
 	/** the team of this player */
 	protected Team team;
@@ -34,7 +34,7 @@ public abstract class Player {
 	private boolean is1st6;
 
 	/** the pegs of this player */
-	protected Peg[] pegs;
+	private Peg[] pegs;
 	
 	private boolean isMenschAergereDichNichtActivity = true;
 
@@ -119,7 +119,7 @@ public abstract class Player {
 			player.checkForMoreTurns();
 		else // just one peg - no options for the player or
 			//player has to select one of two or more pegs
-			player.choosePegForMove(movables, movable == 1 ? found1st : -1);
+			player.choosePegForMove(movable == 1 ? found1st : -1);
 	}
 
 	// checks whether this player can throw again. E.g. when a player has all
@@ -150,7 +150,7 @@ public abstract class Player {
 	 * @param movables
 	 *            the current movable pegs
 	 */
-	protected abstract void choosePegForMove(Peg[] movables, int movable);
+	protected abstract void choosePegForMove(int movable);
 
 	/**
 	 * peg is chosen
@@ -158,7 +158,8 @@ public abstract class Player {
 	 * @param peg
 	 *            the peg to move
 	 */
-	protected final void pegChosen(Peg peg) {
+	protected final void pegChosen(Peg peg, boolean notify) {
+		if (notify) MultiplayerActivity.notifyPlayers(new int[] {NetworkPlayer.PEG_MOVED, peg.pos_start});
 		peg.move();
 	}
 	

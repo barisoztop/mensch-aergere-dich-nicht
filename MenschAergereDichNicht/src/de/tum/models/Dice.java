@@ -44,8 +44,6 @@ public class Dice extends GameObject {
 	private static float angle_diff;
 	/** true if action */
 	private static boolean action;
-	/** true if just notifying */
-	private static boolean notifying;
 	/** result of the dice */
 	private static int result;
 	/** dice object */
@@ -82,8 +80,7 @@ public class Dice extends GameObject {
 		if (++frame_current == 5 * frames) {
 			frame_current = 0;
 			action = false;
-			if (!notifying)
-				Player.diceThrown(result);
+			Player.diceThrown(result);
 			return;
 		}
 		angle += angle_diff;
@@ -107,12 +104,11 @@ public class Dice extends GameObject {
 	 *            the team of this peg
 	 */
 	public static void throwIt(Team team) {
-		throwIt(team, false, 1 + (int) (Math.random() * 6));
-		MultiplayerActivity.notifyPlayers(new int[] {NetworkPlayer.DICE_THROWN, team.id, result});
+		throwIt(team, 1 + (int) (Math.random() * 6));
+		MultiplayerActivity.notifyPlayers(new int[] {NetworkPlayer.DICE_THROWN, result});
 	}
 	
-	public static void throwIt(Team team, boolean notifying, int result) {
-		Dice.notifying = notifying;
+	public static void throwIt(Team team, int result) {
 		Dice.result = result;
 		TupleFloat start = Board.getPositionForDice(team);
 		dice.transfer(start.x - dice.x, start.y - dice.y, 7 * side - dice.z);

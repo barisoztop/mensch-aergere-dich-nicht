@@ -3,7 +3,6 @@ package de.tum.player;
 import de.tum.Team;
 import de.tum.models.Dice;
 import de.tum.models.Peg;
-import de.tum.multiplayer.MultiplayerActivity;
 
 /**
  * this player is an artificial intelligence. All moves are calculated by this
@@ -26,9 +25,9 @@ public class AIPlayer extends Player {
 	}
 
 	/** {@inheritDoc} */
-	protected void choosePegForMove(Peg[] movables, int movable) {
+	protected void choosePegForMove(int movable) {
 		if (movable != -1) { // just one peg - no options for the player
-			pegChosen(movables[movable]);
+			pegChosen(movables[movable], true);
 			return;
 		}
 		Peg chosen = null;
@@ -39,6 +38,6 @@ public class AIPlayer extends Player {
 			// peg with biggest field position is chosen
 					&& peg.getCurrentField() > chosen.getCurrentField())
 				chosen = peg;
-		pegChosen(chosen);
+		pegChosen(chosen, true);
 	}
 }
