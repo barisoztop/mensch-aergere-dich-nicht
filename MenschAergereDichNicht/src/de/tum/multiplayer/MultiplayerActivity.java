@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.GameRenderer;
 import de.tum.GameTouchListener;
+import de.tum.MenschAergereDichNichtActivity;
 import de.tum.R;
 import de.tum.Room;
 import de.tum.Team;
@@ -37,6 +38,7 @@ import de.tum.models.ClassicBoard;
 import de.tum.models.Dice;
 import de.tum.multiplayer.bluetooth.BluetoothMPService;
 import de.tum.multiplayer.bluetooth.DeviceListActivity;
+import de.tum.player.AIPlayer;
 import de.tum.player.HumanPlayer;
 import de.tum.player.NetworkPlayer;
 import de.tum.player.Player;
@@ -161,13 +163,7 @@ public class MultiplayerActivity extends Activity {
 //		titleBar.setText("Multiplayer Mode Activity");
 
 		// players[0].makeTurn();
-		Log.d(TAG, "modeSelectionIntent");
-		modeSelectionIntent = new Intent(this, ModeSelectionActivity.class);
-		startActivityForResult(modeSelectionIntent, REQUEST_MODE_TYPE);
-		Log.d(TAG, "modeSelectionIntent DONE");
 
-		players[0].makeTurn();		
-		
 	}
 
 	@Override
@@ -432,6 +428,7 @@ public class MultiplayerActivity extends Activity {
 					// Select the number of clients
 					Log.d(TAG, "clientNumberPickerIntent == null");
 					clientNumberPickerIntent = new Intent(this, ClientNumberPicker.class);
+					clientNumberPickerIntent.putExtra(MAX_CLIENTS, numberOfClients);
 					startActivityForResult(clientNumberPickerIntent, REQUEST_MODE_TYPE);
 				} else {
 					// set the selected clients amount
