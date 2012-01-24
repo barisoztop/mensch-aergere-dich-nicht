@@ -16,11 +16,11 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
-import de.tum.bluetooth.BluetoothMPService;
-import de.tum.bluetooth.DeviceListActivity;
 import de.tum.models.Board;
 import de.tum.models.ClassicBoard;
 import de.tum.models.Dice;
+import de.tum.multiplayer.bluetooth.BluetoothMPService;
+import de.tum.multiplayer.bluetooth.DeviceListActivity;
 import de.tum.player.AIPlayer;
 import de.tum.player.HumanPlayer;
 import de.tum.player.Player;
@@ -86,7 +86,7 @@ public class MenschAergereDichNichtActivity extends Activity {
       titleBar = (TextView) findViewById(R.id.title_left_text);
       titleBar.setText(R.string.app_name);
       titleBar = (TextView) findViewById(R.id.title_right_text);
-      titleBar.setText("Text goes here!");
+//      titleBar.setText("Text goes here!");
       
       players[0].makeTurn();
     }

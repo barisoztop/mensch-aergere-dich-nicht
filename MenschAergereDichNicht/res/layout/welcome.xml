@@ -6,7 +6,7 @@
     android:paddingTop="100dp" >
 
     <Button
-        android:id="@+id/newgame"
+        android:id="@+id/singleplayer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -14,7 +14,7 @@
         android:textSize="20sp"
         android:drawableLeft="@drawable/ic_menu_play_clip"
         android:layout_marginBottom="5sp"
-        android:text="@string/button_newgame" />
+        android:text="@string/button_singleplayer" />
 
     <Button
         android:id="@+id/multiplayer"

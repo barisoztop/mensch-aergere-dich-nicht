@@ -17,8 +17,8 @@ public class WelcomeActivity extends Activity {
 	private static final String TAG = "WelcomeActivity";
 	private static final boolean D = true;
 
-	private Button newGameButton;
-	private Button multiplayerGameButton;
+	private Button singlePlayerButton;
+	private Button multiPlayerButton;
 	private Button settingsButton;
 	private Button aboutButton;
 	private Button exitButton;
@@ -33,13 +33,13 @@ public class WelcomeActivity extends Activity {
 		setContentView(R.layout.welcome);
 
 		// Initialize the buttons
-		newGameButton = (Button) findViewById(R.id.newgame);
-		multiplayerGameButton = (Button) findViewById(R.id.multiplayer);
+		singlePlayerButton = (Button) findViewById(R.id.singleplayer);
+		multiPlayerButton = (Button) findViewById(R.id.multiplayer);
 		settingsButton = (Button) findViewById(R.id.settings);
 		aboutButton = (Button) findViewById(R.id.about);
 		exitButton = (Button) findViewById(R.id.exit);
 
-		newGameButton.setOnClickListener(new OnClickListener() {
+		singlePlayerButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -50,7 +50,7 @@ public class WelcomeActivity extends Activity {
 			}
 		});
 
-		multiplayerGameButton.setOnClickListener(new OnClickListener() {
+		multiPlayerButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {

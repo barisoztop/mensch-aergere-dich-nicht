@@ -49,7 +49,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".bluetooth.DeviceListActivity"
+            android:name=".multiplayer.bluetooth.DeviceListActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/select_device"
             android:theme="@android:style/Theme.Dialog" />

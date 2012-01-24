@@ -1,5 +1,5 @@
 
-package de.tum.bluetooth;
+package de.tum.multiplayer.bluetooth;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -267,7 +267,7 @@ public class BluetoothMPService {
         if (mAcceptThread != null) {mAcceptThread.cancel(); mAcceptThread = null;}
         connectedDevices = 0;
         serverDevice = false;
-        setState(STATE_NONE);
+        if (mState != STATE_NONE) setState(STATE_NONE);
     }
 
     /**

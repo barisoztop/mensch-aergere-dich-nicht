@@ -1,5 +1,5 @@
 
-package de.tum.bluetooth;
+package de.tum.multiplayer.bluetooth;
 
 import java.util.Set;
 

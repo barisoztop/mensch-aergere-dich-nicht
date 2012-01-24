@@ -28,16 +28,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.GameRenderer;
 import de.tum.GameTouchListener;
-import de.tum.MenschAergereDichNichtActivity;
 import de.tum.R;
 import de.tum.Room;
 import de.tum.Team;
-import de.tum.bluetooth.BluetoothMPService;
-import de.tum.bluetooth.DeviceListActivity;
 import de.tum.models.Board;
 import de.tum.models.ClassicBoard;
 import de.tum.models.Dice;
-import de.tum.player.AIPlayer;
+import de.tum.multiplayer.bluetooth.BluetoothMPService;
+import de.tum.multiplayer.bluetooth.DeviceListActivity;
 import de.tum.player.HumanPlayer;
 import de.tum.player.NetworkPlayer;
 import de.tum.player.Player;
@@ -52,7 +50,7 @@ public class MultiplayerActivity extends Activity {
 	private static final boolean D = true;
 
 	/* Bluetooth communication */
-	// Message types sent from the BluetoothMPService Handler
+	// Message types of the handler
 	public static final int MESSAGE_STATE_CHANGE = 1;
 	public static final int MESSAGE_READ = 2;
 	public static final int MESSAGE_WRITE = 3;
@@ -60,46 +58,45 @@ public class MultiplayerActivity extends Activity {
 	public static final int MESSAGE_TOAST = 5;
 	public static final int MESSAGE_TITLE = 6;
 
-	// Key names received from the BluetoothChatService Handler
+	// Key names for handler messages
 	public static final String DEVICE_NAME = "device_name";
 	public static final String TOAST = "toast";
 	public static final String TITLE = "title";
 	public static final String MAX_CLIENTS = "numberOfClients";
+	
 	// Intent request codes
 	private static final int REQUEST_CONNECT_SERVER = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
 	private static final int REQUEST_MODE_TYPE = 3;
 	
-	
+	// Intent result codes
 	public static final int RESULT_CLIENT_MODE = 1;
 	public static final int RESULT_SERVER_MODE = 2;
 	public static final int RESULT_GOBACK = 3;
 
 	// Local Bluetooth adapter
-	private BluetoothAdapter mBluetoothAdapter = null;
-	// Member object for the chat services
-	private BluetoothMPService mBluetoothMPService = null;
+	private BluetoothAdapter bluetoothAdapter = null;
+	// Manage bluetooth communication
+	private BluetoothMPService bluetoothMPService = null;
 	// Name of the connected device
-	private String mConnectedServerName = null;
-	private String mConnectedDeviceName1 = null;
-	private String mConnectedDeviceName2 = null;
-	private String mConnectedDeviceName3 = null;
+	private String connectedServerName = null;
+	private String connectedDeviceName1 = null;
+	private String connectedDeviceName2 = null;
+	private String connectedDeviceName3 = null;
 
-	// Layout Views
+	// Layout members
 	private TextView titleBar;
 	private ProgressDialog serverWaitingDialog;
-	private static final int SERVER_WAITING_DIALOG = 0;
 	
-	private Intent modeSelectionIntent;
+	// Intent to select the multiplayer mode
+	private Intent modeSelectionIntent = null;
+	// Intent to select the number of clients
 	private Intent clientNumberPickerIntent = null;
-	public Handler modeSelectionHandler;
-	private Bundle savedInstanceState;
-	
+	// Number of connected clients to server
 	private int numberOfClients = 0;
 
-	// just for testing
-	// ############################### needs
-	// some change
+
+	/* graphics members */
 	private static final float f = 8;
 	public static int width;
 	public static int height;
@@ -115,16 +112,15 @@ public class MultiplayerActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.savedInstanceState = savedInstanceState;
 		activity = this;
 		if (D) Log.e(TAG, "+++ ON CREATE +++");
 
 		// Get local Bluetooth adapter
-		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 		// If the adapter is null, then Bluetooth is not supported
-		if (mBluetoothAdapter == null) {
-			Toast.makeText(this, "Bluetooth is not available, try New Game",
+		if (bluetoothAdapter == null) {
+			Toast.makeText(this, "Bluetooth is not available, try Single Player game",
 					Toast.LENGTH_LONG).show();
 			finish();
 			return;
@@ -150,35 +146,12 @@ public class MultiplayerActivity extends Activity {
 		// GameTouchListener listener = new GameTouchListener();
 		// view.setOnTouchListener(listener);
 		// view.setOnLongClickListener(listener);
-
-//		gameView = new GameView(getApplicationContext());
-//		gameView.setRenderer(renderer);
+		
 		// Set up the window layout
 //		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-//	    requestWindowFeature(Window.FEATURE_PROGRESS);
-		
-//		final RelativeLayout rLayout = new RelativeLayout(this);
-//		rLayout.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT, 
-//				LayoutParams.FILL_PARENT));
-//		
-//		RelativeLayout.LayoutParams gameView = new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT, 
-//				LayoutParams.FILL_PARENT);
-//		
-//		rLayout.addView(view, gameView);
-		
-//		serverWaitingDialog =  (ProgressDialog) findViewById(R.id.serverWaitingDialog);
-//    	serverWaitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-//    	serverWaitingDialog.setMessage("Waiting for others...");
-		
-		
 		setContentView(view);
-		
-//		getWindow().addContentView(view, params)
-//		getWindow().setFeatureInt(Window.FEATURE_PROGRESS, 0);
-
 //		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
-
 		// Set up the custom title
 //		titleBar = (TextView) findViewById(R.id.title_left_text);
 //		titleBar.setText(R.string.app_name);
@@ -200,15 +173,14 @@ public class MultiplayerActivity extends Activity {
 		super.onStart();
 		if (D) Log.e(TAG, "++ ON START ++");
 
-		// If BT is not on, request that it be enabled.
-		// setupChat() will then be called during onActivityResult
-		if (!mBluetoothAdapter.isEnabled()) {
+		// If Bluetooth is not on, request enable.
+		if (!bluetoothAdapter.isEnabled()) {
 			Intent enableIntent = new Intent(
 					BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-			// Otherwise, setup the communication between devices
 		} else {
-			if (mBluetoothMPService == null)
+			// setup the multiplayer mode
+			if (bluetoothMPService == null)
 				setupMultiPlayer();
 		}
 	}
@@ -216,7 +188,6 @@ public class MultiplayerActivity extends Activity {
 	@Override
 	public synchronized void onPause() {
 		super.onPause();
-//		view.onPause();
 		if (D) Log.e(TAG, "- ON PAUSE -");
 	}
 
@@ -230,8 +201,8 @@ public class MultiplayerActivity extends Activity {
 	public void onDestroy() {
 		super.onDestroy();
 		// Stop the BluetoothMPService
-		if (mBluetoothMPService != null)
-			mBluetoothMPService.stop();
+		if (bluetoothMPService != null)
+			bluetoothMPService.stop();
 		if (D) Log.e(TAG, "--- ON DESTROY ---");
 	}
 
@@ -239,21 +210,7 @@ public class MultiplayerActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		view.onResume();
-
 		if (D) Log.e(TAG, "+ ON RESUME +");
-
-		// Performing this check in onResume() covers the case in which BT was
-		// not enabled during onStart(), so we were paused to enable it...
-		// onResume() will be called when ACTION_REQUEST_ENABLE activity
-		// returns.
-//		if (mBluetoothMPService != null) {
-//			// Only if the state is STATE_NONE, do we know that we haven't
-//			// started already
-//			if (mBluetoothMPService.getState() == BluetoothMPService.STATE_NONE) {
-//				// Start the Bluetooth chat services
-//				mBluetoothMPService.start();
-//			}
-//		}
 	}
 
 	/**
@@ -287,9 +244,6 @@ public class MultiplayerActivity extends Activity {
 					Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
 				switch (msg.arg1) {
 				case BluetoothMPService.STATE_ALL_CONNECTED:
-					// mTitle.setText(R.string.title_connected_to);
-					// mTitle.append(mConnectedDeviceName);
-					// mConversationArrayAdapter.clear();
 					Toast.makeText(getApplicationContext(), "STATE_ALL_CONNECTED",
 							Toast.LENGTH_SHORT).show();
 					MultiplayerActivity.this.startGame();
@@ -297,32 +251,24 @@ public class MultiplayerActivity extends Activity {
 				case BluetoothMPService.STATE_CONNECTED_1:
 				case BluetoothMPService.STATE_CONNECTED_2:
 				case BluetoothMPService.STATE_CONNECTED_3:
-					// mTitle.setText(R.string.title_connected_to);
-					// mTitle.append(mChatService.connectedDevices +
-					// " Device(s)");
 					Toast.makeText(
 							getApplicationContext(),
-							mBluetoothMPService.connectedDevices
+							bluetoothMPService.connectedDevices
 									+ " Device(s) connected",
 							Toast.LENGTH_SHORT).show();
 					break;
 				case BluetoothMPService.STATE_CONNECTED_TO_SERVER:
-					// mTitle.setText(R.string.title_connected_to);
-					// mTitle.append(mChatService.connectedDevices +
-					// " Device(s)");
 					Toast.makeText(getApplicationContext(),
-							"Connected to Server: " + mConnectedServerName,
+							"Connected to Server: " + connectedServerName,
 							Toast.LENGTH_SHORT).show();
 					break;
 				case BluetoothMPService.STATE_CONNECTING_TO_SERVER:
-					// mTitle.setText(R.string.title_connecting);
 					Toast.makeText(getApplicationContext(), "Connecting...",
 							Toast.LENGTH_SHORT).show(); // TODO no need!
 					break;
 				case BluetoothMPService.STATE_LISTEN:
 					break;
 				case BluetoothMPService.STATE_NONE:
-					// mTitle.setText(R.string.title_not_connected);
 					Toast.makeText(getApplicationContext(), "Not Conntected",
 							Toast.LENGTH_SHORT).show();
 					break;
@@ -331,65 +277,56 @@ public class MultiplayerActivity extends Activity {
 			case MESSAGE_WRITE:
 				byte[] writeBuf = (byte[]) msg.obj;
 				Log.d(TAG, "MESSAGE_WRITE - Message sent to other device(s)");
-				
-				// construct a string from the buffer
-				// String writeMessage = new String(writeBuf);
-				// mConversationArrayAdapter.add("Me:  " + writeMessage);
 				break;
 			case MESSAGE_READ:
 				Log.d(TAG, "MESSAGE_READ - Message came from other device(s)");
 				byte[] readBuf = (byte[]) msg.obj;
-//				Toast.makeText(
-//						getApplicationContext(),
-//						"MESSAGE_READ - Message came from other device(s)",
-//						Toast.LENGTH_SHORT).show();
-				// construct a string from the valid bytes in the buffer
-				// String readMessage = new String(readBuf, 0, msg.arg1);
-				// int deviceID = msg.arg2;
-				// mConversationArrayAdapter.add("Device "+ deviceID + ": " +
-				// readMessage);
 				MultiplayerActivity.this.convertArrivalData(readBuf);
 				break;
 			case MESSAGE_DEVICE_NAME:
-				// save the connected device's name
-				int currentState = mBluetoothMPService.getState();
-				Log.d(TAG, "MESSAGE_DEVICE_NAME arrived: " + mBluetoothMPService.connectedDevices + " Devices and" + " Service State: " + currentState);
+				// set name of the connected device and
+				// the progress dialog value after each connection
+				int currentState = bluetoothMPService.getState();
+				Log.d(TAG, "MESSAGE_DEVICE_NAME: " + bluetoothMPService.connectedDevices + " Device(s) and" + " Service State: " + currentState);
+				
+				// Server got the clients connected message
 				if (currentState == BluetoothMPService.STATE_CONNECTED_1 ||
 						currentState == BluetoothMPService.STATE_CONNECTED_2 ||
 							currentState == BluetoothMPService.STATE_CONNECTED_3 ||
 								currentState == BluetoothMPService.STATE_ALL_CONNECTED) {
-					if (mBluetoothMPService.connectedDevices == 1) {
+					if (bluetoothMPService.connectedDevices == 1) {
 						Log.d(TAG, "mBluetoothMPService.connectedDevices == 1");
-						mConnectedDeviceName1 = msg.getData().getString(
+						connectedDeviceName1 = msg.getData().getString(
 								DEVICE_NAME);
 						Toast.makeText(getApplicationContext(),
-								"Connected to " + mConnectedDeviceName1,
+								"Connected to " + connectedDeviceName1,
 								Toast.LENGTH_SHORT).show();
 						Log.d(TAG, "case MESSAGE_DEVICE_NAME & now setProgressValue");
 						MultiplayerActivity.this.setProgessValue(1);
 
-						
-					} else if (mBluetoothMPService.connectedDevices == 2) {
-						mConnectedDeviceName2 = msg.getData().getString(
+					} else if (bluetoothMPService.connectedDevices == 2) {
+						connectedDeviceName2 = msg.getData().getString(
 								DEVICE_NAME);
 						Toast.makeText(getApplicationContext(),
-								"Connected to " + mConnectedDeviceName2,
+								"Connected to " + connectedDeviceName2,
 								Toast.LENGTH_SHORT).show();
 						MultiplayerActivity.this.setProgessValue(2);
-					} else if (mBluetoothMPService.connectedDevices == 3) {
-						mConnectedDeviceName3 = msg.getData().getString(
+
+					} else if (bluetoothMPService.connectedDevices == 3) {
+						connectedDeviceName3 = msg.getData().getString(
 								DEVICE_NAME);
 						Toast.makeText(getApplicationContext(),
-								"Connected to " + mConnectedDeviceName3,
+								"Connected to " + connectedDeviceName3,
 								Toast.LENGTH_SHORT).show();
 						MultiplayerActivity.this.setProgessValue(3);
 					}
 				}
 
-				if (mBluetoothMPService.getState() == BluetoothMPService.STATE_CONNECTED_TO_SERVER) {
-					mConnectedServerName = msg.getData().getString(DEVICE_NAME);
+				// Client got the connected to the server message
+				if (bluetoothMPService.getState() == BluetoothMPService.STATE_CONNECTED_TO_SERVER) {
+					connectedServerName = msg.getData().getString(DEVICE_NAME);
 					Toast.makeText(getApplicationContext(),
-							"Connected to server " + mConnectedServerName,
+							"Connected to server " + connectedServerName,
 							Toast.LENGTH_SHORT).show();
 				}
 				break;
@@ -406,7 +343,7 @@ public class MultiplayerActivity extends Activity {
 	};
 
 	/**
-	 * create menu when user click menu button
+	 * create menu button's menu
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -414,7 +351,6 @@ public class MultiplayerActivity extends Activity {
 		inflater.inflate(R.menu.option_menu, menu);
 		return true;
 	}
-
 
 	/**
 	 * create menu options
@@ -436,12 +372,12 @@ public class MultiplayerActivity extends Activity {
 	}
 
 	/**
-	 * Ensure if the device is discoverable
+	 * Ensure if the device is discoverable by others for 300 sec
 	 */
 	private void ensureDiscoverable() {
 		if (D)
 			Log.d(TAG, "ensure discoverable");
-		if (mBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+		if (bluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
 			Intent discoverableIntent = new Intent(
 					BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 			discoverableIntent.putExtra(
@@ -451,82 +387,72 @@ public class MultiplayerActivity extends Activity {
 	}
 
 	/**
-	 * Handle all the onActivityResult events
+	 * Handle all onActivityResult events
 	 */
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (D)
 			Log.d(TAG, "onActivityResult " + resultCode);
 		switch (requestCode) {
 		case REQUEST_CONNECT_SERVER:
-			// When DeviceListActivity returns with a device to connect
+			// Clients connects to DeviceListActivity's server
 			if (resultCode == Activity.RESULT_OK) {
-				// Get the device MAC address
+				// Get the server's MAC
 				String address = data.getExtras().getString(
 						DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-				// Get the BLuetoothDevice object
-				BluetoothDevice device = mBluetoothAdapter
+				// Get the server's BLuetoothDevice object
+				BluetoothDevice serverDevice = bluetoothAdapter
 						.getRemoteDevice(address);
-				// Attempt to connect to the device
-				mBluetoothMPService.connectServer(device);
+				// Attempt to connect to server
+				bluetoothMPService.connectServer(serverDevice);
 			}
 			break;
 		case REQUEST_ENABLE_BT:
-			// When the request to enable Bluetooth returns
 			if (resultCode == Activity.RESULT_OK) {
-				// Bluetooth is now enabled, so set up a MP session
+				// setup multiplayer mode
 				setupMultiPlayer();
 			} else {
-				// User did not enable Bluetooth or an error occured
+				// Bluetooth isn't enabled or an error occurred
 				Log.d(TAG, "BT not enabled");
-				Toast.makeText(this, R.string.bt_not_enabled_leaving,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.try_singleplayer,
+						Toast.LENGTH_LONG).show();
 				finish();
 			}
 		case REQUEST_MODE_TYPE:
 			if (resultCode == RESULT_CLIENT_MODE) {
+				// Device is client, select server device to connect
 				Log.d(TAG, "REQUEST_MODE_TYPE: RESULT_CLIENT_MODE");
-				// Launch the DeviceListActivity to see devices and do scan
 				Intent connectServerIntent = new Intent(this, DeviceListActivity.class);
 				startActivityForResult(connectServerIntent, REQUEST_CONNECT_SERVER);
 			} else if (resultCode == RESULT_SERVER_MODE){
+				// Device is server
 				Log.d(TAG, "REQUEST_MODE_TYPE: RESULT_SERVER_MODE");
-
 				if (clientNumberPickerIntent == null) {
+					// Select the number of clients
 					Log.d(TAG, "clientNumberPickerIntent == null");
 					clientNumberPickerIntent = new Intent(this, ClientNumberPicker.class);
-//					clientNumberPickerIntent.putExtra(MAX_CLIENTS, numberOfClients);
 					startActivityForResult(clientNumberPickerIntent, REQUEST_MODE_TYPE);
 				} else {
+					// set the selected clients amount
 					Log.d(TAG, "clientNumberPickerIntent != null");
-					Log.d(TAG, "Old numberOfClients: " + numberOfClients);
 					clientNumberPickerIntent = null;
 					numberOfClients = data.getExtras().getInt(MAX_CLIENTS);
-					mBluetoothMPService.setMaxDeviceNumber(numberOfClients);
-					Log.d(TAG, "New numberOfClients: " + numberOfClients);
+					bluetoothMPService.setMaxDeviceNumber(numberOfClients);
+					Log.d(TAG, "numberOfClients: " + numberOfClients);
 					
-					if (mBluetoothMPService != null) {
-						// Only if the state is STATE_NONE, do we know that we haven't
-						// started already
-						if (mBluetoothMPService.getState() == BluetoothMPService.STATE_NONE) {
-							// Start the Bluetooth chat services
-							mBluetoothMPService.startServer();
+					if (bluetoothMPService != null) {
+						if (bluetoothMPService.getState() == BluetoothMPService.STATE_NONE) {
+							// Start server listening mode
+							bluetoothMPService.startServer();
 						}
 					}
-					
-					Log.d(TAG, "Create Progress Dialog");
+					// Create progress dialog to show the device connection activity
 					MultiplayerActivity.this.serverWaitingDialog = new ProgressDialog(MultiplayerActivity.this);
-					Log.d(TAG, "Create Progress Dialog Success!");
 					MultiplayerActivity.this.serverWaitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-					Log.d(TAG, "Create Progress Dialog setProgressStyle Success!");
-					MultiplayerActivity.this.serverWaitingDialog.setMessage("Waiting for others...");
-					Log.d(TAG, "Create Progress Dialog setMessage Success!");
+					MultiplayerActivity.this.serverWaitingDialog.setMessage(getResources().getText(R.string.waiting_others));
 					MultiplayerActivity.this.serverWaitingDialog.setCancelable(true);
-					Log.d(TAG, "Create Progress Dialog setCancelable Success!");
 					MultiplayerActivity.this.serverWaitingDialog.show();
-					Log.d(TAG, "Create Progress Dialog Success!");
-					
+					Log.d(TAG, "Creating Progress Dialog is successful!");
 				}
-
 			} else if (resultCode == RESULT_CANCELED) {
 				Log.d(TAG, "REQUEST_MODE_TYPE: RESULT_CANCELED");
 				finish();
@@ -538,57 +464,41 @@ public class MultiplayerActivity extends Activity {
 	}
 
 	/**
-	 * 
-	 * Set the action listeners in here !!!!!!!!!! use sendMessage() to send
-	 * your new object in here
+	 * Initiate the BluetoothMPService and select game mode 
 	 */
 	private void setupMultiPlayer() {
 		Log.d(TAG, "setupMultiPlayer()");
-		// TODO Modify
-
-		// Initialize the BluetoothMPService to perform bluetooth connections
-		mBluetoothMPService = new BluetoothMPService(this, mHandler);
-
-		// Initialize the buffer for outgoing messages
-		// mOutStringBuffer = new StringBuffer("");
-
+		bluetoothMPService = new BluetoothMPService(this, mHandler);
+		modeSelectionIntent = new Intent(this, ModeSelectionActivity.class);
+		startActivityForResult(modeSelectionIntent, REQUEST_MODE_TYPE);
 	}
-
+	
 	/**
-	 * Sends a message. This will be converted to any object that we wanna send
-	 * !!!!!!!!
+	 * Sends the object to other device(s) for both client
+	 * and server side
 	 * 
-	 * @param message
-	 *            A string of text to send.
+	 * @param data Object that is sent
 	 */
 	private void sendMessage(Object data) {
-		// Check if all devices connected to server
-		if (mBluetoothMPService.serverDevice
-				&& mBluetoothMPService.getState() != BluetoothMPService.STATE_ALL_CONNECTED) {
+		// If server, check if all devices connected to server
+		if (bluetoothMPService.serverDevice
+				&& bluetoothMPService.getState() != BluetoothMPService.STATE_ALL_CONNECTED) {
 //			Toast.makeText(this, R.string.waiting_others, Toast.LENGTH_SHORT)
 //					.show();
 			return;
 		}
 
-		if (!mBluetoothMPService.serverDevice
-				&& mBluetoothMPService.getState() != BluetoothMPService.STATE_CONNECTED_TO_SERVER) {
+		// If client, check if it's connected to server
+		if (!bluetoothMPService.serverDevice
+				&& bluetoothMPService.getState() != BluetoothMPService.STATE_CONNECTED_TO_SERVER) {
 //			Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT)
 //					.show();
 			return;
 		}
 
-		// Client connected to server but not all devices connected to server
-		// TODO transmission is possible even now
-		// if (!mChatService.serverDevice && mChatService.getState() !=
-		// BluetoothChatService.STATE_CONNECTED_TO_SERVER) {
-		// Toast.makeText(this, R.string.waiting_others,
-		// Toast.LENGTH_SHORT).show();
-		// return;
-		// }
-
-		// Check that there's actually something to send
+		// Check there is data to send
 		if (data != null) {
-			// Get the message bytes and tell the BluetoothChatService to write
+			// Convert the Object to byte[]
 			ByteArrayOutputStream bos = null;
 			ObjectOutput out = null;
 			try {
@@ -600,21 +510,25 @@ public class MultiplayerActivity extends Activity {
 				e.printStackTrace();
 			}   
 			byte[] send = bos.toByteArray();
-			
-			mBluetoothMPService.write(send);
+			// send the data
+			bluetoothMPService.write(send);
 		}
 	}
 	
+	/**
+	 * Set the value of the progress bar when server device
+	 * is waiting for client devices to connect
+	 * @param value Number of devices connected
+	 */
     private void setProgessValue(int value) {
-    	
-    	int barValue = (100 / mBluetoothMPService.getMaxDeviceNumber()) * value;
+    	// convert the value to percentage
+    	int barValue = (100 / bluetoothMPService.getMaxDeviceNumber()) * value;
     	Log.d(TAG, "setProgessValue()----> barValue: " + barValue);
 		MultiplayerActivity.this.serverWaitingDialog.setProgress(barValue);
 		Log.d(TAG, "setProgress(barValue) SUCCESS!");
         if ( barValue >= 100){
-        	Log.d(TAG, "setProgress(barValue) SUCCESS!");
+        	// all connected
         	serverWaitingDialog.dismiss();
-        	
         }
     }
     
@@ -623,12 +537,11 @@ public class MultiplayerActivity extends Activity {
 		activity.sendMessage(new DataServer(tokens));
     }
     
+    /**
+     * Initialize the player on the board and start the first movement 
+     */
 	private void startGame() {
-		
-		/* setup game */
-		
-//		view.invalidate();
-//		view.refreshDrawableState();
+		Log.d(TAG, "startGame()");
 		players = new Player[Board.getPlayers()];
 //		players[0] = new HumanPlayer(Team.RED, mHandler, MultiplayerActivity.class);
 //		players[1] = new NetworkPlayer(Team.YELLOW, MultiplayerActivity.class);
@@ -639,31 +552,30 @@ public class MultiplayerActivity extends Activity {
 		 players[2] = new HumanPlayer(Team.GREEN, mHandler, MultiplayerActivity.class);
 		 players[3] = new HumanPlayer(Team.BLUE, mHandler, MultiplayerActivity.class);
 		
-//		renderer = new GameRenderer();
-//		view = new GLSurfaceView(this);
-//		view.setRenderer(renderer);
 		GameTouchListener listener = new GameTouchListener();
 		view.setOnTouchListener(listener);
 		view.setOnLongClickListener(listener);
-//		setContentView(view);
-//		view.refreshDrawableState();
 
-//		String thisMessage = "server message:  HEY";
-//		DataServer dataServer = new DataServer(thisMessage); 
 		Toast.makeText(getApplicationContext(), "server",
 				Toast.LENGTH_LONG).show();
 
 		players[0].makeTurn();		
 	}
 	
+	/**
+	 * Convert data arrived from other device to corresponding
+	 * object according to the device mode
+	 * 
+	 * @param readBuf data arrived from other device
+	 */
 	protected void convertArrivalData(byte[] readBuf) {
-		Log.d(TAG, "convertArrivalData() --");
+		Log.d(TAG, "convertArrivalData()");
 		ByteArrayInputStream bis = null;
 		ObjectInput in = null;
 		Object o = null;
 		try {
 			bis = new ByteArrayInputStream(readBuf);
-			in = new ObjectInputStream(bis); // ERROR occuers TODO
+			in = new ObjectInputStream(bis);
 			o = in.readObject();
 			in.close();
 		} catch (StreamCorruptedException e) {
@@ -674,22 +586,30 @@ public class MultiplayerActivity extends Activity {
 			e.printStackTrace();
 		}
 
-		if (o != null && mBluetoothMPService.serverDevice) processArrivalClientData((DataClient) o);
-		if (o != null && !mBluetoothMPService.serverDevice) processArrivalServerData((DataServer) o);
-		
+		// process the data according to device mode
+		if (o != null && bluetoothMPService.serverDevice) processArrivalClientData((DataClient) o);
+		if (o != null && !bluetoothMPService.serverDevice) processArrivalServerData((DataServer) o);
 	}
 
+	/**
+	 * Process data arrived from client to server
+	 * 
+	 * @param object
+	 */
 	private void processArrivalClientData(DataClient object) {
+		Log.d(TAG, "processArrivalServerData()");
 		// TODO Auto-generated method stub
 		
 	}
 	
+	/**
+	 * Process data arrived from server to client
+	 * 
+	 * @param object
+	 */
 	private void processArrivalServerData(DataServer object) {
-		Log.d(TAG, "processArrivalServerData() --");
+		Log.d(TAG, "processArrivalServerData()");
 //		players = object.player;
-//		GameTouchListener listener = new GameTouchListener();
-//		view.setOnTouchListener(listener);
-//		view.setOnLongClickListener(listener);
 //		players[0].makeTurn();
 		
 //		Toast.makeText(getApplicationContext(),
