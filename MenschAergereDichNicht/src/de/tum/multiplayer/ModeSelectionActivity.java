@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 import de.tum.R;
 
 public class ModeSelectionActivity extends Activity {
@@ -58,6 +59,17 @@ public class ModeSelectionActivity extends Activity {
 		});
 	}
 	
+	private void startDiscovery() {
+		if (D) Log.d(TAG, "startDiscovery()");
+		if (mBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+			Intent discoverableIntent = new Intent(
+					BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+			discoverableIntent.putExtra(
+					BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+			startActivity(discoverableIntent);
+		}
+	}
+	
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -67,7 +79,14 @@ public class ModeSelectionActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (D) Log.e(TAG, "+ ON RESUME +");
+//		if (D) Log.e(TAG, "+ ON RESUME +");
+//		// If the adapter is null, then Bluetooth is not supported
+//		if (mBluetoothAdapter == null) {
+//			Toast.makeText(this, "Bluetooth is not available, try New Game",
+//					Toast.LENGTH_LONG).show();
+//			finish();
+//			return;
+//		}
 	}
 	
 	@Override
@@ -86,17 +105,6 @@ public class ModeSelectionActivity extends Activity {
 	public void onDestroy() {
 		super.onDestroy();
 		if (D) Log.e(TAG, "--- ON DESTROY ---");
-	}
-	
-	private void startDiscovery() {
-		if (D) Log.d(TAG, "startDiscovery()");
-		if (mBluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-			Intent discoverableIntent = new Intent(
-					BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-			discoverableIntent.putExtra(
-					BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-			startActivity(discoverableIntent);
-		}
 	}
 
 }
