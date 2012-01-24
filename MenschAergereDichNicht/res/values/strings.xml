@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, MenschAergereDichNichtActivity!</string>
-    <string name="app_name">MenschAergereDichNicht</string>
+    <string name="app_name">Mensch Aergere Dich Nicht</string>
 
     <!-- Bluetooth -->
     <string name="send">Send</string>
@@ -64,9 +63,9 @@
     </string-array>
 
     <!-- About -->
-    <string name="about_title">About this app</string>
-    <string name="copyright">Copyright © 2011</string>
-    <string name="authors">Names come here</string>
-    <string name="disclaimer">This is Free and Open Source Software. You are free to use, modify, and redistribute it under the GNU General Public License version 2 or later.</string>
+    <string name="license">GNU GPL v3 / New BSD License</string>
+    <string name="info_demo_txt">The app was developed during the Android Praktikum 2011 at Technical University Munich (TUM).\n\nThe TUM is not responsible for any kind of violations by this app. Also the TUM does not offer any support for this app. Please refer to the authors mentioned above for any requests.\n\nIn case of violations please contact us at admin.i13.in@tum.de as well.</string>
+	<string name="chair_info_txt"><b>Chair of Operating Systems</b>\nSupervisor:\nProf. Dr. Baumgarten\nAdvisor:\nNils T. Kannengiesser</string>
+    <string name="authors"><b>Baris Oztop, Stefan Matl</b></string>
 
 </resources>
