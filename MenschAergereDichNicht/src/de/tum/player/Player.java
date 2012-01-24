@@ -120,6 +120,7 @@ public abstract class Player {
 		else // just one peg - no options for the player or
 			//player has to select one of two or more pegs
 			player.choosePegForMove(movable == 1 ? found1st : -1);
+		MultiplayerActivity.tokenDone();
 	}
 
 	// checks whether this player can throw again. E.g. when a player has all
@@ -167,6 +168,7 @@ public abstract class Player {
 	public static final void pegMoved() {
 		player.verifyWinner();
 		player.checkForMoreTurns();
+		MultiplayerActivity.tokenDone();
 	}
 
 	// just to verify if the player has won
