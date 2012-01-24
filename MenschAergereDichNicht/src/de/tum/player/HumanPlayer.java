@@ -7,13 +7,11 @@ import de.tum.GameTouchListener;
 import de.tum.MenschAergereDichNichtActivity;
 import de.tum.Team;
 import de.tum.models.Dice;
-import de.tum.models.Peg;
 
 /**
  * this player is a human player. All moves are chosen by a human
  */
 public class HumanPlayer extends Player {
-	private Peg[] pegs;
 	private int movable;
 	private int peg;
 	private final Handler mHandler;
@@ -58,15 +56,14 @@ public class HumanPlayer extends Player {
 	}
 
 	/** {@inheritDoc} */
-	protected void choosePegForMove(Peg[] movables, int movable) {
+	protected void choosePegForMove(int movable) {
 		this.movable = movable;
-		pegs = movables;
 		if (movable != -1)
-			pegs[this.peg = movable].setSelection(true);
+			movables[this.peg = movable].setSelection(true);
 		else {
-			for (int i = 0; i < pegs.length; ++i)
-				if (pegs[i] != null) {
-					pegs[this.peg = i].setSelection(true);
+			for (int i = 0; i < movables.length; ++i)
+				if (movables[i] != null) {
+					movables[this.peg = i].setSelection(true);
 					break;
 				}
 //			MenschAergereDichNichtActivity.showMessage("touch to select next peg");
@@ -98,16 +95,16 @@ public class HumanPlayer extends Player {
 				break;
 			// Log.d("touch", "peg=" + peg);
 			// Log.d("touch", "selecting next peg");
-			pegs[peg].setSelection(false);
-			for (int i = 1; i < pegs.length; ++i)
-				if (pegs[(peg + i) % pegs.length] != null) {
-					pegs[peg = (peg + i) % pegs.length].setSelection(true);
+			movables[peg].setSelection(false);
+			for (int i = 1; i < movables.length; ++i)
+				if (movables[(peg + i) % movables.length] != null) {
+					movables[peg = (peg + i) % movables.length].setSelection(true);
 					break x;
 				}
 		case GameTouchListener.waitingForPegChosen:
 			GameTouchListener.stopWaiting();
-			pegs[peg].setSelection(false);
-			pegChosen(pegs[peg]);
+			movables[peg].setSelection(false);
+			pegChosen(movables[peg], true);
 			break;
 		case GameTouchListener.waitingTimeOut:
 	        Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);

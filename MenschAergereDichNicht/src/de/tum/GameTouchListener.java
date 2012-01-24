@@ -13,7 +13,7 @@ public class GameTouchListener implements OnTouchListener, OnLongClickListener {
 	// time out
 	private static long timeOutForDice = 1000 * 3;
 	private static long timeOutForSelection = 1000 * 6;
-	private static long timeOutAdditional = 1000 * 4;
+	private static long timeOutAdditional = 1000 * 14;
 
 	// Debugging
 	private static final String TAG = "GameTouchListener";

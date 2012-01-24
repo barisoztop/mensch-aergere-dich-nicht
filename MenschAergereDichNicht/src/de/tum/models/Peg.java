@@ -16,9 +16,9 @@ public abstract class Peg extends GameObject {
 	/** the current frame of an action */
 	private int frame_current;
 	/** the final position where the peg starts */
-	private final int pos_start;
+	public final int pos_start;
 	/** the final team of this peg */
-	private final Team team;
+	public final Team team;
 	/** the current position of this peg */
 	private int pos_current;
 	/** the next position of this peg */
@@ -89,10 +89,10 @@ public abstract class Peg extends GameObject {
 		if (action)	
 			Log.d("peg",
 					"move: already moving ######	################!!!!+++++++++++++++++++++++");
-		action = true;
 		frame_current = frames;
 		pos_next.set(x, y);
 		pos_offset_z = 0x00;
+		action = true;
 	}
 
 	/**
@@ -155,15 +155,6 @@ public abstract class Peg extends GameObject {
 	 */
 	public final int getCurrentField() {
 		return pos_current;
-	}
-
-	/**
-	 * getting the team
-	 * 
-	 * @return the peg's team
-	 */
-	public final Team getTeam() {
-		return team;
 	}
 
 	/**

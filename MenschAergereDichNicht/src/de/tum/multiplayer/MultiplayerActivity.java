@@ -134,11 +134,15 @@ public class MultiplayerActivity extends Activity {
 		room = new Room();
 		Room.addRenderable(new ClassicBoard(true, 4));
 		Room.addRenderable(new Dice(true));
-		// players = new Player[Board.getPlayers()];
-		// players[0] = new HumanPlayer(Team.RED, mHandler);
-		// players[1] = new AIPlayer(Team.YELLOW);
-		// players[2] = new AIPlayer(Team.GREEN);
-		// players[3] = new AIPlayer(Team.BLUE);
+		 players = new Player[Board.getPlayers()];
+//		 players[0] = new NetworkPlayer(Team.RED, MultiplayerActivity.class);
+//		 players[1] = new HumanPlayer(Team.YELLOW, mHandler, MultiplayerActivity.class);
+//		 players[2] = new HumanPlayer(Team.GREEN, mHandler, MultiplayerActivity.class);
+//		 players[3] = new AIPlayer(Team.BLUE, MultiplayerActivity.class);
+			players[0] = new NetworkPlayer(Team.RED, MultiplayerActivity.class);
+			players[1] = new NetworkPlayer(Team.YELLOW, MultiplayerActivity.class);
+			players[2] = new NetworkPlayer(Team.GREEN, MultiplayerActivity.class);
+			players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
 		
 		renderer = new GameRenderer();
 		view = new GLSurfaceView(this);
@@ -186,6 +190,8 @@ public class MultiplayerActivity extends Activity {
 		modeSelectionIntent = new Intent(this, ModeSelectionActivity.class);
 		startActivityForResult(modeSelectionIntent, REQUEST_MODE_TYPE);
 		Log.d(TAG, "modeSelectionIntent DONE");
+
+		players[0].makeTurn();		
 		
 	}
 
@@ -259,7 +265,7 @@ public class MultiplayerActivity extends Activity {
 	public static final void nextTurn(Team team) {
 		players[(team.id + 1) % players.length].makeTurn();
 	}
-
+	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK)
@@ -559,15 +565,15 @@ public class MultiplayerActivity extends Activity {
 		// Check if all devices connected to server
 		if (mBluetoothMPService.serverDevice
 				&& mBluetoothMPService.getState() != BluetoothMPService.STATE_ALL_CONNECTED) {
-			Toast.makeText(this, R.string.waiting_others, Toast.LENGTH_SHORT)
-					.show();
+//			Toast.makeText(this, R.string.waiting_others, Toast.LENGTH_SHORT)
+//					.show();
 			return;
 		}
 
 		if (!mBluetoothMPService.serverDevice
 				&& mBluetoothMPService.getState() != BluetoothMPService.STATE_CONNECTED_TO_SERVER) {
-			Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT)
-					.show();
+//			Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT)
+//					.show();
 			return;
 		}
 
@@ -610,7 +616,6 @@ public class MultiplayerActivity extends Activity {
         	serverWaitingDialog.dismiss();
         	
         }
-    	
     }
     
     public static final void notifyPlayers(int[] tokens) {
@@ -625,10 +630,14 @@ public class MultiplayerActivity extends Activity {
 //		view.invalidate();
 //		view.refreshDrawableState();
 		players = new Player[Board.getPlayers()];
-		players[0] = new HumanPlayer(Team.RED, mHandler, MultiplayerActivity.class);
-		players[1] = new AIPlayer(Team.YELLOW, MultiplayerActivity.class);
-		players[2] = new AIPlayer(Team.GREEN, MultiplayerActivity.class);
-		players[3] = new AIPlayer(Team.BLUE, MultiplayerActivity.class);
+//		players[0] = new HumanPlayer(Team.RED, mHandler, MultiplayerActivity.class);
+//		players[1] = new NetworkPlayer(Team.YELLOW, MultiplayerActivity.class);
+//		players[2] = new NetworkPlayer(Team.GREEN, MultiplayerActivity.class);
+//		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
+		 players[0] = new HumanPlayer(Team.RED, mHandler, MultiplayerActivity.class);
+		 players[1] = new HumanPlayer(Team.YELLOW, mHandler, MultiplayerActivity.class);
+		 players[2] = new HumanPlayer(Team.GREEN, mHandler, MultiplayerActivity.class);
+		 players[3] = new HumanPlayer(Team.BLUE, mHandler, MultiplayerActivity.class);
 		
 //		renderer = new GameRenderer();
 //		view = new GLSurfaceView(this);
@@ -641,6 +650,9 @@ public class MultiplayerActivity extends Activity {
 
 //		String thisMessage = "server message:  HEY";
 //		DataServer dataServer = new DataServer(thisMessage); 
+		Toast.makeText(getApplicationContext(), "server",
+				Toast.LENGTH_LONG).show();
+
 		players[0].makeTurn();		
 	}
 	
@@ -683,14 +695,11 @@ public class MultiplayerActivity extends Activity {
 //		Toast.makeText(getApplicationContext(),
 //				"processArrivalServerData: " + object,
 //				Toast.LENGTH_SHORT).show();
-		switch (object.tokens[0]) {
-		case NetworkPlayer.DICE_THROWN:
-			Dice.throwIt(Team.getById(object.tokens[1]), true, object.tokens[2]);
+		NetworkPlayer.notify(object.tokens);
 			Toast.makeText(getApplicationContext(),
 					"processArrivalServerData: " +
-			"dice thrown:" + object.tokens[2],
-					Toast.LENGTH_SHORT).show();
-		}
+			(object.tokens[0] == NetworkPlayer.DICE_THROWN ? "dice thrown: " : "peg moved: ")
+			+ object.tokens[1], Toast.LENGTH_SHORT).show();
 //		Toast.makeText(getApplicationContext(),
 //				"processArrivalServerData: " +
 //		(object.tokens[0] == NetworkPlayer.DICE_THROWN ? "dice thrown " + object.tokens[1] : "error"),
