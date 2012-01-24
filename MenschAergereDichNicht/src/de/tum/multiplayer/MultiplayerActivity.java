@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
+import java.util.LinkedList;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -108,6 +109,7 @@ public class MultiplayerActivity extends Activity {
 	private Room room;
 	
 	private static MultiplayerActivity activity;
+	private static final LinkedList<int[]> tokens = new LinkedList<int[]>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -608,14 +610,17 @@ public class MultiplayerActivity extends Activity {
 	 * @param object
 	 */
 	private void processArrivalServerData(DataServer object) {
-		Log.d(TAG, "processArrivalServerData()");
+		Log.d(TAG, "processArrivalServerData() --");
 //		players = object.player;
+//		GameTouchListener listener = new GameTouchListener();
+//		view.setOnTouchListener(listener);
+//		view.setOnLongClickListener(listener);
 //		players[0].makeTurn();
 		
 //		Toast.makeText(getApplicationContext(),
 //				"processArrivalServerData: " + object,
 //				Toast.LENGTH_SHORT).show();
-		NetworkPlayer.notify(object.tokens);
+		addToken(object.tokens);
 			Toast.makeText(getApplicationContext(),
 					"processArrivalServerData: " +
 			(object.tokens[0] == NetworkPlayer.DICE_THROWN ? "dice thrown: " : "peg moved: ")
@@ -631,4 +636,24 @@ public class MultiplayerActivity extends Activity {
 		view.setOnLongClickListener(listener);
 	}	
 
+    public static final void tokenDone() {
+    	Log.d("multiplayer", "token done");
+    	if (tokens != null)
+	    	synchronized (tokens) {
+	    		if(!tokens.isEmpty())
+	    		  tokens.remove();
+	    		if (!tokens.isEmpty())
+	    			NetworkPlayer.notify(tokens.element());
+	    	}
+    }
+    
+    private static final void addToken(int[] token) {
+    	Log.d("multiplayer", "add token");
+    	if (tokens != null)
+	    	synchronized (tokens) {
+		    	tokens.add(token);
+				if (tokens.size() == 1)
+					NetworkPlayer.notify(tokens.element());
+	    	}
+    }
 }
