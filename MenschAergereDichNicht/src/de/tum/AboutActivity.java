@@ -12,7 +12,8 @@ public class AboutActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		// Setup the window
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		setContentView(R.layout.about);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.about_demo);
 	}
 
 }
