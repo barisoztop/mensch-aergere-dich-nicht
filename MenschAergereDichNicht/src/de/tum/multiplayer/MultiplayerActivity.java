@@ -456,15 +456,6 @@ public class MultiplayerActivity extends Activity {
 		}
 	}
 
-	private void startClientGame() {
-		players[0] = new NetworkPlayer(Team.RED, MultiplayerActivity.class);
-		players[1] = new NetworkPlayer(Team.YELLOW, MultiplayerActivity.class);
-		players[2] = new NetworkPlayer(Team.GREEN, MultiplayerActivity.class);
-		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
-		players[0].makeTurn();
-		
-	}
-
 	/**
 	 * Initiate the BluetoothMPService and select game mode 
 	 */
@@ -564,6 +555,15 @@ public class MultiplayerActivity extends Activity {
 			
 	}
 	
+	private void startClientGame() {
+		players[0] = new NetworkPlayer(Team.RED, MultiplayerActivity.class);
+		players[1] = new NetworkPlayer(Team.YELLOW, MultiplayerActivity.class);
+		players[2] = new NetworkPlayer(Team.GREEN, MultiplayerActivity.class);
+		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
+		players[0].makeTurn();
+		
+	}
+
 	/**
 	 * Convert data arrived from other device to corresponding
 	 * object according to the device mode

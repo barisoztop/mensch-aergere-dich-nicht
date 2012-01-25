@@ -127,7 +127,7 @@ public class BluetoothMPService {
 			acceptThread = new AcceptClientThread();
 			acceptThread.start();
 		}
-		setState(STATE_LISTEN);
+//		setState(STATE_LISTEN);
 	}
 
 	/**
@@ -211,6 +211,9 @@ public class BluetoothMPService {
 			if (getConnectedDevices() == 2) setState(STATE_CONNECTED_2);
 			if (getConnectedDevices() == 3) setState(STATE_CONNECTED_3);
 		}
+		
+        // TODO restart AcceptThread
+		acceptThread.cancel(); acceptThread = null; BluetoothMPService.this.startServer();
 
 		// start ConnectedThread to initiate data transfer mechanism
 		if (comState == STATE_CONNECTED_1) {
