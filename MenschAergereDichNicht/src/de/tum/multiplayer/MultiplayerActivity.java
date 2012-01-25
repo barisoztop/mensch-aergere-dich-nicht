@@ -241,6 +241,7 @@ public class MultiplayerActivity extends Activity {
 				case BluetoothMPService.STATE_ALL_CONNECTED:
 					Toast.makeText(getApplicationContext(), "STATE_ALL_CONNECTED",
 							Toast.LENGTH_SHORT).show();
+					// all devices are connected, so start the game
 					MultiplayerActivity.this.startGame();
 					break;
 				case BluetoothMPService.STATE_CONNECTED_1:
@@ -395,7 +396,7 @@ public class MultiplayerActivity extends Activity {
 						.getRemoteDevice(address);
 				// Attempt to connect to server
 				bluetoothMPService.connectServer(serverDevice);
-				startClientGame();
+				startClientGame(); // TODO check states
 			}
 			break;
 		case REQUEST_ENABLE_BT:

@@ -3,6 +3,7 @@ package de.tum.multiplayer.bluetooth;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import de.tum.MenschAergereDichNichtActivity;
@@ -13,6 +14,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.location.Address;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,8 +32,10 @@ public class BluetoothMPService {
 	private static final String NAME = "MenschAergereDichNicht";
 
 	// Unique UUID
-	private static final UUID MY_UUID = UUID
-			.fromString("c0a8648d-7382-457a-8de3-6c5aca4d922e");
+	private ArrayList<UUID> uuidList;
+	private static final UUID UUID1 = UUID.fromString("7ab4f8ae-289f-4a2f-8474-ba12a58ec499");
+	private static final UUID UUID2 = UUID.fromString("142c58fe-8432-4931-95b3-febd4afab6df");
+	private static final UUID UUID3 = UUID.fromString("09d183b6-2b92-4aae-85e2-4034eb91d92c");
 
 	// Local bluetooth adapter
 	private final BluetoothAdapter bluetoothAdapter;
@@ -73,6 +77,7 @@ public class BluetoothMPService {
 	private int maxDeviceNumber = 1;
 	// server device id
 	private static final int SERVER_ID = -1;
+	private int clientTryings = 0;
 
 	/**
 	 * Constructor to get the handler from MultiplayerActivity,and its context
@@ -86,6 +91,11 @@ public class BluetoothMPService {
 		bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		comState = STATE_NONE;
 		this.handler = handler;
+		uuidList = new ArrayList<UUID>();
+		uuidList.add(UUID1);
+		uuidList.add(UUID2);
+		uuidList.add(UUID3);
+
 	}
 
 	/**
@@ -127,7 +137,7 @@ public class BluetoothMPService {
 			acceptThread = new AcceptClientThread();
 			acceptThread.start();
 		}
-//		setState(STATE_LISTEN);
+		if (connectedDevices == 0) setState(STATE_LISTEN);
 	}
 
 	/**
@@ -143,7 +153,7 @@ public class BluetoothMPService {
 			// Create a new listening server socket
 			try {
 				tmp = bluetoothAdapter
-						.listenUsingRfcommWithServiceRecord(NAME, MY_UUID);
+						.listenUsingRfcommWithServiceRecord(NAME, uuidList.get(clientTryings));
 			} catch (IOException e) {
 				Log.e(TAG, "listen() failed", e);
 			}
@@ -162,12 +172,14 @@ public class BluetoothMPService {
 					// blocking call
 					socket = mmServerSocket.accept();
 				} catch (IOException e) {
-					Log.e(TAG, "Server's accept() failed", e);
+					Log.e(TAG, "Server's accept() failed/stopped");
+					Log.e(TAG, "connectedDevices: " + getConnectedDevices());
 					break;
 				}
 
 				// connection is accepted
 				if (socket != null) {
+					if (clientTryings < maxDeviceNumber) clientTryings++;
 					if (D) Log.d(TAG, "AcceptClientThread, socket != null");
 					connected(socket, socket.getRemoteDevice());
 				}
@@ -201,9 +213,10 @@ public class BluetoothMPService {
 		}
 
 		// set the state according the number of devices connected
-		if (getConnectedDevices() < maxDeviceNumber) {
-			Log.d(TAG, "connectedDevices++");
+		if (getConnectedDevices() <= maxDeviceNumber) {
 			setConnectedDevices(getConnectedDevices() + 1); // TODO no need??
+			Log.d(TAG, "connectedDevices++: " + getConnectedDevices());
+			Log.d(TAG, "maxDeviceNumber: " + maxDeviceNumber);
 			if (getConnectedDevices() == 1) {
 				serverDevice = true;
 				setState(STATE_CONNECTED_1);
@@ -211,12 +224,9 @@ public class BluetoothMPService {
 			if (getConnectedDevices() == 2) setState(STATE_CONNECTED_2);
 			if (getConnectedDevices() == 3) setState(STATE_CONNECTED_3);
 		}
-		
-        // TODO restart AcceptThread
-		acceptThread.cancel(); acceptThread = null; BluetoothMPService.this.startServer();
 
 		// start ConnectedThread to initiate data transfer mechanism
-		if (comState == STATE_CONNECTED_1) {
+		if (getConnectedDevices() == 1) {
 			connectedThread1 = new ConnectedThread(socket,
 					getConnectedDevices());
 			connectedThread1.start();
@@ -228,7 +238,7 @@ public class BluetoothMPService {
 			msg.setData(bundle);
 			handler.sendMessage(msg);
 
-		} else if (comState == STATE_CONNECTED_2) {
+		} else if (getConnectedDevices() == 2) {
 			connectedThread2 = new ConnectedThread(socket,
 					getConnectedDevices());
 			connectedThread2.start();
@@ -239,7 +249,7 @@ public class BluetoothMPService {
 			bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
 			msg.setData(bundle);
 			handler.sendMessage(msg);
-		} else if (comState == STATE_CONNECTED_3) {
+		} else if (getConnectedDevices() == 3) {
 			connectedThread3 = new ConnectedThread(socket,
 					getConnectedDevices());
 			connectedThread3.start();
@@ -261,7 +271,16 @@ public class BluetoothMPService {
 				setState(STATE_ALL_CONNECTED);
 				Log.d(TAG, "mAcceptThread.cancel()");
 			}
+		} else {
+	        // TODO restart AcceptThread
+			if (D) Log.d(TAG, "connectedDevices !!!!= maxDeviceNumber");
+			if (acceptThread != null) {
+				acceptThread.cancel();
+				acceptThread = null;
+				BluetoothMPService.this.startServer();
+			}
 		}
+
 	}
 
 	/**
@@ -324,7 +343,8 @@ public class BluetoothMPService {
 
 			// Get a BluetoothSocket for the connection with server
 			try {
-				tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
+				tmp = device.createRfcommSocketToServiceRecord(uuidList.get(clientTryings));
+				if (clientTryings < 3) clientTryings++;
 			} catch (IOException e) {
 				Log.e(TAG, "client couldn't get socket", e);
 			}
@@ -343,7 +363,7 @@ public class BluetoothMPService {
 				// blocking call
 				mmSocket.connect();
 			} catch (IOException e) {
-				connectionFailed();
+//				connectionFailed();
 				Log.e(TAG, "Client couldn't connect to server via mmSocket.connect()");
 				// Close the socket
 				try {
@@ -353,6 +373,11 @@ public class BluetoothMPService {
 				}
 				Log.e(TAG, "Exception occurred at ConnectToServerThread");
 				setState(STATE_NONE);
+				Log.e(TAG, "Try next UUID");
+				if (clientTryings < 3)
+					tryNextUUID(mmDevice);
+				else
+					connectionFailed();
 				return;
 			}
 
@@ -372,6 +397,14 @@ public class BluetoothMPService {
 				Log.e(TAG, "close() of connect socket failed", e);
 			}
 		}
+	}
+	
+	public void tryNextUUID (BluetoothDevice device) {
+		Log.e(TAG, "Trying next UUID, Try no: " + clientTryings);
+		// Connect to the server
+		connectToServerThread = new ConnectToServerThread(device);
+		connectToServerThread.start();
+		setState(STATE_CONNECTING_TO_SERVER);
 	}
 
 	/**
