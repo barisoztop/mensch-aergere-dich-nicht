@@ -3,15 +3,15 @@
 
     <item
         android:id="@+id/menu_server_mode"
-        android:drawableLeft="@drawable/ic_menu_forward"
+        android:icon="@drawable/ic_menu_forward"
         android:title="@string/button_servermode"/>
     <item
         android:id="@+id/menu_client_mode"
-        android:drawableLeft="@drawable/ic_menu_back"
+        android:icon="@drawable/ic_menu_back"
         android:title="@string/button_clientmode"/>
     <item
         android:id="@+id/menu_discovery"
-        android:drawableLeft="@drawable/ic_menu_share"
+        android:icon="@drawable/ic_menu_share"
         android:title="@string/button_discovery"/>
 
 </menu>

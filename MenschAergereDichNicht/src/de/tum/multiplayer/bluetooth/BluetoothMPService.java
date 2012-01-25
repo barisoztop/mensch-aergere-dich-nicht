@@ -1,4 +1,3 @@
-
 package de.tum.multiplayer.bluetooth;
 
 import java.io.IOException;
@@ -20,330 +19,591 @@ import android.os.Message;
 import android.util.Log;
 
 /**
- * This class does all the work for setting up and managing Bluetooth
- * connections with other devices. It has a thread that listens for
- * incoming connections, a thread for connecting with a device, and a
- * thread for performing data transmissions when connected.
+ * Consists threads to handle the communication with other devices
  */
 public class BluetoothMPService {
-    // Debugging
-    private static final String TAG = "BluetoothMPService";
-    private static final boolean D = true;
+	// Debugging
+	private static final String TAG = "BluetoothMPService";
+	private static final boolean D = true;
 
-    // Name for the SDP record when creating server socket
-    private static final String NAME = "MenschAergereDichNicht";
+	// Name for the SDP record when creating server socket
+	private static final String NAME = "MenschAergereDichNicht";
 
-    // Unique UUID for this application
-    private static final UUID MY_UUID = UUID.fromString("c0a8648d-7382-457a-8de3-6c5aca4d922e");
+	// Unique UUID
+	private static final UUID MY_UUID = UUID
+			.fromString("c0a8648d-7382-457a-8de3-6c5aca4d922e");
 
-    // Member fields
-    private final BluetoothAdapter mAdapter;
-    private final Handler mHandler;
-    private AcceptClientThread mAcceptThread;
-    private ConnectToServerThread mConnectThread;
-    private ConnectedThread mConnectedClientThread;
-    private ConnectedThread mConnectedThread1;
-    private ConnectedThread mConnectedThread2;
-    private ConnectedThread mConnectedThread3;
-    private int mState;
+	// Local bluetooth adapter
+	private final BluetoothAdapter bluetoothAdapter;
+	// Handler to communicate with MultiplayerActivity
+	private final Handler handler;
+	// Threads that making communication on server and client side
+	private AcceptClientThread acceptThread;
+	private ConnectToServerThread connectToServerThread;
+	private ConnectedThread connectedClientThread;
+	private ConnectedThread connectedThread1;
+	private ConnectedThread connectedThread2;
+	private ConnectedThread connectedThread3;
+	// State of the communication
+	private int comState;
 
-    // Constants that indicate the current connection state
-    public static final int STATE_NONE = 0;       // we're doing nothing
-    public static final int STATE_LISTEN = 1;     // now listening for incoming connections
-    public static final int STATE_CONNECTING_TO_SERVER = 2; 		// connecting to the server device
-    public static final int STATE_CONNECTED_1 = 3;  // now connected to a remote device
-    public static final int STATE_CONNECTED_2 = 4;
-    public static final int STATE_CONNECTED_3 = 5;
-    public static final int STATE_ALL_CONNECTED = 6;	// all the devices connected to the server
+	// Communication states
+	// no connection
+	public static final int STATE_NONE = 0;
+	// listening for incoming client connections
+	public static final int STATE_LISTEN = 1;
+	// connecting to the server
+	public static final int STATE_CONNECTING_TO_SERVER = 2;
+	// now first device is connected to server
+	public static final int STATE_CONNECTED_1 = 3;
+	// now second device is connected to server
+	public static final int STATE_CONNECTED_2 = 4;
+	// now third device is connected to server
+	public static final int STATE_CONNECTED_3 = 5;
+	// all the devices connected to the server
+	public static final int STATE_ALL_CONNECTED = 6;
+	// client connected to the server
 	public static final int STATE_CONNECTED_TO_SERVER = 7;
-	
-    public int connectedDevices = 0;
-    public boolean serverDevice = false;
-    private int maxDeviceNumber = 1;
+
+	// number of current connected devices to server
+	private int connectedDevices = 0;
+	// if current device is server/client
+	public boolean serverDevice = false;
+	// max number of devices allowed to connect
+	private int maxDeviceNumber = 1;
+	// server device id
 	private static final int SERVER_ID = -1;
 
-    /**
-     * Constructor. Prepares a new BluetoothChat session.
-     * @param context  The UI Activity Context
-     * @param handler  A Handler to send messages back to the UI Activity
-     */
-    public BluetoothMPService(Context context, Handler handler) {
-        mAdapter = BluetoothAdapter.getDefaultAdapter();
-        mState = STATE_NONE;
-        mHandler = handler;
-    }
+	/**
+	 * Constructor to get the handler from MultiplayerActivity,and its context
+	 * 
+	 * @param context
+	 *            MultiplayerActivity's context
+	 * @param handler
+	 *            Handler for the communication with MultiplayerActivity
+	 */
+	public BluetoothMPService(Context context, Handler handler) {
+		bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		comState = STATE_NONE;
+		this.handler = handler;
+	}
 
-    /**
-     * Set the current state of the chat connection
-     * @param state  An integer defining the current connection state
-     */
-    private synchronized void setState(int state) {
-        if (D) Log.d(TAG, "setState() " + mState + " -> " + state);
-        mState = state;
+	/**
+	 * Update the state of the communication
+	 * 
+	 * @param state
+	 *            State constant
+	 */
+	private synchronized void setState(int state) {
+		if (D) Log.d(TAG, "setState(): " + comState + " to " + state);
+		comState = state;
 
-        // Give the new state to the Handler so the UI Activity can update
-        mHandler.obtainMessage(MultiplayerActivity.MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
-    }
+		// let the MultiplayerActivity know
+		handler.obtainMessage(MultiplayerActivity.MESSAGE_STATE_CHANGE, state,
+				-1).sendToTarget();
+	}
 
-    /**
-     * Return the current connection state. */
-    public synchronized int getState() {
-        return mState;
-    }
+	/**
+	 * Return the current communication state.
+	 */
+	public synchronized int getState() {
+		return comState;
+	}
 
-    /**
-     * Start the chat service. Specifically start AcceptThread to begin a
-     * session in listening (server) mode. Called by the Activity onResume() */
-    public synchronized void startServer() {
-        if (D) Log.d(TAG, "start Service (again)");
+	/**
+	 * Start the server mode by starting the AcceptClientThread
+	 */
+	public synchronized void startServer() {
+		if (D) Log.d(TAG, "startServer()");
 
-        // Cancel any thread attempting to make a connection
-        if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
+		// Cancel earlier attempts to connect another server
+//		if (connectToServerThread != null) {
+//			connectToServerThread.cancel();
+//			connectToServerThread = null;
+//		}
 
-        // Cancel any thread currently running a connection
-//        if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
+		// Start the listening for client connections
+		if (acceptThread == null) {
+			acceptThread = new AcceptClientThread();
+			acceptThread.start();
+		}
+		setState(STATE_LISTEN);
+	}
 
-        // Start the thread to listen on a BluetoothServerSocket
-        if (mAcceptThread == null) {
-            mAcceptThread = new AcceptClientThread();
-            mAcceptThread.start();
-        }
-        setState(STATE_LISTEN);
-    }
+	/**
+	 * Thread that listening for client connections
+	 */
+	private class AcceptClientThread extends Thread {
+		// The local server socket
+		private final BluetoothServerSocket mmServerSocket;
 
-    /**
-     * Clients connects to Server
-     * @param device  The BluetoothDevice to connect
-     */
-    public synchronized void connectServer(BluetoothDevice device) {
-        if (D) Log.d(TAG, "connect to server: " + device);
+		public AcceptClientThread() {
+			BluetoothServerSocket tmp = null;
 
-        // Cancel any thread attempting to make a connection
-        if (mState == STATE_CONNECTING_TO_SERVER) {
-            if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
-        }
+			// Create a new listening server socket
+			try {
+				tmp = bluetoothAdapter
+						.listenUsingRfcommWithServiceRecord(NAME, MY_UUID);
+			} catch (IOException e) {
+				Log.e(TAG, "listen() failed", e);
+			}
+			mmServerSocket = tmp;
+		}
 
-        // Cancel any thread currently running a connection
-        if (mConnectedThread1 != null) {mConnectedThread1.cancel(); mConnectedThread1 = null;}
-        if (mConnectedThread2 != null) {mConnectedThread2.cancel(); mConnectedThread2 = null;}
-        if (mConnectedThread3 != null) {mConnectedThread3.cancel(); mConnectedThread3 = null;}
-        if (mConnectedClientThread != null) {mConnectedClientThread.cancel(); mConnectedClientThread = null;}
+		public void run() {
+			if (D)
+				Log.d(TAG, "BEGIN AcceptClientThread" + this);
+			setName("AcceptClientThread");
+			BluetoothSocket socket = null;
 
-        // Start the thread to connect with the given device
-        mConnectThread = new ConnectToServerThread(device);
-        mConnectThread.start();
-        setState(STATE_CONNECTING_TO_SERVER);
-    }
+			// Listen to the server socket if we're not connected
+			while (true) {
+				try {
+					// blocking call
+					socket = mmServerSocket.accept();
+				} catch (IOException e) {
+					Log.e(TAG, "Server's accept() failed", e);
+					break;
+				}
 
-    /**
-     * Start the ConnectedThread to begin managing a Bluetooth connection
-     * @param socket  The BluetoothSocket on which the connection was made
-     * @param device  The BluetoothDevice that has been connected
-     */
-    public synchronized void connectedClient(BluetoothSocket socket, BluetoothDevice device) {
-        if (D) Log.d(TAG, "Client connected");
+				// connection is accepted
+				if (socket != null) {
+					if (D) Log.d(TAG, "AcceptClientThread, socket != null");
+					connected(socket, socket.getRemoteDevice());
+				}
+			}
+		}
 
-        // Cancel the thread that doing client connection
-        if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
+		public void cancel() {
+			if (D) Log.d(TAG, "cancel " + this);
+			try {
+				mmServerSocket.close();
+			} catch (IOException e) {
+				Log.e(TAG, "close() of server failed");
+			}
+		}
+	}
 
-        // Cancel any thread currently running a connection
-        if (mConnectedThread1 != null) {mConnectedThread1.cancel(); mConnectedThread1 = null;}
-        if (mConnectedThread2 != null) {mConnectedThread2.cancel(); mConnectedThread2 = null;}
-        if (mConnectedThread3 != null) {mConnectedThread3.cancel(); mConnectedThread3 = null;}
-        if (mConnectedClientThread != null) {mConnectedClientThread.cancel(); mConnectedClientThread = null;}
+	/*
+	 * Start the ConnectedThread to begin managing a Bluetooth connection
+	 * 
+	 * @param socket The BluetoothSocket on which the connection was made
+	 * @param device The BluetoothDevice that has been connected
+	 */
+	public synchronized void connected(BluetoothSocket socket,
+			BluetoothDevice device) {
+		if (D) Log.d(TAG, "Server is connected to client");
 
-        // This is client device so cancel the AcceptThread
-        if (mAcceptThread != null) {mAcceptThread.cancel(); mAcceptThread = null;}
+		// Cancel the thread for client connection
+		if (connectToServerThread != null) {
+			connectToServerThread.cancel();
+			connectToServerThread = null;
+		}
 
-        // Start the thread to manage the connection and perform transmissions
-        mConnectedClientThread = new ConnectedThread(socket, SERVER_ID); // TODO -1 is the server that we connected, socket also server's socket
-        mConnectedClientThread.start();
+		// set the state according the number of devices connected
+		if (getConnectedDevices() < maxDeviceNumber) {
+			Log.d(TAG, "connectedDevices++");
+			setConnectedDevices(getConnectedDevices() + 1); // TODO no need??
+			if (getConnectedDevices() == 1) {
+				serverDevice = true;
+				setState(STATE_CONNECTED_1);
+			}
+			if (getConnectedDevices() == 2) setState(STATE_CONNECTED_2);
+			if (getConnectedDevices() == 3) setState(STATE_CONNECTED_3);
+		}
 
-        // Send the name of the connected Server back to the UI Activity
-        Message msg = mHandler.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
-        Bundle bundle = new Bundle();
-        bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
-        msg.setData(bundle);
-        mHandler.sendMessage(msg);
+		// start ConnectedThread to initiate data transfer mechanism
+		if (comState == STATE_CONNECTED_1) {
+			connectedThread1 = new ConnectedThread(socket,
+					getConnectedDevices());
+			connectedThread1.start();
 
-        serverDevice = false;
-        setState(STATE_CONNECTED_TO_SERVER);
-    }
+			Message msg = handler
+					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
+			Bundle bundle = new Bundle();
+			bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
+			msg.setData(bundle);
+			handler.sendMessage(msg);
 
-    /**
-     * Start the ConnectedThread to begin managing a Bluetooth connection
-     * @param socket  The BluetoothSocket on which the connection was made
-     * @param device  The BluetoothDevice that has been connected
-     */
-    public synchronized void connected(BluetoothSocket socket, BluetoothDevice device) {
-        if (D) Log.d(TAG, "Server is connected to client");
+		} else if (comState == STATE_CONNECTED_2) {
+			connectedThread2 = new ConnectedThread(socket,
+					getConnectedDevices());
+			connectedThread2.start();
 
-        // Cancel the thread for client connection
-        if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
+			Message msg = handler
+					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
+			Bundle bundle = new Bundle();
+			bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
+			msg.setData(bundle);
+			handler.sendMessage(msg);
+		} else if (comState == STATE_CONNECTED_3) {
+			connectedThread3 = new ConnectedThread(socket,
+					getConnectedDevices());
+			connectedThread3.start();
 
-        // Cancel any thread currently running a connection
-//        if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
+			Message msg = handler
+					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
+			Bundle bundle = new Bundle();
+			bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
+			msg.setData(bundle);
+			handler.sendMessage(msg);
+		}
 
-        // Cancel the accept thread because we only want to connect to one device
-//        if (mAcceptThread != null) {mAcceptThread.cancel(); mAcceptThread = null;}
-        
-        // TODO restart AcceptThread
-        if (D) Log.d(TAG, "Cancel mAcceptThread and Restart it with BluetoothMPService.this.start()");
+		// Cancel the accept thread for more than MAX_DEVICE
+		if (getConnectedDevices() == maxDeviceNumber) {
+			if (D) Log.d(TAG, "connectedDevices == maxDeviceNumber");
+			if (acceptThread != null) {
+				acceptThread.cancel();
+				acceptThread = null;
+				setState(STATE_ALL_CONNECTED);
+				Log.d(TAG, "mAcceptThread.cancel()");
+			}
+		}
+	}
 
-        
-        if (connectedDevices < maxDeviceNumber)  {
-        	Log.d(TAG,"connectedDevices++");
-        	connectedDevices++; // TODO no need??
-        	if (connectedDevices == 1) setState(STATE_CONNECTED_1);
-        	if (connectedDevices == 2) setState(STATE_CONNECTED_2);
-        	if (connectedDevices == 3) setState(STATE_CONNECTED_3);
-        }
-        
-        serverDevice = true; // TODO put it under connectedDevices == 1
-        
-        // Start the thread to manage the connection and perform transmissions
-        if (mState == STATE_CONNECTED_1) {        	
-        	mConnectedThread1 = new ConnectedThread(socket, connectedDevices);
-            mConnectedThread1.start();
-            
-            // Send the name of the connected device back to the UI Activity
-            Message msg = mHandler.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
-            Bundle bundle = new Bundle();
-            bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
-            msg.setData(bundle);
-            mHandler.sendMessage(msg);
-            
-        } else if (mState == STATE_CONNECTED_2) {
-        	mConnectedThread2 = new ConnectedThread(socket, connectedDevices);
-            mConnectedThread2.start();
-            
-            // Send the name of the connected device back to the UI Activity
-            Message msg = mHandler.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
-            Bundle bundle = new Bundle();
-            bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
-            msg.setData(bundle);
-            mHandler.sendMessage(msg);
-        } else if (mState == STATE_CONNECTED_3){
-        	mConnectedThread3 = new ConnectedThread(socket, connectedDevices);
-            mConnectedThread3.start();
-            
-            // Send the name of the connected device back to the UI Activity
-            Message msg = mHandler.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
-            Bundle bundle = new Bundle();
-            bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
-            msg.setData(bundle);
-            mHandler.sendMessage(msg);
-        }
-        
-        // Cancel the accept thread for more than MAX_DEVICE
-        if (connectedDevices == maxDeviceNumber){
-        	if (D) Log.d(TAG, "connectedDevices == maxDeviceNumber so mAcceptThread.cancel()");
-        	if (mAcceptThread != null) {
-        		mAcceptThread.cancel();
-        		mAcceptThread = null;
-        		setState(STATE_ALL_CONNECTED);
-        		Log.d(TAG, "mAcceptThread.cancel()");
-        	}
-        } else {
-            if (D) Log.d(TAG, "connectedDevices != maxDeviceNumber --> setStates");
-//            mAcceptThread.cancel();
-//            mAcceptThread = null;
-//            BluetoothMPService.this.startServer();
-//            setState(STATE_LISTEN); // TODO see below
+	/**
+	 * Clients connects to Server
+	 * 
+	 * @param device
+	 *            The BluetoothDevice to connect
+	 */
+	public synchronized void connectServer(BluetoothDevice device) {
+		if (D) Log.d(TAG, "connect to server: " + device);
 
-        }
-    }
-    
-    /**
-     * Stop all threads
-     */
-    public synchronized void stop() {
-        if (D) Log.d(TAG, "stop");
-        if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
-        if (mConnectedThread1 != null) {mConnectedThread1.cancel(); mConnectedThread1 = null;}
-        if (mConnectedThread2 != null) {mConnectedThread2.cancel(); mConnectedThread2 = null;}
-        if (mConnectedThread3 != null) {mConnectedThread3.cancel(); mConnectedThread3 = null;}
-        if (mConnectedClientThread != null) {mConnectedClientThread.cancel(); mConnectedClientThread = null;}
-        if (mAcceptThread != null) {mAcceptThread.cancel(); mAcceptThread = null;}
-        connectedDevices = 0;
-        serverDevice = false;
-        if (mState != STATE_NONE) setState(STATE_NONE);
-    }
+		// Cancel earlier attempts to connect to server
+		if (comState == STATE_CONNECTING_TO_SERVER) {
+			if (connectToServerThread != null) {
+				connectToServerThread.cancel();
+				connectToServerThread = null;
+			}
+		}
 
-    /**
-     * Write to the ConnectedThread in an unsynchronized manner
-     * @param out The bytes to write
-     * @see ConnectedThread#write(byte[])
-     */
-    public void write(byte[] out) {        
+		// Cancel all the threads that running a connection
+		if (connectedThread1 != null) {
+			connectedThread1.cancel();
+			connectedThread1 = null;
+		}
+		if (connectedThread2 != null) {
+			connectedThread2.cancel();
+			connectedThread2 = null;
+		}
+		if (connectedThread3 != null) {
+			connectedThread3.cancel();
+			connectedThread3 = null;
+		}
+		if (connectedClientThread != null) {
+			connectedClientThread.cancel();
+			connectedClientThread = null;
+		}
 
-        
-        // Synchronize a copy of the ConnectedThread
-        if (serverDevice) {
-        	// Create temporary object
-            ConnectedThread r1 = null;
-            ConnectedThread r2 = null;
-            ConnectedThread r3 = null;
-            
-	        synchronized (this) {
-	            if (mState != STATE_ALL_CONNECTED) return;
-	            r1 = mConnectedThread1;
-	            r2 = mConnectedThread2;
-	            r3 = mConnectedThread3;  
-	        }
-	        // Perform the write unsynchronized
-	        // TODO if are debugging
-        	if (r1 != null) r1.write(out);
-        	if (r2 != null) r2.write(out);
-        	if (r3 != null) r3.write(out);
-        } else {
-        	
-        	ConnectedThread client = null;
-        	
-            synchronized (this) {
-                if (mState != STATE_CONNECTED_TO_SERVER) return;
-                client = mConnectedClientThread;
-            }
-            // Perform the write unsynchronized
-            client.write(out);
-        }
-        	
-    }
+		// This is client device so cancel the AcceptThread
+		if (acceptThread != null) {
+			acceptThread.cancel();
+			acceptThread = null;
+		}
 
-    /**
-     * Indicate that the connection attempt failed and notify the UI Activity.
-     */
-    private void connectionFailed() {
-        setState(STATE_LISTEN);
+		// Connect to the server
+		connectToServerThread = new ConnectToServerThread(device);
+		connectToServerThread.start();
+		setState(STATE_CONNECTING_TO_SERVER);
+	}
 
-        // Send a failure message back to the Activity
-        Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
-        Bundle bundle = new Bundle();
-        bundle.putString(MenschAergereDichNichtActivity.TOAST, "Unable to connect device");
-        msg.setData(bundle);
-        mHandler.sendMessage(msg);
-        // Make it possible to be server again
-        BluetoothMPService.this.startServer();
-    }
+	/**
+	 * Attempt to connect to server device
+	 */
+	private class ConnectToServerThread extends Thread {
+		private final BluetoothSocket mmSocket;
+		private final BluetoothDevice mmDevice;
 
-    /**
-     * Indicate that the connection was lost and notify the UI Activity.
-     */
-    private void connectionLost() {
-        setState(STATE_LISTEN); // TODO
+		public ConnectToServerThread(BluetoothDevice device) {
+			mmDevice = device;
+			BluetoothSocket tmp = null;
 
-        // Send a failure message back to the Activity
-        Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
-        Bundle bundle = new Bundle();
-        bundle.putString(MenschAergereDichNichtActivity.TOAST, "Device connection was lost");
-        msg.setData(bundle);
-        mHandler.sendMessage(msg);
-        stop(); // TODO
-        // Make it possible to be server again
-//        BluetoothMPService.this.startServer();
-    }
+			// Get a BluetoothSocket for the connection with server
+			try {
+				tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
+			} catch (IOException e) {
+				Log.e(TAG, "client couldn't get socket", e);
+			}
+			mmSocket = tmp;
+		}
 
-    public int getMaxDeviceNumber() {
+		public void run() {
+			if(D) Log.d(TAG, "BEGIN ConnectToServerThread");
+			setName("ConnectThread");
+
+			// Cancel discovery in case it's still running
+			bluetoothAdapter.cancelDiscovery();
+
+			// Make a connection to the BluetoothSocket
+			try {
+				// blocking call
+				mmSocket.connect();
+			} catch (IOException e) {
+				connectionFailed();
+				Log.e(TAG, "Client couldn't connect to server via mmSocket.connect()");
+				// Close the socket
+				try {
+					mmSocket.close();
+				} catch (IOException e2) {
+					Log.e(TAG,"unable to close() socket during connection failure", e2);
+				}
+				Log.e(TAG, "Exception occurred at ConnectToServerThread");
+				setState(STATE_NONE);
+				return;
+			}
+
+			// Reset the ConnectToServerThread because we're done
+			synchronized (BluetoothMPService.this) {
+				connectToServerThread = null;
+			}
+
+			// Start the connected thread
+			connectedClient(mmSocket, mmDevice);
+		}
+
+		public void cancel() {
+			try {
+				mmSocket.close();
+			} catch (IOException e) {
+				Log.e(TAG, "close() of connect socket failed", e);
+			}
+		}
+	}
+
+	/**
+	 * Client connected to server, now handle the data transfer
+	 * 
+	 * @param socket
+	 *            socket that made connection to server
+	 * @param device
+	 *            server
+	 */
+	public synchronized void connectedClient(BluetoothSocket socket,
+			BluetoothDevice device) {
+		if (D)
+			Log.d(TAG, "Client connected");
+
+		// Client connection is done, so cancel its thread
+		if (connectToServerThread != null) {
+			connectToServerThread.cancel();
+			connectToServerThread = null;
+		}
+
+		// Start the thread to manage the connection and perform transmissions
+		connectedClientThread = new ConnectedThread(socket, SERVER_ID); // TODO
+		connectedClientThread.start();
+		
+		serverDevice = false;
+		setState(STATE_CONNECTED_TO_SERVER);
+
+		Message msg = handler
+				.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
+		Bundle bundle = new Bundle();
+		bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
+		msg.setData(bundle);
+		handler.sendMessage(msg);
+
+
+	}
+
+	/**
+	 * This thread runs during a connection with a remote device either for
+	 * server or client. It handles all incoming and outgoing transmissions.
+	 */
+	private class ConnectedThread extends Thread {
+		private final BluetoothSocket mmSocket;
+		private final InputStream mmInStream;
+		private final OutputStream mmOutStream;
+		private final int DeviceNo;
+
+		public ConnectedThread(BluetoothSocket socket, int DeviceNo) {
+			Log.d(TAG, "create ConnectedThread for Client or Server");
+			mmSocket = socket;
+			InputStream tmpIn = null;
+			OutputStream tmpOut = null;
+			this.DeviceNo = DeviceNo; // SERVER_ID is the server
+
+			// Get the BluetoothSocket input and output streams
+			try {
+				tmpIn = socket.getInputStream();
+				tmpOut = socket.getOutputStream();
+			} catch (IOException e) {
+				Log.e(TAG, "temp sockets not created", e);
+			}
+
+			mmInStream = tmpIn;
+			mmOutStream = tmpOut;
+		}
+
+		public void run() {
+			Log.i(TAG, "BEGIN mConnectedThread");
+			byte[] buffer = new byte[1024];
+			int bytes;
+
+			// Keep listening to the InputStream while connected
+			while (true) {
+				try {
+					// Read from the InputStream for messages
+					bytes = mmInStream.read(buffer);
+
+					// Send the bytes to MultiplayerActivity
+					handler.obtainMessage(MultiplayerActivity.MESSAGE_READ,
+							bytes, DeviceNo, buffer).sendToTarget();
+
+				} catch (IOException e) {
+					Log.e(TAG, "disconnected", e);
+					connectionLost();
+					break;
+				}
+			}
+		}
+
+		/**
+		 * Write to the connected OutStream.
+		 * 
+		 * @param buffer
+		 *            The bytes to write
+		 */
+		public void write(byte[] buffer) {
+			try {
+				mmOutStream.write(buffer);
+
+				// TODO no need!
+				// Share the sent message back to the MultiplayerActivity
+				handler.obtainMessage(MultiplayerActivity.MESSAGE_WRITE, -1,
+						-1, buffer).sendToTarget();
+			} catch (IOException e) {
+				Log.e(TAG, "Exception during write", e);
+			}
+		}
+
+		public void cancel() {
+			try {
+				mmSocket.close();
+			} catch (IOException e) {
+				Log.e(TAG, "close() of connect socket failed", e);
+			}
+		}
+	}
+
+	/**
+	 * Write to the ConnectedThread in an unsynchronized manner
+	 * 
+	 * @param out
+	 *            The bytes to write
+	 * @see ConnectedThread#write(byte[])
+	 */
+	public void write(byte[] out) {
+
+		if (serverDevice) {
+			// Create temporary objects
+			ConnectedThread r1 = null;
+			ConnectedThread r2 = null;
+			ConnectedThread r3 = null;
+
+			// Synchronize copies of the ConnectedThreads
+			synchronized (this) {
+				if (comState != STATE_ALL_CONNECTED)
+					return;
+				r1 = connectedThread1;
+				r2 = connectedThread2;
+				r3 = connectedThread3;
+			}
+			// Perform the write unsynchronized
+			if (r1 != null)
+				r1.write(out);
+			if (r2 != null)
+				r2.write(out);
+			if (r3 != null)
+				r3.write(out);
+		} else {
+			ConnectedThread client = null;
+
+			synchronized (this) {
+				if (comState != STATE_CONNECTED_TO_SERVER)
+					return;
+				client = connectedClientThread;
+			}
+			client.write(out);
+		}
+
+	}
+
+	/**
+	 * connection attempt failed
+	 */
+	private void connectionFailed() {
+		setState(STATE_LISTEN);
+
+		// Send a failure message back to the Activity
+		Message msg = handler
+				.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+		Bundle bundle = new Bundle();
+		bundle.putString(MenschAergereDichNichtActivity.TOAST,
+				"Couldn't connect! Use menu button to continue");
+		msg.setData(bundle);
+		handler.sendMessage(msg);
+		// Make it possible to be server again TODO
+		BluetoothMPService.this.startServer();
+	}
+
+	/**
+	 * Indicate that the connection was lost and notify the UI Activity.
+	 */
+	private void connectionLost() {
+		setState(STATE_LISTEN); // TODO
+
+		// Send a failure message back to the Activity
+		Message msg = handler
+				.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+		Bundle bundle = new Bundle();
+		bundle.putString(MenschAergereDichNichtActivity.TOAST,
+				"Device connection was lost");
+		msg.setData(bundle);
+		handler.sendMessage(msg);
+		stop(); // TODO
+		// Make it possible to be server again
+		// BluetoothMPService.this.startServer();
+	}
+
+	/**
+	 * Stop all threads
+	 */
+	public synchronized void stop() {
+		if (D)
+			Log.d(TAG, "stop");
+		if (connectToServerThread != null) {
+			connectToServerThread.cancel();
+			connectToServerThread = null;
+		}
+		if (connectedThread1 != null) {
+			connectedThread1.cancel();
+			connectedThread1 = null;
+		}
+		if (connectedThread2 != null) {
+			connectedThread2.cancel();
+			connectedThread2 = null;
+		}
+		if (connectedThread3 != null) {
+			connectedThread3.cancel();
+			connectedThread3 = null;
+		}
+		if (connectedClientThread != null) {
+			connectedClientThread.cancel();
+			connectedClientThread = null;
+		}
+		if (acceptThread != null) {
+			acceptThread.cancel();
+			acceptThread = null;
+		}
+		setConnectedDevices(0);
+		serverDevice = false;
+		if (comState != STATE_NONE)
+			setState(STATE_NONE);
+	}
+
+	public int getMaxDeviceNumber() {
 		return maxDeviceNumber;
 	}
 
@@ -352,203 +612,17 @@ public class BluetoothMPService {
 	}
 
 	/**
-     * This thread runs while listening for incoming connections. It behaves
-     * like a server-side client. It runs until a connection is accepted
-     * (or until cancelled).
-     */
-    private class AcceptClientThread extends Thread {
-        // The local server socket
-        private final BluetoothServerSocket mmServerSocket;
+	 * @return the connectedDevices
+	 */
+	public int getConnectedDevices() {
+		return connectedDevices;
+	}
 
-        public AcceptClientThread() {
-            BluetoothServerSocket tmp = null;
-
-            // Create a new listening server socket
-            try {
-                tmp = mAdapter.listenUsingRfcommWithServiceRecord(NAME, MY_UUID);
-            } catch (IOException e) {
-                Log.e(TAG, "listen() failed", e);
-            }
-            mmServerSocket = tmp;
-        }
-
-        public void run() {
-            if (D) Log.d(TAG, "BEGIN AcceptClientThread" + this);
-            setName("AcceptClientThread");
-            BluetoothSocket socket = null;
-
-            // Listen to the server socket if we're not connected
-            while (true) {
-                try {
-                    // This is a blocking call and will only return on a
-                    // successful connection or an exception
-                    socket = mmServerSocket.accept();
-                } catch (IOException e) {
-                    Log.e(TAG, "Server's accept() failed", e);
-                    break;
-                }
-
-                // If a connection was accepted
-                if (socket != null) {
-                	Log.i(TAG, "A connection is accepted by client, socket != null");
-                	connected(socket, socket.getRemoteDevice());
-                }
-            }
-        }
-
-        public void cancel() {
-            if (D) Log.d(TAG, "cancel " + this);
-            try {
-                mmServerSocket.close();
-            } catch (IOException e) {
-                Log.e(TAG, "close() of server failed", e);
-            }
-        }
-    }
-
-
-    /**
-     * This thread runs while attempting to make an outgoing connection
-     * with a device. It runs straight through; the connection either
-     * succeeds or fails.
-     */
-    private class ConnectToServerThread extends Thread {
-        private final BluetoothSocket mmSocket;
-        private final BluetoothDevice mmDevice;
-
-        public ConnectToServerThread(BluetoothDevice device) {
-            mmDevice = device;
-            BluetoothSocket tmp = null;
-
-            // Get a BluetoothSocket for a connection with the
-            // given BluetoothDevice
-            try {
-                tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
-            } catch (IOException e) {
-                Log.e(TAG, "client couldn't get socket", e);
-            }
-            mmSocket = tmp;
-        }
-
-        public void run() {
-            Log.i(TAG, "BEGIN ConnectToServerThread");
-            setName("ConnectThread");
-
-            // Cancel discovery in case it's still running
-            mAdapter.cancelDiscovery();
-
-            // Make a connection to the BluetoothSocket
-            try {
-                // This is a blocking call and will only return on a
-                // successful connection or an exception
-                mmSocket.connect();
-            } catch (IOException e) {
-                connectionFailed();
-                Log.d(TAG, "Client couldn't connect to server via mmSocket.connect()");
-                // Close the socket
-                try {
-                    mmSocket.close();
-                } catch (IOException e2) {
-                    Log.e(TAG, "unable to close() socket during connection failure", e2);
-                }
-                // Exception occurred so start the service again
-                Log.e(TAG,"Exception occurred at ConnectToServerThread");
-                setState(STATE_NONE);
-                return;
-            }
-
-            // Reset the ConnectThread because we're done
-            synchronized (BluetoothMPService.this) {
-                mConnectThread = null;
-            }
-
-            // Start the connected thread
-            connectedClient(mmSocket, mmDevice);
-        }
-
-        public void cancel() {
-            try {
-                mmSocket.close();
-            } catch (IOException e) {
-                Log.e(TAG, "close() of connect socket failed", e);
-            }
-        }
-    }
-
-    /**
-     * This thread runs during a connection with a remote device either for server or client
-     * It handles all incoming and outgoing transmissions.
-     */
-    private class ConnectedThread extends Thread {
-        private final BluetoothSocket mmSocket;
-        private final InputStream mmInStream;
-        private final OutputStream mmOutStream;
-        private final int DeviceNo;
-
-        public ConnectedThread(BluetoothSocket socket, int DeviceNo) {
-            Log.d(TAG, "create ConnectedThread for Client or Server");
-            mmSocket = socket;
-            InputStream tmpIn = null;
-            OutputStream tmpOut = null;
-            this.DeviceNo = DeviceNo; // SERVER_ID is the server
-
-            // Get the BluetoothSocket input and output streams
-            try {
-                tmpIn = socket.getInputStream();
-                tmpOut = socket.getOutputStream();
-            } catch (IOException e) {
-                Log.e(TAG, "temp sockets not created", e);
-            }
-
-            mmInStream = tmpIn;
-            mmOutStream = tmpOut;
-        }
-
-        public void run() {
-            Log.i(TAG, "BEGIN mConnectedThread");
-            byte[] buffer = new byte[1024];
-            int bytes;
-
-            // Keep listening to the InputStream while connected
-            while (true) {
-                try {
-                    // Read from the InputStream for Server's messages
-                    bytes = mmInStream.read(buffer);
-//                    if (serverDevice) write(buffer); // TODO don't send to your self
-
-                    // Send the obtained bytes to the UI Activity
-                    mHandler.obtainMessage(MultiplayerActivity.MESSAGE_READ, bytes, DeviceNo, buffer).sendToTarget();
-
-                } catch (IOException e) {
-                    Log.e(TAG, "disconnected", e);
-                    connectionLost();
-                    break;
-                }
-            }
-        }
-
-        /**
-         * Write to the connected OutStream.
-         * @param buffer  The bytes to write
-         */
-        public void write(byte[] buffer) {
-            try {
-                mmOutStream.write(buffer);
-
-                // Share the sent message back to the UI Activity
-                mHandler.obtainMessage(MultiplayerActivity.MESSAGE_WRITE, -1, -1, buffer)
-                        .sendToTarget();
-            } catch (IOException e) {
-                Log.e(TAG, "Exception during write", e);
-            }
-        }
-
-        public void cancel() {
-            try {
-                mmSocket.close();
-            } catch (IOException e) {
-                Log.e(TAG, "close() of connect socket failed", e);
-            }
-        }
-    }
+	/**
+	 * @param connectedDevices
+	 *            the connectedDevices to set
+	 */
+	public void setConnectedDevices(int connectedDevices) {
+		this.connectedDevices = connectedDevices;
+	}
 }
