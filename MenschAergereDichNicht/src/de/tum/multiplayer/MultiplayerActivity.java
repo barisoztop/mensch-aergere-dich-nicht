@@ -29,7 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.GameRenderer;
 import de.tum.GameTouchListener;
-import de.tum.MenschAergereDichNichtActivity;
 import de.tum.R;
 import de.tum.Room;
 import de.tum.Team;
@@ -38,7 +37,6 @@ import de.tum.models.ClassicBoard;
 import de.tum.models.Dice;
 import de.tum.multiplayer.bluetooth.BluetoothMPService;
 import de.tum.multiplayer.bluetooth.DeviceListActivity;
-import de.tum.player.AIPlayer;
 import de.tum.player.HumanPlayer;
 import de.tum.player.NetworkPlayer;
 import de.tum.player.Player;
@@ -141,19 +139,14 @@ public class MultiplayerActivity extends Activity {
 //		 players[2] = new HumanPlayer(Team.GREEN, mHandler, MultiplayerActivity.class);
 //		 players[3] = new AIPlayer(Team.BLUE, MultiplayerActivity.class);
 		 
-		 /* HERE STEFAN - 1
-			players[0] = new NetworkPlayer(Team.RED, MultiplayerActivity.class);
-			players[1] = new NetworkPlayer(Team.YELLOW, MultiplayerActivity.class);
-			players[2] = new NetworkPlayer(Team.GREEN, MultiplayerActivity.class);
-			players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
-		*/
+
 		
 		renderer = new GameRenderer();
 		view = new GLSurfaceView(this);
 		view.setRenderer(renderer);
-		// GameTouchListener listener = new GameTouchListener();
-		// view.setOnTouchListener(listener);
-		// view.setOnLongClickListener(listener);
+		GameTouchListener listener = new GameTouchListener();
+		view.setOnTouchListener(listener);
+		view.setOnLongClickListener(listener);
 		
 		// Set up the window layout
 //		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -166,9 +159,7 @@ public class MultiplayerActivity extends Activity {
 //		titleBar = (TextView) findViewById(R.id.title_right_text);
 //		titleBar.setText("Multiplayer Mode Activity");
 
-		/* HERE STEFAN - 2
-		 players[0].makeTurn();
-		 */
+		 
 
 	}
 
@@ -404,6 +395,7 @@ public class MultiplayerActivity extends Activity {
 						.getRemoteDevice(address);
 				// Attempt to connect to server
 				bluetoothMPService.connectServer(serverDevice);
+				startClientGame();
 			}
 			break;
 		case REQUEST_ENABLE_BT:
@@ -462,6 +454,15 @@ public class MultiplayerActivity extends Activity {
 				finish(); // TODO create MultiPlayer activity again
 			}
 		}
+	}
+
+	private void startClientGame() {
+		players[0] = new NetworkPlayer(Team.RED, MultiplayerActivity.class);
+		players[1] = new NetworkPlayer(Team.YELLOW, MultiplayerActivity.class);
+		players[2] = new NetworkPlayer(Team.GREEN, MultiplayerActivity.class);
+		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
+		players[0].makeTurn();
+		
 	}
 
 	/**
@@ -548,20 +549,18 @@ public class MultiplayerActivity extends Activity {
 //		players[1] = new NetworkPlayer(Team.YELLOW, MultiplayerActivity.class);
 //		players[2] = new NetworkPlayer(Team.GREEN, MultiplayerActivity.class);
 //		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
-		/*
 		 players[0] = new HumanPlayer(Team.RED, mHandler, MultiplayerActivity.class);
 		 players[1] = new HumanPlayer(Team.YELLOW, mHandler, MultiplayerActivity.class);
 		 players[2] = new HumanPlayer(Team.GREEN, mHandler, MultiplayerActivity.class);
 		 players[3] = new HumanPlayer(Team.BLUE, mHandler, MultiplayerActivity.class);
-		*/
-		GameTouchListener listener = new GameTouchListener();
-		view.setOnTouchListener(listener);
-		view.setOnLongClickListener(listener);
+//		GameTouchListener listener = new GameTouchListener();
+//		view.setOnTouchListener(listener);
+//		view.setOnLongClickListener(listener);
 
 		Toast.makeText(getApplicationContext(), "server",
 				Toast.LENGTH_LONG).show();
 
-//		players[0].makeTurn();
+		players[0].makeTurn();
 			
 	}
 	
@@ -632,9 +631,9 @@ public class MultiplayerActivity extends Activity {
 //				Toast.LENGTH_SHORT).show();
 		
 	
-		GameTouchListener listener = new GameTouchListener();
-		view.setOnTouchListener(listener);
-		view.setOnLongClickListener(listener);
+//		GameTouchListener listener = new GameTouchListener();
+//		view.setOnTouchListener(listener);
+//		view.setOnLongClickListener(listener);
 	}	
 
     public static final void tokenDone() {
