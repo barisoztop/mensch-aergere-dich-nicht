@@ -51,7 +51,7 @@ public class GameRenderer implements Renderer {
 			degree_vertical = degree_90;
 		center_x = (float) (radius * Math.sin(degree_horizontal));
 		center_y = (float) (radius * Math.cos(degree_horizontal));
-		center_z = (float) (radius * Math.sin(degree_vertical));
+		center_z = 1 + (float) (radius * Math.sin(degree_vertical));
 		up_z = (float) Math.cos(degree_vertical);
 		center_x *= up_z;
 		center_y *= up_z;
