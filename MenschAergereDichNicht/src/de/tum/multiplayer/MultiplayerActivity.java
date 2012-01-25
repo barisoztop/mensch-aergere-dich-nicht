@@ -257,30 +257,26 @@ public class MultiplayerActivity extends Activity {
 				case BluetoothMPService.STATE_CONNECTED_3:
 					Toast.makeText(
 							getApplicationContext(),
-							bluetoothMPService.connectedDevices
+							bluetoothMPService.getConnectedDevices()
 									+ " Device(s) connected",
 							Toast.LENGTH_SHORT).show();
 					break;
 				case BluetoothMPService.STATE_CONNECTED_TO_SERVER:
-					Toast.makeText(getApplicationContext(),
-							"Connected to Server: " + connectedServerName,
-							Toast.LENGTH_SHORT).show();
 					break;
 				case BluetoothMPService.STATE_CONNECTING_TO_SERVER:
-					Toast.makeText(getApplicationContext(), "Connecting...",
-							Toast.LENGTH_SHORT).show(); // TODO no need!
+					Toast.makeText(getApplicationContext(), "Connecting to server...",
+							Toast.LENGTH_SHORT).show();
 					break;
 				case BluetoothMPService.STATE_LISTEN:
 					break;
 				case BluetoothMPService.STATE_NONE:
-					Toast.makeText(getApplicationContext(), "Not Conntected",
-							Toast.LENGTH_SHORT).show();
 					break;
 				}
 				break;
 			case MESSAGE_WRITE:
+				// message that this device send to other(s)
 				byte[] writeBuf = (byte[]) msg.obj;
-				Log.d(TAG, "MESSAGE_WRITE - Message sent to other device(s)");
+				Log.d(TAG, "MESSAGE_WRITE - Message is sent to other device(s)");
 				break;
 			case MESSAGE_READ:
 				Log.d(TAG, "MESSAGE_READ - Message came from other device(s)");
@@ -291,14 +287,14 @@ public class MultiplayerActivity extends Activity {
 				// set name of the connected device and
 				// the progress dialog value after each connection
 				int currentState = bluetoothMPService.getState();
-				Log.d(TAG, "MESSAGE_DEVICE_NAME: " + bluetoothMPService.connectedDevices + " Device(s) and" + " Service State: " + currentState);
+				Log.d(TAG, "MESSAGE_DEVICE_NAME: " + bluetoothMPService.getConnectedDevices() + " Device(s) and" + " Service State: " + currentState);
 				
 				// Server got the clients connected message
 				if (currentState == BluetoothMPService.STATE_CONNECTED_1 ||
 						currentState == BluetoothMPService.STATE_CONNECTED_2 ||
 							currentState == BluetoothMPService.STATE_CONNECTED_3 ||
 								currentState == BluetoothMPService.STATE_ALL_CONNECTED) {
-					if (bluetoothMPService.connectedDevices == 1) {
+					if (bluetoothMPService.getConnectedDevices() == 1) {
 						Log.d(TAG, "mBluetoothMPService.connectedDevices == 1");
 						connectedDeviceName1 = msg.getData().getString(
 								DEVICE_NAME);
@@ -308,7 +304,7 @@ public class MultiplayerActivity extends Activity {
 						Log.d(TAG, "case MESSAGE_DEVICE_NAME & now setProgressValue");
 						MultiplayerActivity.this.setProgessValue(1);
 
-					} else if (bluetoothMPService.connectedDevices == 2) {
+					} else if (bluetoothMPService.getConnectedDevices() == 2) {
 						connectedDeviceName2 = msg.getData().getString(
 								DEVICE_NAME);
 						Toast.makeText(getApplicationContext(),
@@ -316,7 +312,7 @@ public class MultiplayerActivity extends Activity {
 								Toast.LENGTH_SHORT).show();
 						MultiplayerActivity.this.setProgessValue(2);
 
-					} else if (bluetoothMPService.connectedDevices == 3) {
+					} else if (bluetoothMPService.getConnectedDevices() == 3) {
 						connectedDeviceName3 = msg.getData().getString(
 								DEVICE_NAME);
 						Toast.makeText(getApplicationContext(),
@@ -327,7 +323,7 @@ public class MultiplayerActivity extends Activity {
 				}
 
 				// Client got the connected to the server message
-				if (bluetoothMPService.getState() == BluetoothMPService.STATE_CONNECTED_TO_SERVER) {
+				if (currentState == BluetoothMPService.STATE_CONNECTED_TO_SERVER) {
 					connectedServerName = msg.getData().getString(DEVICE_NAME);
 					Toast.makeText(getApplicationContext(),
 							"Connected to server " + connectedServerName,
@@ -552,12 +548,12 @@ public class MultiplayerActivity extends Activity {
 //		players[1] = new NetworkPlayer(Team.YELLOW, MultiplayerActivity.class);
 //		players[2] = new NetworkPlayer(Team.GREEN, MultiplayerActivity.class);
 //		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
-		
+		/*
 		 players[0] = new HumanPlayer(Team.RED, mHandler, MultiplayerActivity.class);
 		 players[1] = new HumanPlayer(Team.YELLOW, mHandler, MultiplayerActivity.class);
 		 players[2] = new HumanPlayer(Team.GREEN, mHandler, MultiplayerActivity.class);
 		 players[3] = new HumanPlayer(Team.BLUE, mHandler, MultiplayerActivity.class);
-		
+		*/
 		GameTouchListener listener = new GameTouchListener();
 		view.setOnTouchListener(listener);
 		view.setOnLongClickListener(listener);
@@ -565,7 +561,7 @@ public class MultiplayerActivity extends Activity {
 		Toast.makeText(getApplicationContext(), "server",
 				Toast.LENGTH_LONG).show();
 
-		players[0].makeTurn();
+//		players[0].makeTurn();
 			
 	}
 	
