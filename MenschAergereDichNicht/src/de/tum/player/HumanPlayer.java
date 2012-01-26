@@ -3,7 +3,7 @@ package de.tum.player;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import de.tum.GameTouchListener;
+import de.tum.GameListener;
 import de.tum.MenschAergereDichNichtActivity;
 import de.tum.Team;
 import de.tum.models.Dice;
@@ -52,7 +52,7 @@ public class HumanPlayer extends Player {
         bundle.putString(MenschAergereDichNichtActivity.TOAST, "touch to throw the dice");
         msg.setData(bundle);
         mHandler.sendMessage(msg);
-		GameTouchListener.waitForInput(this, GameTouchListener.waitingForDice);
+		GameListener.waitForInput(this, GameListener.waitingForDice);
 	}
 
 	/** {@inheritDoc} */
@@ -80,16 +80,19 @@ public class HumanPlayer extends Player {
 	        msg.setData(bundle);
 	        mHandler.sendMessage(msg);
 		}
-		GameTouchListener.waitForInput(this, GameTouchListener.waitingForPegSelection);
+		GameListener.waitForInput(this, GameListener.waitingForPegSelection);
 	}
 
-	public final void waitedForInput(int waitingFor) {
+	public final void waitedForInput(int waitingFor, float values[]) {
 		x: switch (waitingFor) {
-		case GameTouchListener.waitingForDice:
-			GameTouchListener.stopWaiting();
-			Dice.throwIt(team);
+		case GameListener.waitingForDice:
+			GameListener.stopWaiting();
+			if (values == null)
+			  Dice.throwIt(team);
+			else
+				Dice.throwIt(team, values);
 			break;
-		case GameTouchListener.waitingForPegSelection:
+		case GameListener.waitingForPegSelection:
 			// Log.d("touch", "tap");
 			if (movable != -1)
 				break;
@@ -101,12 +104,12 @@ public class HumanPlayer extends Player {
 					movables[peg = (peg + i) % movables.length].setSelection(true);
 					break x;
 				}
-		case GameTouchListener.waitingForPegChosen:
-			GameTouchListener.stopWaiting();
+		case GameListener.waitingForPegChosen:
+			GameListener.stopWaiting();
 			movables[peg].setSelection(false);
 			pegChosen(movables[peg], true);
 			break;
-		case GameTouchListener.waitingTimeOut:
+		case GameListener.waitingTimeOut:
 	        Message msg = mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
 	        Bundle bundle = new Bundle();
 	        bundle.putString(MenschAergereDichNichtActivity.TOAST, "hurry up !");

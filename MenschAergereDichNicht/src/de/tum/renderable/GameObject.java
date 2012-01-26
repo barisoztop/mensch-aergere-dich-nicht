@@ -12,7 +12,7 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public abstract class GameObject extends GeometricObject {
 	/** p is a factor for scaling a game object */
-	protected static final float p = 0.08f;
+	public static final float p = 0.08f;
 
 	/** the amount of frames a peg needs to reach the next field */
 	protected static final int frames = 20;
@@ -35,7 +35,7 @@ public abstract class GameObject extends GeometricObject {
 	protected float az;
 
 	/** true if GL is changed before rendering */
-	protected boolean poppushtranslationrotation;
+	protected boolean rotated;
 
 	/**
 	 * specify whether this object will be rendered
@@ -50,10 +50,6 @@ public abstract class GameObject extends GeometricObject {
 
 	/** {@inheritDoc} */
 	public final void transfer(float dx, float dy, float dz) {
-		if (!poppushtranslationrotation)
-			if (sgobjects != null)
-				for (SimpleGeometricObject object : sgobjects)
-					object.transfer(dx, dy, dz);
 		x += dx;
 		y += dy;
 		z += dz;
@@ -74,14 +70,12 @@ public abstract class GameObject extends GeometricObject {
 		action();
 		if (!visible || sgobjects == null)
 			return;
-		if (poppushtranslationrotation) {
-			gl.glPushMatrix();
-			gl.glTranslatef(x, y, z);
+		gl.glPushMatrix();
+		gl.glTranslatef(x, y, z);
+		if (rotated)
 			gl.glRotatef(angle, ax, ay, az);
-		}
 		for (SimpleGeometricObject object : sgobjects)
 			object.render(gl);
-		if (poppushtranslationrotation)
-			gl.glPopMatrix();
+		gl.glPopMatrix();
 	}
 }

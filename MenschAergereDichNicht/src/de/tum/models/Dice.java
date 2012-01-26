@@ -10,6 +10,7 @@ import de.tum.multiplayer.MultiplayerActivity;
 import de.tum.player.NetworkPlayer;
 import de.tum.player.Player;
 import de.tum.renderable.GameObject;
+import de.tum.renderable.SimpleGeometricObject;
 import de.tum.renderable.Textures;
 import de.tum.renderable.TriangleStripe;
 
@@ -63,11 +64,12 @@ public class Dice extends GameObject {
 		for (int i = 0; i < 6; ++i)
 			sgobjects.add(new TriangleStripe(visible, vertices[i],
 					null, texture, textures[i]));
-		transfer(-side / 2, -side / 2, -side / 2);
+		for (SimpleGeometricObject object : sgobjects)
+			object.transfer(-side / 2, -side / 2, -side / 2);
 		x = y = z = 0;
 		ax = ay = az = 1;
-		poppushtranslationrotation = true;
 		transfer(0, 0, side / 2);
+		rotated = true;
 		dice = this;
 		speed = new TupleFloat(0, 0);
 	}
@@ -108,6 +110,11 @@ public class Dice extends GameObject {
 		MultiplayerActivity.notifyPlayers(new int[] {NetworkPlayer.DICE_THROWN, result});
 	}
 	
+	public static void throwIt(Team team, float values[]) {
+		throwIt(team, 1 + (int) Math.abs(values[0] + values[1] + values[2]) % 6);
+		MultiplayerActivity.notifyPlayers(new int[] {NetworkPlayer.DICE_THROWN, result});
+	}
+	
 	public static void throwIt(Team team, int result) {
 		Dice.result = result;
 		TupleFloat start = Board.getPositionForDice(team);
@@ -123,28 +130,29 @@ public class Dice extends GameObject {
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
+		int a = 128;
 		for (int i = 0; i < 6;) {
-			Bitmap bitmap = Bitmap.createBitmap(64, 64, Config.ARGB_8888);
+			Bitmap bitmap = Bitmap.createBitmap(a, a, Config.ARGB_8888);
 			Canvas canvas = new Canvas(bitmap);
 			canvas.drawRGB((int) (255 * dice_red[0]), (int) (255 * dice_red[1]),
 					(int) (255 * dice_red[2]));
 			paint.setARGB(255, 255, 255, 255);
 			switch (++i) {
 				case 6:
-					canvas.drawCircle(32, 11, 8, paint);
-					canvas.drawCircle(32, 53, 8, paint);
+					canvas.drawCircle(a / 2, a / 6, a / 8, paint);
+					canvas.drawCircle(a / 2, a * 5 / 6, a / 8, paint);
 				case 4:
 				case 5:
-					canvas.drawCircle(11, 11, 8, paint);
-					canvas.drawCircle(53, 53, 8, paint);
+					canvas.drawCircle(a / 6, a / 6, a / 8, paint);
+					canvas.drawCircle(a * 5 / 6, a * 5 / 6, a / 8, paint);
 				case 2:
 				case 3:
-					canvas.drawCircle(11, 53, 8, paint);
-					canvas.drawCircle(53, 11, 8, paint);
+					canvas.drawCircle(a / 6, a * 5 / 6, a / 8, paint);
+					canvas.drawCircle(a * 5 / 6, a / 6, a / 8, paint);
 					if (i != 3 && i != 5)
 						break;
 				case 1:
-					canvas.drawCircle(32, 32, 8, paint);
+					canvas.drawCircle(a / 2, a / 2, a / 8, paint);
 					break;
 			}
 			textures[i - 1] = Textures.addTexture(bitmap);

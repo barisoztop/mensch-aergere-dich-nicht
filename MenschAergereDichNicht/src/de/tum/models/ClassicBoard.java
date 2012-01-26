@@ -148,18 +148,19 @@ public class ClassicBoard extends Board {
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
+		int a = 128;
 		for (int i = 0; i < 6; ++i) {
-			Bitmap bitmap = Bitmap.createBitmap(64, 64, Config.ARGB_8888);
+			Bitmap bitmap = Bitmap.createBitmap(a, a, Config.ARGB_8888);
 			Canvas canvas = new Canvas(bitmap);
 			canvas.drawRGB((int) (255 * gray[0]), (int) (255 * gray[1]),
 					(int) (255 * gray[2]));
 			if (i != 5) {
 				float[] color = i != 4 ? Team.values()[i].color : circle_white;
 				paint.setARGB(255, 0, 0, 0);
-				canvas.drawCircle(32, 32, 29, paint);
+				canvas.drawCircle(a / 2, a / 2, a * 9 / 20, paint);
 				paint.setARGB(255, (int) (255 * color[0]), (int) (255 * color[1]),
 						(int) (255 * color[2]));
-				canvas.drawCircle(32, 32, 23, paint);
+				canvas.drawCircle(a / 2, a / 2, a * 7 / 20, paint);
 			}
 			textures[i] = Textures.addTexture(bitmap);
 		}
