@@ -15,13 +15,15 @@
         android:id="@+id/spinnerClientNumber"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
         android:drawSelectorOnTop="true"
         android:prompt="@string/select_client_numbers_title" />
 
     <Button
         android:id="@+id/button_clientnumber"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginTop="4sp"
         android:text="@string/button_clientnumber" />
 
 </LinearLayout>

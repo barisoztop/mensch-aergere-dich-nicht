@@ -22,6 +22,7 @@ public class WelcomeActivity extends Activity {
 	private Button settingsButton;
 	private Button aboutButton;
 	private Button exitButton;
+	private Button helpButton;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -38,6 +39,7 @@ public class WelcomeActivity extends Activity {
 		settingsButton = (Button) findViewById(R.id.settings);
 		aboutButton = (Button) findViewById(R.id.about);
 		exitButton = (Button) findViewById(R.id.exit);
+		helpButton = (Button) findViewById(R.id.help);
 
 		singlePlayerButton.setOnClickListener(new OnClickListener() {
 
@@ -74,9 +76,9 @@ public class WelcomeActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Intent aboutApp = new Intent(getApplicationContext(),
+				Intent aboutAct = new Intent(getApplicationContext(),
 						AboutActivity.class);
-				startActivity(aboutApp);
+				startActivity(aboutAct);
 			}
 		});
 
@@ -88,6 +90,16 @@ public class WelcomeActivity extends Activity {
 
 			}
 		});
+		
+		helpButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent helpAct = new Intent(getApplicationContext(),
+						HelpActivity.class);
+				startActivity(helpAct);
+			}
+		});		
 	}
 
 	@Override
