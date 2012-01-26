@@ -1,63 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:paddingTop="100dp" >
+    android:padding="13dp" >
 
-    <Button
-        android:id="@+id/singleplayer"
+    <LinearLayout
+        android:id="@+id/llayout_welcome"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:drawableLeft="@drawable/ic_menu_play_clip"
-        android:layout_marginBottom="5sp"
-        android:text="@string/button_singleplayer" />
+        android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/multiplayer"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:drawableLeft="@drawable/ic_menu_allfriends"
-        android:layout_marginBottom="5sp"
-        android:text="@string/button_multiplayer" />
+        <Button
+            android:id="@+id/singleplayer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5sp"
+            android:drawableLeft="@drawable/ic_menu_play_clip"
+            android:text="@string/button_singleplayer"
+            android:textColor="#fff"
+            android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/settings"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:drawableLeft="@drawable/ic_menu_manage"
-        android:layout_marginBottom="5sp"
-        android:text="@string/button_settings" />
+        <Button
+            android:id="@+id/multiplayer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5sp"
+            android:drawableLeft="@drawable/ic_menu_allfriends"
+            android:text="@string/button_multiplayer"
+            android:textColor="#fff"
+            android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/about"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:drawableLeft="@drawable/ic_menu_info_details"
-        android:layout_marginBottom="5sp"
-        android:text="@string/button_about" />
-    
-    <Button
-        android:id="@+id/exit"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="#fff"
-        android:textSize="20sp"
-        android:drawableLeft="@drawable/ic_menu_close_clear_cancel"
-        android:layout_marginBottom="5sp"
-        android:text="@string/button_exit" />
-    
-</LinearLayout>
+        <Button
+            android:id="@+id/settings"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5sp"
+            android:drawableLeft="@drawable/ic_menu_manage"
+            android:text="@string/button_settings"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/help"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5sp"
+            android:drawableLeft="@drawable/ic_menu_help"
+            android:text="@string/button_help"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/about"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5sp"
+            android:drawableLeft="@drawable/ic_menu_info_details"
+            android:text="@string/button_about"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/exit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5sp"
+            android:drawableLeft="@drawable/ic_menu_close_clear_cancel"
+            android:text="@string/button_exit"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</ScrollView>
