@@ -1,11 +1,9 @@
 package de.tum.player;
 
-import de.tum.MenschAergereDichNichtActivity;
 import de.tum.Team;
 import de.tum.models.Board;
 import de.tum.models.Peg;
 import de.tum.multiplayer.MultiplayerActivity;
-import android.util.Log;
 
 /**
  * a player can be a human player or an artificial intelligence. Every player
@@ -35,8 +33,6 @@ public abstract class Player {
 
 	/** the pegs of this player */
 	private Peg[] pegs;
-	
-	private boolean isMenschAergereDichNichtActivity = true;
 
 	/**
 	 * creating a player
@@ -49,16 +45,6 @@ public abstract class Player {
 		team.setHuman(this instanceof HumanPlayer);
 		pegs = Board.getPegs(team);
 	}
-	
-	public Player(Team team, Class<?> staticAccess) {
-		this(team);
-		String className = staticAccess.getSimpleName();
-		if (className.equals("MenschAergereDichNichtActivity")){
-			isMenschAergereDichNichtActivity = true;
-		} else if (className.equals("MultiplayerActivity")) {
-			isMenschAergereDichNichtActivity = false;
-		}
-	}	
 
 	/**
 	 * resetting this player. All pegs of this player are reset.
@@ -78,8 +64,7 @@ public abstract class Player {
 		player = this;
 		++current_try;
 		if (won)
-			if (isMenschAergereDichNichtActivity) MenschAergereDichNichtActivity.nextTurn(team);
-			else MultiplayerActivity.nextTurn(team);
+			MultiplayerActivity.nextTurn(team);
 		else
 			throwDice();
 	}
@@ -131,8 +116,7 @@ public abstract class Player {
 		else {
 			current_try = 0;
 			is1st6 = false;
-			if (isMenschAergereDichNichtActivity) MenschAergereDichNichtActivity.nextTurn(team);
-			else MultiplayerActivity.nextTurn(team);
+			MultiplayerActivity.nextTurn(team);
 		}
 	}
 
@@ -177,6 +161,5 @@ public abstract class Player {
 			if (!peg.hasFinished())
 				return;
 		won = true;
-		Log.d("team " + team, "won");
 	}
 }

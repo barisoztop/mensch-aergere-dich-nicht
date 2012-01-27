@@ -23,19 +23,14 @@ public class HumanPlayer extends Player {
 	 *            the team of this player
 	 */
 	public HumanPlayer(Team team) {
-		super(team);
-		mHandler = null;
+		this(team, null);
 	}
 
 	public HumanPlayer(Team team, Handler handler) {
-		this(team);
+		super(team);
+		mHandler = handler;
 	}
 	
-	public HumanPlayer(Team team, Handler handler, Class<?> staticAccess) {
-		super(team, staticAccess);
-		mHandler = handler;
-	}	
-
 	/** {@inheritDoc} */
 	protected void throwDice() {
 //		MenschAergereDichNichtActivity.showMessage("touch to throw the dice");
