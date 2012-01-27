@@ -307,7 +307,8 @@ public class MultiplayerActivity extends Activity {
 								Toast.LENGTH_SHORT).show();
 						MultiplayerActivity.this.setProgessValue(2);
 
-					} else if (bluetoothMPService.getConnectedDevices() == 3) {
+					}
+ else if (bluetoothMPService.getConnectedDevices() == 3) {
 						connectedDeviceName3 = msg.getData().getString(
 								DEVICE_NAME);
 						Toast.makeText(getApplicationContext(),
@@ -586,7 +587,8 @@ public class MultiplayerActivity extends Activity {
 	
 	private void startClientGame() {
 		players[0] = new NetworkPlayer(Team.RED, MultiplayerActivity.class);
-		players[1] = new NetworkPlayer(Team.YELLOW, MultiplayerActivity.class);
+		players[1] = new NetworkPlayer(Team.YELLOW,
+ MultiplayerActivity.class);
 		players[2] = new NetworkPlayer(Team.GREEN, MultiplayerActivity.class);
 		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
 		players[0].makeTurn();
