@@ -46,12 +46,12 @@ public abstract class Player {
 	 */
 	public Player(Team team) {
 		this.team = team;
+		team.setHuman(this instanceof HumanPlayer);
 		pegs = Board.getPegs(team);
 	}
 	
 	public Player(Team team, Class<?> staticAccess) {
-		this.team = team;
-		pegs = Board.getPegs(team);
+		this(team);
 		String className = staticAccess.getSimpleName();
 		if (className.equals("MenschAergereDichNichtActivity")){
 			isMenschAergereDichNichtActivity = true;

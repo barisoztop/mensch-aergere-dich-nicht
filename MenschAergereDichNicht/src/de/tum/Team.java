@@ -17,6 +17,9 @@ public enum Team {
 	/** the typical color of that team */
 	public final float color[];
 
+	/** true if that team has a human player*/
+	private boolean human;
+
 	/**
 	 * creating a team
 	 * 
@@ -30,6 +33,33 @@ public enum Team {
 		this.color = color;
 	}
 	
+	/**
+	 * verifying if this team is human
+	 * 
+	 * @return true if human
+	 */
+	public final boolean isHuman() {
+		return human;
+	}
+	
+	/**
+	 * setting whether this team is human or not
+	 * 
+	 * @param human
+	 *            true if human
+	 */
+	public final void setHuman(boolean human) {
+		this.human = human;
+	}
+	
+	/**
+	 * getting the team with the given id
+	 * 
+	 * @param id
+	 *            the id of the team
+	 * 
+	 * @return the team with the given id
+	 */
 	public static final Team getById(int id) {
 		switch (id) {
 		case 0:

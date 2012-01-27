@@ -137,7 +137,17 @@ public abstract class Peg extends GameObject {
 	 * @return true if this peg can move
 	 */
 	public final boolean checkMove(int fields) {
-		return (pos_final = Board.getPositionNext(team, pos_current, fields)) != -1;
+		pos_final = (int) (pos_next = Board.getPositionNext(team, pos_current, fields)).x;
+		return pos_next.y != -2;
+	}
+	
+	/**
+	 * checking whether this peg hits another peg
+	 * 
+	 * @return -1 if the final field is empty or the team id of the field's peg
+	 */
+	public final int getHit() {
+		return (int) pos_next.y;
 	}
 
 	/**

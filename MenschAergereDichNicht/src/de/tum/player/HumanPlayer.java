@@ -28,8 +28,7 @@ public class HumanPlayer extends Player {
 	}
 
 	public HumanPlayer(Team team, Handler handler) {
-		super(team);
-		mHandler = handler;
+		this(team);
 	}
 	
 	public HumanPlayer(Team team, Handler handler, Class<?> staticAccess) {
