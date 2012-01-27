@@ -30,8 +30,8 @@ public class AIPlayer extends Player {
 	 * @param strategy
 	 *            the strategy of this player
 	 */
-	public AIPlayer(Team team, Class<?> staticAccess, int strategy) {
-		super(team, staticAccess);
+	public AIPlayer(Team team, int strategy) {
+		super(team);
 		this.strategy = strategy;
 	}
 

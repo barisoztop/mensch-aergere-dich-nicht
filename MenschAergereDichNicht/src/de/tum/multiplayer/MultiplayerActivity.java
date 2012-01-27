@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.GameRenderer;
 import de.tum.GameListener;
+import de.tum.MenschAergereDichNichtActivity;
 import de.tum.R;
 import de.tum.Room;
 import de.tum.Team;
@@ -214,7 +215,10 @@ public class MultiplayerActivity extends Activity {
 	 *            the current team
 	 */
 	public static final void nextTurn(Team team) {
+    	if (activity != null)
 		players[(team.id + 1) % players.length].makeTurn();
+    	else
+    		MenschAergereDichNichtActivity.nextTurn(team);
 	}
 	
 	@Override
@@ -569,30 +573,23 @@ public class MultiplayerActivity extends Activity {
 	private void startGame() {
 		Log.d(TAG, "startGame()");
 		players = new Player[Board.getPlayers()];
-//		players[0] = new HumanPlayer(Team.RED, mHandler, MultiplayerActivity.class);
-//		players[1] = new NetworkPlayer(Team.YELLOW, MultiplayerActivity.class);
-//		players[2] = new NetworkPlayer(Team.GREEN, MultiplayerActivity.class);
-//		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
-		 players[0] = new HumanPlayer(Team.RED, mHandler, MultiplayerActivity.class);
-		 players[1] = new HumanPlayer(Team.YELLOW, mHandler, MultiplayerActivity.class);
-		 players[2] = new HumanPlayer(Team.GREEN, mHandler, MultiplayerActivity.class);
-		 players[3] = new HumanPlayer(Team.BLUE, mHandler, MultiplayerActivity.class);
+		 players[0] = new HumanPlayer(Team.RED, mHandler);
+		 players[1] = new HumanPlayer(Team.YELLOW, mHandler);
+		 players[2] = new HumanPlayer(Team.GREEN, mHandler);
+		 players[3] = new HumanPlayer(Team.BLUE, mHandler);
 
 		Toast.makeText(getApplicationContext(), "server",
 				Toast.LENGTH_LONG).show();
 
 		players[0].makeTurn();
-			
 	}
 	
 	private void startClientGame() {
-		players[0] = new NetworkPlayer(Team.RED, MultiplayerActivity.class);
-		players[1] = new NetworkPlayer(Team.YELLOW,
- MultiplayerActivity.class);
-		players[2] = new NetworkPlayer(Team.GREEN, MultiplayerActivity.class);
-		players[3] = new NetworkPlayer(Team.BLUE, MultiplayerActivity.class);
+		players[0] = new NetworkPlayer(Team.RED);
+		players[1] = new NetworkPlayer(Team.YELLOW);
+		players[2] = new NetworkPlayer(Team.GREEN);
+		players[3] = new NetworkPlayer(Team.BLUE);
 		players[0].makeTurn();
-		
 	}
 
 	/**
