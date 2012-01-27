@@ -28,7 +28,7 @@ import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.GameRenderer;
-import de.tum.GameTouchListener;
+import de.tum.GameListener;
 import de.tum.R;
 import de.tum.Room;
 import de.tum.Team;
@@ -115,7 +115,6 @@ public class MultiplayerActivity extends Activity {
 	
 	private static MultiplayerActivity activity;
 
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -142,13 +141,11 @@ public class MultiplayerActivity extends Activity {
 //		 players[1] = new HumanPlayer(Team.YELLOW, mHandler, MultiplayerActivity.class);
 //		 players[2] = new HumanPlayer(Team.GREEN, mHandler, MultiplayerActivity.class);
 //		 players[3] = new AIPlayer(Team.BLUE, MultiplayerActivity.class);
-		 
-
 		
 		renderer = new GameRenderer();
 		view = new GLSurfaceView(this);
 		view.setRenderer(renderer);
-		GameTouchListener listener = new GameTouchListener();
+		GameListener listener = new GameListener(this);
 		view.setOnTouchListener(listener);
 		view.setOnLongClickListener(listener);
 		
@@ -161,9 +158,6 @@ public class MultiplayerActivity extends Activity {
 		titleBar.setText("Connection Status: ");
 		titleBar = (TextView) findViewById(R.id.title_right_text);
 		titleBar.setText("None");
-
-		 
-
 	}
 
 	@Override
@@ -186,6 +180,7 @@ public class MultiplayerActivity extends Activity {
 	@Override
 	public synchronized void onPause() {
 		super.onPause();
+		GameListener.onPause();
 		if (D) Log.e(TAG, "- ON PAUSE -");
 	}
 
@@ -208,6 +203,7 @@ public class MultiplayerActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		view.onResume();
+		GameListener.onResume();
 		if (D) Log.e(TAG, "+ ON RESUME +");
 	}
 
@@ -670,7 +666,7 @@ public class MultiplayerActivity extends Activity {
 	}	
 
     public static final void tokenDone() {
-    	Log.d("multiplayer", "token done");
+//    	Log.d("multiplayer", "token done");
     	if (tokens != null)
 	    	synchronized (tokens) {
 	    		if(!tokens.isEmpty())
@@ -681,7 +677,7 @@ public class MultiplayerActivity extends Activity {
     }
     
     private static final void addToken(int[] token) {
-    	Log.d("multiplayer", "add token");
+//    	Log.d("multiplayer", "add token");
     	if (tokens != null)
 	    	synchronized (tokens) {
 		    	tokens.add(token);
