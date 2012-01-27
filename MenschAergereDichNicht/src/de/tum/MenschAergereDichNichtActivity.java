@@ -74,7 +74,7 @@ public class MenschAergereDichNichtActivity extends Activity {
       renderer = new GameRenderer();
       view = new GLSurfaceView(this);
       view.setRenderer(renderer);
-      GameTouchListener listener = new GameTouchListener(); 
+      GameListener listener = new GameListener(this); 
       view.setOnTouchListener(listener);
       view.setOnLongClickListener(listener);
       // Set up the window layout
@@ -101,6 +101,7 @@ public class MenschAergereDichNichtActivity extends Activity {
     public synchronized void onPause() {
       super.onPause();
       view.onPause();
+      GameListener.onPause();
       if(D) Log.e(TAG, "- ON PAUSE -");      
     }
     
@@ -119,7 +120,8 @@ public class MenschAergereDichNichtActivity extends Activity {
     @Override
     public void onResume() {
       super.onResume();
-      view.onResume();      
+      view.onResume();
+      GameListener.onResume();
       if(D) Log.e(TAG, "+ ON RESUME +");
     }
     
