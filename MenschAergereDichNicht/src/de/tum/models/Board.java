@@ -105,17 +105,16 @@ public abstract class Board extends GameObject {
 	 *            the current position for this peg
 	 * @param distance
 	 *            the distance to move, typically the number the dice shows
-	 * @return the number of the next field for the given peg or -1 if the peg
-	 *         is not allowed to move
+	 * @return a tuple containing the number of the next field for the given peg
+	 *         and the team's id or -1 if the field is empty or -2 if the peg is not allowed to move
 	 */
-	public static final int getPositionNext(Team team, int fieldPos,
+	public static final TupleFloat getPositionNext(Team team, int fieldPos,
 			int distance) {
-		if (fieldPos < start_pegs) // peg didn't start
-			return distance == 6 && isFree(team, getAbsolutePositionOnPathOrEnd(team, start_pegs)) ? start_pegs : -1;
-		int posNext = fieldPos + distance;
-		if (posNext >= 2 * start_pegs + path_length) // too far
-			return -1;
-		return isFree(team, getAbsolutePositionOnPathOrEnd(team, posNext)) ? posNext : -1;
+		return fieldPos < start_pegs ? new TupleFloat(start_pegs,
+				distance == 6 ? isFree(team, start_pegs) : -2)
+				: new TupleFloat(distance += fieldPos, distance >= 2
+						* start_pegs + path_length ? -2
+						: isFree(team, distance));
 	}
 	
 	/**
@@ -130,9 +129,10 @@ public abstract class Board extends GameObject {
 	}
 	
 	// just for checking whether the given field is free or a different team is there	
-	private static final boolean isFree(Team team, int absolute_pos) {
-		return peg_fields[absolute_pos] == null
-				|| peg_fields[absolute_pos].team != team;
+	private static final int isFree(Team team, int relative_pos) {
+		return peg_fields[relative_pos = getAbsolutePositionOnPathOrEnd(team,
+				relative_pos)] == null ? -1 : (relative_pos =
+				peg_fields[relative_pos].team.id) == team.id ? -2 : relative_pos;
 	}
 
 	// just for calculating the absolute field on board
