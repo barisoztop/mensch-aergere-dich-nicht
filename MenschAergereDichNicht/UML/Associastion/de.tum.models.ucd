@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" size="1113,1324" id="de.tum.models" metadata="uml2-1.0" initialized="true" scrolledY="432" tag="1000" key="32303037303533312D31303030204D656E73636841657267657265446963684E696368742F4261726973">
+  <children xsi:type="editmodel:ClassEditModel" name="ClassicPeg" location="570,810" size="112,85" id="de.tum.models/ClassicPeg">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="89,36">
+      <children xsi:type="editmodel:MethodEditModel" name="ClassicPeg" id="de.tum.models/ClassicPeg#ClassicPeg(ZLde.tum.Team;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setSelection" id="de.tum.models/ClassicPeg#setSelection(Z)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="SimplePeg" location="570,702" size="112,85" id="de.tum.models/SimplePeg">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="89,36">
+      <children xsi:type="editmodel:MethodEditModel" name="SimplePeg" id="de.tum.models/SimplePeg#SimplePeg(ZLde.tum.Team;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setSelection" id="de.tum.models/SimplePeg#setSelection(Z)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:EnumerationEditModel" targetConnections="//@children.8/@sourceConnections.0" name="Team" location="90,930" size="94,139" id="de.tum/Team">
+    <children xsi:type="editmodel:CompartmentEditModel" size="63,72">
+      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="YELLOW" id="de.tum/Team#YELLOW%"/>
+      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="RED" id="de.tum/Team#RED%"/>
+      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="GREEN" id="de.tum/Team#GREEN%"/>
+      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="BLUE" id="de.tum/Team#BLUE%"/>
+    </children>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/Team@team+de.tum.player/Player@" source="//@children.2" target="//@children.3" targetEnd="//@children.2/@sourceConnections.0/@children.2" label="//@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="team" location="94,103" id="de.tum/Team@team+de.tum.player/Player@|de.tum/Team#team" attachSource="true" multiplicityLabel="//@children.2/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.2/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # team" location="191,1012" size="35,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="191,1040" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,35" id="de.tum/Team@team+de.tum.player/Player@|de.tum.player/Player#"/>
+    </sourceConnections>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.8/@sourceConnections.1 //@children.8/@sourceConnections.2 //@children.2/@sourceConnections.0 //@children.3/@sourceConnections.0" name="Player" location="334,998" size="111,171" id="de.tum.player/Player">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="88,108">
+      <children xsi:type="editmodel:MethodEditModel" name="Player" id="de.tum.player/Player#Player(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="Player" id="de.tum.player/Player#Player(Lde.tum.Team;Ljava.lang.Class;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="diceThrown" id="de.tum.player/Player#diceThrown(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="makeTurn" id="de.tum.player/Player#makeTurn()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pegMoved" id="de.tum.player/Player#pegMoved()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="reset" id="de.tum.player/Player#reset()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.player/Player@player+de.tum.player/Player@" source="//@children.3" target="//@children.3" targetEnd="//@children.3/@sourceConnections.0/@children.2" label="//@children.3/@sourceConnections.0/@children.0" sourceEnd="//@children.3/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="player" location="0,20" id="de.tum.player/Player@player+de.tum.player/Player@|de.tum.player/Player#player" anchorKind="FixedAtEdge" attachSource="true" multiplicityLabel="//@children.3/@sourceConnections.0/@children.1/@children.2" roleLabel="//@children.3/@sourceConnections.0/@children.1/@children.0" orderingLabel="//@children.3/@sourceConnections.0/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # player" location="285,1025" size="42,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="293,997" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="309,1039" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="20,0" id="de.tum.player/Player@player+de.tum.player/Player@|de.tum.player/Player#" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.6/@sourceConnections.5 //@children.4/@sourceConnections.0" name="Dice" location="645,375" size="87,121" id="de.tum.models/Dice">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="64,72">
+      <children xsi:type="editmodel:MethodEditModel" name="Dice" id="de.tum.models/Dice#Dice(Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="throwIt" id="de.tum.models/Dice#throwIt(Lde.tum.Team;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="throwIt" id="de.tum.models/Dice#throwIt(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="throwIt" id="de.tum.models/Dice#throwIt(Lde.tum.Team;[F)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.models/Dice@dice+de.tum.models/Dice@" source="//@children.4" target="//@children.4" targetEnd="//@children.4/@sourceConnections.0/@children.2" label="//@children.4/@sourceConnections.0/@children.0" sourceEnd="//@children.4/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="dice" location="0,20" id="de.tum.models/Dice@dice+de.tum.models/Dice@|de.tum.models/Dice#dice" anchorKind="FixedAtEdge" attachSource="true" multiplicityLabel="//@children.4/@sourceConnections.0/@children.1/@children.2" roleLabel="//@children.4/@sourceConnections.0/@children.1/@children.0" orderingLabel="//@children.4/@sourceConnections.0/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - dice" location="608,360" size="30,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="604,402" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="620,374" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="20,0" id="de.tum.models/Dice@dice+de.tum.models/Dice@|de.tum.models/Dice#" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.6/@sourceConnections.2 //@children.6/@sourceConnections.3 //@children.6/@sourceConnections.4" name="ClassicBoard" location="420,165" size="124,67" id="de.tum.models/ClassicBoard">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="94,18">
+      <children xsi:type="editmodel:MethodEditModel" name="ClassicBoard" id="de.tum.models/ClassicBoard#ClassicBoard(ZI)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.7/@sourceConnections.0 //@children.7/@sourceConnections.1 //@children.7/@sourceConnections.4" name="TupleFloat" location="427,345" size="109,135" id="de.tum/TupleFloat">
+    <children xsi:type="editmodel:CompartmentEditModel" size="52,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="x" id="de.tum/TupleFloat#x"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="y" id="de.tum/TupleFloat#y"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="79,36">
+      <children xsi:type="editmodel:MethodEditModel" name="TupleFloat" id="de.tum/TupleFloat#TupleFloat(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="set" id="de.tum/TupleFloat#set(FF)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/TupleFloat@pos_offset+de.tum.models/Peg@" source="//@children.6" target="//@children.8" targetEnd="//@children.6/@sourceConnections.0/@children.2" label="//@children.6/@sourceConnections.0/@children.0" sourceEnd="//@children.6/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="pos_offset" location="8,135" id="de.tum/TupleFloat@pos_offset+de.tum.models/Peg@|de.tum/TupleFloat#pos_offset" attachSource="true" multiplicityLabel="//@children.6/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.6/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - pos_offset" location="442,487" size="63,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="410,487" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="116,0" id="de.tum/TupleFloat@pos_offset+de.tum.models/Peg@|de.tum.models/Peg#"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/TupleFloat@pos_next+de.tum.models/Peg@" source="//@children.6" target="//@children.8" targetEnd="//@children.6/@sourceConnections.1/@children.2" label="//@children.6/@sourceConnections.1/@children.0" sourceEnd="//@children.6/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="pos_next" location="109,130" id="de.tum/TupleFloat@pos_next+de.tum.models/Peg@|de.tum/TupleFloat#pos_next" attachSource="true" multiplicityLabel="//@children.6/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.6/@sourceConnections.1/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - pos_next" location="543,454" size="55,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="543,482" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="126,15" id="de.tum/TupleFloat@pos_next+de.tum.models/Peg@|de.tum.models/Peg#"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/TupleFloat@dice_fields+de.tum.models/ClassicBoard@" source="//@children.6" target="//@children.5" targetEnd="//@children.6/@sourceConnections.2/@children.2" label="//@children.6/@sourceConnections.2/@children.0" sourceEnd="//@children.6/@sourceConnections.2/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="dice_fields" location="54,0" id="de.tum/TupleFloat@dice_fields+de.tum.models/ClassicBoard@|de.tum/TupleFloat#dice_fields" attachSource="true" multiplicityLabel="//@children.6/@sourceConnections.2/@children.1/@children.2" roleLabel="//@children.6/@sourceConnections.2/@children.1/@children.0" orderingLabel="//@children.6/@sourceConnections.2/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - dice_fields" location="488,310" size="62,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="440,324" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="488,324" size="4,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="61,67" id="de.tum/TupleFloat@dice_fields+de.tum.models/ClassicBoard@|de.tum.models/ClassicBoard#"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/TupleFloat@besides+de.tum.models/ClassicBoard@" source="//@children.6" target="//@children.5" targetEnd="//@children.6/@sourceConnections.3/@children.2" label="//@children.6/@sourceConnections.3/@children.0" sourceEnd="//@children.6/@sourceConnections.3/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="besides" location="123,21" id="de.tum/TupleFloat@besides+de.tum.models/ClassicBoard@|de.tum/TupleFloat#besides" attachSource="true" multiplicityLabel="//@children.6/@sourceConnections.3/@children.1/@children.2" roleLabel="//@children.6/@sourceConnections.3/@children.1/@children.0" orderingLabel="//@children.6/@sourceConnections.3/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - besides" location="543,373" size="48,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="543,345" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="543,387" size="4,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="81,67" id="de.tum/TupleFloat@besides+de.tum.models/ClassicBoard@|de.tum.models/ClassicBoard#"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/TupleFloat@fields+de.tum.models/ClassicBoard@" source="//@children.6" target="//@children.5" targetEnd="//@children.6/@sourceConnections.4/@children.2" label="//@children.6/@sourceConnections.4/@children.0" sourceEnd="//@children.6/@sourceConnections.4/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="fields" location="0,5" id="de.tum/TupleFloat@fields+de.tum.models/ClassicBoard@|de.tum/TupleFloat#fields" attachSource="true" multiplicityLabel="//@children.6/@sourceConnections.4/@children.1/@children.2" roleLabel="//@children.6/@sourceConnections.4/@children.1/@children.0" orderingLabel="//@children.6/@sourceConnections.4/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - fields" location="384,357" size="36,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="386,329" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="416,371" size="4,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="41,67" id="de.tum/TupleFloat@fields+de.tum.models/ClassicBoard@|de.tum.models/ClassicBoard#"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/TupleFloat@speed+de.tum.models/Dice@" source="//@children.6" target="//@children.4" targetEnd="//@children.6/@sourceConnections.5/@children.2" label="//@children.6/@sourceConnections.5/@children.0" sourceEnd="//@children.6/@sourceConnections.5/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="speed" location="109,82" id="de.tum/TupleFloat@speed+de.tum.models/Dice@|de.tum/TupleFloat#speed" attachSource="true" multiplicityLabel="//@children.6/@sourceConnections.5/@children.1/@children.2" roleLabel="//@children.6/@sourceConnections.5/@children.1/@children.0" orderingLabel="//@children.6/@sourceConnections.5/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - speed" location="543,392" size="40,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="543,434" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="543,406" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,52" id="de.tum/TupleFloat@speed+de.tum.models/Dice@|de.tum.models/Dice#"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Board" location="103,426" size="142,211" id="de.tum.models/Board">
+    <children xsi:type="editmodel:CompartmentEditModel" size="92,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="path_length" id="de.tum.models/Board#path_length"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="start_pegs" id="de.tum.models/Board#start_pegs"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="119,126">
+      <children xsi:type="editmodel:MethodEditModel" name="Board" id="de.tum.models/Board#Board(Z[Lde.tum.TupleFloat;[Lde.tum.TupleFloat;[Lde.tum.TupleFloat;II)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPegs" id="de.tum.models/Board#getPegs(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPlayers" id="de.tum.models/Board#getPlayers()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPosition" id="de.tum.models/Board#getPosition(Lde.tum.models.Peg;IZ)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPositionForDice" id="de.tum.models/Board#getPositionForDice(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPositionNext" id="de.tum.models/Board#getPositionNext(Lde.tum.Team;II)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getTeams" id="de.tum.models/Board#getTeams()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/TupleFloat@dice_fields+de.tum.models/Board@" source="//@children.7" target="//@children.6" targetEnd="//@children.7/@sourceConnections.0/@children.2" label="//@children.7/@sourceConnections.0/@children.0" sourceEnd="//@children.7/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="142,26" id="de.tum/TupleFloat@dice_fields+de.tum.models/Board@|de.tum.models/Board#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="dice_fields" location="0,107" id="de.tum/TupleFloat@dice_fields+de.tum.models/Board@|de.tum/TupleFloat#dice_fields" multiplicityLabel="//@children.7/@sourceConnections.0/@children.2/@children.2" roleLabel="//@children.7/@sourceConnections.0/@children.2/@children.0" orderingLabel="//@children.7/@sourceConnections.0/@children.2/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - dice_fields" location="358,417" size="62,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="386,459" size="34,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="416,431" size="4,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/TupleFloat@besides+de.tum.models/Board@" source="//@children.7" target="//@children.6" targetEnd="//@children.7/@sourceConnections.1/@children.2" label="//@children.7/@sourceConnections.1/@children.0" sourceEnd="//@children.7/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="142,6" id="de.tum/TupleFloat@besides+de.tum.models/Board@|de.tum.models/Board#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="besides" location="0,37" id="de.tum/TupleFloat@besides+de.tum.models/Board@|de.tum/TupleFloat#besides" multiplicityLabel="//@children.7/@sourceConnections.1/@children.2/@children.2" roleLabel="//@children.7/@sourceConnections.1/@children.2/@children.0" orderingLabel="//@children.7/@sourceConnections.1/@children.2/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - besides" location="372,347" size="48,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="386,389" size="34,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="416,361" size="4,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.models/Peg@pegs+de.tum.models/Board@" source="//@children.7" target="//@children.8" targetEnd="//@children.7/@sourceConnections.2/@children.2" label="//@children.7/@sourceConnections.2/@children.0" sourceEnd="//@children.7/@sourceConnections.2/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="132,211" id="de.tum.models/Peg@pegs+de.tum.models/Board@|de.tum.models/Board#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="pegs" location="0,10" id="de.tum.models/Peg@pegs+de.tum.models/Board@|de.tum.models/Peg#pegs" multiplicityLabel="//@children.7/@sourceConnections.2/@children.2/@children.2" roleLabel="//@children.7/@sourceConnections.2/@children.2/@children.0" orderingLabel="//@children.7/@sourceConnections.2/@children.2/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - pegs" location="278,677" size="34,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="278,719" size="34,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="308,691" size="4,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.models/Peg@peg_fields+de.tum.models/Board@" source="//@children.7" target="//@children.8" targetEnd="//@children.7/@sourceConnections.3/@children.2" label="//@children.7/@sourceConnections.3/@children.0" sourceEnd="//@children.7/@sourceConnections.3/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="142,206" id="de.tum.models/Peg@peg_fields+de.tum.models/Board@|de.tum.models/Board#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="peg_fields" location="126,5" id="de.tum.models/Peg@peg_fields+de.tum.models/Board@|de.tum.models/Peg#peg_fields" multiplicityLabel="//@children.7/@sourceConnections.3/@children.2/@children.2" roleLabel="//@children.7/@sourceConnections.3/@children.2/@children.0" orderingLabel="//@children.7/@sourceConnections.3/@children.2/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - peg_fields" location="452,714" size="60,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="452,686" size="34,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="452,728" size="4,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/TupleFloat@fields+de.tum.models/Board@" source="//@children.7" target="//@children.6" targetEnd="//@children.7/@sourceConnections.4/@children.2" label="//@children.7/@sourceConnections.4/@children.0" sourceEnd="//@children.7/@sourceConnections.4/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="142,46" id="de.tum/TupleFloat@fields+de.tum.models/Board@|de.tum.models/Board#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="fields" location="5,135" id="de.tum/TupleFloat@fields+de.tum.models/Board@|de.tum/TupleFloat#fields" multiplicityLabel="//@children.7/@sourceConnections.4/@children.2/@children.2" roleLabel="//@children.7/@sourceConnections.4/@children.2/@children.0" orderingLabel="//@children.7/@sourceConnections.4/@children.2/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - fields" location="439,487" size="36,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="391,487" size="34,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="439,501" size="4,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.7/@sourceConnections.2 //@children.7/@sourceConnections.3 //@children.6/@sourceConnections.0 //@children.6/@sourceConnections.1" name="Peg" location="319,702" size="126,229" id="de.tum.models/Peg">
+    <children xsi:type="editmodel:CompartmentEditModel" size="82,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="pos_start" id="de.tum.models/Peg#pos_start"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="103,162">
+      <children xsi:type="editmodel:MethodEditModel" name="Peg" id="de.tum.models/Peg#Peg(ZLde.tum.Team;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="checkMove" id="de.tum.models/Peg#checkMove(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getCurrentField" id="de.tum.models/Peg#getCurrentField()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="giveWay" id="de.tum.models/Peg#giveWay(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hasFinished" id="de.tum.models/Peg#hasFinished()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hasStarted" id="de.tum.models/Peg#hasStarted()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="move" id="de.tum.models/Peg#move()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="reset" id="de.tum.models/Peg#reset()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setSelection" id="de.tum.models/Peg#setSelection(Z)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/Team@team+de.tum.models/Peg@" source="//@children.8" target="//@children.2" targetEnd="//@children.8/@sourceConnections.0/@children.2" label="//@children.8/@sourceConnections.0/@children.0" sourceEnd="//@children.8/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="10,229" id="de.tum/Team@team+de.tum.models/Peg@|de.tum.models/Peg#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="team" location="94,10" id="de.tum/Team@team+de.tum.models/Peg@|de.tum/Team#team" multiplicityLabel="//@children.8/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.8/@sourceConnections.0/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" + team" location="191,947" size="35,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="191,919" size="18,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.models/Peg@movables+de.tum.player/Player@" source="//@children.8" target="//@children.3" targetEnd="//@children.8/@sourceConnections.1/@children.2" label="//@children.8/@sourceConnections.1/@children.0" sourceEnd="//@children.8/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="movables" location="70,229" id="de.tum.models/Peg@movables+de.tum.player/Player@|de.tum.models/Peg#movables" attachSource="true" multiplicityLabel="//@children.8/@sourceConnections.1/@children.1/@children.2" roleLabel="//@children.8/@sourceConnections.1/@children.1/@children.0" orderingLabel="//@children.8/@sourceConnections.1/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # movables" location="396,938" size="58,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="348,938" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="396,952" size="4,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="55,0" id="de.tum.models/Peg@movables+de.tum.player/Player@|de.tum.player/Player#"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.models/Peg@pegs+de.tum.player/Player@" source="//@children.8" target="//@children.3" targetEnd="//@children.8/@sourceConnections.2/@children.2" label="//@children.8/@sourceConnections.2/@children.0" sourceEnd="//@children.8/@sourceConnections.2/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="pegs" location="126,203" id="de.tum.models/Peg@pegs+de.tum.player/Player@|de.tum.models/Peg#pegs" attachSource="true" multiplicityLabel="//@children.8/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.8/@sourceConnections.2/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - pegs" location="452,884" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="452,912" size="4,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="111,15" id="de.tum.models/Peg@pegs+de.tum.player/Player@|de.tum.player/Player#"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=2;Product=eUML2" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

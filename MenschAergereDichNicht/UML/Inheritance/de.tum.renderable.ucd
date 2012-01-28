@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" size="1128,750" id="de.tum.renderable" metadata="uml2-1.0" initialized="true" tag="1000" key="32303037303533312D31303030204D656E73636841657267657265446963684E696368742F4261726973">
+  <children xsi:type="editmodel:ClassEditModel" name="Textures" location="60,50" size="146,121" id="de.tum.renderable/Textures">
+    <children xsi:type="editmodel:CompartmentEditModel" size="123,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="bitmaps" id="de.tum.renderable/Textures#bitmaps"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="textures" id="de.tum.renderable/Textures#textures"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="92,36">
+      <children xsi:type="editmodel:MethodEditModel" name="addTexture" id="de.tum.renderable/Textures#addTexture(Landroid.graphics.Bitmap;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="bindTextures" id="de.tum.renderable/Textures#bindTextures(Ljavax.microedition.khronos.opengles.GL10;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.3/@sourceConnections.0" name="Renderable" location="452,50" size="116,81" id="de.tum.renderable/Renderable">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="62,18">
+      <children xsi:type="editmodel:MethodEditModel" name="render" id="de.tum.renderable/Renderable#render(Ljavax.microedition.khronos.opengles.GL10;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="TriangleStripe" location="500,487" size="132,67" id="de.tum.renderable/TriangleStripe">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="96,18">
+      <children xsi:type="editmodel:MethodEditModel" name="TriangleStripe" id="de.tum.renderable/TriangleStripe#TriangleStripe(Z[F[F[SI)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.6/@sourceConnections.0" autoLocated="true" id="de.tum.renderable/SimpleGeometricObject&lt;-de.tum.renderable/TriangleStripe" source="//@children.2" target="//@children.9" targetEnd="//@children.2/@sourceConnections.0/@children.1" sourceEnd="//@children.2/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="66,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="97,121" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.8/@sourceConnections.0" name="GeometricObject" location="435,181" size="149,85" id="de.tum.renderable/GeometricObject">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="110,36">
+      <children xsi:type="editmodel:MethodEditModel" name="GeometricObject" id="de.tum.renderable/GeometricObject#GeometricObject(Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="transfer" id="de.tum.renderable/GeometricObject#transfer(FFF)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.tum.renderable/Renderable&lt;-de.tum.renderable/GeometricObject" source="//@children.3" target="//@children.1" targetEnd="//@children.3/@sourceConnections.0/@children.1" sourceEnd="//@children.3/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="74,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="57,81"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Dice" location="222,487" size="92,135" id="de.tum.models/Dice">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="64,72">
+      <children xsi:type="editmodel:MethodEditModel" name="Dice" id="de.tum.models/Dice#Dice(Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="throwIt" id="de.tum.models/Dice#throwIt(Lde.tum.Team;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="throwIt" id="de.tum.models/Dice#throwIt(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="throwIt" id="de.tum.models/Dice#throwIt(Lde.tum.Team;[F)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.tum.renderable/GameObject&lt;-de.tum.models/Dice" source="//@children.4" target="//@children.5/@sourceConnections.0" targetEnd="//@children.4/@sourceConnections.0/@children.1" sourceEnd="//@children.4/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="46,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Board" location="50,487" size="142,225" id="de.tum.models/Board">
+    <children xsi:type="editmodel:CompartmentEditModel" size="92,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="path_length" id="de.tum.models/Board#path_length"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="start_pegs" id="de.tum.models/Board#start_pegs"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="119,126">
+      <children xsi:type="editmodel:MethodEditModel" name="Board" id="de.tum.models/Board#Board(Z[Lde.tum.TupleFloat;[Lde.tum.TupleFloat;[Lde.tum.TupleFloat;II)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPegs" id="de.tum.models/Board#getPegs(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPlayers" id="de.tum.models/Board#getPlayers()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPosition" id="de.tum.models/Board#getPosition(Lde.tum.models.Peg;IZ)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPositionForDice" id="de.tum.models/Board#getPositionForDice(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPositionNext" id="de.tum.models/Board#getPositionNext(Lde.tum.Team;II)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getTeams" id="de.tum.models/Board#getTeams()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.4/@sourceConnections.0 //@children.7/@sourceConnections.0" autoLocated="true" id="de.tum.renderable/GameObject&lt;-de.tum.models/Board" source="//@children.5" target="//@children.8" targetEnd="//@children.5/@sourceConnections.0/@children.1" sourceEnd="//@children.5/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="71,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="60,121" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="TriangleFan" location="662,487" size="118,67" id="de.tum.renderable/TriangleFan">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="86,18">
+      <children xsi:type="editmodel:MethodEditModel" name="TriangleFan" id="de.tum.renderable/TriangleFan#TriangleFan(Z[F[F[SI)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.tum.renderable/SimpleGeometricObject&lt;-de.tum.renderable/TriangleFan" source="//@children.6" target="//@children.2/@sourceConnections.0" targetEnd="//@children.6/@sourceConnections.0/@children.1" sourceEnd="//@children.6/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="59,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Peg" location="344,487" size="126,243" id="de.tum.models/Peg">
+    <children xsi:type="editmodel:CompartmentEditModel" size="82,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="pos_start" id="de.tum.models/Peg#pos_start"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="103,162">
+      <children xsi:type="editmodel:MethodEditModel" name="Peg" id="de.tum.models/Peg#Peg(ZLde.tum.Team;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="checkMove" id="de.tum.models/Peg#checkMove(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getCurrentField" id="de.tum.models/Peg#getCurrentField()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="giveWay" id="de.tum.models/Peg#giveWay(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hasFinished" id="de.tum.models/Peg#hasFinished()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hasStarted" id="de.tum.models/Peg#hasStarted()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="move" id="de.tum.models/Peg#move()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="reset" id="de.tum.models/Peg#reset()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setSelection" id="de.tum.models/Peg#setSelection(Z)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.tum.renderable/GameObject&lt;-de.tum.models/Peg" source="//@children.7" target="//@children.5/@sourceConnections.0" targetEnd="//@children.7/@sourceConnections.0/@children.1" sourceEnd="//@children.7/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="63,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.5/@sourceConnections.0" name="GameObject" location="316,316" size="121,121" id="de.tum.renderable/GameObject">
+    <children xsi:type="editmodel:CompartmentEditModel" size="52,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="p" id="de.tum.renderable/GameObject#p"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="89,54">
+      <children xsi:type="editmodel:MethodEditModel" name="GameObject" id="de.tum.renderable/GameObject#GameObject(Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="render" id="de.tum.renderable/GameObject#render(Ljavax.microedition.khronos.opengles.GL10;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="transfer" id="de.tum.renderable/GameObject#transfer(FFF)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.9/@sourceConnections.0" autoLocated="true" id="de.tum.renderable/GeometricObject&lt;-de.tum.renderable/GameObject" source="//@children.8" target="//@children.3" targetEnd="//@children.8/@sourceConnections.0/@children.1" sourceEnd="//@children.8/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="60,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="74,85" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.2/@sourceConnections.0" name="SimpleGeometricObject" location="546,316" size="194,121" id="de.tum.renderable/SimpleGeometricObject">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="141,72">
+      <children xsi:type="editmodel:MethodEditModel" name="SimpleGeometricObject" id="de.tum.renderable/SimpleGeometricObject#SimpleGeometricObject(ZI[F[F[SI)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="render" id="de.tum.renderable/SimpleGeometricObject#render(Ljavax.microedition.khronos.opengles.GL10;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setTextures" id="de.tum.renderable/SimpleGeometricObject#setTextures([S)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="transfer" id="de.tum.renderable/SimpleGeometricObject#transfer(FFF)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.tum.renderable/GeometricObject&lt;-de.tum.renderable/SimpleGeometricObject" source="//@children.9" target="//@children.8/@sourceConnections.0" targetEnd="//@children.9/@sourceConnections.0/@children.1" sourceEnd="//@children.9/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="97,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=1;Product=eUML2" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

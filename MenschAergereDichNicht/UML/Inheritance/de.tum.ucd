@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" size="1130,747" id="de.tum" metadata="uml2-1.0" initialized="true" tag="1000" key="32303037303533312D31303030204D656E73636841657267657265446963684E696368742F4261726973">
+  <children xsi:type="editmodel:ClassEditModel" name="AboutActivity" location="353,392" size="125,67" id="de.tum/AboutActivity">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="74,18">
+      <children xsi:type="editmodel:MethodEditModel" name="onCreate" id="de.tum/AboutActivity#onCreate(Landroid.os.Bundle;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="GameListener" location="347,50" size="172,301" id="de.tum/GameListener">
+    <children xsi:type="editmodel:CompartmentEditModel" size="149,72">
+      <children xsi:type="editmodel:AttributeEditModel" name="waitingForDice" id="de.tum/GameListener#waitingForDice"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="waitingForPegChosen" id="de.tum/GameListener#waitingForPegChosen"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="waitingForPegSelection" id="de.tum/GameListener#waitingForPegSelection"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="waitingTimeOut" id="de.tum/GameListener#waitingTimeOut"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="133,180">
+      <children xsi:type="editmodel:MethodEditModel" name="GameListener" id="de.tum/GameListener#GameListener(Landroid.app.Activity;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onAccuracyChanged" id="de.tum/GameListener#onAccuracyChanged(Landroid.hardware.Sensor;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onLongClick" id="de.tum/GameListener#onLongClick(Landroid.view.View;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onPause" id="de.tum/GameListener#onPause()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onResume" id="de.tum/GameListener#onResume()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onSensorChanged" id="de.tum/GameListener#onSensorChanged(Landroid.hardware.SensorEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onTouch" id="de.tum/GameListener#onTouch(Landroid.view.View;Landroid.view.MotionEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="stopWaiting" id="de.tum/GameListener#stopWaiting()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="verifyWaiting" id="de.tum/GameListener#verifyWaiting()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="waitForInput" id="de.tum/GameListener#waitForInput(Lde.tum.player.HumanPlayer;I)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="GameRenderer" location="569,50" size="147,193" id="de.tum/GameRenderer">
+    <children xsi:type="editmodel:CompartmentEditModel" size="118,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="rotating" id="de.tum/GameRenderer#rotating"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="rotation_speed" id="de.tum/GameRenderer#rotation_speed"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="124,108">
+      <children xsi:type="editmodel:MethodEditModel" name="GameRenderer" id="de.tum/GameRenderer#GameRenderer()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDrawFrame" id="de.tum/GameRenderer#onDrawFrame(Ljavax.microedition.khronos.opengles.GL10;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onSurfaceChanged" id="de.tum/GameRenderer#onSurfaceChanged(Ljavax.microedition.khronos.opengles.GL10;II)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onSurfaceCreated" id="de.tum/GameRenderer#onSurfaceCreated(Ljavax.microedition.khronos.opengles.GL10;Ljavax.microedition.khronos.egl.EGLConfig;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="tranfer" id="de.tum/GameRenderer#tranfer(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="zoom" id="de.tum/GameRenderer#zoom(F)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HelpActivity" location="180,538" size="117,67" id="de.tum/HelpActivity">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="74,18">
+      <children xsi:type="editmodel:MethodEditModel" name="onCreate" id="de.tum/HelpActivity#onCreate(Landroid.os.Bundle;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Helper" location="50,538" size="93,67" id="de.tum/Helper">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="70,18">
+      <children xsi:type="editmodel:MethodEditModel" name="rotate90" id="de.tum/Helper#rotate90([FI)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="MenschAergereDichNichtActivity" location="50,50" size="247,319" id="de.tum/MenschAergereDichNichtActivity">
+    <children xsi:type="editmodel:CompartmentEditModel" size="126,126">
+      <children xsi:type="editmodel:AttributeEditModel" name="height" id="de.tum/MenschAergereDichNichtActivity#height"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="hz" id="de.tum/MenschAergereDichNichtActivity#hz"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_TITLE" id="de.tum/MenschAergereDichNichtActivity#mESSAGE_TITLE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_TOAST" id="de.tum/MenschAergereDichNichtActivity#mESSAGE_TOAST"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tITLE" id="de.tum/MenschAergereDichNichtActivity#tITLE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tOAST" id="de.tum/MenschAergereDichNichtActivity#tOAST"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="width" id="de.tum/MenschAergereDichNichtActivity#width"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="90,144">
+      <children xsi:type="editmodel:MethodEditModel" name="nextTurn" id="de.tum/MenschAergereDichNichtActivity#nextTurn(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onCreate" id="de.tum/MenschAergereDichNichtActivity#onCreate(Landroid.os.Bundle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDestroy" id="de.tum/MenschAergereDichNichtActivity#onDestroy()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onKeyDown" id="de.tum/MenschAergereDichNichtActivity#onKeyDown(ILandroid.view.KeyEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onPause" id="de.tum/MenschAergereDichNichtActivity#onPause()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onResume" id="de.tum/MenschAergereDichNichtActivity#onResume()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStart" id="de.tum/MenschAergereDichNichtActivity#onStart()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStop" id="de.tum/MenschAergereDichNichtActivity#onStop()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Room" location="569,272" size="126,121" id="de.tum/Room">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="103,72">
+      <children xsi:type="editmodel:MethodEditModel" name="addRenderable" id="de.tum/Room#addRenderable(Lde.tum.renderable.Renderable;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="clear" id="de.tum/Room#clear()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isEmpty" id="de.tum/Room#isEmpty()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="render" id="de.tum/Room#render(Ljavax.microedition.khronos.opengles.GL10;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="SettingsActivity" location="353,486" size="139,29" id="de.tum/SettingsActivity">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:EnumerationEditModel" name="Team" location="203,390" size="94,125" id="de.tum/Team">
+    <children xsi:type="editmodel:CompartmentEditModel" size="63,72">
+      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="BLUE" id="de.tum/Team#BLUE%"/>
+      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="YELLOW" id="de.tum/Team#YELLOW%"/>
+      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="GREEN" id="de.tum/Team#GREEN%"/>
+      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="RED" id="de.tum/Team#RED%"/>
+    </children>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="TupleFloat" location="50,392" size="109,121" id="de.tum/TupleFloat">
+    <children xsi:type="editmodel:CompartmentEditModel" size="52,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="x" id="de.tum/TupleFloat#x"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="y" id="de.tum/TupleFloat#y"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="79,36">
+      <children xsi:type="editmodel:MethodEditModel" name="TupleFloat" id="de.tum/TupleFloat#TupleFloat(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="set" id="de.tum/TupleFloat#set(FF)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="WelcomeActivity" location="569,422" size="148,157" id="de.tum/WelcomeActivity">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="81,108">
+      <children xsi:type="editmodel:MethodEditModel" name="onCreate" id="de.tum/WelcomeActivity#onCreate(Landroid.os.Bundle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDestroy" id="de.tum/WelcomeActivity#onDestroy()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onPause" id="de.tum/WelcomeActivity#onPause()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onResume" id="de.tum/WelcomeActivity#onResume()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStart" id="de.tum/WelcomeActivity#onStart()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStop" id="de.tum/WelcomeActivity#onStop()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=1;Product=eUML2" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>
