@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:text="@string/match_teams" />
+
+    <CheckBox
+        android:id="@+id/checkBoxTeamEnabled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/box_enable_team" />
+    
+    <CheckBox
+        android:id="@+id/checkBoxTeamHuman"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/box_human" />
+    
+    <Spinner
+        android:id="@+id/spinnerAIStrategy"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:drawSelectorOnTop="true"
+        android:prompt="@string/select_strategy" />
+    
+    <Spinner
+        android:id="@+id/spinnerDevice"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:drawSelectorOnTop="true"
+        android:prompt="@string/select_device_for_this_team" />
+    
+</LinearLayout>
