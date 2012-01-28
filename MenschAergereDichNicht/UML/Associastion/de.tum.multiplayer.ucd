@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" size="1227,1222" id="de.tum.multiplayer" metadata="uml2-1.0" initialized="true" tag="1000" key="32303037303533312D31303030204D656E73636841657267657265446963684E696368742F4261726973">
+  <children xsi:type="editmodel:ClassEditModel" name="ClientNumberPicker" location="50,948" size="277,254" id="de.tum.multiplayer/ClientNumberPicker" runTimeClassModel="onStop(),de.tum.multiplayer.ClientNumberPicker.OnClientNumberSelectedListener,onPause(),onDestroy(),onCreate(Landroid.os.Bundle;),onStart(),onResume()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="81,108">
+      <children xsi:type="editmodel:MethodEditModel" name="onCreate" id="de.tum.multiplayer/ClientNumberPicker#onCreate(Landroid.os.Bundle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDestroy" id="de.tum.multiplayer/ClientNumberPicker#onDestroy()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onPause" id="de.tum.multiplayer/ClientNumberPicker#onPause()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onResume" id="de.tum.multiplayer/ClientNumberPicker#onResume()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStart" id="de.tum.multiplayer/ClientNumberPicker#onStart()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStop" id="de.tum.multiplayer/ClientNumberPicker#onStop()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="254,87">
+      <children xsi:type="editmodel:ClassEditModel" name="OnClientNumberSelectedListener" size="254,85" id="de.tum.multiplayer/ClientNumberPicker$OnClientNumberSelectedListener" runTimeClassModel="onNothingSelected(Landroid.widget.AdapterView;),onItemSelected(Landroid.widget.AdapterView;Landroid.view.View;IJ)">
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <children xsi:type="editmodel:CompartmentEditModel" size="120,36">
+          <children xsi:type="editmodel:MethodEditModel" name="onItemSelected" id="de.tum.multiplayer/ClientNumberPicker$OnClientNumberSelectedListener#onItemSelected(Landroid.widget.AdapterView;Landroid.view.View;IJ)"/>
+          <children xsi:type="editmodel:MethodEditModel" name="onNothingSelected" id="de.tum.multiplayer/ClientNumberPicker$OnClientNumberSelectedListener#onNothingSelected(Landroid.widget.AdapterView;)"/>
+        </children>
+        <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+        <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+      </children>
+    </children>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="DataClient" location="610,948" size="108,103" id="de.tum.multiplayer/DataClient" runTimeClassModel="getValue(),setValue(Ljava.lang.String;),DataClient(Ljava.lang.String;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="78,54">
+      <children xsi:type="editmodel:MethodEditModel" name="DataClient" id="de.tum.multiplayer/DataClient#DataClient(Ljava.lang.String;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getValue" id="de.tum.multiplayer/DataClient#getValue()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setValue" id="de.tum.multiplayer/DataClient#setValue(Ljava.lang.String;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="DataServer" location="768,948" size="122,85" id="de.tum.multiplayer/DataServer" runTimeClassModel="DataServer([I),tokens">
+    <children xsi:type="editmodel:CompartmentEditModel" size="99,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="tokens" id="de.tum.multiplayer/DataServer#tokens"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="85,18">
+      <children xsi:type="editmodel:MethodEditModel" name="DataServer" id="de.tum.multiplayer/DataServer#DataServer([I)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="ModeSelectionActivity" location="377,948" size="183,157" id="de.tum.multiplayer/ModeSelectionActivity" runTimeClassModel="onStop(),onPause(),onCreate(Landroid.os.Bundle;),onDestroy(),onStart(),onResume()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="81,108">
+      <children xsi:type="editmodel:MethodEditModel" name="onCreate" id="de.tum.multiplayer/ModeSelectionActivity#onCreate(Landroid.os.Bundle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDestroy" id="de.tum.multiplayer/ModeSelectionActivity#onDestroy()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onPause" id="de.tum.multiplayer/ModeSelectionActivity#onPause()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onResume" id="de.tum.multiplayer/ModeSelectionActivity#onResume()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStart" id="de.tum.multiplayer/ModeSelectionActivity#onStart()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStop" id="de.tum.multiplayer/ModeSelectionActivity#onStop()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.5/@sourceConnections.4" name="BluetoothMPService" location="583,50" size="244,405" id="de.tum.multiplayer.bluetooth/BluetoothMPService" runTimeClassModel="maxDeviceNumber,connectedDevices,connected(Landroid.bluetooth.BluetoothSocket;Landroid.bluetooth.BluetoothDevice;),write([B),sTATE_LISTEN,getState(),startServer(),sTATE_ALL_CONNECTED,connectedClient(Landroid.bluetooth.BluetoothSocket;Landroid.bluetooth.BluetoothDevice;),BluetoothMPService(Landroid.content.Context;Landroid.os.Handler;),serverDevice,connectServer(Landroid.bluetooth.BluetoothDevice;),sTATE_CONNECTING_TO_SERVER,sTATE_WAITING_FOR_CONNECTIONS,tryNextUUID(Landroid.bluetooth.BluetoothDevice;),sTATE_CONNECTED_TO_SERVER,initiateServer(),sTATE_NONE,stop(Z)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="221,162">
+      <children xsi:type="editmodel:AttributeEditModel" name="connectedDevices" id="de.tum.multiplayer.bluetooth/BluetoothMPService#connectedDevices"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="maxDeviceNumber" id="de.tum.multiplayer.bluetooth/BluetoothMPService#maxDeviceNumber"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="sTATE_ALL_CONNECTED" id="de.tum.multiplayer.bluetooth/BluetoothMPService#sTATE_ALL_CONNECTED"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="sTATE_CONNECTED_TO_SERVER" id="de.tum.multiplayer.bluetooth/BluetoothMPService#sTATE_CONNECTED_TO_SERVER"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="sTATE_CONNECTING_TO_SERVER" id="de.tum.multiplayer.bluetooth/BluetoothMPService#sTATE_CONNECTING_TO_SERVER"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="sTATE_LISTEN" id="de.tum.multiplayer.bluetooth/BluetoothMPService#sTATE_LISTEN"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="sTATE_NONE" id="de.tum.multiplayer.bluetooth/BluetoothMPService#sTATE_NONE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="sTATE_WAITING_FOR_CONNECTIONS" id="de.tum.multiplayer.bluetooth/BluetoothMPService#sTATE_WAITING_FOR_CONNECTIONS"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="serverDevice" id="de.tum.multiplayer.bluetooth/BluetoothMPService#serverDevice"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="126,180">
+      <children xsi:type="editmodel:MethodEditModel" name="BluetoothMPService" id="de.tum.multiplayer.bluetooth/BluetoothMPService#BluetoothMPService(Landroid.content.Context;Landroid.os.Handler;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="connectServer" id="de.tum.multiplayer.bluetooth/BluetoothMPService#connectServer(Landroid.bluetooth.BluetoothDevice;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="connected" id="de.tum.multiplayer.bluetooth/BluetoothMPService#connected(Landroid.bluetooth.BluetoothSocket;Landroid.bluetooth.BluetoothDevice;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="connectedClient" id="de.tum.multiplayer.bluetooth/BluetoothMPService#connectedClient(Landroid.bluetooth.BluetoothSocket;Landroid.bluetooth.BluetoothDevice;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getState" id="de.tum.multiplayer.bluetooth/BluetoothMPService#getState()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="initiateServer" id="de.tum.multiplayer.bluetooth/BluetoothMPService#initiateServer()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="startServer" id="de.tum.multiplayer.bluetooth/BluetoothMPService#startServer()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="stop" id="de.tum.multiplayer.bluetooth/BluetoothMPService#stop(Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="tryNextUUID" id="de.tum.multiplayer.bluetooth/BluetoothMPService#tryNextUUID(Landroid.bluetooth.BluetoothDevice;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="write" id="de.tum.multiplayer.bluetooth/BluetoothMPService#write([B)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.5/@sourceConnections.2" name="MultiplayerActivity" location="326,327" size="195,571" id="de.tum.multiplayer/MultiplayerActivity" runTimeClassModel="onCreateOptionsMenu(Landroid.view.Menu;),rESULT_GOBACK,onPause(),nextTurn(Lde.tum.Team;),onCreate(Landroid.os.Bundle;),mESSAGE_DEVICE_NAME,mESSAGE_TITLE,onStop(),tokenDone(),rESULT_SERVER_MODE,height,dEVICE_NAME,onDestroy(),tOAST,hz,mESSAGE_READ,onResume(),onActivityResult(IILandroid.content.Intent;),mESSAGE_WRITE,mESSAGE_STATE_CHANGE,tITLE,onOptionsItemSelected(Landroid.view.MenuItem;),width,rESULT_CLIENT_MODE,onStart(),onKeyDown(ILandroid.view.KeyEvent;),mESSAGE_TOAST,notifyPlayers([I),mAX_CLIENTS">
+    <children xsi:type="editmodel:CompartmentEditModel" size="172,288">
+      <children xsi:type="editmodel:AttributeEditModel" name="dEVICE_NAME" id="de.tum.multiplayer/MultiplayerActivity#dEVICE_NAME"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="height" id="de.tum.multiplayer/MultiplayerActivity#height"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="hz" id="de.tum.multiplayer/MultiplayerActivity#hz"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mAX_CLIENTS" id="de.tum.multiplayer/MultiplayerActivity#mAX_CLIENTS"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_DEVICE_NAME" id="de.tum.multiplayer/MultiplayerActivity#mESSAGE_DEVICE_NAME"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_READ" id="de.tum.multiplayer/MultiplayerActivity#mESSAGE_READ"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_STATE_CHANGE" id="de.tum.multiplayer/MultiplayerActivity#mESSAGE_STATE_CHANGE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_TITLE" id="de.tum.multiplayer/MultiplayerActivity#mESSAGE_TITLE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_TOAST" id="de.tum.multiplayer/MultiplayerActivity#mESSAGE_TOAST"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_WRITE" id="de.tum.multiplayer/MultiplayerActivity#mESSAGE_WRITE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="rESULT_CLIENT_MODE" id="de.tum.multiplayer/MultiplayerActivity#rESULT_CLIENT_MODE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="rESULT_GOBACK" id="de.tum.multiplayer/MultiplayerActivity#rESULT_GOBACK"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="rESULT_SERVER_MODE" id="de.tum.multiplayer/MultiplayerActivity#rESULT_SERVER_MODE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tITLE" id="de.tum.multiplayer/MultiplayerActivity#tITLE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tOAST" id="de.tum.multiplayer/MultiplayerActivity#tOAST"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="width" id="de.tum.multiplayer/MultiplayerActivity#width"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="140,234">
+      <children xsi:type="editmodel:MethodEditModel" name="nextTurn" id="de.tum.multiplayer/MultiplayerActivity#nextTurn(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="notifyPlayers" id="de.tum.multiplayer/MultiplayerActivity#notifyPlayers([I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onActivityResult" id="de.tum.multiplayer/MultiplayerActivity#onActivityResult(IILandroid.content.Intent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onCreate" id="de.tum.multiplayer/MultiplayerActivity#onCreate(Landroid.os.Bundle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onCreateOptionsMenu" id="de.tum.multiplayer/MultiplayerActivity#onCreateOptionsMenu(Landroid.view.Menu;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDestroy" id="de.tum.multiplayer/MultiplayerActivity#onDestroy()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onKeyDown" id="de.tum.multiplayer/MultiplayerActivity#onKeyDown(ILandroid.view.KeyEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onOptionsItemSelected" id="de.tum.multiplayer/MultiplayerActivity#onOptionsItemSelected(Landroid.view.MenuItem;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onPause" id="de.tum.multiplayer/MultiplayerActivity#onPause()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onResume" id="de.tum.multiplayer/MultiplayerActivity#onResume()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStart" id="de.tum.multiplayer/MultiplayerActivity#onStart()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStop" id="de.tum.multiplayer/MultiplayerActivity#onStop()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="tokenDone" id="de.tum.multiplayer/MultiplayerActivity#tokenDone()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.player/Player@players+de.tum.multiplayer/MultiplayerActivity@" source="//@children.5" target="//@children.6" targetEnd="//@children.5/@sourceConnections.0/@children.2" label="//@children.5/@sourceConnections.0/@children.0" sourceEnd="//@children.5/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="195,341" id="de.tum.player/Player@players+de.tum.multiplayer/MultiplayerActivity@|de.tum.multiplayer/MultiplayerActivity#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="players" location="0,85" id="de.tum.player/Player@players+de.tum.multiplayer/MultiplayerActivity@|de.tum.player/Player#players" multiplicityLabel="//@children.5/@sourceConnections.0/@children.2/@children.2" roleLabel="//@children.5/@sourceConnections.0/@children.2/@children.0" orderingLabel="//@children.5/@sourceConnections.0/@children.2/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - players" location="550,633" size="46,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="562,675" size="34,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="592,647" size="4,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/GameRenderer@renderer+de.tum.multiplayer/MultiplayerActivity@" source="//@children.5" target="//@children.8" targetEnd="//@children.5/@sourceConnections.1/@children.2" label="//@children.5/@sourceConnections.1/@children.0" sourceEnd="//@children.5/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,379" id="de.tum/GameRenderer@renderer+de.tum.multiplayer/MultiplayerActivity@|de.tum.multiplayer/MultiplayerActivity#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="renderer" location="147,103" id="de.tum/GameRenderer@renderer+de.tum.multiplayer/MultiplayerActivity@|de.tum/GameRenderer#renderer" multiplicityLabel="//@children.5/@sourceConnections.1/@children.2/@children.1" roleLabel="//@children.5/@sourceConnections.1/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - renderer" location="224,685" size="52,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="224,713" size="18,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.multiplayer/MultiplayerActivity@activity+de.tum.multiplayer/MultiplayerActivity@" source="//@children.5" target="//@children.5" targetEnd="//@children.5/@sourceConnections.2/@children.2" label="//@children.5/@sourceConnections.2/@children.0" sourceEnd="//@children.5/@sourceConnections.2/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="activity" location="0,20" id="de.tum.multiplayer/MultiplayerActivity@activity+de.tum.multiplayer/MultiplayerActivity@|de.tum.multiplayer/MultiplayerActivity#activity" anchorKind="FixedAtEdge" attachSource="true" multiplicityLabel="//@children.5/@sourceConnections.2/@children.1/@children.2" roleLabel="//@children.5/@sourceConnections.2/@children.1/@children.0" orderingLabel="//@children.5/@sourceConnections.2/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - activity" location="275,354" size="44,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="285,326" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="301,368" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="20,0" id="de.tum.multiplayer/MultiplayerActivity@activity+de.tum.multiplayer/MultiplayerActivity@|de.tum.multiplayer/MultiplayerActivity#" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/Room@room+de.tum.multiplayer/MultiplayerActivity@" source="//@children.5" target="//@children.7" targetEnd="//@children.5/@sourceConnections.3/@children.2" label="//@children.5/@sourceConnections.3/@children.0" sourceEnd="//@children.5/@sourceConnections.3/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,10" id="de.tum/Room@room+de.tum.multiplayer/MultiplayerActivity@|de.tum.multiplayer/MultiplayerActivity#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="room" location="116,135" id="de.tum/Room@room+de.tum.multiplayer/MultiplayerActivity@|de.tum/Room#room" multiplicityLabel="//@children.5/@sourceConnections.3/@children.2/@children.1" roleLabel="//@children.5/@sourceConnections.3/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - room" location="125,212" size="34,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="173,212" size="18,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.multiplayer.bluetooth/BluetoothMPService@bluetoothMPService+de.tum.multiplayer/MultiplayerActivity@" source="//@children.5" target="//@children.4" targetEnd="//@children.5/@sourceConnections.4/@children.2" label="//@children.5/@sourceConnections.4/@children.0" sourceEnd="//@children.5/@sourceConnections.4/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="195,64" id="de.tum.multiplayer.bluetooth/BluetoothMPService@bluetoothMPService+de.tum.multiplayer/MultiplayerActivity@|de.tum.multiplayer/MultiplayerActivity#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="bluetoothMPService" location="0,341" id="de.tum.multiplayer.bluetooth/BluetoothMPService@bluetoothMPService+de.tum.multiplayer/MultiplayerActivity@|de.tum.multiplayer.bluetooth/BluetoothMPService#bluetoothMPService" multiplicityLabel="//@children.5/@sourceConnections.4/@children.2/@children.1" roleLabel="//@children.5/@sourceConnections.4/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - bluetoothMPService" location="471,370" size="105,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="570,398" size="6,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.5/@sourceConnections.0 //@children.6/@sourceConnections.0" name="Player" location="603,583" size="111,171" id="de.tum.player/Player" runTimeClassModel="diceThrown(I),Player(Lde.tum.Team;Ljava.lang.Class;),reset(),Player(Lde.tum.Team;),pegMoved(),makeTurn()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="88,108">
+      <children xsi:type="editmodel:MethodEditModel" name="Player" id="de.tum.player/Player#Player(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="Player" id="de.tum.player/Player#Player(Lde.tum.Team;Ljava.lang.Class;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="diceThrown" id="de.tum.player/Player#diceThrown(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="makeTurn" id="de.tum.player/Player#makeTurn()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pegMoved" id="de.tum.player/Player#pegMoved()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="reset" id="de.tum.player/Player#reset()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.player/Player@player+de.tum.player/Player@" source="//@children.6" target="//@children.6" targetEnd="//@children.6/@sourceConnections.0/@children.2" label="//@children.6/@sourceConnections.0/@children.0" sourceEnd="//@children.6/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="player" location="0,20" id="de.tum.player/Player@player+de.tum.player/Player@|de.tum.player/Player#player" anchorKind="FixedAtEdge" attachSource="true" multiplicityLabel="//@children.6/@sourceConnections.0/@children.1/@children.2" roleLabel="//@children.6/@sourceConnections.0/@children.1/@children.0" orderingLabel="//@children.6/@sourceConnections.0/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # player" location="554,610" size="42,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="562,582" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="578,624" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="20,0" id="de.tum.player/Player@player+de.tum.player/Player@|de.tum.player/Player#" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.5/@sourceConnections.3" name="Room" location="50,70" size="126,135" id="de.tum/Room" runTimeClassModel="render(Ljavax.microedition.khronos.opengles.GL10;),clear(),isEmpty(),addRenderable(Lde.tum.renderable.Renderable;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="103,72">
+      <children xsi:type="editmodel:MethodEditModel" name="addRenderable" id="de.tum/Room#addRenderable(Lde.tum.renderable.Renderable;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="clear" id="de.tum/Room#clear()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isEmpty" id="de.tum/Room#isEmpty()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="render" id="de.tum/Room#render(Ljavax.microedition.khronos.opengles.GL10;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.5/@sourceConnections.1" name="GameRenderer" location="70,603" size="147,207" id="de.tum/GameRenderer" runTimeClassModel="onDrawFrame(Ljavax.microedition.khronos.opengles.GL10;),zoom(F),rotating,GameRenderer(),rotation_speed,tranfer(FF),onSurfaceChanged(Ljavax.microedition.khronos.opengles.GL10;II),onSurfaceCreated(Ljavax.microedition.khronos.opengles.GL10;Ljavax.microedition.khronos.egl.EGLConfig;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="118,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="rotating" id="de.tum/GameRenderer#rotating"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="rotation_speed" id="de.tum/GameRenderer#rotation_speed"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="124,108">
+      <children xsi:type="editmodel:MethodEditModel" name="GameRenderer" id="de.tum/GameRenderer#GameRenderer()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDrawFrame" id="de.tum/GameRenderer#onDrawFrame(Ljavax.microedition.khronos.opengles.GL10;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onSurfaceChanged" id="de.tum/GameRenderer#onSurfaceChanged(Ljavax.microedition.khronos.opengles.GL10;II)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onSurfaceCreated" id="de.tum/GameRenderer#onSurfaceCreated(Ljavax.microedition.khronos.opengles.GL10;Ljavax.microedition.khronos.egl.EGLConfig;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="tranfer" id="de.tum/GameRenderer#tranfer(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="zoom" id="de.tum/GameRenderer#zoom(F)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=2;Product=eUML2" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

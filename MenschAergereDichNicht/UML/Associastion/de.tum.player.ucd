@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" size="1168,1481" id="de.tum.player" metadata="uml2-1.0" initialized="true" scrolledX="-8" tag="1000" key="32303037303533312D31303030204D656E73636841657267657265446963684E696368742F4261726973">
+  <children xsi:type="editmodel:ClassEditModel" name="AIPlayer" location="445,1290" size="96,67" id="de.tum.player/AIPlayer">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="69,18">
+      <children xsi:type="editmodel:MethodEditModel" name="AIPlayer" id="de.tum.player/AIPlayer#AIPlayer(Lde.tum.Team;Ljava.lang.Class;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="NetworkPlayer" location="445,1146" size="135,121" id="de.tum.player/NetworkPlayer">
+    <children xsi:type="editmodel:CompartmentEditModel" size="109,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="dICE_THROWN" id="de.tum.player/NetworkPlayer#dICE_THROWN"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="pEG_MOVED" id="de.tum.player/NetworkPlayer#pEG_MOVED"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="101,36">
+      <children xsi:type="editmodel:MethodEditModel" name="NetworkPlayer" id="de.tum.player/NetworkPlayer#NetworkPlayer(Lde.tum.Team;Ljava.lang.Class;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="notify" id="de.tum.player/NetworkPlayer#notify([I)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.4/@sourceConnections.5 //@children.2/@sourceConnections.0" name="MenschAergereDichNichtActivity" location="413,210" size="247,333" id="de.tum/MenschAergereDichNichtActivity">
+    <children xsi:type="editmodel:CompartmentEditModel" size="126,126">
+      <children xsi:type="editmodel:AttributeEditModel" name="height" id="de.tum/MenschAergereDichNichtActivity#height"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="hz" id="de.tum/MenschAergereDichNichtActivity#hz"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_TITLE" id="de.tum/MenschAergereDichNichtActivity#mESSAGE_TITLE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_TOAST" id="de.tum/MenschAergereDichNichtActivity#mESSAGE_TOAST"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tITLE" id="de.tum/MenschAergereDichNichtActivity#tITLE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tOAST" id="de.tum/MenschAergereDichNichtActivity#tOAST"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="width" id="de.tum/MenschAergereDichNichtActivity#width"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="90,144">
+      <children xsi:type="editmodel:MethodEditModel" name="nextTurn" id="de.tum/MenschAergereDichNichtActivity#nextTurn(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onCreate" id="de.tum/MenschAergereDichNichtActivity#onCreate(Landroid.os.Bundle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDestroy" id="de.tum/MenschAergereDichNichtActivity#onDestroy()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onKeyDown" id="de.tum/MenschAergereDichNichtActivity#onKeyDown(ILandroid.view.KeyEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onPause" id="de.tum/MenschAergereDichNichtActivity#onPause()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onResume" id="de.tum/MenschAergereDichNichtActivity#onResume()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStart" id="de.tum/MenschAergereDichNichtActivity#onStart()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStop" id="de.tum/MenschAergereDichNichtActivity#onStop()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/MenschAergereDichNichtActivity@context+de.tum/MenschAergereDichNichtActivity@" source="//@children.2" target="//@children.2" targetEnd="//@children.2/@sourceConnections.0/@children.2" label="//@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="context" location="0,20" id="de.tum/MenschAergereDichNichtActivity@context+de.tum/MenschAergereDichNichtActivity@|de.tum/MenschAergereDichNichtActivity#context" anchorKind="FixedAtEdge" attachSource="true" multiplicityLabel="//@children.2/@sourceConnections.0/@children.1/@children.2" roleLabel="//@children.2/@sourceConnections.0/@children.1/@children.0" orderingLabel="//@children.2/@sourceConnections.0/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - context" location="360,237" size="46,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="372,209" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="388,251" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="20,0" id="de.tum/MenschAergereDichNichtActivity@context+de.tum/MenschAergereDichNichtActivity@|de.tum/MenschAergereDichNichtActivity#" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:EnumerationEditModel" targetConnections="//@children.4/@sourceConnections.2" name="Team" location="413,930" size="94,139" id="de.tum/Team">
+    <children xsi:type="editmodel:CompartmentEditModel" size="63,72">
+      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="RED" id="de.tum/Team#RED%"/>
+      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="YELLOW" id="de.tum/Team#YELLOW%"/>
+      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="BLUE" id="de.tum/Team#BLUE%"/>
+      <children xsi:type="editmodel:EnumerationLiteralEditModel" name="GREEN" id="de.tum/Team#GREEN%"/>
+    </children>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/Team@team+de.tum.models/Peg@" source="//@children.3" target="//@children.6" targetEnd="//@children.3/@sourceConnections.0/@children.2" label="//@children.3/@sourceConnections.0/@children.0" sourceEnd="//@children.3/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="team" location="94,38" id="de.tum/Team@team+de.tum.models/Peg@|de.tum/Team#team" attachSource="true" multiplicityLabel="//@children.3/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.3/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" + team" location="514,947" size="35,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="514,975" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,203" id="de.tum/Team@team+de.tum.models/Peg@|de.tum.models/Peg#"/>
+    </sourceConnections>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.4/@sourceConnections.1" name="Player" location="413,645" size="111,157" id="de.tum.player/Player">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="88,108">
+      <children xsi:type="editmodel:MethodEditModel" name="Player" id="de.tum.player/Player#Player(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="Player" id="de.tum.player/Player#Player(Lde.tum.Team;Ljava.lang.Class;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="diceThrown" id="de.tum.player/Player#diceThrown(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="makeTurn" id="de.tum.player/Player#makeTurn()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="pegMoved" id="de.tum.player/Player#pegMoved()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="reset" id="de.tum.player/Player#reset()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.player/Player@players+de.tum.multiplayer/MultiplayerActivity@" source="//@children.4" target="//@children.5" targetEnd="//@children.4/@sourceConnections.0/@children.2" label="//@children.4/@sourceConnections.0/@children.0" sourceEnd="//@children.4/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="players" location="0,78" id="de.tum.player/Player@players+de.tum.multiplayer/MultiplayerActivity@|de.tum.player/Player#players" attachSource="true" multiplicityLabel="//@children.4/@sourceConnections.0/@children.1/@children.2" roleLabel="//@children.4/@sourceConnections.0/@children.1/@children.0" orderingLabel="//@children.4/@sourceConnections.0/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - players" location="360,688" size="46,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="372,730" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="402,702" size="4,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="195,212" id="de.tum.player/Player@players+de.tum.multiplayer/MultiplayerActivity@|de.tum.multiplayer/MultiplayerActivity#"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.player/Player@player+de.tum.player/Player@" source="//@children.4" target="//@children.4" targetEnd="//@children.4/@sourceConnections.1/@children.2" label="//@children.4/@sourceConnections.1/@children.0" sourceEnd="//@children.4/@sourceConnections.1/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="player" location="0,20" id="de.tum.player/Player@player+de.tum.player/Player@|de.tum.player/Player#player" anchorKind="FixedAtEdge" attachSource="true" multiplicityLabel="//@children.4/@sourceConnections.1/@children.1/@children.2" roleLabel="//@children.4/@sourceConnections.1/@children.1/@children.0" orderingLabel="//@children.4/@sourceConnections.1/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # player" location="364,672" size="42,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="372,644" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="388,686" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="20,0" id="de.tum.player/Player@player+de.tum.player/Player@|de.tum.player/Player#" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/Team@team+de.tum.player/Player@" source="//@children.4" target="//@children.3" targetEnd="//@children.4/@sourceConnections.2/@children.2" label="//@children.4/@sourceConnections.2/@children.0" sourceEnd="//@children.4/@sourceConnections.2/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="46,157" id="de.tum/Team@team+de.tum.player/Player@|de.tum.player/Player#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="team" location="46,0" id="de.tum/Team@team+de.tum.player/Player@|de.tum/Team#team" multiplicityLabel="//@children.4/@sourceConnections.2/@children.2/@children.1" roleLabel="//@children.4/@sourceConnections.2/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # team" location="466,909" size="35,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="434,909" size="18,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.models/Peg@movables+de.tum.player/Player@" source="//@children.4" target="//@children.6" targetEnd="//@children.4/@sourceConnections.3/@children.2" label="//@children.4/@sourceConnections.3/@children.0" sourceEnd="//@children.4/@sourceConnections.3/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="111,138" id="de.tum.models/Peg@movables+de.tum.player/Player@|de.tum.player/Player#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="movables" location="0,18" id="de.tum.models/Peg@movables+de.tum.player/Player@|de.tum.models/Peg#movables" multiplicityLabel="//@children.4/@sourceConnections.3/@children.2/@children.2" roleLabel="//@children.4/@sourceConnections.3/@children.2/@children.0" orderingLabel="//@children.4/@sourceConnections.3/@children.2/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" # movables" location="625,748" size="58,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="649,790" size="34,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="679,762" size="4,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.models/Peg@pegs+de.tum.player/Player@" source="//@children.4" target="//@children.6" targetEnd="//@children.4/@sourceConnections.4/@children.2" label="//@children.4/@sourceConnections.4/@children.0" sourceEnd="//@children.4/@sourceConnections.4/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="106,157" id="de.tum.models/Peg@pegs+de.tum.player/Player@|de.tum.player/Player#" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="pegs" location="0,60" id="de.tum.models/Peg@pegs+de.tum.player/Player@|de.tum.models/Peg#pegs" multiplicityLabel="//@children.4/@sourceConnections.4/@children.2/@children.1" roleLabel="//@children.4/@sourceConnections.4/@children.2/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - pegs" location="649,832" size="34,14" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="679,804" size="4,14" anchorKind="LastPart"/>
+      </children>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.player/Player@players+de.tum/MenschAergereDichNichtActivity@" source="//@children.4" target="//@children.2" targetEnd="//@children.4/@sourceConnections.5/@children.2" label="//@children.4/@sourceConnections.5/@children.0" sourceEnd="//@children.4/@sourceConnections.5/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="players" location="55,0" id="de.tum.player/Player@players+de.tum/MenschAergereDichNichtActivity@|de.tum.player/Player#players" attachSource="true" multiplicityLabel="//@children.4/@sourceConnections.5/@children.1/@children.2" roleLabel="//@children.4/@sourceConnections.5/@children.1/@children.0" orderingLabel="//@children.4/@sourceConnections.5/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - players" location="475,610" size="46,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="427,624" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="475,624" size="4,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="55,333" id="de.tum.player/Player@players+de.tum/MenschAergereDichNichtActivity@|de.tum/MenschAergereDichNichtActivity#"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.4/@sourceConnections.0 //@children.5/@sourceConnections.0" name="MultiplayerActivity" location="50,511" size="195,585" id="de.tum.multiplayer/MultiplayerActivity">
+    <children xsi:type="editmodel:CompartmentEditModel" size="172,288">
+      <children xsi:type="editmodel:AttributeEditModel" name="dEVICE_NAME" id="de.tum.multiplayer/MultiplayerActivity#dEVICE_NAME"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="height" id="de.tum.multiplayer/MultiplayerActivity#height"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="hz" id="de.tum.multiplayer/MultiplayerActivity#hz"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mAX_CLIENTS" id="de.tum.multiplayer/MultiplayerActivity#mAX_CLIENTS"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_DEVICE_NAME" id="de.tum.multiplayer/MultiplayerActivity#mESSAGE_DEVICE_NAME"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_READ" id="de.tum.multiplayer/MultiplayerActivity#mESSAGE_READ"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_STATE_CHANGE" id="de.tum.multiplayer/MultiplayerActivity#mESSAGE_STATE_CHANGE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_TITLE" id="de.tum.multiplayer/MultiplayerActivity#mESSAGE_TITLE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_TOAST" id="de.tum.multiplayer/MultiplayerActivity#mESSAGE_TOAST"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="mESSAGE_WRITE" id="de.tum.multiplayer/MultiplayerActivity#mESSAGE_WRITE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="rESULT_CLIENT_MODE" id="de.tum.multiplayer/MultiplayerActivity#rESULT_CLIENT_MODE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="rESULT_GOBACK" id="de.tum.multiplayer/MultiplayerActivity#rESULT_GOBACK"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="rESULT_SERVER_MODE" id="de.tum.multiplayer/MultiplayerActivity#rESULT_SERVER_MODE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tITLE" id="de.tum.multiplayer/MultiplayerActivity#tITLE"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="tOAST" id="de.tum.multiplayer/MultiplayerActivity#tOAST"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="width" id="de.tum.multiplayer/MultiplayerActivity#width"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="140,234">
+      <children xsi:type="editmodel:MethodEditModel" name="nextTurn" id="de.tum.multiplayer/MultiplayerActivity#nextTurn(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="notifyPlayers" id="de.tum.multiplayer/MultiplayerActivity#notifyPlayers([I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onActivityResult" id="de.tum.multiplayer/MultiplayerActivity#onActivityResult(IILandroid.content.Intent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onCreate" id="de.tum.multiplayer/MultiplayerActivity#onCreate(Landroid.os.Bundle;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onCreateOptionsMenu" id="de.tum.multiplayer/MultiplayerActivity#onCreateOptionsMenu(Landroid.view.Menu;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onDestroy" id="de.tum.multiplayer/MultiplayerActivity#onDestroy()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onKeyDown" id="de.tum.multiplayer/MultiplayerActivity#onKeyDown(ILandroid.view.KeyEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onOptionsItemSelected" id="de.tum.multiplayer/MultiplayerActivity#onOptionsItemSelected(Landroid.view.MenuItem;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onPause" id="de.tum.multiplayer/MultiplayerActivity#onPause()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onResume" id="de.tum.multiplayer/MultiplayerActivity#onResume()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStart" id="de.tum.multiplayer/MultiplayerActivity#onStart()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onStop" id="de.tum.multiplayer/MultiplayerActivity#onStop()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="tokenDone" id="de.tum.multiplayer/MultiplayerActivity#tokenDone()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.multiplayer/MultiplayerActivity@activity+de.tum.multiplayer/MultiplayerActivity@" source="//@children.5" target="//@children.5" targetEnd="//@children.5/@sourceConnections.0/@children.2" label="//@children.5/@sourceConnections.0/@children.0" sourceEnd="//@children.5/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="activity" location="0,20" id="de.tum.multiplayer/MultiplayerActivity@activity+de.tum.multiplayer/MultiplayerActivity@|de.tum.multiplayer/MultiplayerActivity#activity" anchorKind="FixedAtEdge" attachSource="true" multiplicityLabel="//@children.5/@sourceConnections.0/@children.1/@children.2" roleLabel="//@children.5/@sourceConnections.0/@children.1/@children.0" orderingLabel="//@children.5/@sourceConnections.0/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - activity" location="-1,538" size="44,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="9,510" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="25,552" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="20,0" id="de.tum.multiplayer/MultiplayerActivity@activity+de.tum.multiplayer/MultiplayerActivity@|de.tum.multiplayer/MultiplayerActivity#" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.4/@sourceConnections.3 //@children.4/@sourceConnections.4 //@children.3/@sourceConnections.0" name="Peg" location="690,765" size="126,243" id="de.tum.models/Peg">
+    <children xsi:type="editmodel:CompartmentEditModel" size="82,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="pos_start" id="de.tum.models/Peg#pos_start"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="103,162">
+      <children xsi:type="editmodel:MethodEditModel" name="Peg" id="de.tum.models/Peg#Peg(ZLde.tum.Team;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="checkMove" id="de.tum.models/Peg#checkMove(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getCurrentField" id="de.tum.models/Peg#getCurrentField()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="giveWay" id="de.tum.models/Peg#giveWay(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hasFinished" id="de.tum.models/Peg#hasFinished()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hasStarted" id="de.tum.models/Peg#hasStarted()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="move" id="de.tum.models/Peg#move()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="reset" id="de.tum.models/Peg#reset()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setSelection" id="de.tum.models/Peg#setSelection(Z)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="HumanPlayer" location="50,1146" size="128,121" id="de.tum.player/HumanPlayer">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="102,72">
+      <children xsi:type="editmodel:MethodEditModel" name="HumanPlayer" id="de.tum.player/HumanPlayer#HumanPlayer(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HumanPlayer" id="de.tum.player/HumanPlayer#HumanPlayer(Lde.tum.Team;Landroid.os.Handler;Ljava.lang.Class;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="HumanPlayer" id="de.tum.player/HumanPlayer#HumanPlayer(Lde.tum.Team;Landroid.os.Handler;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="waitedForInput" id="de.tum.player/HumanPlayer#waitedForInput(I[F)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum.player/HumanPlayer@player+de.tum/GameListener@" source="//@children.7" target="//@children.8" targetEnd="//@children.7/@sourceConnections.0/@children.2" label="//@children.7/@sourceConnections.0/@children.0" sourceEnd="//@children.7/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="player" location="128,60" id="de.tum.player/HumanPlayer@player+de.tum/GameListener@|de.tum.player/HumanPlayer#player" attachSource="true" multiplicityLabel="//@children.7/@sourceConnections.0/@children.1/@children.2" roleLabel="//@children.7/@sourceConnections.0/@children.1/@children.0" orderingLabel="//@children.7/@sourceConnections.0/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - player" location="185,1171" size="40,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="185,1213" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="185,1185" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,60" id="de.tum.player/HumanPlayer@player+de.tum/GameListener@|de.tum/GameListener#"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.7/@sourceConnections.0 //@children.8/@sourceConnections.0" name="GameListener" location="223,1146" size="172,315" id="de.tum/GameListener">
+    <children xsi:type="editmodel:CompartmentEditModel" size="149,72">
+      <children xsi:type="editmodel:AttributeEditModel" name="waitingForDice" id="de.tum/GameListener#waitingForDice"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="waitingForPegChosen" id="de.tum/GameListener#waitingForPegChosen"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="waitingForPegSelection" id="de.tum/GameListener#waitingForPegSelection"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="waitingTimeOut" id="de.tum/GameListener#waitingTimeOut"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="133,180">
+      <children xsi:type="editmodel:MethodEditModel" name="GameListener" id="de.tum/GameListener#GameListener(Landroid.app.Activity;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onAccuracyChanged" id="de.tum/GameListener#onAccuracyChanged(Landroid.hardware.Sensor;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onLongClick" id="de.tum/GameListener#onLongClick(Landroid.view.View;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onPause" id="de.tum/GameListener#onPause()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onResume" id="de.tum/GameListener#onResume()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onSensorChanged" id="de.tum/GameListener#onSensorChanged(Landroid.hardware.SensorEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="onTouch" id="de.tum/GameListener#onTouch(Landroid.view.View;Landroid.view.MotionEvent;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="stopWaiting" id="de.tum/GameListener#stopWaiting()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="verifyWaiting" id="de.tum/GameListener#verifyWaiting()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="waitForInput" id="de.tum/GameListener#waitForInput(Lde.tum.player.HumanPlayer;I)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="de.tum/GameListener@content+de.tum/GameListener@" source="//@children.8" target="//@children.8" targetEnd="//@children.8/@sourceConnections.0/@children.2" label="//@children.8/@sourceConnections.0/@children.0" sourceEnd="//@children.8/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="content" location="0,20" id="de.tum/GameListener@content+de.tum/GameListener@|de.tum/GameListener#content" anchorKind="FixedAtEdge" attachSource="true" multiplicityLabel="//@children.8/@sourceConnections.0/@children.1/@children.2" roleLabel="//@children.8/@sourceConnections.0/@children.1/@children.0" orderingLabel="//@children.8/@sourceConnections.0/@children.1/@children.1" scopeKind="1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - content" location="170,1173" size="46,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="182,1145" size="34,14" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="198,1187" size="18,14" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="20,0" id="de.tum/GameListener@content+de.tum/GameListener@|de.tum/GameListener#" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=2;Product=eUML2" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>
