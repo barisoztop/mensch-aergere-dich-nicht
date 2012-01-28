@@ -552,9 +552,9 @@ public class MultiplayerActivity extends Activity {
 	 */
     private void setProgessValue(int value) {
     	// convert the value to percentage
-    	int barValue = (100 / bluetoothMPService.getMaxDeviceNumber()) * value;
+    	double barValue = ((100 / bluetoothMPService.getMaxDeviceNumber()) + 0.5) * value;
     	Log.d(TAG, "setProgessValue()----> barValue: " + barValue);
-		MultiplayerActivity.this.serverWaitingDialog.setProgress(barValue);
+		MultiplayerActivity.this.serverWaitingDialog.setProgress((int) barValue);
 		Log.d(TAG, "setProgress(barValue) SUCCESS!");
         if ( barValue >= 100){
         	// all connected
