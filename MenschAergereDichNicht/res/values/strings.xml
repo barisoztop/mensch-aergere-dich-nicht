@@ -42,7 +42,24 @@
     <string name="title_other_devices">Other Available Devices</string>
     <string name="button_scan">Scan for devices</string>
 
-    <!-- Options Menu -->
+    <!-- MatchPlayers -->
+    <string name="box_enable_team">Enable team</string>
+    <string name="box_human">Is human</string>
+	<string name="match_teams">Please match the teams to the devices:</string>
+    <string name="select_strategy">Select strategy</string>
+    <string name="select_device_for_this_team">Select team\'s device</string>
+        	    
+    <string-array name="strategy">
+        <item>Easy</item>
+        <item>Medium</item>
+		<item>Hard</item>
+    </string-array>
+        
+    <string-array name="avaible_devices">
+        <item>My device</item>
+    </string-array>
+        
+	<!-- Options Menu -->
     <string name="connect">Connect a device</string>
     <string name="discoverable">Make discoverable</string>
 
