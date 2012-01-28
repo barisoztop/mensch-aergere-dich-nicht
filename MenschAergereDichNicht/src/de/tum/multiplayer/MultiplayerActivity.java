@@ -294,9 +294,7 @@ public class MultiplayerActivity extends Activity {
 				if (currentState == BluetoothMPService.STATE_WAITING_FOR_CONNECTIONS ||
 						currentState == BluetoothMPService.STATE_ALL_CONNECTED) {
 					if (bluetoothMPService.getConnectedDevices() == 1) {
-						Log.d(TAG, "mBluetoothMPService.connectedDevices == 1");
-						connectedDeviceName1 = msg.getData().getString(
-								DEVICE_NAME);
+						connectedDeviceName1 = msg.getData().getString(DEVICE_NAME);
 						Toast.makeText(getApplicationContext(),
 								"Connected to " + connectedDeviceName1,
 								Toast.LENGTH_SHORT).show();
@@ -304,48 +302,42 @@ public class MultiplayerActivity extends Activity {
 						MultiplayerActivity.this.setProgessValue(1);
 
 					} else if (bluetoothMPService.getConnectedDevices() == 2) {
-						connectedDeviceName2 = msg.getData().getString(
-								DEVICE_NAME);
+						connectedDeviceName2 = msg.getData().getString(DEVICE_NAME);
 						Toast.makeText(getApplicationContext(),
 								"Connected to " + connectedDeviceName2,
 								Toast.LENGTH_SHORT).show();
 						MultiplayerActivity.this.setProgessValue(2);
 
-					}
- else if (bluetoothMPService.getConnectedDevices() == 3) {
-						connectedDeviceName3 = msg.getData().getString(
-								DEVICE_NAME);
+					} else if (bluetoothMPService.getConnectedDevices() == 3) {
+						connectedDeviceName3 = msg.getData().getString(DEVICE_NAME);
 						Toast.makeText(getApplicationContext(),
 								"Connected to " + connectedDeviceName3,
 								Toast.LENGTH_SHORT).show();
 						MultiplayerActivity.this.setProgessValue(3);
 					}
 					 else if (bluetoothMPService.getConnectedDevices() == 4) {
-							connectedDeviceName4 = msg.getData().getString(DEVICE_NAME);
+						 connectedDeviceName4 = msg.getData().getString(DEVICE_NAME);
 							Toast.makeText(getApplicationContext(),
 									"Connected to " + connectedDeviceName4,
 									Toast.LENGTH_SHORT).show();
 							MultiplayerActivity.this.setProgessValue(4);
 						}
 					 else if (bluetoothMPService.getConnectedDevices() == 5) {
-							connectedDeviceName5 = msg.getData().getString(
-									DEVICE_NAME);
+						 connectedDeviceName5 = msg.getData().getString(DEVICE_NAME);
 							Toast.makeText(getApplicationContext(),
 									"Connected to " + connectedDeviceName5,
 									Toast.LENGTH_SHORT).show();
 							MultiplayerActivity.this.setProgessValue(5);
 						}
 					 else if (bluetoothMPService.getConnectedDevices() == 6) {
-							connectedDeviceName6 = msg.getData().getString(
-									DEVICE_NAME);
+						 connectedDeviceName6 = msg.getData().getString(DEVICE_NAME);
 							Toast.makeText(getApplicationContext(),
 									"Connected to " + connectedDeviceName6,
 									Toast.LENGTH_SHORT).show();
 							MultiplayerActivity.this.setProgessValue(6);
 						}
 					 else if (bluetoothMPService.getConnectedDevices() == 7) {
-							connectedDeviceName7 = msg.getData().getString(
-									DEVICE_NAME);
+						 connectedDeviceName7 = msg.getData().getString(DEVICE_NAME);
 							Toast.makeText(getApplicationContext(),
 									"Connected to " + connectedDeviceName7,
 									Toast.LENGTH_SHORT).show();

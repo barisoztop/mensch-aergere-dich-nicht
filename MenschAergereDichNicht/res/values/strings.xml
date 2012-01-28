@@ -31,6 +31,10 @@
         <item>1 Client</item>
         <item>2 Clients</item>
         <item>3 Clients</item>
+        <item>4 Clients</item>
+        <item>5 Clients</item>
+        <item>6 Clients</item>
+        <item>7 Clients</item>
     </string-array>
 
     <!-- DeviceListActivity -->
