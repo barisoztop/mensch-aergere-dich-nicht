@@ -12,7 +12,7 @@ import de.tum.renderable.Renderable;
  */
 public class Room {
 	/** list of renderable objects */
-	private static List<Renderable> renderables = new ArrayList<Renderable>();
+	private static final List<Renderable> renderables = new ArrayList<Renderable>();
 
 	/**
 	 * here you can add a renderable object
@@ -45,7 +45,7 @@ public class Room {
 	 * 
 	 * @return returns true if the room is empty
 	 */
-	public static boolean isEmpty() {
+	public static synchronized boolean isEmpty() {
 		return renderables.isEmpty();
 	}
 }

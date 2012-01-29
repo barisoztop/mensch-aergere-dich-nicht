@@ -50,7 +50,7 @@ public class AIPlayer extends Player {
 		for (Peg peg : movables)
 			if (chosen == null)
 				chosen = peg;
-			else if (peg != null)
+			else if (peg != null) // choose that peg according to the strategy
 				switch (strategy) {
 				case STRATEGY_EASY:
 					if (peg.getCurrentField() < chosen.getCurrentField())

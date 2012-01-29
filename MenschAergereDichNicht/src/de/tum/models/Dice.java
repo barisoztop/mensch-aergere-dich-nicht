@@ -61,14 +61,17 @@ public class Dice extends GameObject {
 	 */
 	public Dice(boolean visible) {
 		super(visible);
+		// creating game object
 		for (int i = 0; i < 6; ++i)
 			sgobjects.add(new TriangleStripe(visible, vertices[i],
 					null, texture, textures[i]));
+		// setting position
 		for (SimpleGeometricObject object : sgobjects)
 			object.transfer(-side / 2, -side / 2, -side / 2);
 		x = y = z = 0;
 		ax = ay = az = 1;
 		transfer(0, 0, side / 2);
+		// updating game object info
 		rotated = true;
 		dice = this;
 		speed = new TupleFloat(0, 0);
@@ -80,11 +83,13 @@ public class Dice extends GameObject {
 		if (!action)
 			return;
 		if (++frame_current == 5 * frames) {
+			// animation over
 			frame_current = 0;
 			action = false;
 			Player.diceThrown(result);
 			return;
 		}
+		// updating game object
 		angle += angle_diff;
 		transfer(speed.x, speed.y, speed_z);
 		speed_z -= side / 8;
@@ -110,11 +115,28 @@ public class Dice extends GameObject {
 		MultiplayerActivity.notifyPlayers(new int[] {NetworkPlayer.DICE_THROWN, result});
 	}
 	
+	/**
+	 * throws the dice. Calculates a number with shaking values
+	 * 
+	 * @param team
+	 *            the team of this peg
+	 * @param values
+	 *            the shaking values
+	 */
 	public static void throwIt(Team team, float values[]) {
 		throwIt(team, 1 + (int) Math.abs(values[0] + values[1] + values[2]) % 6);
-		MultiplayerActivity.notifyPlayers(new int[] {NetworkPlayer.DICE_THROWN, result});
+		MultiplayerActivity.notifyPlayers(
+				new int[] {NetworkPlayer.DICE_THROWN, result});
 	}
 	
+	/**
+	 * throws the dice. Just for animation for a network player
+	 * 
+	 * @param team
+	 *            the team of this peg
+	 * @param result
+	 *            the result the dice shows
+	 */
 	public static void throwIt(Team team, int result) {
 		Dice.result = result;
 		TupleFloat start = Board.getPositionForDice(team);
@@ -131,6 +153,7 @@ public class Dice extends GameObject {
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
 		int a = 128;
+		// drawing textures for the six sides
 		for (int i = 0; i < 6;) {
 			Bitmap bitmap = Bitmap.createBitmap(a, a, Config.ARGB_8888);
 			Canvas canvas = new Canvas(bitmap);
@@ -155,6 +178,7 @@ public class Dice extends GameObject {
 					canvas.drawCircle(a / 2, a / 2, a / 8, paint);
 					break;
 			}
+			// adding textures
 			textures[i - 1] = Textures.addTexture(bitmap);
 		}
 	}	

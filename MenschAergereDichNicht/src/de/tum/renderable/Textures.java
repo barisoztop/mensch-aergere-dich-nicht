@@ -9,15 +9,29 @@ import android.graphics.Bitmap;
 import android.opengl.GLUtils;
 
 public class Textures {
+	/** texture IDs */
 	public static int[] textures;
+	/** list with bitmaps for textures */
 	public static List<Bitmap> bitmaps = new LinkedList<Bitmap>();
 
+	/**
+	 * adding a texture
+	 * 
+	 * @param bitmap
+	 *            the texture
+	 * @return the texture id's index
+	 */
 	public static final int addTexture(Bitmap bitmap) {
 		bitmaps.add(bitmap);
 		return bitmaps.size() - 1;
 	}
 
-	// Load bitmaps into GL10
+	/**
+	 * load bitmaps into GL10
+	 * 
+	 * @param gl
+	 *            the Gl10
+	 */
 	public static final void bindTextures(GL10 gl) {
 		textures = new int[bitmaps.size()];
 		// Generate texture-ID array
