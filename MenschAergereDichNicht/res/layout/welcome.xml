@@ -20,7 +20,8 @@
             android:drawableLeft="@drawable/ic_menu_play_clip"
             android:text="@string/button_singleplayer"
             android:textColor="#ee777777"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/multiplayer"
@@ -31,7 +32,8 @@
             android:drawableLeft="@drawable/ic_menu_allfriends"
             android:text="@string/button_multiplayer"
             android:textColor="#ee777777"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/settings"
@@ -42,7 +44,8 @@
             android:drawableLeft="@drawable/ic_menu_manage"
             android:text="@string/button_settings"
             android:textColor="#ee777777"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/help"
@@ -53,7 +56,8 @@
             android:drawableLeft="@drawable/ic_menu_help"
             android:text="@string/button_help"
             android:textColor="#ee777777"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/about"
@@ -64,7 +68,8 @@
             android:drawableLeft="@drawable/ic_menu_info_details"
             android:text="@string/button_about"
             android:textColor="#ee777777"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/exit"
@@ -75,7 +80,8 @@
             android:drawableLeft="@drawable/ic_menu_close_clear_cancel"
             android:text="@string/button_exit"
             android:textColor="#ee777777"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </ScrollView>
