@@ -3,7 +3,7 @@
     android:id="@+id/toast_layout_root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#DAAA"
+    android:background="@layout/toast_border"
     android:orientation="horizontal"
     android:padding="10dp" >
 
