@@ -124,12 +124,6 @@ public class BluetoothMPService {
 	public synchronized int getState() {
 		return comState;
 	}
-	
-	public synchronized void initiateServer() {
-		
-		setState(STATE_LISTEN);
-		
-	}
 
 	/**
 	 * Start the server mode by starting the AcceptClientThread
@@ -229,7 +223,7 @@ public class BluetoothMPService {
 
 		// start ConnectedThread to initiate data transfer mechanism
 		if (connectedDevices == 1) {
-			connectedThread1 = new ConnectedThread(socket, connectedDevices);
+			connectedThread1 = new ConnectedThread(socket, connectedDevices, device);
 
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
@@ -239,7 +233,7 @@ public class BluetoothMPService {
 			handler.sendMessage(msg);
 			
 		} else if (connectedDevices == 2) {
-			connectedThread2 = new ConnectedThread(socket, connectedDevices);
+			connectedThread2 = new ConnectedThread(socket, connectedDevices, device);
 
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
@@ -249,7 +243,7 @@ public class BluetoothMPService {
 			handler.sendMessage(msg);
 			
 		} else if (connectedDevices == 3) {
-			connectedThread3 = new ConnectedThread(socket, connectedDevices);
+			connectedThread3 = new ConnectedThread(socket, connectedDevices, device);
 
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
@@ -259,7 +253,7 @@ public class BluetoothMPService {
 			handler.sendMessage(msg);
 			
 		} else if (connectedDevices == 4) {
-			connectedThread4 = new ConnectedThread(socket, connectedDevices);
+			connectedThread4 = new ConnectedThread(socket, connectedDevices, device);
 
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
@@ -269,7 +263,7 @@ public class BluetoothMPService {
 			handler.sendMessage(msg);
 			
 		} else if (connectedDevices == 5) {
-			connectedThread5 = new ConnectedThread(socket, connectedDevices);
+			connectedThread5 = new ConnectedThread(socket, connectedDevices, device);
 
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
@@ -279,7 +273,7 @@ public class BluetoothMPService {
 			handler.sendMessage(msg);
 			
 		} else if (connectedDevices == 6) {
-			connectedThread6 = new ConnectedThread(socket, connectedDevices);
+			connectedThread6 = new ConnectedThread(socket, connectedDevices, device);
 
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
@@ -289,7 +283,7 @@ public class BluetoothMPService {
 			handler.sendMessage(msg);
 			
 		} else if (connectedDevices == 7) {
-			connectedThread7 = new ConnectedThread(socket, connectedDevices);
+			connectedThread7 = new ConnectedThread(socket, connectedDevices, device);
 
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
@@ -445,7 +439,7 @@ public class BluetoothMPService {
 		}
 
 		// Start the thread to manage the connection and perform transmissions
-		connectedClientThread = new ConnectedThread(socket, SERVER_ID); // TODO
+		connectedClientThread = new ConnectedThread(socket, SERVER_ID, device); // TODO
 		
 		serverDevice = false; // TODO remove look@ stop(true)
 		setState(STATE_CONNECTED_TO_SERVER);
@@ -468,15 +462,17 @@ public class BluetoothMPService {
 		private final BluetoothSocket mmSocket;
 		private final InputStream mmInStream;
 		private final OutputStream mmOutStream;
-		private final int DeviceNo;
+		private final int deviceNo;
+		private final BluetoothDevice mmDevice;
 
-		public ConnectedThread(BluetoothSocket socket, int DeviceNo) {
+		public ConnectedThread(BluetoothSocket socket, int DeviceNo, BluetoothDevice device) {
 			setName("ConnectedThread" + DeviceNo);
 			Log.d(TAG, "Create ConnectedThread for Client or Server, Thread: " + this);
 			mmSocket = socket;
+			mmDevice = device;
 			InputStream tmpIn = null;
 			OutputStream tmpOut = null;
-			this.DeviceNo = DeviceNo; // SERVER_ID is the server
+			this.deviceNo = DeviceNo; // SERVER_ID is the server
 
 			// Get the BluetoothSocket input and output streams
 			try {
@@ -505,11 +501,11 @@ public class BluetoothMPService {
 
 					// Send the bytes to MultiplayerActivity
 					handler.obtainMessage(MultiplayerActivity.MESSAGE_READ,
-							bytes, DeviceNo, buffer).sendToTarget();
+							bytes, deviceNo, buffer).sendToTarget();
 
 				} catch (IOException e) {
 					Log.e(TAG, "mConnectedThread disconnected");
-					connectionLost();
+					connectionLost(mmDevice.getName());
 					break;
 				}
 			}
@@ -625,15 +621,16 @@ public class BluetoothMPService {
 
 	/**
 	 * Indicate that the connection was lost and notify the UI Activity.
+	 * @param deviceName 
 	 */
-	private void connectionLost() {
+	private void connectionLost(String deviceName) {
 		if (D) Log.d(TAG, "connectionLost()");
 		// Send a failure message back to the Activity
 		Message msg = handler
 				.obtainMessage(MultiplayerActivity.MESSAGE_TOAST);
 		Bundle bundle = new Bundle();
 		bundle.putString(MultiplayerActivity.TOAST,
-				"Device connection was lost");
+				"Connection to " + deviceName + " is lost!");
 		msg.setData(bundle);
 		handler.sendMessage(msg);
 		
