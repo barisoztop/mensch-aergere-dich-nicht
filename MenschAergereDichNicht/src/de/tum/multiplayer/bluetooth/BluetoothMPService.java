@@ -606,7 +606,7 @@ public class BluetoothMPService {
 
 		// Send a failure message back to the Activity
 		Message msg = handler
-				.obtainMessage(MultiplayerActivity.MESSAGE_TOAST);
+				.obtainMessage(MultiplayerActivity.MESSAGE_TOAST_WARNING);
 		Bundle bundle = new Bundle();
 		bundle.putString(MultiplayerActivity.TOAST,
 				"Couldn't connect! Use menu button to continue");
@@ -627,7 +627,7 @@ public class BluetoothMPService {
 		if (D) Log.d(TAG, "connectionLost()");
 		// Send a failure message back to the Activity
 		Message msg = handler
-				.obtainMessage(MultiplayerActivity.MESSAGE_TOAST);
+				.obtainMessage(MultiplayerActivity.MESSAGE_TOAST_WARNING);
 		Bundle bundle = new Bundle();
 		bundle.putString(MultiplayerActivity.TOAST,
 				"Connection to " + deviceName + " is lost!");
