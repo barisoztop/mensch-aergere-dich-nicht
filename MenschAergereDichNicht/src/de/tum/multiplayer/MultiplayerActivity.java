@@ -20,11 +20,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.GameRenderer;
@@ -100,6 +105,8 @@ public class MultiplayerActivity extends Activity {
 	private Intent clientNumberPickerIntent = null;
 	// Number of connected clients to server
 	private int numberOfClients = 0;
+	
+	private View toastLayout;
 
 
 	/* graphics members */
@@ -159,6 +166,12 @@ public class MultiplayerActivity extends Activity {
 		titleBar.setText("Connection Status: ");
 		titleBar = (TextView) findViewById(R.id.title_right_text);
 		titleBar.setText("None");
+		
+		// Toast layout
+		LayoutInflater inflater = getLayoutInflater();
+		toastLayout = inflater.inflate(R.layout.toast_layout,
+		                               (ViewGroup) findViewById(R.id.toast_layout_root));
+
 	}
 
 	@Override
@@ -367,9 +380,15 @@ public class MultiplayerActivity extends Activity {
 				}
 				break;
 			case MESSAGE_TOAST:
-				Toast.makeText(getApplicationContext(),
-						msg.getData().getString(TOAST), Toast.LENGTH_SHORT)
-						.show();
+				TextView text = (TextView) toastLayout.findViewById(R.id.toast_text);
+				text.setText(msg.getData().getString(TOAST));
+
+				Toast toast = new Toast(getApplicationContext());
+				toast.setGravity(Gravity.BOTTOM, 0, 60);
+				toast.setDuration(Toast.LENGTH_SHORT);
+				toast.setView(toastLayout);
+				toast.show();
+//				openOptionsMenu();
 				break;
 			case MESSAGE_TITLE:
 				titleBar.setText(msg.getData().getString(TITLE));
@@ -581,9 +600,6 @@ public class MultiplayerActivity extends Activity {
 		 players[1] = new HumanPlayer(Team.YELLOW);
 		 players[2] = new HumanPlayer(Team.GREEN);
 		 players[3] = new HumanPlayer(Team.BLUE);
-
-		Toast.makeText(getApplicationContext(), "server",
-				Toast.LENGTH_LONG).show();
 
 		players[0].makeTurn();
 	}
