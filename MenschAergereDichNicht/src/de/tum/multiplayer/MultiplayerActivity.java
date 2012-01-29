@@ -63,7 +63,8 @@ public class MultiplayerActivity extends Activity {
 	public static final int MESSAGE_WRITE = 3;
 	public static final int MESSAGE_DEVICE_NAME = 4;
 	public static final int MESSAGE_TOAST = 5;
-	public static final int MESSAGE_TITLE = 6;
+	public static final int MESSAGE_TOAST_WARNING = 6;
+	public static final int MESSAGE_TITLE = 7;
 
 	// Key names for handler messages
 	public static final String DEVICE_NAME = "device_name";
@@ -383,13 +384,19 @@ public class MultiplayerActivity extends Activity {
 				TextView text = (TextView) toastLayout.findViewById(R.id.toast_text);
 				text.setText(msg.getData().getString(TOAST));
 
-				Toast toast = new Toast(getApplicationContext());
+				Toast toast = new Toast(MultiplayerActivity.this);
 				toast.setGravity(Gravity.BOTTOM, 0, 60);
 				toast.setDuration(Toast.LENGTH_SHORT);
 				toast.setView(toastLayout);
 				toast.show();
-//				openOptionsMenu();
 				break;
+			case MESSAGE_TOAST_WARNING:
+				Toast toast_warn = Toast.makeText(MultiplayerActivity.this, msg.getData().getString(TOAST),
+						Toast.LENGTH_LONG);
+				toast_warn.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+				toast_warn.show();
+				openOptionsMenu();
+				break;				
 			case MESSAGE_TITLE:
 				titleBar.setText(msg.getData().getString(TITLE));
 				break;
