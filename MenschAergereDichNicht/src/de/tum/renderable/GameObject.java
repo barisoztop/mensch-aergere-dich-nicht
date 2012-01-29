@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.microedition.khronos.opengles.GL10;
 
-
 /**
  * a game object is a geometric object, that represents a typical object of the
  * game like a peg or the board and consists of one or more simple geometric
@@ -55,7 +54,12 @@ public abstract class GameObject extends GeometricObject {
 		z += dz;
 	}
 	
-	/** setting color for all parts of this game object */
+	/**
+	 * setting color for all parts of this game object
+	 * 
+	 * @param color
+	 *            the new colors
+	 */
 	protected final void setColor(float color[]) {
 		for (SimpleGeometricObject object : sgobjects)
 			object.setColor(color);
@@ -71,9 +75,11 @@ public abstract class GameObject extends GeometricObject {
 		if (!visible || sgobjects == null)
 			return;
 		gl.glPushMatrix();
+		// setting game object position
 		gl.glTranslatef(x, y, z);
-		if (rotated)
+		if (rotated) // rotate object
 			gl.glRotatef(angle, ax, ay, az);
+		// render game object
 		for (SimpleGeometricObject object : sgobjects)
 			object.render(gl);
 		gl.glPopMatrix();

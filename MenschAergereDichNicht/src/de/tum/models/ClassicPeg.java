@@ -6,6 +6,10 @@ import de.tum.renderable.SimpleGeometricObject;
 import de.tum.renderable.TriangleFan;
 import de.tum.renderable.TriangleStripe;
 
+/**
+ * a classic peg is a peg that represents a classic peg model. Like all pegs it
+ * can move on the board on given paths
+ */
 public class ClassicPeg extends Peg {
 	/** the height of this peg */
 	private static final float height = 3;
@@ -40,6 +44,7 @@ public class ClassicPeg extends Peg {
 	 */
 	public ClassicPeg(boolean visible, Team team, int pos_start) {
 		super(visible, team, pos_start);
+		// calculating colors
 		colors = new float[vertices.length][];
 		float max = vertices.length;
 		for (int y = 0; y < vertices.length - 1; ++y) {
@@ -64,12 +69,13 @@ public class ClassicPeg extends Peg {
 			for (int x = 0; x < colors_selection[y].length; ++x)			
 				colors_selection[y][x] = colors[y][x] > 0.7 || x % 8 < 4 ? 1 : colors[y][x] + 0.3f;
 		}
+		// creating shapes
 		sgobjects.add(new TriangleFan(visible, vertices[0], colors[0], null, 0));
 		for (int y = 1; y < vertices.length - 1; ++y)
 			sgobjects.add(new TriangleStripe(visible, vertices[y], colors[y], null, 0));
 		sgobjects.add(new TriangleFan(visible, vertices[vertices.length - 1], colors[colors.length - 1], null, 0));
-		TupleFloat position = Board.getPosition(this, pos_start, true);
 		// moving this peg to its start position
+		TupleFloat position = Board.getPosition(this, pos_start, true);
 		transfer(position.x, position.y, layer_z + bottom);
 	}
 
@@ -77,6 +83,7 @@ public class ClassicPeg extends Peg {
 	@Override
 	public void setSelection(boolean selected) {
 		int i = 0;
+		// changing colors
 		for (SimpleGeometricObject object : sgobjects)
 			object.setColor(selected ? colors_selection[i++] : colors[i++]);
 	}

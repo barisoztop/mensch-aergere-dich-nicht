@@ -9,8 +9,9 @@ import de.tum.renderable.GameObject;
  * a board is a game object. The pegs are moving on the board.
  */
 public abstract class Board extends GameObject {
+	/** amount of start pegs */
 	public static final int start_pegs = 4;
-	// length of the path around the board
+	/** length of the path around the board */
 	public static int path_length;
 	// the coordinates of the fields
 	private static TupleFloat[] fields;
@@ -41,7 +42,8 @@ public abstract class Board extends GameObject {
 	 * @param players
 	 *            the amount of players that actually play
 	 */
-	public Board(boolean visible, TupleFloat[] fields, TupleFloat[] besides, TupleFloat[] dice_fields, int teams, int players) {
+	public Board(boolean visible, TupleFloat[] fields, TupleFloat[] besides,
+			TupleFloat[] dice_fields, int teams, int players) {
 		super(visible);
 		set(fields, besides, dice_fields, teams, players);
 		createPegs();
@@ -70,7 +72,7 @@ public abstract class Board extends GameObject {
 	 * 
 	 * @param team
 	 *            the team of this peg
-	 * @param fieldPos
+	 * @param position
 	 *            the current position for this peg
 	 * @param permanent
 	 *            true if the pegs is there permanent (false if peg is just crossing the field)

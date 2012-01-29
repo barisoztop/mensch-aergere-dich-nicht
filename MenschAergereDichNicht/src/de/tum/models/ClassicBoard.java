@@ -40,6 +40,7 @@ public class ClassicBoard extends Board {
 	/** an array representing the color white */
 	private static final float[] circle_white = { 0.9f, 0.9f, 0.9f};
 	static {
+		// creating values
 		float[] fields_start = { -10, 8, -8, 8, -8, 10, -10, 10 };
 		float[] fields_path = { -10, 2, -8, 2, -6, 2, -4, 2, -2, 2, -2,
 				4, -2, 6, -2, 8, -2, 10, 0, 10 };
@@ -78,6 +79,7 @@ public class ClassicBoard extends Board {
 	/** {@inheritDoc} */
 	@Override
 	protected void action() {
+		// nothing to do
 		return;
 	}
 
@@ -149,6 +151,7 @@ public class ClassicBoard extends Board {
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
 		int a = 128;
+		// drawing all textures
 		for (int i = 0; i < 6; ++i) {
 			Bitmap bitmap = Bitmap.createBitmap(a, a, Config.ARGB_8888);
 			Canvas canvas = new Canvas(bitmap);

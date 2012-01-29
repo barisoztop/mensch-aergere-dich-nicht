@@ -63,6 +63,7 @@ public abstract class Player {
 	public final void makeTurn() {
 		player = this;
 		++current_try;
+		// already won
 		if (won)
 			MultiplayerActivity.nextTurn(team);
 		else
@@ -132,8 +133,8 @@ public abstract class Player {
 	/**
 	 * player has to choose a peg for moving
 	 * 
-	 * @param movables
-	 *            the current movable pegs
+	 * @param movable
+	 *            the current movable peg(s)
 	 */
 	protected abstract void choosePegForMove(int movable);
 
@@ -142,9 +143,13 @@ public abstract class Player {
 	 * 
 	 * @param peg
 	 *            the peg to move
+	 * @param notify
+	 *            true if player has to notify other players
 	 */
 	protected final void pegChosen(Peg peg, boolean notify) {
-		if (notify) MultiplayerActivity.notifyPlayers(new int[] {NetworkPlayer.PEG_MOVED, peg.pos_start});
+		if (notify)
+			MultiplayerActivity.notifyPlayers(
+					new int[] {NetworkPlayer.PEG_MOVED, peg.pos_start});
 		peg.move();
 	}
 	

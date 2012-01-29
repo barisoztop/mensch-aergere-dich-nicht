@@ -66,7 +66,7 @@ public class MenschAergereDichNichtActivity extends Activity {
       Room.addRenderable(new ClassicBoard(true, 4));
       Room.addRenderable(new Dice(true));
       players = new Player[Board.getPlayers()];
-      players[0] = new HumanPlayer(Team.RED, mHandler);
+      players[0] = new HumanPlayer(Team.RED);
       players[1] = new AIPlayer(Team.YELLOW, AIPlayer.STRATEGY_EASY);
       players[2] = new AIPlayer(Team.GREEN, AIPlayer.STRATEGY_MEDIUM);
       players[3] = new AIPlayer(Team.BLUE, AIPlayer.STRATEGY_HARD);
@@ -148,7 +148,15 @@ public class MenschAergereDichNichtActivity extends Activity {
 //    	Toast.makeText(getApplicationContext(), message, show_long ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
 //    }
 
-    @Override
+	public static final void showToast(int toast) {
+	    Message msg = context.mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+        Bundle bundle = new Bundle();
+        bundle.putString(MenschAergereDichNichtActivity.TOAST, context.getString(toast));
+        msg.setData(bundle);
+        context.mHandler.sendMessage(msg);
+	}
+
+	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
       if (keyCode == KeyEvent.KEYCODE_BACK)
         System.exit(0);
