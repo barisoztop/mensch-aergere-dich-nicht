@@ -3,6 +3,12 @@
 
     <string name="app_name">Mensch Aergere Dich Nicht</string>
 
+    <!-- Messages -->
+    <string name="throw_dice">Please throw the dice</string>
+    <string name="select_peg">Please touch to select a peg</string>
+    <string name="hurry">Hurry up !</string>
+    <string name="player_won">You win !</string>
+        
     <!-- Bluetooth -->
     <string name="send">Send</string>
     <string name="not_connected">You are not connected to a device</string>

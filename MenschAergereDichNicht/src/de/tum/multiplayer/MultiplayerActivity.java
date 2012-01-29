@@ -221,6 +221,18 @@ public class MultiplayerActivity extends Activity {
     		MenschAergereDichNichtActivity.nextTurn(team);
 	}
 	
+	public static final void showToast(int toast) {
+		if (activity == null)
+			MenschAergereDichNichtActivity.showToast(toast);
+		else {
+		    Message msg = activity.mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+	        Bundle bundle = new Bundle();
+	        bundle.putString(MenschAergereDichNichtActivity.TOAST, activity.getString(toast));
+	        msg.setData(bundle);
+	        activity.mHandler.sendMessage(msg);
+		}
+	}
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK){
@@ -565,10 +577,10 @@ public class MultiplayerActivity extends Activity {
 	private void startGame() {
 		Log.d(TAG, "startGame()");
 		players = new Player[Board.getPlayers()];
-		 players[0] = new HumanPlayer(Team.RED, mHandler);
-		 players[1] = new HumanPlayer(Team.YELLOW, mHandler);
-		 players[2] = new HumanPlayer(Team.GREEN, mHandler);
-		 players[3] = new HumanPlayer(Team.BLUE, mHandler);
+		 players[0] = new HumanPlayer(Team.RED);
+		 players[1] = new HumanPlayer(Team.YELLOW);
+		 players[2] = new HumanPlayer(Team.GREEN);
+		 players[3] = new HumanPlayer(Team.BLUE);
 
 		Toast.makeText(getApplicationContext(), "server",
 				Toast.LENGTH_LONG).show();

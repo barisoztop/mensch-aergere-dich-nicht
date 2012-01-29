@@ -135,19 +135,6 @@ public class MenschAergereDichNichtActivity extends Activity {
     	players[(team.id + 1) % players.length].makeTurn();
     }
 
-//    public static final void showMessage(String message) {
-////		context.makeToast(message, show_long);
-//		Message msg = context.mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
-//        Bundle bundle = new Bundle();
-//        bundle.putString(MenschAergereDichNichtActivity.TOAST, message);
-//        msg.setData(bundle);
-//        context.mHandler.sendMessage(msg);
-//    }
-//    
-//    private final void makeToast(String message, boolean show_long) {
-//    	Toast.makeText(getApplicationContext(), message, show_long ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
-//    }
-
 	public static final void showToast(int toast) {
 	    Message msg = context.mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
