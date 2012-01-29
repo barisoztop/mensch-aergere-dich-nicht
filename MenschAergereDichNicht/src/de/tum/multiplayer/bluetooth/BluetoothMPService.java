@@ -6,18 +6,16 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import de.tum.multiplayer.MultiplayerActivity;
-
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.location.Address;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import de.tum.multiplayer.MultiplayerActivity;
 
 /**
  * Consists threads to handle the communication with other devices
@@ -148,6 +146,7 @@ public class BluetoothMPService {
 			setName("AcceptClientThread" + uuidTrying);
 			BluetoothServerSocket tmp = null;
 
+			if (D) Log.d(TAG, "Server use this UUID: " + uuidList.get(uuidTrying));
 			// Create a new listening server socket
 			try {
 				tmp = bluetoothAdapter
@@ -160,9 +159,7 @@ public class BluetoothMPService {
 		}
 
 		public void run() {
-			if (D) Log.d(TAG, "BEGIN AcceptClientThread" + this);
-			if (D) Log.d(TAG, "Server use this UUID: " + uuidList.get(uuidTrying));
-			setName("AcceptClientThread" + uuidTrying);
+			if (D) Log.d(TAG, "BEGIN AcceptClientThread" + this + " UUID no: " + uuidList.get(uuidTrying));
 			BluetoothSocket socket = null;
 
 			// Listen to the server socket if we're not connected
@@ -171,8 +168,7 @@ public class BluetoothMPService {
 					// blocking call
 					socket = sBluetoothServerSocket.accept();
 				} catch (IOException e) {
-					Log.e(TAG, "Server's accept() failed/stopped");
-					Log.e(TAG, "connectedDevices: " + getConnectedDevices());
+					Log.e(TAG, "Server's accept() failed/stopped: connectedDevices: " + connectedDevices);
 					break;
 				}
 
@@ -224,7 +220,7 @@ public class BluetoothMPService {
 		// start ConnectedThread to initiate data transfer mechanism
 		if (connectedDevices == 1) {
 			connectedThread1 = new ConnectedThread(socket, connectedDevices, device);
-
+			if (D) Log.d(TAG, "Now Connected Device == 1");
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
 			Bundle bundle = new Bundle();
@@ -234,7 +230,7 @@ public class BluetoothMPService {
 			
 		} else if (connectedDevices == 2) {
 			connectedThread2 = new ConnectedThread(socket, connectedDevices, device);
-
+			if (D) Log.d(TAG, "Now Connected Device == 2");
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
 			Bundle bundle = new Bundle();
@@ -244,7 +240,7 @@ public class BluetoothMPService {
 			
 		} else if (connectedDevices == 3) {
 			connectedThread3 = new ConnectedThread(socket, connectedDevices, device);
-
+			if (D) Log.d(TAG, "Now Connected Device == 3");
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
 			Bundle bundle = new Bundle();
@@ -254,7 +250,7 @@ public class BluetoothMPService {
 			
 		} else if (connectedDevices == 4) {
 			connectedThread4 = new ConnectedThread(socket, connectedDevices, device);
-
+			if (D) Log.d(TAG, "Now Connected Device == 4");
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
 			Bundle bundle = new Bundle();
@@ -264,7 +260,7 @@ public class BluetoothMPService {
 			
 		} else if (connectedDevices == 5) {
 			connectedThread5 = new ConnectedThread(socket, connectedDevices, device);
-
+			if (D) Log.d(TAG, "Now Connected Device == 5");
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
 			Bundle bundle = new Bundle();
@@ -274,7 +270,7 @@ public class BluetoothMPService {
 			
 		} else if (connectedDevices == 6) {
 			connectedThread6 = new ConnectedThread(socket, connectedDevices, device);
-
+			if (D) Log.d(TAG, "Now Connected Device == 6");
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
 			Bundle bundle = new Bundle();
@@ -284,7 +280,7 @@ public class BluetoothMPService {
 			
 		} else if (connectedDevices == 7) {
 			connectedThread7 = new ConnectedThread(socket, connectedDevices, device);
-
+			if (D) Log.d(TAG, "Now Connected Device == 7");
 			Message msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
 			Bundle bundle = new Bundle();
@@ -303,7 +299,6 @@ public class BluetoothMPService {
 				Log.d(TAG, "mAcceptThread.cancel()");
 			}
 		} else {
-	        // TODO restart AcceptThread
 			if (D) Log.d(TAG, "connectedDevices !!!!= maxDeviceNumber, restart AcceptThread");
 			if (acceptClientThread != null) {
 //				acceptClientThread.cancel();
@@ -311,7 +306,6 @@ public class BluetoothMPService {
 				BluetoothMPService.this.startServer();
 			}
 		}
-
 	}
 
 	/**
@@ -331,7 +325,7 @@ public class BluetoothMPService {
 			}
 		}
 
-		stop(true);
+		stop(false);
 
 		// Connect to the server
 		connectToServerThread = new ConnectToServerThread(device);
@@ -357,7 +351,7 @@ public class BluetoothMPService {
 				Log.e(TAG, "Client couldn't get socket", e);
 			}
 			mmSocket = tmp;
-			
+
 			start();
 		}
 
@@ -380,8 +374,6 @@ public class BluetoothMPService {
 				} catch (IOException e2) {
 					Log.e(TAG,"unable to close() socket during connection failure", e2);
 				}
-				Log.e(TAG, "Exception occurred at ConnectToServerThread");
-//				setState(STATE_NONE); // TODO wrong at new impl.
 				Log.e(TAG, "clients try next UUID");
 				if (uuidTrying < 6) {
 					uuidTrying++; // TODO maybe reset the counter??
@@ -450,8 +442,6 @@ public class BluetoothMPService {
 		bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
 		msg.setData(bundle);
 		handler.sendMessage(msg);
-
-
 	}
 
 	/**
@@ -595,7 +585,6 @@ public class BluetoothMPService {
 			}
 			client.write(out);
 		}
-
 	}
 
 	/**
@@ -609,14 +598,13 @@ public class BluetoothMPService {
 				.obtainMessage(MultiplayerActivity.MESSAGE_TOAST_WARNING);
 		Bundle bundle = new Bundle();
 		bundle.putString(MultiplayerActivity.TOAST,
-				"Couldn't connect! Use menu button to continue");
+				"Couldn't connect! Use menu button.");
 		msg.setData(bundle);
 		handler.sendMessage(msg);
 		
 		setTitleNone();
-		// Make it possible to be server again TODO
-		stop(false);
-		BluetoothMPService.this.startServer();
+		// reset all the threads and values
+		stop(true);
 	}
 
 	/**
@@ -646,12 +634,13 @@ public class BluetoothMPService {
 		else
 			setTitleNone();
 		
-		
-		stop(false); // TODO handle client side!!
-		// Make it possible to be server again
-		// BluetoothMPService.this.startServer();
+		// reset all the threads and values
+		stop(true);
 	}
 
+	/**
+	 * Set the title about the connection status to "none"
+	 */
 	private void setTitleNone() {
 		Message msg = handler
 				.obtainMessage(MultiplayerActivity.MESSAGE_TITLE);
@@ -664,12 +653,13 @@ public class BluetoothMPService {
 	}
 
 	/**
-	 * Stop all threads
+	 * Stop all threads and set the variables to their
+	 * default values
 	 */
 	public synchronized void stop(boolean startup) {
 		if (D) Log.d(TAG, "stop : startup: " + startup);
 		
-		if (!startup)
+		if (startup)
 			if (connectToServerThread != null) {
 				connectToServerThread.cancel();
 				connectToServerThread = null;
@@ -707,7 +697,7 @@ public class BluetoothMPService {
 			connectedThread7.cancel();
 			connectedThread7 = null;
 		}
-		if (!startup)
+		if (startup)
 			if (connectedClientThread != null) {
 				connectedClientThread.cancel();
 				connectedClientThread = null;
@@ -719,15 +709,26 @@ public class BluetoothMPService {
 		maxDeviceNumber = 1;
 		serverDevice = false;
 		
-		if (!startup)
+		if (startup)
 			if (comState != STATE_NONE)
 				setState(STATE_NONE);
 	}
 
+	/**
+	 *
+	 * @return
+	 * 		max number of allowed devices to connect
+	 *		to connect to server
+	 */
 	public int getMaxDeviceNumber() {
 		return maxDeviceNumber;
 	}
 
+	/**
+	 * Sets the max number of allowed devices to connect
+	 * to server
+	 * @param maxDeviceNumber
+	 */
 	public void setMaxDeviceNumber(int maxDeviceNumber) {
 		this.maxDeviceNumber = maxDeviceNumber;
 	}

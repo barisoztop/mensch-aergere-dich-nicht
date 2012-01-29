@@ -29,11 +29,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import de.tum.GameRenderer;
 import de.tum.GameListener;
+import de.tum.GameRenderer;
 import de.tum.MenschAergereDichNichtActivity;
 import de.tum.R;
 import de.tum.Room;
@@ -210,7 +209,7 @@ public class MultiplayerActivity extends Activity {
 		super.onDestroy();
 		// Stop the BluetoothMPService
 		if (bluetoothMPService != null)
-			bluetoothMPService.stop(false);
+			bluetoothMPService.stop(true);
 		if (D) Log.e(TAG, "--- ON DESTROY ---");
 	}
 
@@ -251,7 +250,7 @@ public class MultiplayerActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK){
 			if (bluetoothMPService != null)
-				bluetoothMPService.stop(false);
+				bluetoothMPService.stop(true);
 			System.exit(0);
 			finish();
 			

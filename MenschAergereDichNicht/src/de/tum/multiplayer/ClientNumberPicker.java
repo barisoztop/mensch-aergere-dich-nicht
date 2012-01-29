@@ -54,7 +54,7 @@ public class ClientNumberPicker extends Activity {
 		spinnerClientNumber
 				.setOnItemSelectedListener(new OnClientNumberSelectedListener());
 
-		// Set result CANCELED in case of back button is pressed
+		// Set result RESULT_GOBACK in case of back button is pressed
 		setResult(MultiplayerActivity.RESULT_GOBACK);
 	}
 
