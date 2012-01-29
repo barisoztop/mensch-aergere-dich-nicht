@@ -13,7 +13,7 @@ public class AboutActivity extends Activity {
 		// Setup the window
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.help);
+		setContentView(R.layout.about_demo);
 	}
 
 }

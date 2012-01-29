@@ -19,7 +19,7 @@
             android:layout_marginBottom="5sp"
             android:drawableLeft="@drawable/ic_menu_play_clip"
             android:text="@string/button_singleplayer"
-            android:textColor="#fff"
+            android:textColor="#ee777777"
             android:textSize="20sp" />
 
         <Button
@@ -30,7 +30,7 @@
             android:layout_marginBottom="5sp"
             android:drawableLeft="@drawable/ic_menu_allfriends"
             android:text="@string/button_multiplayer"
-            android:textColor="#fff"
+            android:textColor="#ee777777"
             android:textSize="20sp" />
 
         <Button
@@ -41,7 +41,7 @@
             android:layout_marginBottom="5sp"
             android:drawableLeft="@drawable/ic_menu_manage"
             android:text="@string/button_settings"
-            android:textColor="#fff"
+            android:textColor="#ee777777"
             android:textSize="20sp" />
 
         <Button
@@ -52,7 +52,7 @@
             android:layout_marginBottom="5sp"
             android:drawableLeft="@drawable/ic_menu_help"
             android:text="@string/button_help"
-            android:textColor="#fff"
+            android:textColor="#ee777777"
             android:textSize="20sp" />
 
         <Button
@@ -63,7 +63,7 @@
             android:layout_marginBottom="5sp"
             android:drawableLeft="@drawable/ic_menu_info_details"
             android:text="@string/button_about"
-            android:textColor="#fff"
+            android:textColor="#ee777777"
             android:textSize="20sp" />
 
         <Button
@@ -74,7 +74,7 @@
             android:layout_marginBottom="5sp"
             android:drawableLeft="@drawable/ic_menu_close_clear_cancel"
             android:text="@string/button_exit"
-            android:textColor="#fff"
+            android:textColor="#ee777777"
             android:textSize="20sp" />
     </LinearLayout>
 
