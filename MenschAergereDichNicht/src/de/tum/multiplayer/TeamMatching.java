@@ -1,6 +1,7 @@
 package de.tum.multiplayer;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,7 +13,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import de.tum.R;
-import de.tum.models.Board;
 
 /**
  * a team matching shows a dialog for setting up the players and matching them to the available devices.
@@ -20,29 +20,18 @@ import de.tum.models.Board;
  * This activity can be used for single player mode as well as multiplayer mode
  */
 public class TeamMatching extends Activity {
+	/** the keys for extra data for this activity */
+	public static final String key = "devices";
 	/** this says that a player is disabled */
-	private static final int int_disabled = -1;
+	public static final int int_disabled = -1;
 	/** this says that a player is disabled */
-	private static final int int_human = 1;
+	public static final int int_human = 1;
+	/** offset for strategy  */
+	public static final int offset_strategy = 100;
 	/** one team match for every team */
 	private TeamMatch matches[];
 	/** available devices */
 	private String devices[];
-	
-	/**
-	 * creating a team matching
-	 * 
-	 * @param devices
-	 *            the available devices (this device not included)
-	 */
-	public TeamMatching(String devices[]) {
-		// adding all devices together
-		int amount = devices != null ? devices.length : 0;
-		this.devices = new String[amount + 1];
-		this.devices[0] = getString(R.string.my_device);
-		while (amount-- > 0)
-			this.devices[amount] = devices[amount - 1];
-	}
 	
 	/**
 	 * a team match holds the settings for setting up one player and matching it to the available devices.
@@ -53,7 +42,7 @@ public class TeamMatching extends Activity {
 		/** true if player is human */
 		private boolean human;
 		/** the strategy of this AI-player */
-		private int startegy;
+		private int strategy;
 		/** the device of this player */
 		private int device;
 		
@@ -85,7 +74,7 @@ public class TeamMatching extends Activity {
 					enabled = box_enabled.isChecked();
 					box_human.setEnabled(enabled);
 					spinner_strategy.setEnabled(enabled && !human);
-					spinner_devices.setEnabled(enabled);
+					spinner_devices.setEnabled(devices.length != 1 && enabled);
 				}
 			});
 
@@ -111,7 +100,7 @@ public class TeamMatching extends Activity {
 				public void onItemSelected(AdapterView<?> parent, View view,
 						int pos, long id) {
 					// setting the strategy
-					startegy = pos;
+					strategy = pos;
 				}
 
 				@Override
@@ -119,7 +108,6 @@ public class TeamMatching extends Activity {
 			});
 
 			spinner_devices = (Spinner) findViewById(id_spinner_devices);
-			spinner_devices.setEnabled(enabled);
 			adapter = new ArrayAdapter<CharSequence>(TeamMatching.this,
 					android.R.layout.simple_spinner_item);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -129,7 +117,8 @@ public class TeamMatching extends Activity {
 			spinner_devices.setAdapter(adapter);
 			if (devices.length == 1)
 				spinner_devices.setEnabled(false);
-			else
+			else {
+				spinner_devices.setEnabled(enabled);
 				spinner_devices.setOnItemSelectedListener(new OnItemSelectedListener() {
 					@Override
 					public void onItemSelected(AdapterView<?> parent, View view,
@@ -141,12 +130,22 @@ public class TeamMatching extends Activity {
 					@Override
 					public void onNothingSelected(AdapterView<?> parent) {}
 				});
+			}
 		}
 	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		String devices[] = getIntent().getExtras().getStringArray(key);
+		// adding all devices together
+		int amount = devices != null ? devices.length : 0;
+		this.devices = new String[amount + 1];
+		this.devices[0] = getString(R.string.my_device);
+		while (amount-- > 0)
+			this.devices[amount] = devices[amount - 1];
+
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.match_players);
 
@@ -170,25 +169,26 @@ public class TeamMatching extends Activity {
 					else if (matches[i].enabled) // found one enabled player
 						break;
 				// creating the players configuration
-				int[] players[] = new int[devices.length][Board.getTeams()];
+				int[] players = new int[TeamMatching.this.devices.length * 4];
 				// setting the cofiguration
 				for (int i = 0; i < matches.length; ++i) {
 					TeamMatch match = matches[i];
 					if (!match.enabled) { // player disabled
-						for (int device = 0; device < players.length; ++device)
-							players[device][i] = int_disabled;
+						for (int device = 0; device < players.length / 4; ++device)
+							players[device * 4 + i] = int_disabled;
 						continue;
 					}
 					if (match.human) // human player
-						players[match.device][i] = int_human;
+						players[match.device * 4 + i] = int_human;
 					else // AI-player
-						players[match.device][i] = match.startegy + 100;
+						players[match.device * 4 + i] = match.strategy + offset_strategy;
 				}
-				// set players
-				
+				// set result
+				Intent intent = new Intent();
+				intent.putExtra(key, players);
+				TeamMatching.this.setResult(RESULT_OK, intent);
+				TeamMatching.this.finish();
 			}
 		});
-		// Set result CANCELED in case of back button is pressed
-		setResult(MultiplayerActivity.RESULT_GOBACK);
 	}
 }
