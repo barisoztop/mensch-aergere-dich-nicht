@@ -1,13 +1,11 @@
 package de.tum;
 
-import de.tum.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import de.tum.multiplayer.MultiplayerActivity;
 
@@ -28,7 +26,6 @@ public class WelcomeActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.welcome);
 
 		// Initialize the buttons

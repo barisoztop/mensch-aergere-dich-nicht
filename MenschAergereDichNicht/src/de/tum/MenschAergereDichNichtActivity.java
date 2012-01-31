@@ -11,7 +11,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.models.Board;
@@ -35,28 +34,23 @@ public class MenschAergereDichNichtActivity extends Activity {
     public static final String TOAST = "toast";
     public static final String TITLE = "title";
 	
-	// just for testing
-	// ############################### needs
-	// some change
+	// game values
     private static final float f = 8;
     public static int width;
     public static int height;
     public static float hz = 4;
     private GLSurfaceView view;
     private GameRenderer renderer;
-//    private Board board;
     private static Player[] players;
     private static MenschAergereDichNichtActivity context;
     
     // Layout Views
-//    private TextView titleBar;
     private View toastLayout;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      requestWindowFeature(Window.FEATURE_NO_TITLE);
       context = this;
       if(D) Log.e(TAG, "+++ ON CREATE +++");      
       
@@ -75,21 +69,12 @@ public class MenschAergereDichNichtActivity extends Activity {
       GameListener listener = new GameListener(this); 
       view.setOnTouchListener(listener);
       view.setOnLongClickListener(listener);
-      // Set up the window layout
-//      requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
       setContentView(view);
-//      getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
-      
-      // Set up the custom title
-//      titleBar = (TextView) findViewById(R.id.title_left_text);
-//      titleBar.setText(R.string.app_name);
-//      titleBar = (TextView) findViewById(R.id.title_right_text);
-//      titleBar.setText("Text goes here!");
-      
-		// Toast layout
-		LayoutInflater inflater = getLayoutInflater();
-		toastLayout = inflater.inflate(R.layout.toast_layout,
-		                               (ViewGroup) findViewById(R.id.toast_layout_root));
+
+      // Toast layout
+      LayoutInflater inflater = getLayoutInflater();
+      toastLayout = inflater.inflate(R.layout.toast_layout,
+    		  (ViewGroup) findViewById(R.id.toast_layout_root));
       
       players[0].makeTurn();
     }
@@ -167,7 +152,7 @@ public class MenschAergereDichNichtActivity extends Activity {
 				text.setText(msg.getData().getString(TOAST));
 
 				Toast toast = new Toast(MenschAergereDichNichtActivity.this);
-				toast.setGravity(Gravity.BOTTOM, 0, 30);
+				toast.setGravity(Gravity.BOTTOM, 0, 60);
 				toast.setDuration(Toast.LENGTH_SHORT);
 				toast.setView(toastLayout);
 				toast.show();
