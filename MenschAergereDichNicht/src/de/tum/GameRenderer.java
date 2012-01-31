@@ -3,12 +3,10 @@ package de.tum;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import de.tum.renderable.GameObject;
-import de.tum.renderable.Textures;
-
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
-import android.util.Log;
+import de.tum.renderable.GameObject;
+import de.tum.renderable.Textures;
 
 /**
  * with the game renderer the game is rendered, meaning that the individual
@@ -77,7 +75,6 @@ public class GameRenderer implements Renderer {
 	
 	public static final void updateTextures() {
 		Textures.setZoom((float) Math.min(Math.sqrt(Math.min(radius, center_z)) / 1.8, 0.98));
-		Log.d("zoom", "" + (float) Math.min(Math.sqrt(radius) / 2, 0.98));
 	}
 
 	/**
