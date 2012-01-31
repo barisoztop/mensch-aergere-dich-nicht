@@ -6,21 +6,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import de.tum.multiplayer.MultiplayerActivity;
+import de.tum.multiplayer.TeamMatching;
 
 public class WelcomeActivity extends Activity {
-
+	// result code
+	private static final int code_result_single_player = 123;
 	// Debugging
 	private static final String TAG = "WelcomeActivity";
 	private static final boolean D = true;
-
-	private Button singlePlayerButton;
-	private Button multiPlayerButton;
-	private Button settingsButton;
-	private Button aboutButton;
-	private Button exitButton;
-	private Button helpButton;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -28,75 +22,68 @@ public class WelcomeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome);
 
-		// Initialize the buttons
-		singlePlayerButton = (Button) findViewById(R.id.singleplayer);
-		multiPlayerButton = (Button) findViewById(R.id.multiplayer);
-		settingsButton = (Button) findViewById(R.id.settings);
-		aboutButton = (Button) findViewById(R.id.about);
-		exitButton = (Button) findViewById(R.id.exit);
-		helpButton = (Button) findViewById(R.id.help);
+		// adding listeners
+		findViewById(R.id.singleplayer).setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						startActivityForResult(new Intent(getApplicationContext(),
+								TeamMatching.class).putExtra(
+								TeamMatching.key, (String[]) null), code_result_single_player);
+					}
+				});
 
-		singlePlayerButton.setOnClickListener(new OnClickListener() {
+		findViewById(R.id.multiplayer).setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						startActivity(new Intent(getApplicationContext(),
+								MultiplayerActivity.class));
+					}
+				});
 
+		findViewById(R.id.settings).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent singlePlayerGame = new Intent(getApplicationContext(),
-						MenschAergereDichNichtActivity.class);
-				startActivity(singlePlayerGame);
-
+				startActivity(new Intent(getApplicationContext(),
+						SettingsActivity.class));
 			}
 		});
 
-		multiPlayerButton.setOnClickListener(new OnClickListener() {
-
+		findViewById(R.id.about).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent multiplayerGame = new Intent(getApplicationContext(),
-						MultiplayerActivity.class);
-				startActivity(multiplayerGame);
+				startActivity(new Intent(getApplicationContext(),
+						AboutActivity.class));
 			}
 		});
 
-		settingsButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent gameSettings = new Intent(getApplicationContext(),
-						SettingsActivity.class);
-				startActivity(gameSettings);
-			}
-		});
-
-		aboutButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent aboutAct = new Intent(getApplicationContext(),
-						AboutActivity.class);
-				startActivity(aboutAct);
-			}
-		});
-
-		exitButton.setOnClickListener(new OnClickListener() {
-
+		findViewById(R.id.exit).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();
 
 			}
 		});
-		
-		helpButton.setOnClickListener(new OnClickListener() {
 
+		findViewById(R.id.help).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent helpAct = new Intent(getApplicationContext(),
-						HelpActivity.class);
-				startActivity(helpAct);
+				startActivity(new Intent(getApplicationContext(),
+						HelpActivity.class));
 			}
-		});		
+		});
 	}
-
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == code_result_single_player && resultCode == RESULT_OK)
+			startActivity(new Intent(getApplicationContext(),
+					MenschAergereDichNichtActivity.class).putExtra(
+					TeamMatching.key,
+					data.getExtras().getIntArray(TeamMatching.key)));
+	}
+	
 	@Override
 	public void onStart() {
 		super.onStart();
