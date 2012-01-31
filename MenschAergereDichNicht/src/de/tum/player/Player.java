@@ -16,6 +16,9 @@ public abstract class Player {
 	/** the current player */
 	protected static Player player;
 
+	/** the players */
+	protected static final Player players[] = new Player[4];
+
 	/** the current movable pegs for the current player */
 	protected static final Peg[] movables = new Peg[Board.start_pegs];
 
@@ -44,6 +47,19 @@ public abstract class Player {
 		this.team = team;
 		team.setHuman(this instanceof HumanPlayer);
 		pegs = Board.getPegs(team);
+		for (Peg peg : pegs)
+			peg.setVisible(true);
+		players[team.id] = player = this;
+	}
+
+	/** removing all players and resetting the pegs */
+	public static final void removePlayers() {
+		for (int i = 0; i < players.length; ++i) {
+			for (int u = 0; u < players[i].pegs.length; ++u)
+				players[i].pegs[u].setVisible(false);
+			players[i] = null;
+		}
+		player = null;
 	}
 
 	/**
@@ -60,12 +76,12 @@ public abstract class Player {
 	 * it's this player's turn. If the player hasn't won, the player is asked to
 	 * throw the dice
 	 */
-	public final void makeTurn() {
+	private final void makeTurn() {
 		player = this;
 		++current_try;
 		// already won
 		if (won)
-			MultiplayerActivity.nextTurn(team);
+			nextTurn();
 		else
 			throwDice();
 	}
@@ -117,7 +133,7 @@ public abstract class Player {
 		else {
 			current_try = 0;
 			is1st6 = false;
-			MultiplayerActivity.nextTurn(team);
+			nextTurn();
 		}
 	}
 
@@ -167,4 +183,17 @@ public abstract class Player {
 				return;
 		won = true;
 	}
+	
+	/**
+	 * it's the next player's turn. Calls the next player for its turn
+	 */
+    public static final void nextTurn() {
+    	Team team = player.team;
+    	Player player = null;
+    	while(player == null) {
+    		team = Team.getById((team.id + 1) % players.length);
+    		player = players[team.id];
+    	}
+    	player.makeTurn();
+    }
 }
