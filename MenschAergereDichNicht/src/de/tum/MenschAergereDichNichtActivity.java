@@ -16,6 +16,7 @@ import android.widget.Toast;
 import de.tum.models.Board;
 import de.tum.models.ClassicBoard;
 import de.tum.models.Dice;
+import de.tum.multiplayer.TeamMatching;
 import de.tum.player.AIPlayer;
 import de.tum.player.HumanPlayer;
 import de.tum.player.Player;
@@ -35,10 +36,6 @@ public class MenschAergereDichNichtActivity extends Activity {
     public static final String TITLE = "title";
 	
 	// game values
-    private static final float f = 8;
-    public static int width;
-    public static int height;
-    public static float hz = 4;
     private GLSurfaceView view;
     private GameRenderer renderer;
     private static Player[] players;
@@ -54,14 +51,22 @@ public class MenschAergereDichNichtActivity extends Activity {
       context = this;
       if(D) Log.e(TAG, "+++ ON CREATE +++");      
       
-      new Room();
-      Room.addRenderable(new ClassicBoard(true, 4));
+	  int teams[] = getIntent().getExtras().getIntArray(TeamMatching.key);
+
+	  new Room();
+      Room.addRenderable(new ClassicBoard(true));
       Room.addRenderable(new Dice(true));
-      players = new Player[Board.getPlayers()];
-      players[0] = new HumanPlayer(Team.RED);
-      players[1] = new AIPlayer(Team.YELLOW, AIPlayer.STRATEGY_EASY);
-      players[2] = new AIPlayer(Team.GREEN, AIPlayer.STRATEGY_MEDIUM);
-      players[3] = new AIPlayer(Team.BLUE, AIPlayer.STRATEGY_HARD);
+      players = new Player[Board.getTeams()];
+      int playing = 4;
+      for (int i = 0; i < teams.length; ++i)
+    	  if (teams[i] == TeamMatching.int_disabled) {
+    		  --playing;
+    		  continue;
+    	  }
+    	  else if (teams[i] == TeamMatching.int_human)
+    		  players[i] = new HumanPlayer(Team.getById(i));
+    	  else
+    		  players[i] = new AIPlayer(Team.getById(i), teams[i] - TeamMatching.offset_strategy);
       
       renderer = new GameRenderer();
       view = new GLSurfaceView(this);
@@ -76,7 +81,7 @@ public class MenschAergereDichNichtActivity extends Activity {
       toastLayout = inflater.inflate(R.layout.toast_layout,
     		  (ViewGroup) findViewById(R.id.toast_layout_root));
       
-      players[0].makeTurn();
+      Board.startGame(playing);
     }
     
     @Override
@@ -113,16 +118,6 @@ public class MenschAergereDichNichtActivity extends Activity {
       if(D) Log.e(TAG, "+ ON RESUME +");
     }
     
-	/**
-	 * it's the next player's turn. Calls the next player for its turn
-	 * 
-	 * @param team
-	 *            the current team
-	 */
-    public static final void nextTurn(Team team) {
-    	players[(team.id + 1) % players.length].makeTurn();
-    }
-
 	public static final void showToast(int toast) {
 	    Message msg = context.mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
