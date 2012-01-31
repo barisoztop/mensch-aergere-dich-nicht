@@ -1,26 +1,22 @@
 package de.tum;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.models.Board;
 import de.tum.models.ClassicBoard;
 import de.tum.models.Dice;
-import de.tum.multiplayer.bluetooth.BluetoothMPService;
-import de.tum.multiplayer.bluetooth.DeviceListActivity;
 import de.tum.player.AIPlayer;
 import de.tum.player.HumanPlayer;
 import de.tum.player.Player;
@@ -53,12 +49,14 @@ public class MenschAergereDichNichtActivity extends Activity {
     private static MenschAergereDichNichtActivity context;
     
     // Layout Views
-    private TextView titleBar;
+//    private TextView titleBar;
+    private View toastLayout;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
+      requestWindowFeature(Window.FEATURE_NO_TITLE);
       context = this;
       if(D) Log.e(TAG, "+++ ON CREATE +++");      
       
@@ -78,15 +76,20 @@ public class MenschAergereDichNichtActivity extends Activity {
       view.setOnTouchListener(listener);
       view.setOnLongClickListener(listener);
       // Set up the window layout
-      requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+//      requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
       setContentView(view);
-      getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
+//      getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
       
       // Set up the custom title
-      titleBar = (TextView) findViewById(R.id.title_left_text);
-      titleBar.setText(R.string.app_name);
-      titleBar = (TextView) findViewById(R.id.title_right_text);
+//      titleBar = (TextView) findViewById(R.id.title_left_text);
+//      titleBar.setText(R.string.app_name);
+//      titleBar = (TextView) findViewById(R.id.title_right_text);
 //      titleBar.setText("Text goes here!");
+      
+		// Toast layout
+		LayoutInflater inflater = getLayoutInflater();
+		toastLayout = inflater.inflate(R.layout.toast_layout,
+		                               (ViewGroup) findViewById(R.id.toast_layout_root));
       
       players[0].makeTurn();
     }
@@ -160,11 +163,17 @@ public class MenschAergereDichNichtActivity extends Activity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
             case MESSAGE_TOAST:
-                Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
-                               Toast.LENGTH_SHORT).show();
+				TextView text = (TextView) toastLayout.findViewById(R.id.toast_text);
+				text.setText(msg.getData().getString(TOAST));
+
+				Toast toast = new Toast(MenschAergereDichNichtActivity.this);
+				toast.setGravity(Gravity.BOTTOM, 0, 30);
+				toast.setDuration(Toast.LENGTH_SHORT);
+				toast.setView(toastLayout);
+				toast.show();
                 break;
             case MESSAGE_TITLE:
-            	titleBar.setText(msg.getData().getString(TITLE));
+//            	titleBar.setText(msg.getData().getString(TITLE));
                 break;                 
             }
         }
