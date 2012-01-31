@@ -59,11 +59,9 @@ public class ClassicBoard extends Board {
 	 * 
 	 * @param visible
 	 *            true if visible
-	 * @param players
-	 *            the amount of players that really play
 	 */
-	public ClassicBoard(boolean visible, int players) {
-		super(true, fields, besides, dice_fields, 4, players);
+	public ClassicBoard(boolean visible) {
+		super(true, fields, besides, dice_fields, 4);
 		// adding board components
 		add4Parts(basicSquare, null, singleSquare, textures[5]);
 		add4Parts(player_start, null, player_start_texture, -1);

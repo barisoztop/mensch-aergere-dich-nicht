@@ -70,10 +70,10 @@ public class ClassicPeg extends Peg {
 		super(visible, team, pos_start);
 		// creating shapes
 		int y = 0;
-		sgobjects.add(new TriangleFan(visible, vertices[y], null, null, bufferV[y], bufferC[team.id][y], 0));
+		sgobjects.add(new TriangleFan(true, vertices[y], null, null, bufferV[y], bufferC[team.id][y], 0));
 		for (y = 1; y < vertices.length - 1; ++y)
-			sgobjects.add(new TriangleStripe(visible, vertices[y], null, null, bufferV[y], bufferC[team.id][y], 0));
-		sgobjects.add(new TriangleFan(visible, vertices[y], null, null, bufferV[y], bufferC[team.id][y], 0));
+			sgobjects.add(new TriangleStripe(true, vertices[y], null, null, bufferV[y], bufferC[team.id][y], 0));
+		sgobjects.add(new TriangleFan(true, vertices[y], null, null, bufferV[y], bufferC[team.id][y], 0));
 		// moving this peg to its start position
 		TupleFloat position = Board.getPosition(this, pos_start, true);
 		transfer(position.x, position.y, layer_z + bottom);
