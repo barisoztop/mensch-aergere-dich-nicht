@@ -8,29 +8,80 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import de.tum.R;
+import de.tum.models.Board;
 
+/**
+ * a team matching shows a dialog for setting up the players and matching them to the available devices.
+ * The minimum of available devices is always one - it's simply the current device.
+ * This activity can be used for single player mode as well as multiplayer mode
+ */
 public class TeamMatching extends Activity {
-	private TeamMatch[] matches;
+	/** this says that a player is disabled */
+	private static final int int_disabled = -1;
+	/** this says that a player is disabled */
+	private static final int int_human = 1;
+	/** one team match for every team */
+	private TeamMatch matches[];
+	/** available devices */
+	private String devices[];
 	
+	/**
+	 * creating a team matching
+	 * 
+	 * @param devices
+	 *            the available devices (this device not included)
+	 */
+	public TeamMatching(String devices[]) {
+		// adding all devices together
+		int amount = devices != null ? devices.length : 0;
+		this.devices = new String[amount + 1];
+		this.devices[0] = getString(R.string.my_device);
+		while (amount-- > 0)
+			this.devices[amount] = devices[amount - 1];
+	}
+	
+	/**
+	 * a team match holds the settings for setting up one player and matching it to the available devices.
+	 */
 	private class TeamMatch {
+		/** true if player is enabled */
 		private boolean enabled;
+		/** true if player is human */
 		private boolean human;
+		/** the strategy of this AI-player */
 		private int startegy;
+		/** the device of this player */
 		private int device;
 		
+		// the views of this team match
 		private CheckBox box_enabled;
 		private CheckBox box_human;
 		private Spinner spinner_strategy;
 		private Spinner spinner_devices;
 		
+		/**
+		 * creating a team match
+		 * 
+		 * @param id_box_enabled
+		 *            the id of the box for enabling this player
+		 * @param id_box_human
+		 *            the id of the box for making this player human
+		 * @param id_spinner_startegy
+		 *            the id of the spinner to defining the strategy for this player
+		 * @param id_spinner_devices
+		 *            the id of the spinner for setting the device of this player
+		 */
 		public TeamMatch(int id_box_enabled, int id_box_human, int id_spinner_startegy, int id_spinner_devices) {
+			// setting up GUI
 			box_enabled = (CheckBox) findViewById(id_box_enabled);
 			box_enabled.setChecked(enabled = true);
 			box_enabled.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
+					// setting enabled and updating some views
 					enabled = box_enabled.isChecked();
 					box_human.setEnabled(enabled);
 					spinner_strategy.setEnabled(enabled && !human);
@@ -43,6 +94,7 @@ public class TeamMatching extends Activity {
 			box_human.setChecked(human = true);
 			box_human.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
+					// setting human and updating some views
 					human = box_human.isChecked();
 					spinner_strategy.setEnabled(!human);
 				}
@@ -58,6 +110,7 @@ public class TeamMatching extends Activity {
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View view,
 						int pos, long id) {
+					// setting the strategy
 					startegy = pos;
 				}
 
@@ -67,20 +120,27 @@ public class TeamMatching extends Activity {
 
 			spinner_devices = (Spinner) findViewById(id_spinner_devices);
 			spinner_devices.setEnabled(enabled);
-			adapter = ArrayAdapter.createFromResource(
-					TeamMatching.this, R.array.avaible_devices, android.R.layout.simple_spinner_item);
+			adapter = new ArrayAdapter<CharSequence>(TeamMatching.this,
+					android.R.layout.simple_spinner_item);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			// adding devices
+			for (String device : devices)
+				adapter.add(device);
 			spinner_devices.setAdapter(adapter);
-			spinner_devices.setOnItemSelectedListener(new OnItemSelectedListener() {
-				@Override
-				public void onItemSelected(AdapterView<?> parent, View view,
-						int pos, long id) {
-					device = pos;
-				}
-
-				@Override
-				public void onNothingSelected(AdapterView<?> parent) {}
-			});
+			if (devices.length == 1)
+				spinner_devices.setEnabled(false);
+			else
+				spinner_devices.setOnItemSelectedListener(new OnItemSelectedListener() {
+					@Override
+					public void onItemSelected(AdapterView<?> parent, View view,
+							int pos, long id) {
+						// setting the device
+						device = pos;
+					}
+	
+					@Override
+					public void onNothingSelected(AdapterView<?> parent) {}
+				});
 		}
 	}
 	
@@ -90,12 +150,45 @@ public class TeamMatching extends Activity {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.match_players);
 
+		// setting up team matches
 		matches = new TeamMatch[4];
 		matches[0] = new TeamMatch(R.id.checkBoxTeamEnabled1, R.id.checkBoxTeamHuman1, R.id.spinnerAIStrategy1, R.id.spinnerDevice1);
 		matches[1] = new TeamMatch(R.id.checkBoxTeamEnabled2, R.id.checkBoxTeamHuman2, R.id.spinnerAIStrategy2, R.id.spinnerDevice2);
 		matches[2] = new TeamMatch(R.id.checkBoxTeamEnabled3, R.id.checkBoxTeamHuman3, R.id.spinnerAIStrategy3, R.id.spinnerDevice3);
 		matches[3] = new TeamMatch(R.id.checkBoxTeamEnabled4, R.id.checkBoxTeamHuman4, R.id.spinnerAIStrategy4, R.id.spinnerDevice4);
-//		// Set result CANCELED in case of back button is pressed
-//		setResult(MultiplayerActivity.RESULT_GOBACK);
+
+		// adding listener for confirm button
+		((Button) findViewById(R.id.button_confirm_match)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// checking if at least one player is enabled
+				for (int i = 0; i < matches.length; ++i)
+					if (i == 5) { // no enabled players found
+						MultiplayerActivity.showToast(R.string.no_players);
+						return;
+					}
+					else if (matches[i].enabled) // found one enabled player
+						break;
+				// creating the players configuration
+				int[] players[] = new int[devices.length][Board.getTeams()];
+				// setting the cofiguration
+				for (int i = 0; i < matches.length; ++i) {
+					TeamMatch match = matches[i];
+					if (!match.enabled) { // player disabled
+						for (int device = 0; device < players.length; ++device)
+							players[device][i] = int_disabled;
+						continue;
+					}
+					if (match.human) // human player
+						players[match.device][i] = int_human;
+					else // AI-player
+						players[match.device][i] = match.startegy + 100;
+				}
+				// set players
+				
+			}
+		});
+		// Set result CANCELED in case of back button is pressed
+		setResult(MultiplayerActivity.RESULT_GOBACK);
 	}
 }

@@ -62,7 +62,7 @@ public abstract class GameObject extends GeometricObject {
 	 */
 	protected final void setColor(float color[]) {
 		for (SimpleGeometricObject object : sgobjects)
-			object.setColor(color);
+			object.setColor(color, null);
 	}
 	
 	/** calculates moves and updates properties for this game object */

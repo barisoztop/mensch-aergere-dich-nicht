@@ -59,6 +59,7 @@
 	<string name="button_confirm">Confirm</string>
 	<string name="select_strategy">Select strategy</string>
     <string name="select_device_for_this_team">Select team\'s device</string>
+    <string name="no_players">At least one player has to be enabled</string>
         	    
     <string-array name="strategy">
         <item>Easy</item>
@@ -66,9 +67,7 @@
 		<item>Hard</item>
     </string-array>
         
-    <string-array name="avaible_devices">
-        <item>My device</item>
-    </string-array>
+    <string name="my_device">My device</string>
         
     <string name="team1">Team RED</string>
     <string name="team2">Team YELLOW</string>

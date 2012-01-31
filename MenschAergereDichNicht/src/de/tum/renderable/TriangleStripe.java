@@ -1,5 +1,7 @@
 package de.tum.renderable;
 
+import java.nio.FloatBuffer;
+
 import javax.microedition.khronos.opengles.GL10;
 
 /**
@@ -20,10 +22,17 @@ public class TriangleStripe extends SimpleGeometricObject {
 	 *            an array of rgba-color values for each vertex
 	 * @param textures
 	 *            an array of texture values
+	 * @param bufferV
+	 *            a buffer of vertices
+	 * @param bufferC
+	 *            a buffer of rgba-color values for each vertex
 	 * @param texture
 	 *            the texture ID
 	 */
-	public TriangleStripe(boolean visible, float[] vertices, float[] color, short[] textures, int texture) {
-		super(visible, GL10.GL_TRIANGLE_STRIP, vertices, color, textures, texture);
+	public TriangleStripe(boolean visible, float[] vertices, float[] color,
+			short[] textures, FloatBuffer bufferV, FloatBuffer bufferC,
+			int texture) {
+		super(visible, GL10.GL_TRIANGLE_STRIP, vertices, color, textures,
+				bufferV, bufferC, texture);
 	}
 }

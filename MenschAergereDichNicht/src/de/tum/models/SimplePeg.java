@@ -41,8 +41,9 @@ public class SimplePeg extends Peg {
 	public SimplePeg(boolean visible, Team team, int pos_start) {
 		super(visible, team, pos_start);
 		// creating the real mesh
-		sgobjects.add(new TriangleStripe(visible, convert(vertices,
-				team), color = createColor(new float[][] { team.color, black }), null, 0));
+		sgobjects.add(new TriangleStripe(visible, convert(vertices, team),
+				color = createColor(new float[][] { team.color, black }), null,
+				null, null, 0));
 		color_selection = createColor(new float[][] { team.color, white }); 
 		TupleFloat position = Board.getPosition(this, pos_start, true);
 		// moving this peg to its start position
