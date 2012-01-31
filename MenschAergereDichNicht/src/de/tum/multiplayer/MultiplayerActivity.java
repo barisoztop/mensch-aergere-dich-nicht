@@ -42,6 +42,7 @@ import de.tum.models.ClassicBoard;
 import de.tum.models.Dice;
 import de.tum.multiplayer.bluetooth.BluetoothMPService;
 import de.tum.multiplayer.bluetooth.DeviceListActivity;
+import de.tum.player.AIPlayer;
 import de.tum.player.HumanPlayer;
 import de.tum.player.NetworkPlayer;
 import de.tum.player.Player;
@@ -75,6 +76,7 @@ public class MultiplayerActivity extends Activity {
 	private static final int REQUEST_CONNECT_SERVER = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
 	private static final int REQUEST_MODE_TYPE = 3;
+	private static final int REQUEST_SET_PLAYERS = 4;
 	
 	// Intent result codes
 	public static final int RESULT_CLIENT_MODE = 1;
@@ -142,13 +144,9 @@ public class MultiplayerActivity extends Activity {
 
 		/* setup game */
 		room = new Room();
-		Room.addRenderable(new ClassicBoard(true, 4));
+		Room.addRenderable(new ClassicBoard(true));
 		Room.addRenderable(new Dice(true));
 		 players = new Player[Board.getPlayers()];
-//		 players[0] = new NetworkPlayer(Team.RED, MultiplayerActivity.class);
-//		 players[1] = new HumanPlayer(Team.YELLOW, mHandler, MultiplayerActivity.class);
-//		 players[2] = new HumanPlayer(Team.GREEN, mHandler, MultiplayerActivity.class);
-//		 players[3] = new AIPlayer(Team.BLUE, MultiplayerActivity.class);
 		
 		renderer = new GameRenderer();
 		view = new GLSurfaceView(this);
@@ -221,19 +219,6 @@ public class MultiplayerActivity extends Activity {
 		if (D) Log.e(TAG, "+ ON RESUME +");
 	}
 
-	/**
-	 * it's the next player's turn. Calls the next player for its turn
-	 * 
-	 * @param team
-	 *            the current team
-	 */
-	public static final void nextTurn(Team team) {
-    	if (activity != null)
-		players[(team.id + 1) % players.length].makeTurn();
-    	else
-    		MenschAergereDichNichtActivity.nextTurn(team);
-	}
-	
 	public static final void showToast(int toast) {
 		if (activity == null)
 			MenschAergereDichNichtActivity.showToast(toast);
@@ -276,7 +261,9 @@ public class MultiplayerActivity extends Activity {
 //							Toast.LENGTH_SHORT).show();
 					// all devices are connected, so start the game
 					titleBar.setText("All Connected");
-					MultiplayerActivity.this.startGame();
+					startActivityForResult(new Intent(getApplicationContext(),
+							TeamMatching.class).putExtra(
+							TeamMatching.key, (String[]) null), REQUEST_SET_PLAYERS);
 					break;
 				case BluetoothMPService.STATE_WAITING_FOR_CONNECTIONS:
 					Toast.makeText(
@@ -523,6 +510,10 @@ public class MultiplayerActivity extends Activity {
 				Log.d(TAG, "REQUEST_MODE_TYPE: RESULT_GOBACK");
 				finish(); // TODO create MultiPlayer activity again
 			}
+			break;
+		case REQUEST_SET_PLAYERS:
+			if (resultCode == RESULT_OK)
+				startGame(data.getExtras().getIntArray(TeamMatching.key));
 		}
 	}
 
@@ -599,23 +590,30 @@ public class MultiplayerActivity extends Activity {
     /**
      * Initialize the player on the board and start the first movement 
      */
-	private void startGame() {
+	private void startGame(int teams[]) {
 		Log.d(TAG, "startGame()");
-		players = new Player[Board.getPlayers()];
-		 players[0] = new HumanPlayer(Team.RED);
-		 players[1] = new HumanPlayer(Team.YELLOW);
-		 players[2] = new HumanPlayer(Team.GREEN);
-		 players[3] = new HumanPlayer(Team.BLUE);
-
-		players[0].makeTurn();
+	      players = new Player[Board.getTeams()];
+	      int playing = 4;
+	      for (int i = 0; i < teams.length; ++i)
+	    	  if (teams[i] == TeamMatching.int_disabled) {
+	    		  --playing;
+	    		  continue;
+	    	  }
+	    	  else if (teams[i] == TeamMatching.int_human)
+	    		  players[i] = new HumanPlayer(Team.getById(i));
+	    	  else if (teams[i] >= TeamMatching.offset_strategy)
+	    		  players[i] = new AIPlayer(Team.getById(i), teams[i] - TeamMatching.offset_strategy);
+	    	  else
+	    		  players[i] = new NetworkPlayer(Team.getById(i));
+	      Board.startGame(playing);
 	}
 	
-	private void startClientGame() {
+    private void startClientGame() {
 		players[0] = new NetworkPlayer(Team.RED);
 		players[1] = new NetworkPlayer(Team.YELLOW);
 		players[2] = new NetworkPlayer(Team.GREEN);
 		players[3] = new NetworkPlayer(Team.BLUE);
-		players[0].makeTurn();
+	      Board.startGame(4);
 	}
 
 	/**
