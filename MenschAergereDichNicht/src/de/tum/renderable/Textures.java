@@ -9,10 +9,15 @@ import android.graphics.Bitmap;
 import android.opengl.GLUtils;
 
 public class Textures {
+	/** current zoom [0; 1[ */
+	private static float zoom;
 	/** texture IDs */
-	public static int[] textures;
+	private static int[][] textures;
+	// just for initializing
 	/** list with bitmaps for textures */
-	public static List<Bitmap> bitmaps = new LinkedList<Bitmap>();
+	private static final List<Bitmap> bitmaps = new LinkedList<Bitmap>();
+	/** list with texture groups */
+	private static final List<int[]> groups = new LinkedList<int[]>();
 
 	/**
 	 * adding a texture
@@ -21,24 +26,61 @@ public class Textures {
 	 *            the texture
 	 * @return the texture id's index
 	 */
-	public static final int addTexture(Bitmap bitmap) {
+	public static final synchronized int addTexture(Bitmap bitmap) {
 		bitmaps.add(bitmap);
-		return bitmaps.size() - 1;
+		groups.add(new int[] {groups.size()});
+		return groups.size() - 1;
+	}
+	
+	/**
+	 * grouping textures so that different textures can be used for zooming
+	 * 
+	 * @param textures
+	 *            the textures for one group
+	 * @return the group's index (texture id)
+	 */
+	public static final synchronized int groupTextures(int[] textures) {
+		int[] array = new int[textures.length];
+		for (int i = 0; i < textures.length; ++i)
+			array[i] = textures[i];
+		groups.add(array);
+		return groups.size() - 1;
 	}
 
+	/**
+	 * getting the actual texture id
+	 * 
+	 * @param index
+	 *            the texture's or group's index
+	 * @return the texture id
+	 */
+	public static final synchronized int getId(int index) {
+		return textures[index][(int) (textures[index].length * zoom)];
+	}
+	
+	/**
+	 * setting the current zoom [0; 1[
+	 * 
+	 * @param zoom
+	 *            the current zoom
+	 */
+	public static final synchronized void setZoom(float zoom) {
+		Textures.zoom = zoom;
+	}
+	
 	/**
 	 * load bitmaps into GL10
 	 * 
 	 * @param gl
 	 *            the Gl10
 	 */
-	public static final void bindTextures(GL10 gl) {
-		textures = new int[bitmaps.size()];
+	public static final synchronized void bindTextures(GL10 gl) {
+		int tmp[] = new int[bitmaps.size()];
 		// Generate texture-ID array
-		gl.glGenTextures(textures.length, textures, 0);
-		for (int i = 0; i < textures.length; ++i) {
+		gl.glGenTextures(tmp.length, tmp, 0);
+		for (int i = 0; i < tmp.length; ++i) {
 			// Bind to texture ID
-			gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[i]);
+			gl.glBindTexture(GL10.GL_TEXTURE_2D, tmp[i]);
 
 			gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER,
 //                    GL10.GL_LINEAR);
@@ -59,6 +101,17 @@ public class Textures {
 			// ID
 			GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmaps.get(i), 0);
 			// bitmaps.get(i).recycle();
+		}
+		//setting up all textures (also groups)
+		textures = new int[groups.size()][];
+		int texture = 0; int dif = 0;
+		for (int[] group : groups) {
+			int array[] = new int[group.length];
+			for (int i = 0; i < array.length; ++i)
+				array[i] = tmp[group[i] - dif];
+			textures[texture++] = array;
+			if (array.length != 1)
+				++dif;
 		}
 	}
 }

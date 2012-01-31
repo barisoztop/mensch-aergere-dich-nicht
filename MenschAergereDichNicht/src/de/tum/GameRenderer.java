@@ -8,6 +8,7 @@ import de.tum.renderable.Textures;
 
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
+import android.util.Log;
 
 /**
  * with the game renderer the game is rendered, meaning that the individual
@@ -58,6 +59,7 @@ public class GameRenderer implements Renderer {
 		up_z = (float) Math.cos(degree_vertical);
 		center_x *= up_z;
 		center_y *= up_z;
+		updateTextures();
 	}
 
 	public static final void zoom(float zoom) {
@@ -70,6 +72,12 @@ public class GameRenderer implements Renderer {
 		center_y *= zoom / radius;
 		center_z *= zoom / radius;
 		radius = zoom;
+		updateTextures();
+	}
+	
+	public static final void updateTextures() {
+		Textures.setZoom((float) Math.min(Math.sqrt(Math.min(radius, center_z)) / 1.8, 0.98));
+		Log.d("zoom", "" + (float) Math.min(Math.sqrt(radius) / 2, 0.98));
 	}
 
 	/**
@@ -100,8 +108,8 @@ public class GameRenderer implements Renderer {
 		GLU.gluLookAt(gl, center_x, center_y, center_z, 0, 0, 0, 0, 0, 1);
 		Room.render(gl);
 		GameListener.verifyWaiting();
-		if (rotating)
-			tranfer(rotation_speed, 0);
+//		if (rotating)
+//			tranfer(rotation_speed, 0);
 	}
 
 	/**

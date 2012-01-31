@@ -64,7 +64,7 @@ public class Dice extends GameObject {
 		// creating game object
 		for (int i = 0; i < 6; ++i)
 			sgobjects.add(new TriangleStripe(visible, vertices[i],
-					null, texture, textures[i]));
+					null, texture, null, null, textures[i]));
 		// setting position
 		for (SimpleGeometricObject object : sgobjects)
 			object.transfer(-side / 2, -side / 2, -side / 2);
@@ -152,7 +152,7 @@ public class Dice extends GameObject {
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
-		int a = 128;
+		int a = 256;
 		// drawing textures for the six sides
 		for (int i = 0; i < 6;) {
 			Bitmap bitmap = Bitmap.createBitmap(a, a, Config.ARGB_8888);

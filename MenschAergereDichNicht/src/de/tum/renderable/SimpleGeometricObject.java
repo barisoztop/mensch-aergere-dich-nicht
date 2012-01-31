@@ -1,5 +1,6 @@
 package de.tum.renderable;
 
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -13,7 +14,9 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public abstract class SimpleGeometricObject extends GeometricObject {
 	/** size in bytes of a float value */
-	private static final int float_size = Float.SIZE >> 3; 
+	private static final int size_float = Float.SIZE >> 3; 
+	/** size in bytes of a short value */
+	private static final int size_short = Short.SIZE >> 3; 
 	/** float array for the rgba-color values */
 	private float[] color;
 	/** float array for the xyz-vector values */
@@ -44,56 +47,72 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 	 *            an array of rgba-color values for each vertex
 	 * @param textures
 	 *            an array of texture values
+	 * @param bufferV
+	 *            a buffer of vertices
+	 * @param bufferC
+	 *            a buffer of rgba-color values for each vertex
 	 * @param texture
 	 *            the texture ID
 	 */
 	public SimpleGeometricObject(boolean visible, int type, float[] vertices,
-			float[] color, short textures[], int texture) {
+			float[] color, short textures[], FloatBuffer bufferV,
+			FloatBuffer bufferC, int texture) {
 		super(visible);
 		this.type = type;
 		this.texture = texture;
-		setVertices(vertices);
-		setColor(color);
+		setVertices(vertices, bufferV);
+		setColor(color, bufferC);
 		setTextures(textures);
+	}
+
+	/**
+	 * method for creating a buffer with the given float or short values
+	 * 
+	 * @param values1
+	 *            a float buffer with the values
+	 * @param values2
+	 *            a short buffer with the values
+	 * @return the buffer
+	 */
+	public static final Buffer createBuffer(float[] values1, short[] values2) {
+		ByteBuffer bufferByte = ByteBuffer
+				.allocateDirect(values1 != null ? size_float * values1.length
+						: size_short * values2.length);
+		bufferByte.order(ByteOrder.nativeOrder());
+		return values1 != null ? ((FloatBuffer) bufferByte.asFloatBuffer()
+				.clear()).put(values1) : ((ShortBuffer) bufferByte
+				.asShortBuffer().clear()).put(values2);
 	}
 
 	/**
 	 * method for updating the color buffer to the given float values
 	 * 
 	 * @param color
+	 *            a float array with the rgba-color values
+	 * @param buffer
 	 *            a float buffer with the rgba-color values
 	 */
-	public final void setColor(float[] color) {
-		if ((this.color = color) == null || color.length == 4) {
-			bufferC = null;
-			return;
-		}
-		// verifying whether the buffer is null or a greater one is needed
-		if (bufferC == null || bufferC.capacity() < float_size * color.length) {
-			ByteBuffer buffer = ByteBuffer.allocateDirect(float_size * color.length);
-			buffer.order(ByteOrder.nativeOrder());
-			bufferC = buffer.asFloatBuffer();
-		}
-		bufferC.clear();
-		bufferC.put(color);
+	public final void setColor(float[] color, FloatBuffer buffer) {
+		if ((bufferC = buffer) == null)
+		bufferC = (this.color = color) == null || color.length == 4 ?
+				null : (FloatBuffer) createBuffer(color, null);
+		else if (color != null)
+			this.color = color;
 	}
 
 	/**
-	 * method for updating the vector buffer to the given float values
+	 * method for updating the vector buffer to the given float values.
+	 * Buffer will be created if null
 	 * 
 	 * @param vertices
+	 *            a float array with the vertex values
+	 * @param buffer
 	 *            a float buffer with the vertex values
 	 */
-	public final void setVertices(float[] vertices) {
+	public final void setVertices(float[] vertices, FloatBuffer buffer) {
 		this.vertices = vertices;
-		// verifying whether the buffer is null or a greater one is needed
-		if (bufferV == null || bufferV.capacity() < float_size * vertices.length) {
-			ByteBuffer buffer = ByteBuffer.allocateDirect(float_size * vertices.length);
-			buffer.order(ByteOrder.nativeOrder());
-			bufferV = buffer.asFloatBuffer();
-		}
-		bufferV.clear();
-		bufferV.put(vertices);
+		if ((bufferV = buffer) == null)
+			bufferV = (FloatBuffer) createBuffer(vertices, null);
 		amount = vertices.length / 3;
 	}
 
@@ -104,18 +123,8 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 	 *            a float buffer with the texture values
 	 */
 	public final void setTextures(short[] textures) {
-		if (textures == null) {
-			bufferT = null;
-			return;
-		}
-		// verifying whether the buffer is null or a greater one is needed
-		if (bufferT == null || bufferT.capacity() < float_size * textures.length) {
-			ByteBuffer buffer = ByteBuffer.allocateDirect(float_size * textures.length);
-			buffer.order(ByteOrder.nativeOrder());
-			bufferT = buffer.asShortBuffer();
-		}
-		bufferT.clear();
-		bufferT.put(textures);
+		bufferT = textures == null ?
+				null : (ShortBuffer) createBuffer(null, textures);
 	}
 	
 	/** {@inheritDoc} */
@@ -127,7 +136,7 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 			vertices[i + 2] += dz;
 		}
 		// updating vertices
-		setVertices(vertices);
+		setVertices(vertices, null);
 	}
 	
 	/** {@inheritDoc} */
@@ -152,7 +161,7 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 			else { // textures
 				bufferT.rewind();
 				gl.glEnable(GL10.GL_TEXTURE_2D); // enable textures
-			    gl.glBindTexture(GL10.GL_TEXTURE_2D, Textures.textures[texture]); // set current texture
+			    gl.glBindTexture(GL10.GL_TEXTURE_2D, Textures.getId(texture)); // set current texture
 				gl.glTexCoordPointer(2, GL10.GL_SHORT, 0, bufferT);
 			}
 		}

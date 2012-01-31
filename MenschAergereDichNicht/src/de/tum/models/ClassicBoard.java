@@ -73,7 +73,7 @@ public class ClassicBoard extends Board {
 		add4Parts(path2, null, player_end_texture, textures[4]);
 		add4Parts(path3, null, singleSquare, textures[4]);
 		sgobjects.add(new TriangleStripe(visible, calculateVertices(middle, p,
-				p, layer_z), null, singleSquare, textures[5]));
+				p, layer_z), null, singleSquare, null, null, textures[5]));
 	}
 
 	/** {@inheritDoc} */
@@ -119,18 +119,18 @@ public class ClassicBoard extends Board {
 	private final void add4Parts(int[] vertices, float[] color, short[] textures, int id) {
 		sgobjects.add(new TriangleStripe(visible, calculateVertices(vertices,
 				p, p, layer_z), textures == null ? color != null ? color
-				: Team.RED.color : null, textures, id == -1 ? ClassicBoard.textures[0] : id));
+				: Team.RED.color : null, textures, null, null, id == -1 ? ClassicBoard.textures[0] : id));
 		sgobjects.add(new TriangleStripe(visible, Helper.rotate90(
 				calculateVertices(vertices, p, p, layer_z), 3),
 				textures == null ? color != null ? color : Team.YELLOW.color
-						: null, textures, id == -1 ? ClassicBoard.textures[1] : id));
+						: null, textures, null, null, id == -1 ? ClassicBoard.textures[1] : id));
 		sgobjects.add(new TriangleStripe(visible, calculateVertices(vertices,
 				-p, -p, layer_z), textures == null ? color != null ? color
-				: Team.GREEN.color : null, textures, id == -1 ? ClassicBoard.textures[2] : id));
+				: Team.GREEN.color : null, textures, null, null, id == -1 ? ClassicBoard.textures[2] : id));
 		sgobjects.add(new TriangleStripe(visible, Helper.rotate90(
 				calculateVertices(vertices, -p, -p, layer_z), 3),
 				textures == null ? color != null ? color : Team.BLUE.color
-						: null, textures, id == -1 ? ClassicBoard.textures[3] : id));
+						: null, textures, null, null, id == -1 ? ClassicBoard.textures[3] : id));
 	}
 
 	// just helping method for calculating mesh
@@ -150,22 +150,31 @@ public class ClassicBoard extends Board {
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);
-		int a = 128;
 		// drawing all textures
-		for (int i = 0; i < 6; ++i) {
-			Bitmap bitmap = Bitmap.createBitmap(a, a, Config.ARGB_8888);
-			Canvas canvas = new Canvas(bitmap);
-			canvas.drawRGB((int) (255 * gray[0]), (int) (255 * gray[1]),
-					(int) (255 * gray[2]));
-			if (i != 5) {
+		for (int i = 0; i < 5; ++i) {
+			int[] sizes = new int[5];
+			// creating different sizes
+			for (int a = 32, size = sizes.length - 1; size > -1; --size, a *= 2) {
+				Bitmap bitmap = Bitmap.createBitmap(a, a, Config.ARGB_8888);
+				Canvas canvas = new Canvas(bitmap);
+				canvas.drawRGB((int) (255 * gray[0]), (int) (255 * gray[1]),
+						(int) (255 * gray[2]));
 				float[] color = i != 4 ? Team.values()[i].color : circle_white;
 				paint.setARGB(255, 0, 0, 0);
 				canvas.drawCircle(a / 2, a / 2, a * 9 / 20, paint);
 				paint.setARGB(255, (int) (255 * color[0]), (int) (255 * color[1]),
 						(int) (255 * color[2]));
 				canvas.drawCircle(a / 2, a / 2, a * 7 / 20, paint);
+				sizes[size] = Textures.addTexture(bitmap);
 			}
-			textures[i] = Textures.addTexture(bitmap);
+			// grouping the five sizes
+			textures[i] = Textures.groupTextures(sizes);
 		}
+		// creating board gray bitmap
+		Bitmap bitmap = Bitmap.createBitmap(32, 32, Config.ARGB_8888);
+		Canvas canvas = new Canvas(bitmap);
+		canvas.drawRGB((int) (255 * gray[0]), (int) (255 * gray[1]),
+				(int) (255 * gray[2]));
+		textures[5] = Textures.addTexture(bitmap);
 	}
 }
