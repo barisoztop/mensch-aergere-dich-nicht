@@ -61,6 +61,9 @@ public class Dice extends GameObject {
 	 */
 	public Dice(boolean visible) {
 		super(visible);
+		// verifying if dice is already created
+		if (dice != null)
+			throw new RuntimeException("second dice");
 		// creating game object
 		for (int i = 0; i < 6; ++i)
 			sgobjects.add(new TriangleStripe(visible, vertices[i],
@@ -68,18 +71,22 @@ public class Dice extends GameObject {
 		// setting position
 		for (SimpleGeometricObject object : sgobjects)
 			object.transfer(-side / 2, -side / 2, -side / 2);
-		x = y = z = 0;
-		ax = ay = az = 1;
-		transfer(0, 0, side / 2);
 		// updating game object info
 		rotated = true;
 		dice = this;
+		reset();
+	}
+	
+	public static final void reset() {
+		dice.x = dice.y = dice.z = 0;
+		dice.ax = dice.ay = dice.az = 1;
+		dice.transfer(0, 0, side / 2);
 		speed = new TupleFloat(0, 0);
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	protected void action() {
+	protected final void action() {
 		if (!action)
 			return;
 		if (++frame_current == 5 * frames) {
@@ -143,12 +150,13 @@ public class Dice extends GameObject {
 		dice.transfer(start.x - dice.x, start.y - dice.y, 7 * side - dice.z);
 		speed.set(-dice.x / frames / 0.9f, -dice.y / frames / 0.9f);
 		speed_z = 0;
+		dice.angle = 0;
 		angle_diff = 15;
 		action = true;
 	}
 	
 	// just helping method for calculating textures
-	private static void calculateTextures() {
+	private static final void calculateTextures() {
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL);
 		paint.setAntiAlias(true);

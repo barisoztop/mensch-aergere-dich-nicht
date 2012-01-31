@@ -3,6 +3,7 @@ package de.tum.models;
 import de.tum.Room;
 import de.tum.Team;
 import de.tum.TupleFloat;
+import de.tum.player.Player;
 import de.tum.renderable.GameObject;
 
 /**
@@ -39,14 +40,24 @@ public abstract class Board extends GameObject {
 	 *            all fields on this actual board
 	 * @param teams
 	 *            the amount of teams this board is made for
-	 * @param players
-	 *            the amount of players that actually play
 	 */
 	public Board(boolean visible, TupleFloat[] fields, TupleFloat[] besides,
-			TupleFloat[] dice_fields, int teams, int players) {
+			TupleFloat[] dice_fields, int teams) {
 		super(visible);
-		set(fields, besides, dice_fields, teams, players);
+		set(fields, besides, dice_fields, teams);
 		createPegs();
+	}
+	
+	/**
+	 * setting the amount of players and starting the game
+	 * 
+	 * @param players
+	 *            the amount of playing teams
+	 */
+	public static final void startGame(int players) {
+		Board.players = players;
+		Dice.reset();
+		Player.nextTurn();
 	}
 
 	/**
@@ -163,21 +174,20 @@ public abstract class Board extends GameObject {
 
 	// creating all pegs
 	private static final void createPegs() {
-		pegs = new Peg[players * start_pegs];
+		pegs = new Peg[teams * start_pegs];
 		for (int i = 0; i < pegs.length; ++i) {
-			pegs[i] = new ClassicPeg(true, Team.values()[i / start_pegs], i
+			pegs[i] = new ClassicPeg(false, Team.values()[i / start_pegs], i
 					% start_pegs);
 			Room.addRenderable(pegs[i]);
 		}
 	}
 
 	// just for setting and calculating some helping values
-	private static final void set(TupleFloat[] fields, TupleFloat[] besides, TupleFloat[] dice_fields, int teams, int players) {
+	private static final void set(TupleFloat[] fields, TupleFloat[] besides, TupleFloat[] dice_fields, int teams) {
 		Board.fields = fields;
 		Board.besides = besides;
 		Board.dice_fields = dice_fields;
 		Board.teams = teams;
-		Board.players = players;
 		start_length = teams * start_pegs;
 		// start length = end length
 		path_length = fields.length - start_length * 2;
