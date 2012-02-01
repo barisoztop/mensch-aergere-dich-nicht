@@ -1,4 +1,4 @@
-package de.tum.multiplayer.bluetooth;
+package de.tum.multiplayer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import de.tum.multiplayer.MultiplayerActivity;
 
 /**
  * Consists threads to handle the communication with other devices
@@ -77,7 +76,8 @@ public class BluetoothMPService {
 	// max number of devices allowed to connect
 	private int maxDeviceNumber = 1;
 	// server device id
-	private static final int SERVER_ID = -1;
+	public static final int SERVER_ID = -1;
+	public static final int ALL_DEVICES = -2;
 	private int uuidTrying = 0;
 
 	/**
@@ -536,7 +536,7 @@ public class BluetoothMPService {
 	 *            The bytes to write
 	 * @see ConnectedThread#write(byte[])
 	 */
-	public void write(byte[] out) {
+	public void write(byte[] out, int deviceNo) {
 
 		if (serverDevice) {
 			// Create temporary objects
@@ -561,19 +561,19 @@ public class BluetoothMPService {
 				r7 = connectedThread7;
 			}
 			// Perform the write unsynchronized
-			if (r1 != null)
+			if (r1 != null && (deviceNo == 1 || deviceNo == ALL_DEVICES))
 				r1.write(out);
-			if (r2 != null)
+			if (r2 != null && (deviceNo == 2 || deviceNo == ALL_DEVICES))
 				r2.write(out);
-			if (r3 != null)
+			if (r3 != null && (deviceNo == 3 || deviceNo == ALL_DEVICES))
 				r3.write(out);
-			if (r4 != null)
+			if (r4 != null && (deviceNo == 4 || deviceNo == ALL_DEVICES))
 				r4.write(out);
-			if (r5 != null)
+			if (r5 != null && (deviceNo == 5 || deviceNo == ALL_DEVICES))
 				r5.write(out);
-			if (r6 != null)
+			if (r6 != null && (deviceNo == 6 || deviceNo == ALL_DEVICES))
 				r6.write(out);
-			if (r7 != null)
+			if (r7 != null && (deviceNo == 7 || deviceNo == ALL_DEVICES))
 				r7.write(out);
 		} else {
 			ConnectedThread client = null;
@@ -583,7 +583,8 @@ public class BluetoothMPService {
 					return;
 				client = connectedClientThread;
 			}
-			client.write(out);
+			if (client != null && deviceNo == SERVER_ID)
+				client.write(out);
 		}
 	}
 
