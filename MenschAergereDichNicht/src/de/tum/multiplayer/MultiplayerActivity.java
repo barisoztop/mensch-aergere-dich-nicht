@@ -408,6 +408,7 @@ public class MultiplayerActivity extends Activity {
 				toast.show();
 				break;
 			case MESSAGE_TOAST_WARNING:
+				if (waitingDialog != null) waitingDialog.dismiss();
 				Toast toast_warn = Toast.makeText(MultiplayerActivity.this, msg.getData().getString(TOAST),
 						Toast.LENGTH_LONG);
 				toast_warn.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
@@ -531,6 +532,7 @@ public class MultiplayerActivity extends Activity {
 					MultiplayerActivity.this.waitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 					MultiplayerActivity.this.waitingDialog.setMessage(getResources().getText(R.string.waiting_others));
 					MultiplayerActivity.this.waitingDialog.setCancelable(true);
+					MultiplayerActivity.this.waitingDialog.setMax(bluetoothMPService.getMaxDeviceNumber());
 					MultiplayerActivity.this.waitingDialog.show();
 					Log.d(TAG, "Creating Progress Dialog is successful!");
 				}
@@ -622,16 +624,14 @@ public class MultiplayerActivity extends Activity {
 	 */
     private void setProgessValue(int value) {
     	// convert the value to percentage
-//    	double barValue = ((100 / bluetoothMPService.getMaxDeviceNumber()) + 0.5) * value;
     	if (!waitingDialog.isShowing()) MultiplayerActivity.this.waitingDialog.show();
-    	int barValue = 100 * value / bluetoothMPService.getMaxDeviceNumber();
-    	Log.d(TAG, "setProgessValue()----> barValue: " + barValue);
-//		MultiplayerActivity.this.serverWaitingDialog.setProgress((int) barValue);
-		MultiplayerActivity.this.waitingDialog.setProgress(barValue);
+		MultiplayerActivity.this.waitingDialog.setProgress(value);
 		Log.d(TAG, "setProgress(barValue) SUCCESS!");
-        if (barValue == 100){
+        if (value == bluetoothMPService.getMaxDeviceNumber()){
         	// all connected
         	waitingDialog.dismiss();
+        	// TODO we can also show a progress bar w/ different style
+        	// until server sets the team properties
         }
     }
     
@@ -737,6 +737,7 @@ public class MultiplayerActivity extends Activity {
 				MultiplayerActivity.this.waitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 				MultiplayerActivity.this.waitingDialog.setMessage(getResources().getText(R.string.waiting_others));
 				MultiplayerActivity.this.waitingDialog.setCancelable(true);
+				MultiplayerActivity.this.waitingDialog.setMax(bluetoothMPService.getMaxDeviceNumber());
 				MultiplayerActivity.this.waitingDialog.show();
 				if (D) Log.d(TAG, "Creating Progress Dialog is successful!");
 				MultiplayerActivity.this.setProgessValue(transfer.tokens[1]);
