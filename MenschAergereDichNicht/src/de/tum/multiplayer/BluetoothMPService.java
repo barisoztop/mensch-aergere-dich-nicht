@@ -550,8 +550,8 @@ public class BluetoothMPService {
 
 			// Synchronize copies of the ConnectedThreads
 			synchronized (this) {
-				if (comState != STATE_ALL_CONNECTED)
-					return;
+//				if (comState != STATE_ALL_CONNECTED)
+//					return;
 				r1 = connectedThread1;
 				r2 = connectedThread2;
 				r3 = connectedThread3;

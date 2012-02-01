@@ -97,7 +97,7 @@ public class MultiplayerActivity extends Activity {
 
 	// Layout members
 	private TextView titleBar;
-	private ProgressDialog serverWaitingDialog;
+	private ProgressDialog waitingDialog;
 	
 	// Intent to select the multiplayer mode
 	private Intent modeSelectionIntent = null;
@@ -314,6 +314,7 @@ public class MultiplayerActivity extends Activity {
 				// Server got the clients connected message
 				if (currentState == BluetoothMPService.STATE_WAITING_FOR_CONNECTIONS ||
 						currentState == BluetoothMPService.STATE_ALL_CONNECTED) {
+					int[] conStatus = null;
 					if (bluetoothMPService.getConnectedDevices() == 1) {
 						connectedDeviceName1 = msg.getData().getString(DEVICE_NAME);
 						Toast.makeText(getApplicationContext(),
@@ -321,6 +322,9 @@ public class MultiplayerActivity extends Activity {
 								Toast.LENGTH_SHORT).show();
 						Log.d(TAG, "case MESSAGE_DEVICE_NAME & now setProgressValue");
 						MultiplayerActivity.this.setProgessValue(1);
+						conStatus = new int[]{bluetoothMPService.getMaxDeviceNumber(), 1};
+						MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.CONNECTION_STATUS,
+								conStatus), BluetoothMPService.ALL_DEVICES);
 
 					} else if (bluetoothMPService.getConnectedDevices() == 2) {
 						connectedDeviceName2 = msg.getData().getString(DEVICE_NAME);
@@ -328,6 +332,9 @@ public class MultiplayerActivity extends Activity {
 								"Connected to " + connectedDeviceName2,
 								Toast.LENGTH_SHORT).show();
 						MultiplayerActivity.this.setProgessValue(2);
+						conStatus = new int[]{bluetoothMPService.getMaxDeviceNumber(), 2};
+						MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.CONNECTION_STATUS,
+								conStatus), BluetoothMPService.ALL_DEVICES);
 
 					} else if (bluetoothMPService.getConnectedDevices() == 3) {
 						connectedDeviceName3 = msg.getData().getString(DEVICE_NAME);
@@ -335,34 +342,49 @@ public class MultiplayerActivity extends Activity {
 								"Connected to " + connectedDeviceName3,
 								Toast.LENGTH_SHORT).show();
 						MultiplayerActivity.this.setProgessValue(3);
+						conStatus = new int[]{bluetoothMPService.getMaxDeviceNumber(), 3};
+						MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.CONNECTION_STATUS,
+								conStatus), BluetoothMPService.ALL_DEVICES);
 					}
 					 else if (bluetoothMPService.getConnectedDevices() == 4) {
 						 connectedDeviceName4 = msg.getData().getString(DEVICE_NAME);
-							Toast.makeText(getApplicationContext(),
-									"Connected to " + connectedDeviceName4,
-									Toast.LENGTH_SHORT).show();
-							MultiplayerActivity.this.setProgessValue(4);
-						}
+						 Toast.makeText(getApplicationContext(),
+								"Connected to " + connectedDeviceName4,
+								Toast.LENGTH_SHORT).show();
+						MultiplayerActivity.this.setProgessValue(4);
+						conStatus = new int[]{bluetoothMPService.getMaxDeviceNumber(), 4};
+						MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.CONNECTION_STATUS,
+								conStatus), BluetoothMPService.ALL_DEVICES);
+					}
 					 else if (bluetoothMPService.getConnectedDevices() == 5) {
 						 connectedDeviceName5 = msg.getData().getString(DEVICE_NAME);
-							Toast.makeText(getApplicationContext(),
-									"Connected to " + connectedDeviceName5,
-									Toast.LENGTH_SHORT).show();
-							MultiplayerActivity.this.setProgessValue(5);
+						 Toast.makeText(getApplicationContext(),
+								"Connected to " + connectedDeviceName5,
+								Toast.LENGTH_SHORT).show();
+						 MultiplayerActivity.this.setProgessValue(5);
+						 conStatus = new int[]{bluetoothMPService.getMaxDeviceNumber(), 5};
+						 MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.CONNECTION_STATUS,
+								conStatus), BluetoothMPService.ALL_DEVICES);
 						}
 					 else if (bluetoothMPService.getConnectedDevices() == 6) {
 						 connectedDeviceName6 = msg.getData().getString(DEVICE_NAME);
-							Toast.makeText(getApplicationContext(),
-									"Connected to " + connectedDeviceName6,
-									Toast.LENGTH_SHORT).show();
-							MultiplayerActivity.this.setProgessValue(6);
+						 Toast.makeText(getApplicationContext(),
+								"Connected to " + connectedDeviceName6,
+								Toast.LENGTH_SHORT).show();
+						 MultiplayerActivity.this.setProgessValue(6);
+						 conStatus = new int[]{bluetoothMPService.getMaxDeviceNumber(), 6};
+						 MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.CONNECTION_STATUS,
+									conStatus), BluetoothMPService.ALL_DEVICES);
 						}
 					 else if (bluetoothMPService.getConnectedDevices() == 7) {
 						 connectedDeviceName7 = msg.getData().getString(DEVICE_NAME);
-							Toast.makeText(getApplicationContext(),
-									"Connected to " + connectedDeviceName7,
-									Toast.LENGTH_SHORT).show();
-							MultiplayerActivity.this.setProgessValue(7);
+						 Toast.makeText(getApplicationContext(),
+								"Connected to " + connectedDeviceName7,
+								Toast.LENGTH_SHORT).show();
+						 MultiplayerActivity.this.setProgessValue(7);
+						 conStatus = new int[]{bluetoothMPService.getMaxDeviceNumber(), 7};
+						 MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.CONNECTION_STATUS,
+								conStatus), BluetoothMPService.ALL_DEVICES);
 						}
 				}
 
@@ -505,11 +527,11 @@ public class MultiplayerActivity extends Activity {
 						}
 					}
 					// Create progress dialog to show the device connection activity
-					MultiplayerActivity.this.serverWaitingDialog = new ProgressDialog(MultiplayerActivity.this);
-					MultiplayerActivity.this.serverWaitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-					MultiplayerActivity.this.serverWaitingDialog.setMessage(getResources().getText(R.string.waiting_others));
-					MultiplayerActivity.this.serverWaitingDialog.setCancelable(true);
-					MultiplayerActivity.this.serverWaitingDialog.show();
+					MultiplayerActivity.this.waitingDialog = new ProgressDialog(MultiplayerActivity.this);
+					MultiplayerActivity.this.waitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+					MultiplayerActivity.this.waitingDialog.setMessage(getResources().getText(R.string.waiting_others));
+					MultiplayerActivity.this.waitingDialog.setCancelable(true);
+					MultiplayerActivity.this.waitingDialog.show();
 					Log.d(TAG, "Creating Progress Dialog is successful!");
 				}
 			} else if (resultCode == RESULT_CANCELED) {
@@ -561,17 +583,17 @@ public class MultiplayerActivity extends Activity {
 	 * @param data Object that is sent
 	 */
 	private void sendMessage(Object data, int deviceNo) {
-		// If server, check if all devices connected to server
-		if (bluetoothMPService.serverDevice
-				&& bluetoothMPService.getState() != BluetoothMPService.STATE_ALL_CONNECTED) {
-			return;
-		}
-
-		// If client, check if it's connected to server
-		if (!bluetoothMPService.serverDevice
-				&& bluetoothMPService.getState() != BluetoothMPService.STATE_CONNECTED_TO_SERVER) {
-			return;
-		}
+//		// If server, check if all devices connected to server
+//		if (bluetoothMPService.serverDevice
+//				&& bluetoothMPService.getState() != BluetoothMPService.STATE_ALL_CONNECTED) {
+//			return;
+//		}
+//
+//		// If client, check if it's connected to server
+//		if (!bluetoothMPService.serverDevice
+//				&& bluetoothMPService.getState() != BluetoothMPService.STATE_CONNECTED_TO_SERVER) {
+//			return;
+//		}
 
 		// Check there is data to send
 		if (data != null) {
@@ -589,6 +611,7 @@ public class MultiplayerActivity extends Activity {
 			byte[] send = bos.toByteArray();
 			// send the data
 			bluetoothMPService.write(send, deviceNo);
+			Log.d(TAG, "Message is sent");
 		}
 	}
 	
@@ -600,14 +623,15 @@ public class MultiplayerActivity extends Activity {
     private void setProgessValue(int value) {
     	// convert the value to percentage
 //    	double barValue = ((100 / bluetoothMPService.getMaxDeviceNumber()) + 0.5) * value;
+    	if (!waitingDialog.isShowing()) MultiplayerActivity.this.waitingDialog.show();
     	int barValue = 100 * value / bluetoothMPService.getMaxDeviceNumber();
     	Log.d(TAG, "setProgessValue()----> barValue: " + barValue);
 //		MultiplayerActivity.this.serverWaitingDialog.setProgress((int) barValue);
-		MultiplayerActivity.this.serverWaitingDialog.setProgress(barValue);
+		MultiplayerActivity.this.waitingDialog.setProgress(barValue);
 		Log.d(TAG, "setProgress(barValue) SUCCESS!");
         if (barValue == 100){
         	// all connected
-        	serverWaitingDialog.dismiss();
+        	waitingDialog.dismiss();
         }
     }
     
@@ -663,7 +687,7 @@ public class MultiplayerActivity extends Activity {
 		}
 
 		// process the data according to device mode
-		processArrivalServerData((DataTransfer) o, deviceNo);
+		processArrivalData((DataTransfer) o, deviceNo);
 //		if (o != null && bluetoothMPService.serverDevice) processArrivalClientData((DataClient) o);
 //		if (o != null && !bluetoothMPService.serverDevice) processArrivalServerData((DataTransfer) o);
 	}
@@ -683,7 +707,7 @@ public class MultiplayerActivity extends Activity {
 	 * 
 	 * @param transfer
 	 */
-	private void processArrivalServerData(DataTransfer transfer,  int deviceNo) {
+	private void processArrivalData(DataTransfer transfer,  int deviceNo) {
 		Log.d(TAG, "processArrivalServerData() --");
 		switch (transfer.reason) {
 		case DataTransfer.SETUP_GAME:
@@ -703,6 +727,24 @@ public class MultiplayerActivity extends Activity {
 			 * 
 			 * BluetoothMPService.ALL_DEVICES (send to all) and BluetoothMPService.SERVER_ID (send to server if you are client)
 			 */
+			break;
+		case DataTransfer.CONNECTION_STATUS:
+			if (MultiplayerActivity.this.waitingDialog == null) {
+				// Create progress dialog to show the device connection activity
+				bluetoothMPService.setMaxDeviceNumber(transfer.tokens[0]);
+				if (D) Log.d(TAG, "transfer.tokens[1]: " + transfer.tokens[1] + " ,transfer.tokens[0]: " + transfer.tokens[0]);
+				MultiplayerActivity.this.waitingDialog = new ProgressDialog(MultiplayerActivity.this);
+				MultiplayerActivity.this.waitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+				MultiplayerActivity.this.waitingDialog.setMessage(getResources().getText(R.string.waiting_others));
+				MultiplayerActivity.this.waitingDialog.setCancelable(true);
+				MultiplayerActivity.this.waitingDialog.show();
+				if (D) Log.d(TAG, "Creating Progress Dialog is successful!");
+				MultiplayerActivity.this.setProgessValue(transfer.tokens[1]);
+			} else {
+				MultiplayerActivity.this.setProgessValue(transfer.tokens[1]);
+			}
+			break;
+
 			
 		}
 	}	
