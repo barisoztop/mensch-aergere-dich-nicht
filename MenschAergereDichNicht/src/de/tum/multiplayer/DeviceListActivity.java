@@ -1,4 +1,4 @@
-package de.tum.multiplayer.bluetooth;
+package de.tum.multiplayer;
 
 import java.util.Set;
 

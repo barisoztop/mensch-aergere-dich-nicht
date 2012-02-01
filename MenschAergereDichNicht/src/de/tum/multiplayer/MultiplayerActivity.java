@@ -40,8 +40,6 @@ import de.tum.Team;
 import de.tum.models.Board;
 import de.tum.models.ClassicBoard;
 import de.tum.models.Dice;
-import de.tum.multiplayer.bluetooth.BluetoothMPService;
-import de.tum.multiplayer.bluetooth.DeviceListActivity;
 import de.tum.player.AIPlayer;
 import de.tum.player.HumanPlayer;
 import de.tum.player.NetworkPlayer;
@@ -248,8 +246,6 @@ public class MultiplayerActivity extends Activity {
 					Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
 				switch (msg.arg1) {
 				case BluetoothMPService.STATE_ALL_CONNECTED:
-//					Toast.makeText(getApplicationContext(), "STATE_ALL_CONNECTED",
-//							Toast.LENGTH_SHORT).show();
 					// all devices are connected, so start the game
 					titleBar.setText("All Connected");
 					Log.d("server", "" + connectedServerName);
@@ -290,8 +286,6 @@ public class MultiplayerActivity extends Activity {
 				case BluetoothMPService.STATE_CONNECTED_TO_SERVER:
 					break;
 				case BluetoothMPService.STATE_CONNECTING_TO_SERVER:
-//					Toast.makeText(getApplicationContext(), "Connecting to server...",
-//							Toast.LENGTH_SHORT).show();
 					titleBar.setText("Connecting to server...");
 					break;
 				case BluetoothMPService.STATE_LISTEN:
@@ -308,8 +302,8 @@ public class MultiplayerActivity extends Activity {
 			case MESSAGE_READ:
 				Log.d(TAG, "MESSAGE_READ - Message came from other device(s)");
 				byte[] readBuf = (byte[]) msg.obj;
-				int deviceID = msg.arg2; // Device ID, -1 is the server
-				MultiplayerActivity.this.convertArrivalData(readBuf);
+				int deviceNo = msg.arg2; // Device ID, -1 is the server
+				MultiplayerActivity.this.convertArrivalData(readBuf, deviceNo);
 				break;
 			case MESSAGE_DEVICE_NAME:
 				// set name of the connected device and
@@ -536,6 +530,16 @@ public class MultiplayerActivity extends Activity {
 				for (int i = 0; i < bluetoothMPService.getConnectedDevices(); ++i)
 					;//TODO  send start[1] - start[start.length - 1] to clients
 				// how to specifiy the client ?
+				
+				/* I used the connection order to identify devices (this can be change to MAC address if you want)
+				 * now if server wanna send message to all the others this is the way:
+				 * sendMessage(data, BluetoothMPService.ALL_DEVICES);
+				 * if wanna send message to first connected:
+				 * sendMessage(data, 1);
+				 * client can use this same method to send to server:
+				 * sendMessage(data, BluetoothMPService.SERVER_ID);
+				 * normally passing the server id is unnecessary but doesn't hurt
+				 */
 			}
 		}
 	}
@@ -556,7 +560,7 @@ public class MultiplayerActivity extends Activity {
 	 * 
 	 * @param data Object that is sent
 	 */
-	private void sendMessage(Object data) {
+	private void sendMessage(Object data, int deviceNo) {
 		// If server, check if all devices connected to server
 		if (bluetoothMPService.serverDevice
 				&& bluetoothMPService.getState() != BluetoothMPService.STATE_ALL_CONNECTED) {
@@ -584,7 +588,7 @@ public class MultiplayerActivity extends Activity {
 			}   
 			byte[] send = bos.toByteArray();
 			// send the data
-			bluetoothMPService.write(send);
+			bluetoothMPService.write(send, deviceNo);
 		}
 	}
 	
@@ -610,7 +614,7 @@ public class MultiplayerActivity extends Activity {
     public static final void notifyPlayers(int[] tokens) {
 		if (activity != null)
 			activity.sendMessage(new DataTransfer(DataTransfer.IS_NOTIFICATION,
-					tokens));
+					tokens), BluetoothMPService.ALL_DEVICES);
     }
     
     /**
@@ -640,7 +644,7 @@ public class MultiplayerActivity extends Activity {
 	 * 
 	 * @param readBuf data arrived from other device
 	 */
-	protected void convertArrivalData(byte[] readBuf) {
+	protected void convertArrivalData(byte[] readBuf, int deviceNo) {
 		Log.d(TAG, "convertArrivalData()");
 		ByteArrayInputStream bis = null;
 		ObjectInput in = null;
@@ -659,7 +663,7 @@ public class MultiplayerActivity extends Activity {
 		}
 
 		// process the data according to device mode
-		processArrivalServerData((DataTransfer) o);
+		processArrivalServerData((DataTransfer) o, deviceNo);
 //		if (o != null && bluetoothMPService.serverDevice) processArrivalClientData((DataClient) o);
 //		if (o != null && !bluetoothMPService.serverDevice) processArrivalServerData((DataTransfer) o);
 	}
@@ -679,7 +683,7 @@ public class MultiplayerActivity extends Activity {
 	 * 
 	 * @param transfer
 	 */
-	private void processArrivalServerData(DataTransfer transfer) {
+	private void processArrivalServerData(DataTransfer transfer,  int deviceNo) {
 		Log.d(TAG, "processArrivalServerData() --");
 		switch (transfer.reason) {
 		case DataTransfer.SETUP_GAME:
@@ -693,6 +697,13 @@ public class MultiplayerActivity extends Activity {
 			+ transfer.tokens[1], Toast.LENGTH_SHORT).show();
 			if (bluetoothMPService.serverDevice) // forward message to clients
 				;//TODO forward message to all other clients
+			/* Now you can use the deviceNo to send a message to specific device,
+			 * deviceNo also get the ordinal numbers at the same time as the connectedDeviceName 1 to 7 gets
+			 * the device names.
+			 * 
+			 * BluetoothMPService.ALL_DEVICES (send to all) and BluetoothMPService.SERVER_ID (send to server if you are client)
+			 */
+			
 		}
 	}	
 
