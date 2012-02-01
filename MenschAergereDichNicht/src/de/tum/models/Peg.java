@@ -31,6 +31,8 @@ public abstract class Peg extends GameObject {
 	private int pos_final;
 	/** true if action */
 	private boolean action;
+	/** true if moving */
+	public static boolean moving;
 
 	/**
 	 * creating a peg
@@ -59,10 +61,14 @@ public abstract class Peg extends GameObject {
 			frame_current = 0;
 			if (pos_current < pos_final) {
 //					getting the next coordinates
-				pos_next = Board.getPosition(this, pos_final == Board.start_pegs ? pos_current = pos_final : ++pos_current, pos_current == pos_final);
+				pos_next = Board.getPosition(this, pos_final == Board.start_pegs || !moving ? pos_current = pos_final : ++pos_current, pos_current == pos_final);
 //					calculating difference
-				pos_offset.set((pos_next.x - x) / frames, (pos_next.y - y) / frames);
-//					resetting the current frame
+				if (moving) // show move
+					pos_offset.set((pos_next.x - x) / frames, (pos_next.y - y) / frames);
+				else { // no moves
+					pos_offset.set(pos_next.x - x, pos_next.y - y);
+					frame_current = frames - 1;
+				}
 			}
 			else if (pos_final == -1) {
 				pos_offset.set(pos_offset.x * -1, pos_offset.y * -1);
@@ -124,8 +130,14 @@ public abstract class Peg extends GameObject {
 		pos_current = pos_start;
 //		// getting the coordinates
 		pos_next = Board.getPosition(this, pos_current, true);
-		pos_offset.set((pos_next.x - x) / frames, (pos_next.y - y) / frames);
-		pos_offset_z = p;
+		if (moving) { // moves are shown
+			pos_offset.set((pos_next.x - x) / frames, (pos_next.y - y) / frames);
+			pos_offset_z = p;
+		}
+		else { // moves are skipped
+			pos_offset.set(pos_next.x - x, pos_next.y - y);
+			frame_current = frames - 1;
+		}
 		pos_final = -3;
 	}
 

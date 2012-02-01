@@ -30,6 +30,8 @@ public class GameListener implements OnTouchListener, OnLongClickListener, Senso
 	// current touch state
 	private int touchState = NONE;
 	
+	public static boolean shaking;
+	
 	private static SensorManager manager;
 	private static Sensor sensor_accelerometer;
 	private static GameListener content;
@@ -153,13 +155,19 @@ public class GameListener implements OnTouchListener, OnLongClickListener, Senso
 		return FloatMath.sqrt(x * x + y * y);
 	}
 	
-	public static final void onResume() {
-        manager.registerListener(
-            content, sensor_accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+	public static final void onResume(View view) {
+		if (shaking && manager != null)
+	        manager.registerListener(
+	            content, sensor_accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        view.setOnTouchListener(content);
+        view.setOnLongClickListener(content);
 	}
 
-	public static final void onPause() {
-	    manager.unregisterListener(content);
+	public static final void onPause(View view) {
+		if (shaking && manager != null)
+			manager.unregisterListener(content);
+        view.setOnTouchListener(null);
+        view.setOnLongClickListener(null);
 	}
 
 	@Override
