@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Mensch Aergere Dich Nicht</string>
+    <string name="app_name">Mensch Ärgere Dich Nicht</string>
 
     <!-- Messages -->
-    <string name="throw_dice">Please throw the diceDE</string>
-    <string name="select_peg">Please touch to select a pegDE</string>
-    <string name="hurry">Hurry up !DE</string>
-    <string name="player_won">You win !DE</string>
+    <string name="throw_dice">Bitte würfel</string>
+    <string name="select_peg">Bitte wähle einen Kegel aus</string>
+    <string name="hurry">Beeil dich !</string>
+    <string name="player_won">Herzlichen Glückwunsch !</string>
         
     <!-- Bluetooth -->
-    <string name="send">Send</string>
-    <string name="not_connected">You are not connected to a device</string>
-    <string name="title_connecting">connecting...</string>
-    <string name="title_connected_to">connected: </string>
-    <string name="title_not_connected">not connected</string>
-    <string name="title_all_connected">Multiplayer Mode</string>
+    <string name="send">Gesendet</string>
+    <string name="not_connected">Sie sind mit keinem Gerät verbunden</string>
+    <string name="title_connecting">verbinden...</string>
+    <string name="title_connected_to">verbunden: </string>
+    <string name="title_not_connected">nicht verbunden</string>
+    <string name="title_all_connected">Mehrspielermodus</string>
 
     <!-- MultiplayerActivity -->
-    <string name="try_singleplayer">Bluetooth was not enabled. Try single player mode.</string>
-    <string name="waiting_others_dialog">Waiting for other devices...</string>
+    <string name="try_singleplayer">Bluetooth ist aus. Probiere den Einzelspielermodus.</string>
+    <string name="waiting_others_dialog">Warten auf andere Geräte...</string>
 
     <!-- ModeSelectionActivity -->
-    <string name="select_mode_title">select a mode</string>
-    <string name="button_servermode">Server Mode</string>
-    <string name="button_clientmode">Client Mode</string>
-    <string name="button_discovery">Make This Device Discoverable</string>
-    <string name="waiting_others">Waiting for other devices...</string>
+    <string name="select_mode_title">Wähle einen Modus aus</string>
+    <string name="button_servermode">Servermodus</string>
+    <string name="button_clientmode">Clientmodus</string>
+    <string name="button_discovery">Gerät sichtbar machen</string>
+    <string name="waiting_others">Warten auf andere Geräte...</string>
 
     <!-- ClientNumberPicker -->
-    <string name="button_clientnumber">Select</string>
-    <string name="select_client_numbers_title">Number of Clients</string>
-    <string name="select_client_numbers">Please select the number of clients:</string>
+    <string name="button_clientnumber">Wähle</string>
+    <string name="select_client_numbers_title">Anzahl an Clients</string>
+    <string name="select_client_numbers">Bite wähle aus, wie viele Clients genutzt werden:</string>
 
     <string-array name="client_numbers_array">
         <item>1 Client</item>
@@ -44,47 +44,47 @@
     </string-array>
 
     <!-- DeviceListActivity -->
-    <string name="scanning">scanning for devices...</string>
-    <string name="select_device">select a device to connect</string>
-    <string name="none_paired">No devices have been paired</string>
-    <string name="none_found">No devices found</string>
-    <string name="title_paired_devices">Paired Devices</string>
-    <string name="title_other_devices">Other Available Devices</string>
-    <string name="button_scan">Scan for devices</string>
+    <string name="scanning">Suche Geräte...</string>
+    <string name="select_device">Wähle ein Gerät zum Verbinden aus</string>
+    <string name="none_paired">Es wurden keine Geräte verbunden</string>
+    <string name="none_found">Es wurden keine Geräte gefunden</string>
+    <string name="title_paired_devices">Verbundene Geräte</string>
+    <string name="title_other_devices">Andere verfügbare Geräte</string>
+    <string name="button_scan">Suche Geräte</string>
 
     <!-- MatchPlayers -->
-    <string name="box_enable_team">Enable team</string>
-    <string name="box_human">Is human</string>
-	<string name="match_teams">Please set the teams:</string>
-	<string name="button_confirm">Confirm</string>
-	<string name="select_strategy">Select strategy</string>
-    <string name="select_device_for_this_team">Select team\'s device</string>
-    <string name="no_players">At least one player has to be enabled</string>
+    <string name="box_enable_team">Aktiviere Team</string>
+    <string name="box_human">Ist Mensch</string>
+	<string name="match_teams">Platziere die Teams:</string>
+	<string name="button_confirm">Bestätigen</string>
+	<string name="select_strategy">Wähle eine Strategie</string>
+    <string name="select_device_for_this_team">Wähle das Gerät für das Team</string>
+    <string name="no_players">Es muss mindestens ein Team aktiviert sein</string>
         	    
     <string-array name="strategy">
-        <item>Easy</item>
-        <item>Medium</item>
-		<item>Hard</item>
+        <item>Einfach</item>
+        <item>Mittel</item>
+		<item>Schwer</item>
     </string-array>
         
-    <string name="my_device">My device</string>
+    <string name="my_device">Ich</string>
         
-    <string name="team1">Team RED</string>
-    <string name="team2">Team YELLOW</string>
-    <string name="team3">Team GREEN</string>
-    <string name="team4">Team BLUE</string>
+    <string name="team1">Team ROT</string>
+    <string name="team2">Team GELB</string>
+    <string name="team3">Team GRÜN</string>
+    <string name="team4">Team BLAU</string>
         
 	<!-- Options Menu -->
-    <string name="connect">Connect a device</string>
-    <string name="discoverable">Make discoverable</string>
+    <string name="connect">Mit Gerät verbinden</string>
+    <string name="discoverable">Sichtbar machen</string>
 
     <!-- Welcome Screen -->
-    <string name="button_singleplayer">Single PlayerDE</string>
-    <string name="button_multiplayer">Multi PlayerDE</string>
-    <string name="button_settings">SettingsDE</string>
-    <string name="button_about">AboutDE</string>
-    <string name="button_exit">ExitDE</string>
-    <string name="button_help">HelpDE</string>
+    <string name="button_singleplayer">Einzelspieler</string>
+    <string name="button_multiplayer">Mehrspieler</string>
+    <string name="button_settings">Einstellungen</string>
+    <string name="button_about">Info</string>
+    <string name="button_exit">Schließen</string>
+    <string name="button_help">Hilfe</string>
 
     <!-- Settings -->
     <string-array name="settings_array">
@@ -100,8 +100,8 @@
 
     <!-- About -->
     <string name="license">GNU GPL v3 / New BSD License</string>
-    <string name="info_demo_txt">The app was developed during the Android Praktikum 2011 at Technical University Munich (TUM).\n\nThe TUM is not responsible for any kind of violations by this app. Also the TUM does not offer any support for this app. Please refer to the authors mentioned above for any requests.\n\nIn case of violations please contact us at admin.i13.in@tum.de as well.</string>
-    <string name="chair_info_txt"><b>Chair of Operating Systems</b>\nSupervisor:\nProf. Dr. Baumgarten\nAdvisor:\nNils T. Kannengiesser</string>
+    <string name="info_demo_txt">Diese App wurde im Rahmen des Android Praktikums 2011 an der Technischen Universität München (TUM) entwickelt.\n\nDie TUM haftet für keine Schäden, die durch diese App entstehen. Außerdem bietet die TUM keinen Support für diese App. Bitte wenden Sie sich für Fragen und Anregungen an den genannten Tutor.\n\nIm Falle irgendwelcher Verstöße kontaktieren Sie uns bitte unter admin.i13.in@tum.de.</string>
+    <string name="chair_info_txt"><b>Lehrstuhl für Betriebssysteme</b>\nÜbungsleitung:\nProf. Dr. Baumgarten\nGruppenleitung:\nNils T. Kannengiesser</string>
     <string name="authors"><b>Baris Oztop, Stefan Matl</b></string>
 
 </resources>
