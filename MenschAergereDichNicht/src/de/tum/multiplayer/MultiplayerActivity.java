@@ -110,17 +110,11 @@ public class MultiplayerActivity extends Activity {
 	
 	private View toastLayout;
 
-
 	/* graphics members */
-	private static final float f = 8;
-	public static int width;
-	public static int height;
-	public static float hz = 4;
 	private GLSurfaceView view;
 	private GameRenderer renderer;
 	// private Board board;
 	private static Player[] players;
-	private Room room;
 	private static final LinkedList<int[]> tokens = new LinkedList<int[]>();
 	
 	private static MultiplayerActivity activity;
@@ -143,7 +137,6 @@ public class MultiplayerActivity extends Activity {
 		}
 
 		/* setup game */
-		room = new Room();
 		Room.addRenderable(new ClassicBoard(true));
 		Room.addRenderable(new Dice(true));
 		 players = new Player[Board.getPlayers()];
@@ -151,9 +144,9 @@ public class MultiplayerActivity extends Activity {
 		renderer = new GameRenderer();
 		view = new GLSurfaceView(this);
 		view.setRenderer(renderer);
-		GameListener listener = new GameListener(this);
-		view.setOnTouchListener(listener);
-		view.setOnLongClickListener(listener);
+		new GameListener(this);
+//		view.setOnTouchListener(listener);
+//		view.setOnLongClickListener(listener);
 		
 		// Set up the window layout
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -169,7 +162,6 @@ public class MultiplayerActivity extends Activity {
 		LayoutInflater inflater = getLayoutInflater();
 		toastLayout = inflater.inflate(R.layout.toast_layout,
 		                               (ViewGroup) findViewById(R.id.toast_layout_root));
-
 	}
 
 	@Override
@@ -192,7 +184,7 @@ public class MultiplayerActivity extends Activity {
 	@Override
 	public synchronized void onPause() {
 		super.onPause();
-		GameListener.onPause();
+		GameListener.onPause(view);
 		if (D) Log.e(TAG, "- ON PAUSE -");
 	}
 
@@ -215,7 +207,7 @@ public class MultiplayerActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		view.onResume();
-		GameListener.onResume();
+		GameListener.onResume(view);
 		if (D) Log.e(TAG, "+ ON RESUME +");
 	}
 
@@ -238,7 +230,6 @@ public class MultiplayerActivity extends Activity {
 				bluetoothMPService.stop(true);
 			System.exit(0);
 			finish();
-			
 		}
 		else
 			return false;
@@ -261,9 +252,33 @@ public class MultiplayerActivity extends Activity {
 //							Toast.LENGTH_SHORT).show();
 					// all devices are connected, so start the game
 					titleBar.setText("All Connected");
+					Log.d("server", "" + connectedServerName);
+					Log.d("client1", "" + connectedDeviceName1);
+					Log.d("client2", "" + connectedDeviceName2);
+					Log.d("client3", "" + connectedDeviceName3);
+					Log.d("client4", "" + connectedDeviceName4);
+					Log.d("client5", "" + connectedDeviceName5);
+					Log.d("client6", "" + connectedDeviceName6);
+					Log.d("client7", "" + connectedDeviceName7);
+					String devices[] = new String[bluetoothMPService.getConnectedDevices()];
+					int index = 0;
+					if (connectedDeviceName1 != null)
+						devices[index++] = connectedDeviceName1;
+					if (connectedDeviceName2 != null)
+						devices[index++] = connectedDeviceName2;
+					if (connectedDeviceName3 != null)
+						devices[index++] = connectedDeviceName3;
+					if (connectedDeviceName4 != null)
+						devices[index++] = connectedDeviceName4;
+					if (connectedDeviceName5 != null)
+						devices[index++] = connectedDeviceName5;
+					if (connectedDeviceName6 != null)
+						devices[index++] = connectedDeviceName6;
+					if (connectedDeviceName7 != null)
+						devices[index++] = connectedDeviceName7;
 					startActivityForResult(new Intent(getApplicationContext(),
 							TeamMatching.class).putExtra(
-							TeamMatching.key, (String[]) null), REQUEST_SET_PLAYERS);
+							TeamMatching.key, devices), REQUEST_SET_PLAYERS);
 					break;
 				case BluetoothMPService.STATE_WAITING_FOR_CONNECTIONS:
 					Toast.makeText(
@@ -452,7 +467,7 @@ public class MultiplayerActivity extends Activity {
 						.getRemoteDevice(address);
 				// Attempt to connect to server
 				bluetoothMPService.connectServer(serverDevice);
-				startClientGame(); // TODO check states
+//				startClientGame(); // TODO check states
 			}
 			break;
 		case REQUEST_ENABLE_BT:
@@ -512,8 +527,16 @@ public class MultiplayerActivity extends Activity {
 			}
 			break;
 		case REQUEST_SET_PLAYERS:
-			if (resultCode == RESULT_OK)
-				startGame(data.getExtras().getIntArray(TeamMatching.key));
+			if (resultCode == RESULT_OK) {
+				int teams[] = data.getExtras().getIntArray(TeamMatching.key);
+				int start[][] = new int[teams.length / 4][4];
+				for (int i = 0; i < teams.length; ++i)
+					start[i / 4][i % 4] = teams[i];
+				startGame(start[0]);
+				for (int i = 0; i < bluetoothMPService.getConnectedDevices(); ++i)
+					;//TODO  send start[1] - start[start.length - 1] to clients
+				// how to specifiy the client ?
+			}
 		}
 	}
 
@@ -572,19 +595,22 @@ public class MultiplayerActivity extends Activity {
 	 */
     private void setProgessValue(int value) {
     	// convert the value to percentage
-    	double barValue = ((100 / bluetoothMPService.getMaxDeviceNumber()) + 0.5) * value;
+//    	double barValue = ((100 / bluetoothMPService.getMaxDeviceNumber()) + 0.5) * value;
+    	int barValue = 100 * value / bluetoothMPService.getMaxDeviceNumber();
     	Log.d(TAG, "setProgessValue()----> barValue: " + barValue);
-		MultiplayerActivity.this.serverWaitingDialog.setProgress((int) barValue);
+//		MultiplayerActivity.this.serverWaitingDialog.setProgress((int) barValue);
+		MultiplayerActivity.this.serverWaitingDialog.setProgress(barValue);
 		Log.d(TAG, "setProgress(barValue) SUCCESS!");
-        if ( barValue >= 100){
+        if (barValue == 100){
         	// all connected
         	serverWaitingDialog.dismiss();
         }
     }
     
     public static final void notifyPlayers(int[] tokens) {
-    	if (activity != null)
-		activity.sendMessage(new DataServer(tokens));
+		if (activity != null)
+			activity.sendMessage(new DataTransfer(DataTransfer.IS_NOTIFICATION,
+					tokens));
     }
     
     /**
@@ -608,14 +634,6 @@ public class MultiplayerActivity extends Activity {
 	      Board.startGame(playing);
 	}
 	
-    private void startClientGame() {
-		players[0] = new NetworkPlayer(Team.RED);
-		players[1] = new NetworkPlayer(Team.YELLOW);
-		players[2] = new NetworkPlayer(Team.GREEN);
-		players[3] = new NetworkPlayer(Team.BLUE);
-	      Board.startGame(4);
-	}
-
 	/**
 	 * Convert data arrived from other device to corresponding
 	 * object according to the device mode
@@ -641,8 +659,9 @@ public class MultiplayerActivity extends Activity {
 		}
 
 		// process the data according to device mode
-		if (o != null && bluetoothMPService.serverDevice) processArrivalClientData((DataClient) o);
-		if (o != null && !bluetoothMPService.serverDevice) processArrivalServerData((DataServer) o);
+		processArrivalServerData((DataTransfer) o);
+//		if (o != null && bluetoothMPService.serverDevice) processArrivalClientData((DataClient) o);
+//		if (o != null && !bluetoothMPService.serverDevice) processArrivalServerData((DataTransfer) o);
 	}
 
 	/**
@@ -650,42 +669,31 @@ public class MultiplayerActivity extends Activity {
 	 * 
 	 * @param object
 	 */
-	private void processArrivalClientData(DataClient object) {
-		Log.d(TAG, "processArrivalServerData()");
-		// TODO Auto-generated method stub
-		
-	}
+//	private void processArrivalClientData(DataClient object) {
+//		Log.d(TAG, "processArrivalServerData()");
+//		
+//	}
 	
 	/**
 	 * Process data arrived from server to client
 	 * 
-	 * @param object
+	 * @param transfer
 	 */
-	private void processArrivalServerData(DataServer object) {
+	private void processArrivalServerData(DataTransfer transfer) {
 		Log.d(TAG, "processArrivalServerData() --");
-//		players = object.player;
-//		GameTouchListener listener = new GameTouchListener();
-//		view.setOnTouchListener(listener);
-//		view.setOnLongClickListener(listener);
-//		players[0].makeTurn();
-		
-//		Toast.makeText(getApplicationContext(),
-//				"processArrivalServerData: " + object,
-//				Toast.LENGTH_SHORT).show();
-		addToken(object.tokens);
+		switch (transfer.reason) {
+		case DataTransfer.SETUP_GAME:
+			startGame(transfer.tokens);
+			break;
+		case DataTransfer.IS_NOTIFICATION:
+			addToken(transfer.tokens);
 			Toast.makeText(getApplicationContext(),
 					"processArrivalServerData: " +
-			(object.tokens[0] == NetworkPlayer.DICE_THROWN ? "dice thrown: " : "peg moved: ")
-			+ object.tokens[1], Toast.LENGTH_SHORT).show();
-//		Toast.makeText(getApplicationContext(),
-//				"processArrivalServerData: " +
-//		(object.tokens[0] == NetworkPlayer.DICE_THROWN ? "dice thrown " + object.tokens[1] : "error"),
-//				Toast.LENGTH_SHORT).show();
-		
-	
-//		GameTouchListener listener = new GameTouchListener();
-//		view.setOnTouchListener(listener);
-//		view.setOnLongClickListener(listener);
+			(transfer.tokens[0] == NetworkPlayer.DICE_THROWN ? "dice thrown: " : "peg moved: ")
+			+ transfer.tokens[1], Toast.LENGTH_SHORT).show();
+			if (bluetoothMPService.serverDevice) // forward message to clients
+				;//TODO forward message to all other clients
+		}
 	}	
 
     public static final void tokenDone() {

@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="Board Settings" >
+    <PreferenceCategory android:title="Game control" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="enable_shaking"
+            android:summary="Shaking the device will trow the dice"
+            android:title="Shaking" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="enable_zoom"
+            android:summary="Enables multi-touch zoom"
+            android:title="Enable Zoom" />
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="rotatingBoard"
+            android:key="rotating_board"
             android:summary="Enables constanst rotation of the board"
             android:title="Rotating Board" />
+	</PreferenceCategory>
+    <PreferenceCategory android:title="Animations" >
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="anotherCheckBox"
-            android:summary="Enables another checkbox"
-            android:title="Another Checkbox" />
+            android:key="animated_peg"
+            android:summary="Peg moves across the board"
+            android:title="Moving Peg" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="View Settings" >
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="anotherCheckBox2"
-            android:summary="Enables another checkbox"
-            android:title="Another Checkbox" />
-
+    <PreferenceCategory android:title="User Settings" >
         <ListPreference
             android:entries="@array/settings_array"
             android:entryValues="@array/settings_array_values"
             android:key="listPref"
             android:summary="This preference lets you select an item in a array"
             android:title="List Preference" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="User Settings" >
         <EditTextPreference
             android:defaultValue="Nothing"
             android:key="editTextPref"

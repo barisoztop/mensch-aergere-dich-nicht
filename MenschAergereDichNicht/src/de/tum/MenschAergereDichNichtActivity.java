@@ -53,7 +53,6 @@ public class MenschAergereDichNichtActivity extends Activity {
       
 	  int teams[] = getIntent().getExtras().getIntArray(TeamMatching.key);
 
-	  new Room();
       Room.addRenderable(new ClassicBoard(true));
       Room.addRenderable(new Dice(true));
       players = new Player[Board.getTeams()];
@@ -71,9 +70,9 @@ public class MenschAergereDichNichtActivity extends Activity {
       renderer = new GameRenderer();
       view = new GLSurfaceView(this);
       view.setRenderer(renderer);
-      GameListener listener = new GameListener(this); 
-      view.setOnTouchListener(listener);
-      view.setOnLongClickListener(listener);
+      new GameListener(this); 
+//      view.setOnTouchListener(listener);
+//      view.setOnLongClickListener(listener);
       setContentView(view);
 
       // Toast layout
@@ -94,7 +93,7 @@ public class MenschAergereDichNichtActivity extends Activity {
     public synchronized void onPause() {
       super.onPause();
       view.onPause();
-      GameListener.onPause();
+      GameListener.onPause(view);
       if(D) Log.e(TAG, "- ON PAUSE -");      
     }
     
@@ -114,7 +113,7 @@ public class MenschAergereDichNichtActivity extends Activity {
     public void onResume() {
       super.onResume();
       view.onResume();
-      GameListener.onResume();
+      GameListener.onResume(view);
       if(D) Log.e(TAG, "+ ON RESUME +");
     }
     

@@ -63,8 +63,10 @@ public class TeamMatching extends Activity {
 		 *            the id of the spinner to defining the strategy for this player
 		 * @param id_spinner_devices
 		 *            the id of the spinner for setting the device of this player
+		 * @param team
+		 *            the id of the team
 		 */
-		public TeamMatch(int id_box_enabled, int id_box_human, int id_spinner_startegy, int id_spinner_devices) {
+		public TeamMatch(int id_box_enabled, int id_box_human, int id_spinner_startegy, int id_spinner_devices, int team) {
 			// setting up GUI
 			box_enabled = (CheckBox) findViewById(id_box_enabled);
 			box_enabled.setChecked(enabled = true);
@@ -80,7 +82,7 @@ public class TeamMatching extends Activity {
 
 			box_human = (CheckBox) findViewById(id_box_human);
 			box_human.setEnabled(enabled);
-			box_human.setChecked(human = true);
+			box_human.setChecked(human = devices.length != 1 ? true : team == 0);
 			box_human.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
 					// setting human and updating some views
@@ -95,6 +97,8 @@ public class TeamMatching extends Activity {
 					TeamMatching.this, R.array.strategy, android.R.layout.simple_spinner_item);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			spinner_strategy.setAdapter(adapter);
+			if (devices.length == 1 && team != 0)
+				spinner_strategy.setSelection(team - 1);
 			spinner_strategy.setOnItemSelectedListener(new OnItemSelectedListener() {
 				@Override
 				public void onItemSelected(AdapterView<?> parent, View view,
@@ -143,18 +147,18 @@ public class TeamMatching extends Activity {
 		int amount = devices != null ? devices.length : 0;
 		this.devices = new String[amount + 1];
 		this.devices[0] = getString(R.string.my_device);
-		while (amount-- > 0)
-			this.devices[amount] = devices[amount - 1];
+		while (amount > 0)
+			this.devices[amount] = devices[amount-- - 1];
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.match_players);
 
 		// setting up team matches
 		matches = new TeamMatch[4];
-		matches[0] = new TeamMatch(R.id.checkBoxTeamEnabled1, R.id.checkBoxTeamHuman1, R.id.spinnerAIStrategy1, R.id.spinnerDevice1);
-		matches[1] = new TeamMatch(R.id.checkBoxTeamEnabled2, R.id.checkBoxTeamHuman2, R.id.spinnerAIStrategy2, R.id.spinnerDevice2);
-		matches[2] = new TeamMatch(R.id.checkBoxTeamEnabled3, R.id.checkBoxTeamHuman3, R.id.spinnerAIStrategy3, R.id.spinnerDevice3);
-		matches[3] = new TeamMatch(R.id.checkBoxTeamEnabled4, R.id.checkBoxTeamHuman4, R.id.spinnerAIStrategy4, R.id.spinnerDevice4);
+		matches[0] = new TeamMatch(R.id.checkBoxTeamEnabled1, R.id.checkBoxTeamHuman1, R.id.spinnerAIStrategy1, R.id.spinnerDevice1, 0);
+		matches[1] = new TeamMatch(R.id.checkBoxTeamEnabled2, R.id.checkBoxTeamHuman2, R.id.spinnerAIStrategy2, R.id.spinnerDevice2, 1);
+		matches[2] = new TeamMatch(R.id.checkBoxTeamEnabled3, R.id.checkBoxTeamHuman3, R.id.spinnerAIStrategy3, R.id.spinnerDevice3, 2);
+		matches[3] = new TeamMatch(R.id.checkBoxTeamEnabled4, R.id.checkBoxTeamHuman4, R.id.spinnerAIStrategy4, R.id.spinnerDevice4, 3);
 
 		// adding listener for confirm button
 		((Button) findViewById(R.id.button_confirm_match)).setOnClickListener(new OnClickListener() {

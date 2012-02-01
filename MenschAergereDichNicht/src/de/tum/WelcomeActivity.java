@@ -3,6 +3,7 @@ package de.tum;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -89,6 +90,7 @@ public class WelcomeActivity extends Activity {
 		super.onStart();
 		if (D)
 			Log.e(TAG, "- ON START -");
+		SettingsActivity.setConfiguration(PreferenceManager.getDefaultSharedPreferences(this)); 
 	}
 
 	@Override

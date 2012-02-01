@@ -28,8 +28,9 @@ public class GameRenderer implements Renderer {
 	private static float center_z;
 	private static float up_z;
 	
-	public static boolean rotating = true;
+	public static boolean rotating;
 	public static float rotation_speed = 1;
+	public static boolean zooming;
 	/**
 	 * creating the game renderer. Usual only one renderer is created
 	 * 
@@ -61,6 +62,8 @@ public class GameRenderer implements Renderer {
 	}
 
 	public static final void zoom(float zoom) {
+		if (!zooming)
+			return;
 		zoom *= radius;
 		if (zoom > 20)
 			zoom = 20;
@@ -105,8 +108,8 @@ public class GameRenderer implements Renderer {
 		GLU.gluLookAt(gl, center_x, center_y, center_z, 0, 0, 0, 0, 0, 1);
 		Room.render(gl);
 		GameListener.verifyWaiting();
-//		if (rotating)
-//			tranfer(rotation_speed, 0);
+		if (rotating)
+			tranfer(rotation_speed, 0);
 	}
 
 	/**
