@@ -161,38 +161,42 @@ public class TeamMatching extends Activity {
 		matches[3] = new TeamMatch(R.id.checkBoxTeamEnabled4, R.id.checkBoxTeamHuman4, R.id.spinnerAIStrategy4, R.id.spinnerDevice4, 3);
 
 		// adding listener for confirm button
-		((Button) findViewById(R.id.button_confirm_match)).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// checking if at least one player is enabled
-				for (int i = 0; i < matches.length; ++i)
-					if (i == 5) { // no enabled players found
-						MultiplayerActivity.showToast(R.string.no_players);
-						return;
-					}
-					else if (matches[i].enabled) // found one enabled player
-						break;
-				// creating the players configuration
-				int[] players = new int[TeamMatching.this.devices.length * 4];
-				// setting the cofiguration
-				for (int i = 0; i < matches.length; ++i) {
-					TeamMatch match = matches[i];
-					if (!match.enabled) { // player disabled
-						for (int device = 0; device < players.length / 4; ++device)
-							players[device * 4 + i] = int_disabled;
-						continue;
-					}
-					if (match.human) // human player
-						players[match.device * 4 + i] = int_human;
-					else // AI-player
-						players[match.device * 4 + i] = match.strategy + offset_strategy;
-				}
-				// set result
-				Intent intent = new Intent();
-				intent.putExtra(key, players);
-				TeamMatching.this.setResult(RESULT_OK, intent);
-				TeamMatching.this.finish();
-			}
-		});
+		((Button) findViewById(R.id.button_confirm_match1)).setOnClickListener(listener);
+		((Button) findViewById(R.id.button_confirm_match2)).setOnClickListener(listener);
 	}
+	
+	// listener for confirm buttons
+	private OnClickListener listener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// checking if at least one player is enabled
+			for (int i = 0; i < matches.length; ++i)
+				if (i == 5) { // no enabled players found
+					MultiplayerActivity.showToast(R.string.no_players);
+					return;
+				}
+				else if (matches[i].enabled) // found one enabled player
+					break;
+			// creating the players configuration
+			int[] players = new int[TeamMatching.this.devices.length * 4];
+			// setting the cofiguration
+			for (int i = 0; i < matches.length; ++i) {
+				TeamMatch match = matches[i];
+				if (!match.enabled) { // player disabled
+					for (int device = 0; device < players.length / 4; ++device)
+						players[device * 4 + i] = int_disabled;
+					continue;
+				}
+				if (match.human) // human player
+					players[match.device * 4 + i] = int_human;
+				else // AI-player
+					players[match.device * 4 + i] = match.strategy + offset_strategy;
+			}
+			// set result
+			Intent intent = new Intent();
+			intent.putExtra(key, players);
+			TeamMatching.this.setResult(RESULT_OK, intent);
+			TeamMatching.this.finish();
+		}
+	};
 }

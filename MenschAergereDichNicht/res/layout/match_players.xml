@@ -25,6 +25,20 @@
 	    android:paddingBottom="10dp"
 	    android:paddingTop="10dp" />
 
+    <Button android:id="@+id/button_confirm_match1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_confirm" />
+	
+	<ImageView
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:src="@android:drawable/divider_horizontal_dark"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:scaleType="fitXY"
+	    android:paddingBottom="10dp"
+	    android:paddingTop="10dp" />
+
 	<TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -201,7 +215,7 @@
 	    android:paddingBottom="10dp"
 	    android:paddingTop="10dp" />
 
-    <Button android:id="@+id/button_confirm_match"
+    <Button android:id="@+id/button_confirm_match2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_confirm" />
