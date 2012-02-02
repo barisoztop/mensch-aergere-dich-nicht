@@ -8,7 +8,7 @@
     <string name="select_peg">Please touch to select a peg</string>
     <string name="hurry">Hurry up !</string>
     <string name="player_won">You win !</string>
-        
+
     <!-- Bluetooth -->
     <string name="send">Send</string>
     <string name="not_connected">You are not connected to a device</string>
@@ -55,26 +55,25 @@
     <!-- MatchPlayers -->
     <string name="box_enable_team">Enable team</string>
     <string name="box_human">Is human</string>
-	<string name="match_teams">Please set the teams:</string>
-	<string name="button_confirm">Confirm</string>
-	<string name="select_strategy">Select strategy</string>
+    <string name="match_teams">Please set the teams:</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="select_strategy">Select strategy</string>
     <string name="select_device_for_this_team">Select team\'s device</string>
     <string name="no_players">At least one player has to be enabled</string>
-        	    
+
     <string-array name="strategy">
         <item>Easy</item>
         <item>Medium</item>
-		<item>Hard</item>
+        <item>Hard</item>
     </string-array>
-        
+
     <string name="my_device">My device</string>
-        
     <string name="team1">Team RED</string>
     <string name="team2">Team YELLOW</string>
     <string name="team3">Team GREEN</string>
     <string name="team4">Team BLUE</string>
-        
-	<!-- Options Menu -->
+
+    <!-- Options Menu -->
     <string name="connect">Connect a device</string>
     <string name="discoverable">Make discoverable</string>
 
@@ -102,6 +101,17 @@
     <string name="license">GNU GPL v3 / New BSD License</string>
     <string name="info_demo_txt">The app was developed during the Android Praktikum 2011 at Technical University Munich (TUM).\n\nThe TUM is not responsible for any kind of violations by this app. Also the TUM does not offer any support for this app. Please refer to the authors mentioned above for any requests.\n\nIn case of violations please contact us at admin.i13.in@tum.de as well.</string>
     <string name="chair_info_txt"><b>Chair of Operating Systems</b>\nSupervisor:\nProf. Dr. Baumgarten\nAdvisor:\nNils T. Kannengiesser</string>
-    <string name="authors"><b>Baris Oztop, Stefan Matl</b></string>
+    <string name="authors"><b>Baris Oztop - boztop@gmail.com\nStefan Matl - stefan.matl@gmail.com</b></string>
+
+    <!-- Help -->
+    <string name="help_title">How to Play the Game</string>
+    <string name="help_playing_title">Playing the Game:</string>
+    <string name="help_playing">If it’s your turn to throw the dice, you will get a notification on the screen. There are two options to throw the dice: You can shake the device like you shake the real dice in your palm or you can touch on the screen. If your pegs are at their beginning fields, you have to throw the dice three times until you get a six on the dice. If that’s not the case, you have to wait other players until the turn comes back to you again. After you throw a six, one of your pegs will get a highlighted color to notify you to move it. Movement of the peg is done by long touching on the screen of your device. Your peg will move with an animation to first position on the board on its team direction to the destination fields. If there are more than one pegs on the board, you can switch between pegs by touching on the screen. Selected peg will always be highlighted, and then you can make it move again by long clicking on the screen. </string>
+    <string name="help_multiplayer_title">Multiplayer Game:</string>
+    <string name="help_multiplayer">You can play the game up to 8 players. While 4 of these players playing the game, the other 4 can watch the game on their device’s screen. For the multiplayer version of the game, one of the devices has to be assigned as “server” device, and the other devices have to connect to that device as “client” devices. After you pressed the “multi player” button on the welcome screen, a dialog box will appear to ask you to select the mode of the device.</string>
+    <string name="help_servermode_title">Server Mode:</string>
+    <string name="help_servermode">If you decide to be a “server” device click on the server mode button. At the next screen after you have selected server mode, you can decide how many client devices can join the game by picking the number from drop-down list, and confirming it by clicking “select” button. Next thing will be waiting for the client devices to connect to your device. You can follow the progress on the screen with a progress bar. After all the devices are connected to server device, you will get the screen allowing you to set the team properties. You can decide which device will belong to which team, and difficulty level of the AI players if you want them to be available. After you’ve decided, you can click the confirm button to start the game.</string>
+    <string name="help_clientmode_title">Client Mode:</string>
+    <string name="help_clientmode">If you decide to be a “client” that connects to a server device, you should click the client mode button after you click the multi player mode button at the welcome screen. Then, you have to select the name of the device from the list that appeared. If the sever device and the client device have not been paired before, you have to pair them. While you can do this before starting the game application under Bluetooth settings, you can also do without leaving the application. To do this, the client device user has to select “Make this device discoverable”, right after entering the multi player mode. This will allow the client device to be discoverable for 300 seconds, which is enough time to connect all the devices. After this, client device users have to click the “Scan for devices” button after they have selected the client mode. All the recognized devices’ name will start to appear under the list of “Other available devices”. When you click on the server device name, a pairing confirmation question will come. After, both of the devices’ user accept the pairing question, client device will be connected to server device. If server device’s user selected more than one client to play the game, you will get a progress screen that let you know about the connection of the other devices to the server device. After ll the devices are connected you can start to enjoy the game. You can follow the commands on the screen for the next movement. But if you don’t do your movement in a proper time, Hurry up mode will start with getting a warning saying “Hury up!” and your peg will move automatically after a while.</string>
 
 </resources>
