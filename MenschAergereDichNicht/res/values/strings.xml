@@ -9,17 +9,28 @@
     <string name="hurry">Hurry up !</string>
     <string name="player_won">You win !</string>
 
-    <!-- Bluetooth -->
+    <!-- BluetoothMPService -->
     <string name="send">Send</string>
     <string name="not_connected">You are not connected to a device</string>
     <string name="title_connecting">connecting...</string>
+    <string name="title_connecting_to_server">Connecting to server...</string>
     <string name="title_connected_to">connected: </string>
     <string name="title_not_connected">not connected</string>
     <string name="title_all_connected">Multiplayer Mode</string>
+    <string name="title_not_all_connected">Not All Connected!</string>
+    <string name="title_none">None</string>
+    <string name="connection_failed">Couldn\'t connect! Use menu button.</string>
+    <string name="connection_lost_part1">Connection to </string>
+    <string name="connection_lost_part2"> is lost!</string>
+    
+    
 
     <!-- MultiplayerActivity -->
     <string name="try_singleplayer">Bluetooth was not enabled. Try single player mode.</string>
     <string name="waiting_others_dialog">Waiting for other devices...</string>
+    <string name="bluetooth_not_supported">Bluetooth is not available, try Single Player game</string>
+    <string name="connected_to">Connected to </string>
+    <string name="connected_to_server">Connected to server </string>
 
     <!-- ModeSelectionActivity -->
     <string name="select_mode_title">select a mode</string>
