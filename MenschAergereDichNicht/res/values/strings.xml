@@ -96,6 +96,29 @@
     <string name="button_exit">Exit</string>
     <string name="button_help">Help</string>
 
+    <!-- Settings Screen -->
+    <string name="settings_screen">Settings</string>
+    <string name="options_input">Input</string>
+    <string name="options_shaking">Shaking</string>
+    <string name="options_shaking_summary">Shaking the device will throw the dice</string>
+    <string name="options_zoom">Enable Zoom</string>
+    <string name="options_zoom_summary">Enables multi-touch zoom</string>
+	<string name="options_animations">Animations</string>
+    <string name="options_animated_peg">Animated Peg</string>
+    <string name="options_animated_peg_summary">Peg moves across the board</string>
+    <string name="options_animated_dice">Animated Dice</string>
+    <string name="options_animated_dice_summary">Dice is thrown</string>
+    <string name="options_board_rotation">Rotating Board</string>
+    <string name="options_board_rotation_summary">Enables constant rotation of the board</string>
+    <string name="options_board_rotation_speed">Rotating Speed</string>
+    <string name="options_board_rotation_speed_summary">Speed of board rotation</string>
+    <string name="options_speed">Animation Speed</string>
+    <string name="options_speed_summary">Speed of animations</string>
+    <string name="options_pegs">Pegs</string>
+    <string name="options_pegs_classic">Classic Pegs</string>
+    <string name="options_pegs_classic_summary">Enable the classic peg shape</string>
+    <string name="options_reset">Reset Settings</string>
+
     <!-- Settings -->
     <string-array name="settings_array">
         <item>1 Client</item>

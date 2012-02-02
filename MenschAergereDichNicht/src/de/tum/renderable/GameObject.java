@@ -14,7 +14,7 @@ public abstract class GameObject extends GeometricObject {
 	public static final float p = 0.08f;
 
 	/** the amount of frames a peg needs to reach the next field */
-	protected static final int frames = 20;
+	public static int frames = 20;
 	/** the final bottom layer has his z-coordinate at 0x00 */
 	protected static final float layer_z = 0x00;
 

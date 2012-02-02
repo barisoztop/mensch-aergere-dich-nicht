@@ -74,6 +74,9 @@ public class WelcomeActivity extends Activity {
 						HelpActivity.class));
 			}
 		});
+		
+		// loading settings
+		SettingsActivity.loadConfiguration(PreferenceManager.getDefaultSharedPreferences(this)); 
 	}
 	
 	@Override
@@ -90,7 +93,6 @@ public class WelcomeActivity extends Activity {
 		super.onStart();
 		if (D)
 			Log.e(TAG, "- ON START -");
-		SettingsActivity.setConfiguration(PreferenceManager.getDefaultSharedPreferences(this)); 
 	}
 
 	@Override
