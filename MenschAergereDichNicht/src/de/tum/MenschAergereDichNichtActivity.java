@@ -25,7 +25,6 @@ import de.tum.player.Player;
  * main activity for controlling the game
  */
 public class MenschAergereDichNichtActivity extends Activity {
-	
     // Debugging
     private static final String TAG = "MenschAergereDichNicht";
     private static final boolean D = true;
@@ -43,7 +42,6 @@ public class MenschAergereDichNichtActivity extends Activity {
     
     // Layout Views
     private View toastLayout;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,8 +69,6 @@ public class MenschAergereDichNichtActivity extends Activity {
       view = new GLSurfaceView(this);
       view.setRenderer(renderer);
       new GameListener(this); 
-//      view.setOnTouchListener(listener);
-//      view.setOnLongClickListener(listener);
       setContentView(view);
 
       // Toast layout

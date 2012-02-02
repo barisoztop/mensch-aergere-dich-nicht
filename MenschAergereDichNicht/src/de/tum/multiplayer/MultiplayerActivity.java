@@ -49,7 +49,6 @@ import de.tum.player.Player;
  * main activity for controlling the game
  */
 public class MultiplayerActivity extends Activity {
-
 	// Debugging
 	private static final String TAG = "MultiplayerActivity";
 	private static final boolean D = true;
@@ -143,8 +142,6 @@ public class MultiplayerActivity extends Activity {
 		view = new GLSurfaceView(this);
 		view.setRenderer(renderer);
 		new GameListener(this);
-//		view.setOnTouchListener(listener);
-//		view.setOnLongClickListener(listener);
 		
 		// Set up the window layout
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
@@ -484,7 +481,6 @@ public class MultiplayerActivity extends Activity {
 						.getRemoteDevice(address);
 				// Attempt to connect to server
 				bluetoothMPService.connectServer(serverDevice);
-//				startClientGame(); // TODO check states
 			}
 			break;
 		case REQUEST_ENABLE_BT:
@@ -552,18 +548,7 @@ public class MultiplayerActivity extends Activity {
 					start[i / 4][i % 4] = teams[i];
 				startGame(start[0]);
 				for (int i = 0; i < bluetoothMPService.getConnectedDevices(); ++i)
-					;//TODO  send start[1] - start[start.length - 1] to clients
-				// how to specifiy the client ?
-				
-				/* I used the connection order to identify devices (this can be change to MAC address if you want)
-				 * now if server wanna send message to all the others this is the way:
-				 * sendMessage(data, BluetoothMPService.ALL_DEVICES);
-				 * if wanna send message to first connected:
-				 * sendMessage(data, 1);
-				 * client can use this same method to send to server:
-				 * sendMessage(data, BluetoothMPService.SERVER_ID);
-				 * normally passing the server id is unnecessary but doesn't hurt
-				 */
+					sendMessage(new DataTransfer(DataTransfer.SETUP_GAME, start[i + 1]), i + 1);
 			}
 		}
 	}
@@ -590,13 +575,11 @@ public class MultiplayerActivity extends Activity {
 //				&& bluetoothMPService.getState() != BluetoothMPService.STATE_ALL_CONNECTED) {
 //			return;
 //		}
-//
 //		// If client, check if it's connected to server
 //		if (!bluetoothMPService.serverDevice
 //				&& bluetoothMPService.getState() != BluetoothMPService.STATE_CONNECTED_TO_SERVER) {
 //			return;
 //		}
-
 		// Check there is data to send
 		if (data != null) {
 			// Convert the Object to byte[]
@@ -635,10 +618,14 @@ public class MultiplayerActivity extends Activity {
         }
     }
     
-    public static final void notifyPlayers(int[] tokens) {
-		if (activity != null)
-			activity.sendMessage(new DataTransfer(DataTransfer.IS_NOTIFICATION,
-					tokens), BluetoothMPService.ALL_DEVICES);
+    public static final void notifyPlayers(int[] token) {
+		if (activity != null) {
+			addToken(token, false);
+			activity.sendMessage(
+					new DataTransfer(DataTransfer.IS_NOTIFICATION, token),
+					activity.bluetoothMPService.serverDevice ? BluetoothMPService.ALL_DEVICES
+							: BluetoothMPService.SERVER_ID);
+		}
     }
     
     /**
@@ -686,24 +673,12 @@ public class MultiplayerActivity extends Activity {
 			e.printStackTrace();
 		}
 
-		// process the data according to device mode
+		// process the data
 		processArrivalData((DataTransfer) o, deviceNo);
-//		if (o != null && bluetoothMPService.serverDevice) processArrivalClientData((DataClient) o);
-//		if (o != null && !bluetoothMPService.serverDevice) processArrivalServerData((DataTransfer) o);
 	}
 
 	/**
-	 * Process data arrived from client to server
-	 * 
-	 * @param object
-	 */
-//	private void processArrivalClientData(DataClient object) {
-//		Log.d(TAG, "processArrivalServerData()");
-//		
-//	}
-	
-	/**
-	 * Process data arrived from server to client
+	 * Process data arrived
 	 * 
 	 * @param transfer
 	 */
@@ -711,22 +686,19 @@ public class MultiplayerActivity extends Activity {
 		Log.d(TAG, "processArrivalServerData() --");
 		switch (transfer.reason) {
 		case DataTransfer.SETUP_GAME:
+			Toast.makeText(getApplicationContext(),
+					"start game", Toast.LENGTH_SHORT).show();
 			startGame(transfer.tokens);
 			break;
 		case DataTransfer.IS_NOTIFICATION:
-			addToken(transfer.tokens);
-			Toast.makeText(getApplicationContext(),
-					"processArrivalServerData: " +
-			(transfer.tokens[0] == NetworkPlayer.DICE_THROWN ? "dice thrown: " : "peg moved: ")
-			+ transfer.tokens[1], Toast.LENGTH_SHORT).show();
-			if (bluetoothMPService.serverDevice) // forward message to clients
-				;//TODO forward message to all other clients
-			/* Now you can use the deviceNo to send a message to specific device,
-			 * deviceNo also get the ordinal numbers at the same time as the connectedDeviceName 1 to 7 gets
-			 * the device names.
-			 * 
-			 * BluetoothMPService.ALL_DEVICES (send to all) and BluetoothMPService.SERVER_ID (send to server if you are client)
-			 */
+			addToken(transfer.tokens, true);
+			--deviceNo;
+			if (bluetoothMPService.serverDevice)
+				for (int i = 0; i < bluetoothMPService.getConnectedDevices(); ++i)
+					if (i != deviceNo) // forward message to clients
+						activity.sendMessage(new DataTransfer(
+								DataTransfer.IS_NOTIFICATION, transfer.tokens),
+								i + 1);
 			break;
 		case DataTransfer.CONNECTION_STATUS:
 			if (MultiplayerActivity.this.waitingDialog == null) {
@@ -761,12 +733,12 @@ public class MultiplayerActivity extends Activity {
 	    	}
     }
     
-    private static final void addToken(int[] token) {
+    private static final void addToken(int[] token, boolean real) {
 //    	Log.d("multiplayer", "add token");
     	if (tokens != null)
 	    	synchronized (tokens) {
 		    	tokens.add(token);
-				if (tokens.size() == 1)
+				if (real && tokens.size() == 1)
 					NetworkPlayer.notify(tokens.element());
 	    	}
     }
