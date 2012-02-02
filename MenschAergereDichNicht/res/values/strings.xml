@@ -22,12 +22,10 @@
     <string name="connection_failed">Couldn\'t connect! Use menu button.</string>
     <string name="connection_lost_part1">Connection to </string>
     <string name="connection_lost_part2"> is lost!</string>
-    
-    
 
     <!-- MultiplayerActivity -->
     <string name="try_singleplayer">Bluetooth was not enabled. Try single player mode.</string>
-    <string name="waiting_others_dialog">Waiting for other devices...</string>
+    <string name="waiting_team_settings_dialog">Waiting for team settings...</string>
     <string name="bluetooth_not_supported">Bluetooth is not available, try Single Player game</string>
     <string name="connected_to">Connected to </string>
     <string name="connected_to_server">Connected to server </string>
@@ -135,7 +133,7 @@
     <string name="license">GNU GPL v3 / New BSD License</string>
     <string name="info_demo_txt">The app was developed during the Android Praktikum 2011 at Technical University Munich (TUM).\n\nThe TUM is not responsible for any kind of violations by this app. Also the TUM does not offer any support for this app. Please refer to the authors mentioned above for any requests.\n\nIn case of violations please contact us at admin.i13.in@tum.de as well.</string>
     <string name="chair_info_txt"><b>Chair of Operating Systems</b>\nSupervisor:\nProf. Dr. Baumgarten\nAdvisor:\nNils T. Kannengiesser</string>
-    <string name="authors"><b>Baris Oztop - boztop@gmail.com\nStefan Matl - stefan.matl@gmail.com</b></string>
+    <string name="authors"><b>Baris Oztop -  baris.oztop@tum.de\nStefan Matl - stefan.matl@tum.de</b></string>
 
     <!-- Help -->
     <string name="help_title">How to Play the Game</string>
