@@ -9,48 +9,140 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp" >
+
+        <TextView
+            android:id="@+id/help_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/help_title"
+            android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/logo"
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/tum_logo" android:contentDescription="tum_logo"/>
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/divider_horizontal_dim_dark" />
 
         <TextView
-            android:id="@+id/app_name_txt"
+            android:id="@+id/help_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Main title:" android:textStyle="bold"/>
+            android:text="@string/help_playing_title"
+            android:textStyle="bold" />
+
+        <ImageView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/divider_horizontal_dim_dark" />
 
         <TextView
-            android:id="@+id/license_txt"
+            android:id="@+id/help_playing"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Text" />
+            android:text="@string/help_playing" />
+
+        <ImageView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/divider_horizontal_dim_dark" />
 
         <TextView
-            android:id="@+id/authors_txt"
+            android:id="@+id/help_multiplayer_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/authors" />
+            android:text="@string/help_multiplayer_title"
+            android:textStyle="bold" />
+
+        <ImageView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/divider_horizontal_dim_dark" />
 
         <TextView
-            android:id="@+id/info_txt"
+            android:id="@+id/help_multiplayer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:autoLink="email"
-            android:layout_marginTop="15dp"
-            android:text="@string/info_demo_txt" />
+            android:text="@string/help_multiplayer" />
+
+        <ImageView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/divider_horizontal_dim_dark" />
 
         <TextView
-            android:id="@+id/chair_info_txt"
+            android:id="@+id/help_servermode_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:text="@string/chair_info_txt" />
+            android:text="@string/help_servermode_title"
+            android:textStyle="bold" />
 
+        <ImageView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/divider_horizontal_dim_dark" />
+
+        <TextView
+            android:id="@+id/help_servermode"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/help_servermode" />
+
+        <ImageView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/divider_horizontal_dim_dark" />
+
+        <TextView
+            android:id="@+id/help_clientmode_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/help_clientmode_title"
+            android:textStyle="bold" />
+
+        <ImageView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/divider_horizontal_dim_dark" />
+
+        <TextView
+            android:id="@+id/help_clientmode"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/help_clientmode" />
     </LinearLayout>
 
 </ScrollView>

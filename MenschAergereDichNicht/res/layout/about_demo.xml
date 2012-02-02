@@ -14,14 +14,16 @@
             android:id="@+id/logo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/tum_logo" android:contentDescription="tum_logo"/>
+            android:contentDescription="tum_logo"
+            android:src="@drawable/tum_logo" />
 
         <TextView
             android:id="@+id/app_name_txt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/app_name" android:textStyle="bold"/>
+            android:text="@string/app_name"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/license_txt"
@@ -33,14 +35,15 @@
             android:id="@+id/authors_txt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:autoLink="email"
             android:text="@string/authors" />
 
         <TextView
             android:id="@+id/info_txt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:autoLink="email"
             android:layout_marginTop="15dp"
+            android:autoLink="email"
             android:text="@string/info_demo_txt" />
 
         <TextView
@@ -50,7 +53,6 @@
             android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="@string/chair_info_txt" />
-
     </LinearLayout>
 
 </ScrollView>
