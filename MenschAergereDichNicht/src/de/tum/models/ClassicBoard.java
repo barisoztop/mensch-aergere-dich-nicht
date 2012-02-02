@@ -1,5 +1,7 @@
 package de.tum.models;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import de.tum.Helper;
 import de.tum.Team;
 import de.tum.TupleFloat;
@@ -78,6 +80,12 @@ public class ClassicBoard extends Board {
 	@Override
 	protected void action() {
 		// nothing to do
+		return;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	protected final void rotate(GL10 gl) {
 		return;
 	}
 
