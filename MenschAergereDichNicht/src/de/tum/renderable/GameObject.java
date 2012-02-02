@@ -26,13 +26,6 @@ public abstract class GameObject extends GeometricObject {
 	protected float y;
 	protected float z;
 
-	/** the angle of rotation of this object */
-	protected float angle;
-	/** the axis of angle of rotation of this object */
-	protected float ax;
-	protected float ay;
-	protected float az;
-
 	/** true if GL is changed before rendering */
 	protected boolean rotated;
 
@@ -68,6 +61,14 @@ public abstract class GameObject extends GeometricObject {
 	/** calculates moves and updates properties for this game object */
 	protected abstract void action();
 
+	/**
+	 * rotates the matrix for this game object. Called if rotated = true
+	 * 
+	 * @param gl
+	 *            the Gl10 to rotate11
+	 */
+	protected abstract void rotate(GL10 gl);
+
 	/** {@inheritDoc}
 	 * Calls the action method */
 	public final void render(GL10 gl) {
@@ -78,7 +79,7 @@ public abstract class GameObject extends GeometricObject {
 		// setting game object position
 		gl.glTranslatef(x, y, z);
 		if (rotated) // rotate object
-			gl.glRotatef(angle, ax, ay, az);
+			rotate(gl);
 		// render game object
 		for (SimpleGeometricObject object : sgobjects)
 			object.render(gl);

@@ -1,5 +1,7 @@
 package de.tum.models;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -41,8 +43,16 @@ public class Dice extends GameObject {
 	private static TupleFloat speed;
 	/** the current z-speed */
 	private static float speed_z;
-	/** the current angle difference */
-	private static float angle_diff;
+	/** angle of rotation */
+	private static float angle;
+	private static float basic_angle;
+	/** the axis of angle of rotation */
+	private static float ax;
+	private static float ay;
+	private static float az;
+	private static float basic_ax;
+	private static float basic_ay;
+	private static float basic_az;
 	/** true if action */
 	private static boolean action;
 	/** result of the dice */
@@ -79,7 +89,7 @@ public class Dice extends GameObject {
 	
 	public static final void reset() {
 		dice.x = dice.y = dice.z = 0;
-		dice.ax = dice.ay = dice.az = 1;
+		ax = ay = az = 1;
 		dice.transfer(0, 0, side / 2);
 		speed = new TupleFloat(0, 0);
 	}
@@ -97,18 +107,25 @@ public class Dice extends GameObject {
 			return;
 		}
 		// updating game object
-		angle += angle_diff;
+		if (frame_current <= frames * 3)
+			angle = frame_current * 360 / frames;
 		transfer(speed.x, speed.y, speed_z);
 		speed_z -= side / 8;
 		if (z < side && speed_z < 0) {
 			speed_z *= -0.6;
 			speed.set(speed.x * 0.75f, speed.y * 0.75f);
 			if (speed_z < side / 6) {
-				angle_diff = 0;
 				speed.set(0, 0);
 				speed_z = 0;
 			}
 		}
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	protected final void rotate(GL10 gl) {
+		gl.glRotatef(basic_angle, basic_ax, basic_ay, basic_az);
+		gl.glRotatef(angle, ax, ay, az);
 	}
 
 	/**
@@ -117,9 +134,8 @@ public class Dice extends GameObject {
 	 * @param team
 	 *            the team of this peg
 	 */
-	public static void throwIt(Team team) {
-		throwIt(team, 1 + (int) (Math.random() * 6));
-		MultiplayerActivity.notifyPlayers(new int[] {NetworkPlayer.DICE_THROWN, result});
+	public static final void throwIt(Team team) {
+		throwIt(team, 1 + (int) (Math.random() * 6), null);
 	}
 	
 	/**
@@ -130,10 +146,8 @@ public class Dice extends GameObject {
 	 * @param values
 	 *            the shaking values
 	 */
-	public static void throwIt(Team team, float values[]) {
-		throwIt(team, 1 + (int) Math.abs(values[0] + values[1] + values[2]) % 6);
-		MultiplayerActivity.notifyPlayers(
-				new int[] {NetworkPlayer.DICE_THROWN, result});
+	public static final void throwIt(Team team, float values[]) {
+		throwIt(team, 1 + (int) Math.abs(values[0] + values[1] + values[2]) % 6, null);
 	}
 	
 	/**
@@ -141,17 +155,60 @@ public class Dice extends GameObject {
 	 * 
 	 * @param team
 	 *            the team of this peg
+	 * @param tokens
+	 *            the tokens for the dice
+	 */
+	public static final void throwIt(Team team, int tokens[]) {
+		throwIt(team, -1, tokens);
+	}
+	
+	/**
+	 * throws the dice
+	 * 
+	 * @param team
+	 *            the team of this peg
 	 * @param result
 	 *            the result the dice shows
+	 * @param tokens
+	 *            the tokens for the dice
 	 */
-	public static void throwIt(Team team, int result) {
+	private static final void throwIt(Team team, int result, int tokens[]) {
+		TupleFloat start = null;
+		if (result == -1) {
+			result = tokens[1];
+			start = Board.getPositionForDice(team, tokens[2]);
+		}
+		else {
+			int choice = (int) (Board.getDiceStartFieldChoices() * Math.random()); 
+			start = Board.getPositionForDice(team, choice);
+			MultiplayerActivity.notifyPlayers(new int[] {
+					NetworkPlayer.DICE_THROWN, result, choice });
+		}
 		Dice.result = result;
-		TupleFloat start = Board.getPositionForDice(team);
 		dice.transfer(start.x - dice.x, start.y - dice.y, 7 * side - dice.z);
 		speed.set(-dice.x / frames / 0.9f, -dice.y / frames / 0.9f);
 		speed_z = 0;
-		dice.angle = 0;
-		angle_diff = 15;
+		angle = 0;
+		// rotate to the correct number
+		basic_az = 0x00;
+		basic_angle = 0x00;
+		switch (result) {
+		case 5:
+			basic_angle += 90;
+		case 1:
+			basic_angle += 90;
+		case 2:
+			basic_angle += 90;
+			basic_ax = 0x00;
+			basic_ay = 0x01;
+			break;
+		case 4:
+			basic_angle += 180;
+		case 3:
+			basic_angle += 90;
+			basic_ax = 0x01;
+			basic_ay = 0x00;
+		}
 		action = true;
 	}
 	

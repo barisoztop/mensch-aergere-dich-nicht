@@ -135,10 +135,21 @@ public abstract class Board extends GameObject {
 	 * 
 	 * @param team
 	 *            the current team
+	 * @param choice
+	 *            additional value, default = 0
 	 * @return the coordinates of the current start field
 	 */
-	public static final TupleFloat getPositionForDice(Team team) {
-		return dice_fields[team.id * 2 + (int) (Math.random() * 2)];
+	public static final TupleFloat getPositionForDice(Team team, int choice) {
+		return dice_fields[team.id * 2 + choice];
+	}
+	
+	/**
+	 * getting the dice start field choices
+	 * 
+	 * @return the amount of options for the dice start field
+	 */
+	public static final int getDiceStartFieldChoices() {
+		return 2;
 	}
 	
 	// just for checking whether the given field is free or a different team is there	

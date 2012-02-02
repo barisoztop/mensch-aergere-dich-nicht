@@ -2,6 +2,8 @@ package de.tum.models;
 
 import java.nio.FloatBuffer;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import de.tum.Team;
 import de.tum.TupleFloat;
 import de.tum.renderable.SimpleGeometricObject;
@@ -77,6 +79,12 @@ public class ClassicPeg extends Peg {
 		// moving this peg to its start position
 		TupleFloat position = Board.getPosition(this, pos_start, true);
 		transfer(position.x, position.y, layer_z + bottom);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	protected final void rotate(GL10 gl) {
+		return;
 	}
 
 	/** {@inheritDoc} */

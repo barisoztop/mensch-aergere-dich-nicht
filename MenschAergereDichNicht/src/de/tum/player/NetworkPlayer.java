@@ -45,7 +45,7 @@ public class NetworkPlayer extends Player {
 	public static void notify(int[] tokens) {
 		switch (tokens[0]) {
 		case NetworkPlayer.DICE_THROWN:
-			Dice.throwIt(player.team, tokens[1]);
+			Dice.throwIt(player.team, tokens);
 			break;
 		case NetworkPlayer.PEG_MOVED:
 			player.pegChosen(movables[tokens[1]], false);

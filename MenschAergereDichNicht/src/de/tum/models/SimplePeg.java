@@ -1,5 +1,7 @@
 package de.tum.models;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import de.tum.Helper;
 import de.tum.Team;
 import de.tum.TupleFloat;
@@ -73,5 +75,11 @@ public class SimplePeg extends Peg {
 			for (int i2 = 0; i2 < 4; ++i2)
 				colors[i1 + i2] = set[SimplePeg.colors[i1 / 4]][i2];
 		return colors;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	protected final void rotate(GL10 gl) {
+		return;
 	}
 }
