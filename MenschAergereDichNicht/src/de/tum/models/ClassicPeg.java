@@ -15,6 +15,8 @@ import de.tum.renderable.TriangleStripe;
  * can move on the board on given paths
  */
 public class ClassicPeg extends Peg {
+	/** true if used */
+	public static boolean used;
 	/** the height of this peg */
 	private static final float height = 3;
 	/** the radius of this peg */

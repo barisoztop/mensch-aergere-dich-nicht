@@ -57,6 +57,8 @@ public class Dice extends GameObject {
 	private static boolean action;
 	/** result of the dice */
 	private static int result;
+	/** true if moving */
+	public static boolean moving;
 	/** dice object */
 	private static Dice dice;
 	static {

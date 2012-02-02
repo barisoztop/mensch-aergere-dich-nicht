@@ -187,8 +187,12 @@ public abstract class Board extends GameObject {
 	private static final void createPegs() {
 		pegs = new Peg[teams * start_pegs];
 		for (int i = 0; i < pegs.length; ++i) {
-			pegs[i] = new ClassicPeg(false, Team.values()[i / start_pegs], i
-					% start_pegs);
+			if (ClassicPeg.used)
+				pegs[i] = new ClassicPeg(false, Team.values()[i / start_pegs],
+						i % start_pegs);
+			else
+				pegs[i] = new SimplePeg(false, Team.values()[i / start_pegs], i
+						% start_pegs);
 			Room.addRenderable(pegs[i]);
 		}
 	}

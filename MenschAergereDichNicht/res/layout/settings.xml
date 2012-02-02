@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_screen"
+        android:textSize="13pt" />
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/options_input"
+        android:background="#ff333333"
+        android:textSize="8pt"
+	    android:paddingBottom="5dp"
+	    android:paddingTop="5dp" />
+    
+    <CheckBox
+        android:id="@+id/checkBoxOptionsShaking"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/options_shaking"
+        android:textSize="10pt" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3pt"
+        android:layout_marginLeft="10pt"
+        android:text="@string/options_shaking_summary"
+        android:textColor="#ff777777"
+        android:textSize="7pt" />
+    
+    <ImageView
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:src="@android:drawable/divider_horizontal_dark"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:scaleType="fitXY"
+	    android:padding="2dp"
+	    android:paddingTop="2dp" />
+    
+    <CheckBox
+        android:id="@+id/checkBoxOptionsZoom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/options_zoom"
+        android:textSize="10pt" />
+	
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3pt"
+        android:layout_marginLeft="10pt"
+        android:text="@string/options_zoom_summary"
+        android:textColor="#ff777777"
+        android:textSize="7pt" />
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/options_animations"
+        android:background="#ff333333"
+        android:textSize="8pt"
+	    android:paddingBottom="5dp"
+	    android:paddingTop="5dp" />
+    
+    <CheckBox
+        android:id="@+id/checkBoxOptionsPeg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/options_animated_peg"
+        android:textSize="10pt" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3pt"
+        android:layout_marginLeft="10pt"
+        android:text="@string/options_animated_peg_summary"
+        android:textColor="#ff777777"
+        android:textSize="7pt" />
+    
+    <ImageView
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:src="@android:drawable/divider_horizontal_dark"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:scaleType="fitXY"
+	    android:paddingBottom="2dp"
+	    android:paddingTop="2dp" />
+    
+    <CheckBox
+        android:id="@+id/checkBoxOptionsDice"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/options_animated_dice"
+        android:textSize="10pt" />
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3pt"
+        android:layout_marginLeft="10pt"
+        android:text="@string/options_animated_dice_summary"
+        android:textColor="#ff777777"
+        android:textSize="7pt" />
+    
+    <ImageView
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:src="@android:drawable/divider_horizontal_dark"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:scaleType="fitXY"
+	    android:paddingBottom="2dp"
+	    android:paddingTop="2dp" />
+    
+    <CheckBox
+        android:id="@+id/checkBoxOptionsRotatingBoard"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/options_board_rotation"
+        android:textSize="10pt" />
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3pt"
+        android:layout_marginLeft="10pt"
+        android:text="@string/options_board_rotation_summary"
+        android:textColor="#ff777777"
+        android:textSize="7pt" />
+    
+    <ImageView
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:src="@android:drawable/divider_horizontal_dark"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:scaleType="fitXY"
+	    android:paddingBottom="2dp"
+	    android:paddingTop="2dp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5pt"
+        android:text="@string/options_board_rotation_speed"
+        android:textSize="10pt" />
+
+    <SeekBar
+        android:id="@+id/seekBarSpeedRotation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10pt"
+        android:layout_marginRight="10pt"
+        android:layout_marginBottom="2pt"
+        android:max="100" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10pt"
+        android:text="@string/options_board_rotation_speed_summary"
+        android:textColor="#ff777777"
+        android:textSize="7pt" />
+    
+    <ImageView
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:src="@android:drawable/divider_horizontal_dark"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:scaleType="fitXY"
+	    android:paddingBottom="2dp"
+	    android:paddingTop="2dp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5pt"
+        android:text="@string/options_speed"
+        android:textSize="10pt" />
+	
+    <SeekBar
+        android:id="@+id/seekBarSpeed"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10pt"
+        android:layout_marginRight="10pt"
+        android:layout_marginBottom="2pt"
+        android:max="100" />
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10pt"
+        android:text="@string/options_speed_summary"
+        android:textColor="#ff777777"
+        android:textSize="7pt" />
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/options_pegs"
+        android:background="#ff333333"
+        android:textSize="8pt"
+	    android:paddingBottom="5dp"
+	    android:paddingTop="5dp" />
+    
+    <CheckBox
+        android:id="@+id/checkBoxOptionsPegsClassic"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/options_pegs_classic"
+        android:textSize="10pt" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3pt"
+        android:layout_marginLeft="10pt"
+        android:text="@string/options_pegs_classic_summary"
+        android:textColor="#ff777777"
+        android:textSize="7pt" />
+    
+    <ImageView
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:src="@android:drawable/divider_horizontal_dark"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:scaleType="fitXY"
+	    android:paddingBottom="2dp"
+	    android:paddingTop="2dp" />
+
+    <Button android:id="@+id/button_settings_reset"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/options_reset" />
+    
+    </LinearLayout>
+</ScrollView>
