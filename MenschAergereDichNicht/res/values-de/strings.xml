@@ -15,7 +15,6 @@
     <string name="title_connecting">verbinden...</string>
     <string name="title_connected_to">verbunden: </string>
     <string name="title_not_connected">nicht verbunden</string>
-    <string name="title_all_connected">Mehrspielermodus</string>
 
     <!-- MultiplayerActivity -->
     <string name="try_singleplayer">Bluetooth ist aus. Probiere den Einzelspielermodus.</string>
