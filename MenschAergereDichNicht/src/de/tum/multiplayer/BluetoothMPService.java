@@ -6,8 +6,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import de.tum.R;
-
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
@@ -17,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import de.tum.R;
 
 /**
  * Consists threads to handle the communication with other devices
@@ -607,7 +606,7 @@ public class BluetoothMPService {
 				.obtainMessage(MultiplayerActivity.MESSAGE_TOAST_WARNING);
 		Bundle bundle = new Bundle();
 		bundle.putString(MultiplayerActivity.TOAST,
-				context.getResources().getString(R.string.connection_failed));
+				context.getString(R.string.connection_failed));
 		msg.setData(bundle);
 		handler.sendMessage(msg);
 		
@@ -627,8 +626,8 @@ public class BluetoothMPService {
 				.obtainMessage(MultiplayerActivity.MESSAGE_TOAST_WARNING);
 		Bundle bundle = new Bundle();
 		bundle.putString(MultiplayerActivity.TOAST,
-				context.getResources().getString(R.string.connection_lost_part1)
-				+ deviceName + context.getResources().getString(R.string.connection_lost_part2));
+				context.getString(R.string.connection_lost_part1)
+				+ deviceName + context.getString(R.string.connection_lost_part2));
 		msg.setData(bundle);
 		handler.sendMessage(msg);
 		
@@ -637,7 +636,7 @@ public class BluetoothMPService {
 					.obtainMessage(MultiplayerActivity.MESSAGE_TITLE);
 			bundle = new Bundle();
 			bundle.putString(MultiplayerActivity.TITLE,
-					context.getResources().getString(R.string.title_not_all_connected));
+					context.getString(R.string.title_not_all_connected));
 			msg.setData(bundle);
 			handler.sendMessage(msg);
 		}
@@ -656,7 +655,7 @@ public class BluetoothMPService {
 				.obtainMessage(MultiplayerActivity.MESSAGE_TITLE);
 		Bundle bundle = new Bundle();
 		bundle.putString(MultiplayerActivity.TITLE,
-				context.getResources().getString(R.string.title_none));
+				context.getString(R.string.title_none));
 		msg.setData(bundle);
 		handler.sendMessage(msg);
 		

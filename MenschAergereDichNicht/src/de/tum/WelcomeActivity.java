@@ -1,6 +1,8 @@
 package de.tum;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -62,7 +64,22 @@ public class WelcomeActivity extends Activity {
 		findViewById(R.id.exit).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				finish();
+				new AlertDialog.Builder(WelcomeActivity.this)
+		        .setIcon(android.R.drawable.ic_dialog_alert)
+		        .setTitle(R.string.button_exit)
+		        .setMessage(R.string.confirm_exit)
+		        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+		            @Override
+		            public void onClick(DialogInterface dialog, int which) {
+
+		                //Stop the activity
+		                WelcomeActivity.this.finish();    
+		            }
+
+		        })
+		        .setNegativeButton(R.string.no, null)
+		        .show();
 
 			}
 		});

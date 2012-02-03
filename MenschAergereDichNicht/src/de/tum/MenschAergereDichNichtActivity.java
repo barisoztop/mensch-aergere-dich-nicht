@@ -121,14 +121,29 @@ public class MenschAergereDichNichtActivity extends Activity {
         context.mHandler.sendMessage(msg);
 	}
 
+	private long lastBackPressTime = 0;
+	private Toast toast;
+	
 	@Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-      if (keyCode == KeyEvent.KEYCODE_BACK)
-        System.exit(0);
-      else
-        return false;
-      return true;
-    }
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK){
+			
+			if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
+				toast = Toast.makeText(this, 
+						getString(R.string.press_again), 3000);
+				toast.show();
+				this.lastBackPressTime = System.currentTimeMillis();
+			} else {
+				if (toast != null)
+				    toast.cancel();
+				System.exit(0);
+			}
+
+		}
+		else
+			return false;
+		return true;
+	}
     
     /**
      *  The Handler that gets information back from the BluetoothMPService
