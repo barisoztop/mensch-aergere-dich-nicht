@@ -36,7 +36,6 @@ import de.tum.GameRenderer;
 import de.tum.MenschAergereDichNichtActivity;
 import de.tum.R;
 import de.tum.Room;
-import de.tum.SettingsActivity;
 import de.tum.Team;
 import de.tum.models.Board;
 import de.tum.models.ClassicBoard;
@@ -129,7 +128,7 @@ public class MultiplayerActivity extends Activity {
 
 		// If the adapter is null, then Bluetooth is not supported
 		if (bluetoothAdapter == null) {
-			Toast.makeText(this, this.getResources().getString(R.string.bluetooth_not_supported),
+			Toast.makeText(this, getString(R.string.bluetooth_not_supported),
 					Toast.LENGTH_LONG).show();
 			finish();
 			return;
@@ -220,13 +219,27 @@ public class MultiplayerActivity extends Activity {
 		}
 	}
 
+	private long lastBackPressTime = 0;
+	private Toast toast;
+	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK){
-			if (bluetoothMPService != null)
-				bluetoothMPService.stop(true);
-			System.exit(0);
-			finish();
+			
+			if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
+				toast = Toast.makeText(this, 
+						getString(R.string.press_again), 3000);
+				toast.show();
+				this.lastBackPressTime = System.currentTimeMillis();
+			} else {
+				if (toast != null)
+				    toast.cancel();
+				if (bluetoothMPService != null)
+					bluetoothMPService.stop(true);
+				System.exit(0);
+				finish();
+			}
+
 		}
 		else
 			return false;
@@ -284,7 +297,7 @@ public class MultiplayerActivity extends Activity {
 				case BluetoothMPService.STATE_CONNECTED_TO_SERVER:
 					break;
 				case BluetoothMPService.STATE_CONNECTING_TO_SERVER:
-					titleBar.setText(MultiplayerActivity.this.getResources().getString(R.string.title_connecting_to_server));
+					titleBar.setText(getString(R.string.title_connecting_to_server));
 					break;
 				case BluetoothMPService.STATE_LISTEN:
 					break;
@@ -396,7 +409,7 @@ public class MultiplayerActivity extends Activity {
 					connectedServerName = msg.getData().getString(DEVICE_NAME);
 					// Toast the server's name
 					Toast.makeText(getApplicationContext(),
-							MultiplayerActivity.this.getResources().getString(R.string.connected_to_server) + 
+							getString(R.string.connected_to_server) + 
 							connectedServerName, Toast.LENGTH_SHORT).show();
 					// Show the server's name on the title
 					titleBar.setText("@" + connectedServerName);
@@ -444,8 +457,7 @@ public class MultiplayerActivity extends Activity {
 		 */
 		private void toastConnectedDevice(String connectedDeviceName) {
 			Toast.makeText(MultiplayerActivity.this,
-					MultiplayerActivity.this.getResources().getString(R.string.connected_to) + 
-					connectedDeviceName1,
+					getString(R.string.connected_to) + connectedDeviceName1,
 					Toast.LENGTH_SHORT).show();
 		}
 	};
@@ -557,7 +569,7 @@ public class MultiplayerActivity extends Activity {
 					// Create progress dialog to show the device connection activity
 					MultiplayerActivity.this.waitingDialog = new ProgressDialog(MultiplayerActivity.this);
 					MultiplayerActivity.this.waitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-					MultiplayerActivity.this.waitingDialog.setMessage(getResources().getText(R.string.waiting_others));
+					MultiplayerActivity.this.waitingDialog.setMessage(getString(R.string.waiting_others));
 					MultiplayerActivity.this.waitingDialog.setCancelable(true);
 					MultiplayerActivity.this.waitingDialog.setMax(bluetoothMPService.getMaxDeviceNumber());
 					MultiplayerActivity.this.waitingDialog.show();
@@ -732,7 +744,7 @@ public class MultiplayerActivity extends Activity {
 				if (D) Log.d(TAG, "transfer.tokens[1]: " + transfer.tokens[1] + " ,transfer.tokens[0]: " + transfer.tokens[0]);
 				MultiplayerActivity.this.waitingDialog = new ProgressDialog(MultiplayerActivity.this);
 				MultiplayerActivity.this.waitingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-				MultiplayerActivity.this.waitingDialog.setMessage(getResources().getText(R.string.waiting_others));
+				MultiplayerActivity.this.waitingDialog.setMessage(getString(R.string.waiting_others));
 				MultiplayerActivity.this.waitingDialog.setCancelable(true);
 				MultiplayerActivity.this.waitingDialog.setMax(bluetoothMPService.getMaxDeviceNumber());
 				MultiplayerActivity.this.waitingDialog.show();
@@ -750,7 +762,7 @@ public class MultiplayerActivity extends Activity {
 			}
 			waitingTeamSettings = new ProgressDialog(MultiplayerActivity.this);
 			waitingTeamSettings.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			waitingTeamSettings.setMessage(getResources().getText(R.string.waiting_team_settings_dialog));
+			waitingTeamSettings.setMessage(getString(R.string.waiting_team_settings_dialog));
 			waitingTeamSettings.setCancelable(true);
 			waitingTeamSettings.show();
 			if (D) Log.i(TAG, "dialog is created");
