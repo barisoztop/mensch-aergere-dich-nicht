@@ -409,7 +409,7 @@ public class MultiplayerActivity extends Activity {
 					connectedServerName = msg.getData().getString(DEVICE_NAME);
 					// Toast the server's name
 					Toast.makeText(getApplicationContext(),
-							getString(R.string.connected_to_server) + 
+							getString(R.string.connected_to_server) + " " +
 							connectedServerName, Toast.LENGTH_SHORT).show();
 					// Show the server's name on the title
 					titleBar.setText("@" + connectedServerName);
@@ -457,7 +457,7 @@ public class MultiplayerActivity extends Activity {
 		 */
 		private void toastConnectedDevice(String connectedDeviceName) {
 			Toast.makeText(MultiplayerActivity.this,
-					getString(R.string.connected_to) + connectedDeviceName1,
+					getString(R.string.connected_to) + " " + connectedDeviceName1,
 					Toast.LENGTH_SHORT).show();
 		}
 	};
