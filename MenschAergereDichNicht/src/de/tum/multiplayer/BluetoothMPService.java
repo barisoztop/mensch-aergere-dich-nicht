@@ -627,7 +627,7 @@ public class BluetoothMPService {
 		Bundle bundle = new Bundle();
 		bundle.putString(MultiplayerActivity.TOAST,
 				context.getString(R.string.connection_lost_part1)
-				+ deviceName + context.getString(R.string.connection_lost_part2));
+				+ " " + deviceName + " "+ context.getString(R.string.connection_lost_part2));
 		msg.setData(bundle);
 		handler.sendMessage(msg);
 		
