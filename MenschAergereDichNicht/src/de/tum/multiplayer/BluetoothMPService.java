@@ -223,71 +223,74 @@ public class BluetoothMPService {
 			setState(STATE_WAITING_FOR_CONNECTIONS);
 		}
 
+		Message msg = null;
+		Bundle bundle = null;
 		// start ConnectedThread to initiate data transfer mechanism
-		if (connectedDevices == 1) {
+		switch (connectedDevices) {
+		case 1:
 			connectedThread1 = new ConnectedThread(socket, connectedDevices, device);
 			// Let the MultiplayerActivity know about the device name
-			Message msg = handler
+			msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
-			Bundle bundle = new Bundle();
+			bundle = new Bundle();
 			bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
 			msg.setData(bundle);
 			handler.sendMessage(msg);
-			
-		} else if (connectedDevices == 2) {
+			break;
+		case 2:
 			connectedThread2 = new ConnectedThread(socket, connectedDevices, device);
-			if (D) Log.d(TAG, "Now Connected Device == 2");
-			Message msg = handler
+			msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
-			Bundle bundle = new Bundle();
+			bundle = new Bundle();
 			bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
 			msg.setData(bundle);
 			handler.sendMessage(msg);
-			
-		} else if (connectedDevices == 3) {
+			break;
+		case 3:
 			connectedThread3 = new ConnectedThread(socket, connectedDevices, device);
-			Message msg = handler
+			msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
-			Bundle bundle = new Bundle();
+			bundle = new Bundle();
 			bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
 			msg.setData(bundle);
 			handler.sendMessage(msg);
-			
-		} else if (connectedDevices == 4) {
+			break;
+		case 4:
 			connectedThread4 = new ConnectedThread(socket, connectedDevices, device);
-			Message msg = handler
+			msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
-			Bundle bundle = new Bundle();
+			bundle = new Bundle();
 			bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
 			msg.setData(bundle);
 			handler.sendMessage(msg);
-			
-		} else if (connectedDevices == 5) {
+			break;
+		case 5:
 			connectedThread5 = new ConnectedThread(socket, connectedDevices, device);
-			Message msg = handler
+			msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
-			Bundle bundle = new Bundle();
+			bundle = new Bundle();
 			bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
 			msg.setData(bundle);
 			handler.sendMessage(msg);
-			
-		} else if (connectedDevices == 6) {
+			break;
+		case 6:
 			connectedThread6 = new ConnectedThread(socket, connectedDevices, device);
-			Message msg = handler
+			msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
-			Bundle bundle = new Bundle();
+			bundle = new Bundle();
 			bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
 			msg.setData(bundle);
 			handler.sendMessage(msg);
-			
-		} else if (connectedDevices == 7) {
+			break;
+		case 7:
 			connectedThread7 = new ConnectedThread(socket, connectedDevices, device);
-			Message msg = handler
+			msg = handler
 					.obtainMessage(MultiplayerActivity.MESSAGE_DEVICE_NAME);
-			Bundle bundle = new Bundle();
+			bundle = new Bundle();
 			bundle.putString(MultiplayerActivity.DEVICE_NAME, device.getName());
 			msg.setData(bundle);
 			handler.sendMessage(msg);
+			break;
 		}
 
 		if (connectedDevices == maxDeviceNumber) {
