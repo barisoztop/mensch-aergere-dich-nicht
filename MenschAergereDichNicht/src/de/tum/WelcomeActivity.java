@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 import de.tum.multiplayer.MultiplayerActivity;
 import de.tum.multiplayer.TeamMatching;
 
@@ -103,6 +105,30 @@ public class WelcomeActivity extends Activity {
 					MenschAergereDichNichtActivity.class).putExtra(
 					TeamMatching.key,
 					data.getExtras().getIntArray(TeamMatching.key)));
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK){
+				new AlertDialog.Builder(WelcomeActivity.this)
+		        .setIcon(android.R.drawable.ic_dialog_alert)
+		        .setTitle(R.string.button_exit)
+		        .setMessage(R.string.confirm_exit)
+		        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+		            @Override
+		            public void onClick(DialogInterface dialog, int which) {
+
+		                //Stop the activity
+		                WelcomeActivity.this.finish();    
+		            }
+		        })
+		        .setNegativeButton(R.string.no, null)
+		        .show();
+		}
+		else
+			return false;
+		return true;
 	}
 	
 	@Override

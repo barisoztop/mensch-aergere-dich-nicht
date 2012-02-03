@@ -10,13 +10,8 @@
     <string name="player_won">You win !</string>
 
     <!-- BluetoothMPService -->
-    <string name="send">Send</string>
-    <string name="not_connected">You are not connected to a device</string>
     <string name="title_connecting">connecting...</string>
     <string name="title_connecting_to_server">Connecting to server...</string>
-    <string name="title_connected_to">connected: </string>
-    <string name="title_not_connected">not connected</string>
-    <string name="title_all_connected">Multiplayer Mode</string>
     <string name="title_not_all_connected">Not All Connected!</string>
     <string name="title_none">None</string>
     <string name="connection_failed">Couldn\'t connect! Use menu button.</string>
@@ -83,10 +78,6 @@
     <string name="team3">Team GREEN</string>
     <string name="team4">Team BLUE</string>
 
-    <!-- Options Menu -->
-    <string name="connect">Connect a device</string>
-    <string name="discoverable">Make discoverable</string>
-
     <!-- Welcome Screen -->
     <string name="button_singleplayer">Single Player</string>
     <string name="button_multiplayer">Multi Player</string>
@@ -120,18 +111,6 @@
     <string name="options_pegs_classic">Classic Pegs</string>
     <string name="options_pegs_classic_summary">Enable the classic peg shape</string>
     <string name="options_reset">Reset Settings</string>
-
-    <!-- Settings -->
-    <string-array name="settings_array">
-        <item>1 Client</item>
-        <item>2 Clients</item>
-        <item>3 Clients</item>
-    </string-array>
-    <string-array name="settings_array_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
 
     <!-- About -->
     <string name="license">GNU GPL v3 / New BSD License</string>
