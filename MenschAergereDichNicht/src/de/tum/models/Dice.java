@@ -190,7 +190,6 @@ public class Dice extends GameObject {
 		}
 		Dice.result = result;
 		dice.transfer(start.x - dice.x, start.y - dice.y, start_z - dice.z);
-		speed.set(-dice.x / frames / 1.5f, -dice.y / frames / 1.5f);
 		angle = 0;
 		// rotate to the correct number
 		basic_az = 0x00;
@@ -212,6 +211,12 @@ public class Dice extends GameObject {
 			basic_ax = 0x01;
 			basic_ay = 0x00;
 		}
+		if (!moving) {
+			frame_current = frames * 3 - 1;
+			speed.set(-dice.x * 2, -dice.y * 2);
+		}
+		else
+			speed.set(-dice.x / frames / 1.5f, -dice.y / frames / 1.5f);
 		action = true;
 	}
 	
