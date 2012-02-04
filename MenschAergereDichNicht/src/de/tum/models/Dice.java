@@ -41,8 +41,8 @@ public class Dice extends GameObject {
 	private static int frame_current;
 	/** the current x- and y-speed */
 	private static TupleFloat speed;
-	/** the current z-speed */
-	private static float speed_z;
+	/** start z for throwing the dice */
+	private static final float start_z = 10 * p;
 	/** angle of rotation */
 	private static float angle;
 	private static float basic_angle;
@@ -91,7 +91,6 @@ public class Dice extends GameObject {
 	
 	public static final void reset() {
 		dice.x = dice.y = dice.z = 0;
-		ax = ay = az = 1;
 		dice.transfer(0, 0, side / 2);
 		speed = new TupleFloat(0, 0);
 	}
@@ -101,25 +100,21 @@ public class Dice extends GameObject {
 	protected final void action() {
 		if (!action)
 			return;
-		if (++frame_current == 5 * frames) {
-			// animation over
+		if (frame_current++ == 4 * frames) {
+			// animation finished
 			frame_current = 0;
 			action = false;
 			Player.diceThrown(result);
 			return;
 		}
 		// updating game object
-		if (frame_current <= frames * 3)
-			angle = frame_current * 360 / frames;
-		transfer(speed.x, speed.y, speed_z);
-		speed_z -= side / 8;
-		if (z < side && speed_z < 0) {
-			speed_z *= -0.6;
-			speed.set(speed.x * 0.75f, speed.y * 0.75f);
-			if (speed_z < side / 6) {
-				speed.set(0, 0);
-				speed_z = 0;
-			}
+		float p = frame_current / 3.0f / frames;
+		if (p <= 1) {
+			angle = 360 * p * 4;
+			p += 1;
+			transfer(speed.x, speed.y, start_z * (float)
+					(Math.abs(Math.cos(p * p * 4)) * (2 - p))
+					+ side / 2 - z);
 		}
 	}
 
@@ -179,17 +174,23 @@ public class Dice extends GameObject {
 		if (result == -1) {
 			result = tokens[1];
 			start = Board.getPositionForDice(team, tokens[2]);
+			ax = tokens[3] / 100.0f;
+			ay = tokens[4] / 100.0f;
+			az = tokens[5] / 100.0f;
 		}
 		else {
-			int choice = (int) (Board.getDiceStartFieldChoices() * Math.random()); 
-			start = Board.getPositionForDice(team, choice);
-			MultiplayerActivity.notifyPlayers(new int[] {
-					NetworkPlayer.DICE_THROWN, result, choice });
+			tokens = new int[6];
+			tokens[0] = NetworkPlayer.DICE_THROWN;
+			tokens[1] = result;
+			start = Board.getPositionForDice(team, tokens[2] = (int) (Board.getDiceStartFieldChoices() * Math.random()));
+			ax = (tokens[3] = (int) (Math.random() * 200) - 100) / 100.0f;
+			ay = (tokens[4] = (int) (Math.random() * 200) - 100) / 100.0f;
+			az = (tokens[5] = (int) (Math.random() * 200) - 100) / 100.0f;
+			MultiplayerActivity.notifyPlayers(tokens);
 		}
 		Dice.result = result;
-		dice.transfer(start.x - dice.x, start.y - dice.y, 7 * side - dice.z);
-		speed.set(-dice.x / frames / 0.9f, -dice.y / frames / 0.9f);
-		speed_z = 0;
+		dice.transfer(start.x - dice.x, start.y - dice.y, start_z - dice.z);
+		speed.set(-dice.x / frames / 1.5f, -dice.y / frames / 1.5f);
 		angle = 0;
 		// rotate to the correct number
 		basic_az = 0x00;
