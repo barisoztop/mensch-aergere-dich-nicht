@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="rendering" size="1499,765" id="de.tum.renderable" metadata="uml2-1.0" initialized="true" tag="1000" key="32303037303533312D31303030204D656E73636841657267657265446963684E696368742F70303830333030">
+  <children xsi:type="editmodel:ClassEditModel" name="GameObject" location="50,255" size="262,247" id="de.tum.renderable/GameObject" runTimeClassModel="action(),transfer(FFF),layer_z,render(Ljavax.microedition.khronos.opengles.GL10;),setColor([F),frames,p,rotate(Ljavax.microedition.khronos.opengles.GL10;),GameObject(Z),z,sgobjects,y,rotated,x">
+    <children xsi:type="editmodel:CompartmentEditModel" size="239,144">
+      <children xsi:type="editmodel:AttributeEditModel" name="frames" id="de.tum.renderable/GameObject#frames"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="p" id="de.tum.renderable/GameObject#p"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="sgobjects" id="de.tum.renderable/GameObject#sgobjects"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="x" id="de.tum.renderable/GameObject#x"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="y" id="de.tum.renderable/GameObject#y"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="z" id="de.tum.renderable/GameObject#z"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="119,108">
+      <children xsi:type="editmodel:MethodEditModel" name="GameObject" id="de.tum.renderable/GameObject#GameObject(Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="action" id="de.tum.renderable/GameObject#action()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="render" id="de.tum.renderable/GameObject#render(Ljavax.microedition.khronos.opengles.GL10;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="rotate" id="de.tum.renderable/GameObject#rotate(Ljavax.microedition.khronos.opengles.GL10;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="transfer" id="de.tum.renderable/GameObject#transfer(FFF)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.5/@sourceConnections.0" autoLocated="true" id="de.tum.renderable/GeometricObject&lt;-de.tum.renderable/GameObject" source="//@children.0" target="//@children.2" targetEnd="//@children.0/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="131,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="81,103" anchorKind="FixedAtEdge"/>
+      <bendpoints secondRelativeDimension="-254,-62" firstRelativeDimension="0,-34"/>
+      <bendpoints secondRelativeDimension="-108,-62" firstRelativeDimension="146,-34"/>
+      <bendpoints secondRelativeDimension="-108,30" firstRelativeDimension="146,58"/>
+      <bendpoints secondRelativeDimension="-1,30" firstRelativeDimension="253,58"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="TriangleStripe" location="50,555" size="395,67" id="de.tum.renderable/TriangleStripe" runTimeClassModel="TriangleStripe(Z[F[F[SLjava.nio.FloatBuffer;Ljava.nio.FloatBuffer;I)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="372,18">
+      <children xsi:type="editmodel:MethodEditModel" name="TriangleStripe" id="de.tum.renderable/TriangleStripe#TriangleStripe(Z[F[F[SLjava.nio.FloatBuffer;Ljava.nio.FloatBuffer;I)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.4/@sourceConnections.0" autoLocated="true" id="de.tum.renderable/SimpleGeometricObject&lt;-de.tum.renderable/TriangleStripe" source="//@children.1" target="//@children.5" targetEnd="//@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.1/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="197,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="233,175" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@sourceConnections.0" name="GeometricObject" location="354,180" size="163,103" id="de.tum.renderable/GeometricObject" runTimeClassModel="transfer(FFF),visible,GeometricObject(Z)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="93,18">
+      <children xsi:type="editmodel:AttributeEditModel" name="visible" id="de.tum.renderable/GeometricObject#visible"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="148,36">
+      <children xsi:type="editmodel:MethodEditModel" name="GeometricObject" id="de.tum.renderable/GeometricObject#GeometricObject(Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="transfer" id="de.tum.renderable/GeometricObject#transfer(FFF)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.tum.renderable/Renderable&lt;-de.tum.renderable/GeometricObject" source="//@children.2" target="//@children.3" targetEnd="//@children.2/@sourceConnections.0/@children.1" sourceEnd="//@children.2/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="81,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="57,81"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.2/@sourceConnections.0" name="Renderable" location="378,58" size="116,81" id="de.tum.renderable/Renderable" runTimeClassModel="render(Ljavax.microedition.khronos.opengles.GL10;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="88,18">
+      <children xsi:type="editmodel:MethodEditModel" name="render" id="de.tum.renderable/Renderable#render(Ljavax.microedition.khronos.opengles.GL10;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="TriangleFan" location="450,555" size="385,67" id="de.tum.renderable/TriangleFan" runTimeClassModel="TriangleFan(Z[F[F[SLjava.nio.FloatBuffer;Ljava.nio.FloatBuffer;I)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="362,18">
+      <children xsi:type="editmodel:MethodEditModel" name="TriangleFan" id="de.tum.renderable/TriangleFan#TriangleFan(Z[F[F[SLjava.nio.FloatBuffer;Ljava.nio.FloatBuffer;I)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.tum.renderable/SimpleGeometricObject&lt;-de.tum.renderable/TriangleFan" source="//@children.4" target="//@children.1/@sourceConnections.0" targetEnd="//@children.4/@sourceConnections.0/@children.1" sourceEnd="//@children.4/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="192,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.1/@sourceConnections.0" name="SimpleGeometricObject" location="368,330" size="467,175" id="de.tum.renderable/SimpleGeometricObject" runTimeClassModel="SimpleGeometricObject(ZI[F[F[SLjava.nio.FloatBuffer;Ljava.nio.FloatBuffer;I),transfer(FFF),render(Ljavax.microedition.khronos.opengles.GL10;),setColor([FLjava.nio.FloatBuffer;),setVertices([FLjava.nio.FloatBuffer;),setTextures([S),createBuffer([F[S)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="444,126">
+      <children xsi:type="editmodel:MethodEditModel" name="createBuffer" id="de.tum.renderable/SimpleGeometricObject#createBuffer([F[S)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setTextures" id="de.tum.renderable/SimpleGeometricObject#setTextures([S)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="render" id="de.tum.renderable/SimpleGeometricObject#render(Ljavax.microedition.khronos.opengles.GL10;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setColor" id="de.tum.renderable/SimpleGeometricObject#setColor([FLjava.nio.FloatBuffer;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setVertices" id="de.tum.renderable/SimpleGeometricObject#setVertices([FLjava.nio.FloatBuffer;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="SimpleGeometricObject" id="de.tum.renderable/SimpleGeometricObject#SimpleGeometricObject(ZI[F[F[SLjava.nio.FloatBuffer;Ljava.nio.FloatBuffer;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="transfer" id="de.tum.renderable/SimpleGeometricObject#transfer(FFF)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.tum.renderable/GeometricObject&lt;-de.tum.renderable/SimpleGeometricObject" source="//@children.5" target="//@children.0/@sourceConnections.0" targetEnd="//@children.5/@sourceConnections.0/@children.1" sourceEnd="//@children.5/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="233,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Room" location="657,58" size="178,135" id="de.tum/Room" runTimeClassModel="render(Ljavax.microedition.khronos.opengles.GL10;),clear(),isEmpty(),addRenderable(Lde.tum.renderable.Renderable;)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="155,72">
+      <children xsi:type="editmodel:MethodEditModel" name="addRenderable" id="de.tum/Room#addRenderable(Lde.tum.renderable.Renderable;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="clear" id="de.tum/Room#clear()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="isEmpty" id="de.tum/Room#isEmpty()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="render" id="de.tum/Room#render(Ljavax.microedition.khronos.opengles.GL10;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Textures" location="50,58" size="180,139" id="de.tum.renderable/Textures" runTimeClassModel="setZoom(F),groupTextures([I),addTexture(Landroid.graphics.Bitmap;),bindTextures(Ljavax.microedition.khronos.opengles.GL10;),getId(I)">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="157,90">
+      <children xsi:type="editmodel:MethodEditModel" name="addTexture" id="de.tum.renderable/Textures#addTexture(Landroid.graphics.Bitmap;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="bindTextures" id="de.tum.renderable/Textures#bindTextures(Ljavax.microedition.khronos.opengles.GL10;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getId" id="de.tum.renderable/Textures#getId(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="groupTextures" id="de.tum.renderable/Textures#groupTextures([I)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=1;Product=eUML2" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showPublicMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>

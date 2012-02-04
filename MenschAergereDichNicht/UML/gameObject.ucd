@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="gameObject" size="1504,735" id="de.tum.models" metadata="uml2-1.0" initialized="true" scrolledY="269" tag="1000" key="32303037303533312D31303030204D656E73636841657267657265446963684E696368742F70303830333030">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.3/@sourceConnections.0" name="Peg" location="390,375" size="182,283" id="de.tum.models/Peg" runTimeClassModel="action(),pos_start,getCurrentField(),pos_final,moving,frame_current,move(),giveWay(FF),Peg(ZLde.tum.Team;I),hasStarted(),checkMove(I),getHit(),pos_offset_z,bottom,action,hasFinished(),reset(),pos_current,setSelection(Z)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="111,144">
+      <children xsi:type="editmodel:AttributeEditModel" name="pos_current" id="de.tum.models/Peg#pos_current"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="pos_final" id="de.tum.models/Peg#pos_final"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="pos_start" id="de.tum.models/Peg#pos_start"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="103,198">
+      <children xsi:type="editmodel:MethodEditModel" name="Peg" id="de.tum.models/Peg#Peg(ZLde.tum.Team;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="action" id="de.tum.models/Peg#action()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="checkMove" id="de.tum.models/Peg#checkMove(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getCurrentField" id="de.tum.models/Peg#getCurrentField()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="giveWay" id="de.tum.models/Peg#giveWay(FF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hasFinished" id="de.tum.models/Peg#hasFinished()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="hasStarted" id="de.tum.models/Peg#hasStarted()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="move" id="de.tum.models/Peg#move()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="reset" id="de.tum.models/Peg#reset()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setSelection" id="de.tum.models/Peg#setSelection(Z)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.tum.renderable/GameObject&lt;-de.tum.models/Peg" source="//@children.0" target="//@children.6/@sourceConnections.0" targetEnd="//@children.0/@sourceConnections.0/@children.1" sourceEnd="//@children.0/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="89,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPrivateMethods="true" showStaticMethods="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="SimplePeg" location="330,747" size="213,247" id="de.tum.models/SimplePeg" runTimeClassModel="color_selection,height,createColor([[F),color,colors,rotate(Ljavax.microedition.khronos.opengles.GL10;),vertices,white,SimplePeg(ZLde.tum.Team;I),convert([ILde.tum.Team;),black,setSelection(Z)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="150,126">
+      <children xsi:type="editmodel:AttributeEditModel" name="color" id="de.tum.models/SimplePeg#color"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="color_selection" id="de.tum.models/SimplePeg#color_selection"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="colors" id="de.tum.models/SimplePeg#colors"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="height" id="de.tum.models/SimplePeg#height"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="vertices" id="de.tum.models/SimplePeg#vertices"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="white" id="de.tum.models/SimplePeg#white"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="154,90">
+      <children xsi:type="editmodel:MethodEditModel" name="SimplePeg" id="de.tum.models/SimplePeg#SimplePeg(ZLde.tum.Team;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="convert" id="de.tum.models/SimplePeg#convert([ILde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="createColor" id="de.tum.models/SimplePeg#createColor([[F)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="rotate" id="de.tum.models/SimplePeg#rotate(Ljavax.microedition.khronos.opengles.GL10;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setSelection" id="de.tum.models/SimplePeg#setSelection(Z)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.tum.models/Peg&lt;-de.tum.models/SimplePeg" source="//@children.1" target="//@children.3/@sourceConnections.0" targetEnd="//@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.1/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="105,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPrivateMethods="true" showStaticMethods="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="ClassicBoard" location="45,693" size="270,301" id="de.tum.models/ClassicBoard" runTimeClassModel="action(),add4Parts([I[F[SI),createFields([F[F[F),createFields([F),textures,calculateTextures(),player_start,circle_white,gray,player_start_texture,middle,player_end_texture,ClassicBoard(Z),calculateVertices([IFFF),player_end,path2,path1,rotate(Ljavax.microedition.khronos.opengles.GL10;),singleSquare,path3,path_start,basicSquare">
+    <children xsi:type="editmodel:CompartmentEditModel" size="179,252">
+      <children xsi:type="editmodel:AttributeEditModel" name="basicSquare" id="de.tum.models/ClassicBoard#basicSquare"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="circle_white" id="de.tum.models/ClassicBoard#circle_white"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="gray" id="de.tum.models/ClassicBoard#gray"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="middle" id="de.tum.models/ClassicBoard#middle"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="path1" id="de.tum.models/ClassicBoard#path1"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="path2" id="de.tum.models/ClassicBoard#path2"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="path3" id="de.tum.models/ClassicBoard#path3"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="path_start" id="de.tum.models/ClassicBoard#path_start"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="247,144">
+      <children xsi:type="editmodel:MethodEditModel" name="ClassicBoard" id="de.tum.models/ClassicBoard#ClassicBoard(Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="action" id="de.tum.models/ClassicBoard#action()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="calculateTextures" id="de.tum.models/ClassicBoard#calculateTextures()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="calculateVertices" id="de.tum.models/ClassicBoard#calculateVertices([IFFF)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="createFields" id="de.tum.models/ClassicBoard#createFields([F[F[F)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="rotate" id="de.tum.models/ClassicBoard#rotate(Ljavax.microedition.khronos.opengles.GL10;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.tum.models/Board&lt;-de.tum.models/ClassicBoard" source="//@children.2" target="//@children.6" targetEnd="//@children.2/@sourceConnections.0/@children.1" sourceEnd="//@children.2/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="134,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="134,265"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPrivateMethods="true" showStaticMethods="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="ClassicPeg" location="555,711" size="217,283" id="de.tum.models/ClassicPeg" runTimeClassModel="ClassicPeg(ZLde.tum.Team;I),bufferV,split_vertical,vertices,used,split_horizontal,bufferCS,height,bufferC,rotate(Ljavax.microedition.khronos.opengles.GL10;),calculateVertices(),radius,calculateColors(),black,setSelection(Z)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="160,180">
+      <children xsi:type="editmodel:AttributeEditModel" name="bufferC" id="de.tum.models/ClassicPeg#bufferC"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="bufferCS" id="de.tum.models/ClassicPeg#bufferCS"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="bufferV" id="de.tum.models/ClassicPeg#bufferV"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="height" id="de.tum.models/ClassicPeg#height"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="radius" id="de.tum.models/ClassicPeg#radius"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="split_horizontal" id="de.tum.models/ClassicPeg#split_horizontal"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="split_vertical" id="de.tum.models/ClassicPeg#split_vertical"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="used" id="de.tum.models/ClassicPeg#used"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="152,90">
+      <children xsi:type="editmodel:MethodEditModel" name="ClassicPeg" id="de.tum.models/ClassicPeg#ClassicPeg(ZLde.tum.Team;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="calculateColors" id="de.tum.models/ClassicPeg#calculateColors()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="calculateVertices" id="de.tum.models/ClassicPeg#calculateVertices()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="rotate" id="de.tum.models/ClassicPeg#rotate(Ljavax.microedition.khronos.opengles.GL10;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setSelection" id="de.tum.models/ClassicPeg#setSelection(Z)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.1/@sourceConnections.0" autoLocated="true" id="de.tum.models/Peg&lt;-de.tum.models/ClassicPeg" source="//@children.3" target="//@children.0" targetEnd="//@children.3/@sourceConnections.0/@children.1" sourceEnd="//@children.3/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="107,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="89,282" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPrivateMethods="true" showStaticMethods="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="Dice" location="624,375" size="148,265" id="de.tum.models/Dice" runTimeClassModel="action(),throwIt(Lde.tum.Team;I[I),result,vertices,Dice(Z),throwIt(Lde.tum.Team;[F),basic_az,basic_ax,basic_ay,basic_angle,side,action,throwIt(Lde.tum.Team;),throwIt(Lde.tum.Team;[I),dice_red,az,ay,moving,frame_current,texture,textures,calculateTextures(),ax,angle,rotate(Ljavax.microedition.khronos.opengles.GL10;),speed_z,reset()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="122,324">
+      <children xsi:type="editmodel:AttributeEditModel" name="action" id="de.tum.models/Dice#action"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="moving" id="de.tum.models/Dice#moving"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="result" id="de.tum.models/Dice#result"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="side" id="de.tum.models/Dice#side"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="158,162">
+      <children xsi:type="editmodel:MethodEditModel" name="Dice" id="de.tum.models/Dice#Dice(Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="action" id="de.tum.models/Dice#action()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="calculateTextures" id="de.tum.models/Dice#calculateTextures()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="reset" id="de.tum.models/Dice#reset()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="rotate" id="de.tum.models/Dice#rotate(Ljavax.microedition.khronos.opengles.GL10;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="throwIt" id="de.tum.models/Dice#throwIt(Lde.tum.Team;[I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="throwIt" id="de.tum.models/Dice#throwIt(Lde.tum.Team;[F)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="throwIt" id="de.tum.models/Dice#throwIt(Lde.tum.Team;)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="de.tum.renderable/GameObject&lt;-de.tum.models/Dice" source="//@children.4" target="//@children.6/@sourceConnections.0" targetEnd="//@children.4/@sourceConnections.0/@children.1" sourceEnd="//@children.4/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="73,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPrivateMethods="true" showStaticMethods="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.6/@sourceConnections.0" name="GameObject" location="45,285" size="727,43" id="de.tum.renderable/GameObject" runTimeClassModel="action(),transfer(FFF),layer_z,render(Ljavax.microedition.khronos.opengles.GL10;),setColor([F),frames,p,rotate(Ljavax.microedition.khronos.opengles.GL10;),GameObject(Z),sgobjects,z,y,rotated,x">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.2/@sourceConnections.0" name="Board" location="45,375" size="296,265" id="de.tum.models/Board" runTimeClassModel="getDiceStartFieldChoices(),besides,getPositionForDice(Lde.tum.Team;I),set([Lde.tum.TupleFloat;[Lde.tum.TupleFloat;[Lde.tum.TupleFloat;I),getPlayers(),path_length,startGame(I),createPegs(),pegs,peg_fields,start_length,teams,Board(Z[Lde.tum.TupleFloat;[Lde.tum.TupleFloat;[Lde.tum.TupleFloat;I),dice_fields,getPositionNext(Lde.tum.Team;II),isFree(Lde.tum.Team;I),getPosition(Lde.tum.models.Peg;IZ),getTeams(),players,getAbsolutePositionOnPathOrEnd(Lde.tum.Team;I),start_pegs,getPegs(Lde.tum.Team;),fields">
+    <children xsi:type="editmodel:CompartmentEditModel" size="93,90">
+      <children xsi:type="editmodel:AttributeEditModel" name="path_length" id="de.tum.models/Board#path_length"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="players" id="de.tum.models/Board#players"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="start_length" id="de.tum.models/Board#start_length"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="start_pegs" id="de.tum.models/Board#start_pegs"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="teams" id="de.tum.models/Board#teams"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="295,198">
+      <children xsi:type="editmodel:MethodEditModel" name="Board" id="de.tum.models/Board#Board(Z[Lde.tum.TupleFloat;[Lde.tum.TupleFloat;[Lde.tum.TupleFloat;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="createPegs" id="de.tum.models/Board#createPegs()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPegs" id="de.tum.models/Board#getPegs(Lde.tum.Team;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPosition" id="de.tum.models/Board#getPosition(Lde.tum.models.Peg;IZ)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPositionForDice" id="de.tum.models/Board#getPositionForDice(Lde.tum.Team;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPositionNext" id="de.tum.models/Board#getPositionNext(Lde.tum.Team;II)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="startGame" id="de.tum.models/Board#startGame(I)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" targetConnections="//@children.0/@sourceConnections.0 //@children.4/@sourceConnections.0" autoLocated="true" id="de.tum.renderable/GameObject&lt;-de.tum.models/Board" source="//@children.6" target="//@children.5" targetEnd="//@children.6/@sourceConnections.0/@children.1" sourceEnd="//@children.6/@sourceConnections.0/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="147,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="352,43" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPrivateMethods="true" showStaticMethods="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=1;Product=eUML2" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+  <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" showMethodsReturnType="true" showMethodsParameterNames="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPrivateAttributes="true" showProtectedAttributes="true" showPublicAttributes="true" showStaticAttributes="true" showProtectedMethods="true" showPublicMethods="true" showPrivateMethods="true" showStaticMethods="true" packageIndication="3" showAttributeProperty="true"/>
+</editmodel:ClassDiagramEditModel>
