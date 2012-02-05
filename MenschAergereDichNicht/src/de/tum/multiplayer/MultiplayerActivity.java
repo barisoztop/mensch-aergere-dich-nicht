@@ -279,7 +279,7 @@ public class MultiplayerActivity extends Activity {
 					if (connectedDeviceName7 != null)
 						devices[index++] = connectedDeviceName7;
 					
-					// Send the progress dialog's value to the client
+					//Send the progress dialog's value to the client
 					MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.STATUS_SETTINGS,
 							null), BluetoothMPService.ALL_DEVICES);
 						
@@ -718,11 +718,16 @@ public class MultiplayerActivity extends Activity {
 		switch (transfer.reason) {
 		case DataTransfer.SETUP_GAME:
 			if (MultiplayerActivity.this.waitingDialog != null) {
+				if (D) Log.d(TAG, "waitingDialog.dismiss()");
 				waitingDialog.dismiss();
 				waitingDialog = null;
 			}
-			waitingTeamSettings.cancel();
-			waitingTeamSettings = null;
+			if (MultiplayerActivity.this.waitingTeamSettings != null) {
+				if (D) Log.d(TAG, "waitingTeamSettings.dismiss()");
+				waitingTeamSettings.dismiss();
+				waitingTeamSettings = null;
+			}
+			
 			Toast.makeText(getApplicationContext(),
 					"start game", Toast.LENGTH_SHORT).show();
 			startGame(transfer.tokens);
