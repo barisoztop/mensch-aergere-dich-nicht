@@ -44,7 +44,7 @@ public class MenschAergereDichNichtActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      context = this;
+      setContext(this);
       if(D) Log.e(TAG, "+++ ON CREATE +++");      
       
 	  int teams[] = getIntent().getExtras().getIntArray(TeamMatching.key);
@@ -109,11 +109,11 @@ public class MenschAergereDichNichtActivity extends Activity {
     }
     
 	public static final void showToast(int toast) {
-	    Message msg = context.mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+	    Message msg = getContext().mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
-        bundle.putString(MenschAergereDichNichtActivity.TOAST, context.getString(toast));
+        bundle.putString(MenschAergereDichNichtActivity.TOAST, getContext().getString(toast));
         msg.setData(bundle);
-        context.mHandler.sendMessage(msg);
+        getContext().mHandler.sendMessage(msg);
 	}
 
 	private long lastBackPressTime = 0;
@@ -140,7 +140,15 @@ public class MenschAergereDichNichtActivity extends Activity {
 		return true;
 	}
     
-    /**
+    public static MenschAergereDichNichtActivity getContext() {
+		return context;
+	}
+
+	public static void setContext(MenschAergereDichNichtActivity context) {
+		MenschAergereDichNichtActivity.context = context;
+	}
+
+	/**
      *  The Handler that gets information back from the BluetoothMPService
      */
     private final Handler mHandler = new Handler() {

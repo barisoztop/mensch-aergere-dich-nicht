@@ -1,5 +1,8 @@
 package de.tum.player;
 
+import android.content.Context;
+import android.media.MediaPlayer;
+import de.tum.MenschAergereDichNichtActivity;
 import de.tum.R;
 import de.tum.Team;
 import de.tum.models.Board;
@@ -37,6 +40,9 @@ public abstract class Player {
 
 	/** the pegs of this player */
 	private Peg[] pegs;
+	
+	/** when a player win play sound */
+	private MediaPlayer mp;
 
 	/**
 	 * creating a player
@@ -183,6 +189,16 @@ public abstract class Player {
 			if (!peg.hasFinished())
 				return;
 		won = true;
+		Context context;
+		if (MenschAergereDichNichtActivity.getContext() == null) {
+			context = MultiplayerActivity.getActivity();
+		} else {
+			context = MenschAergereDichNichtActivity.getContext();
+		}
+
+	    mp = MediaPlayer.create(context, R.raw.tada);
+	    mp.setLooping(false);
+	    
 		if (this instanceof HumanPlayer)
 			MultiplayerActivity.showToast(R.string.you_won);
 		else
@@ -199,6 +215,8 @@ public abstract class Player {
 			case 3:
 				MultiplayerActivity.showToast(R.string.won_blue);
 			}
+		
+		mp.start();
 	}
 	
 	/**
