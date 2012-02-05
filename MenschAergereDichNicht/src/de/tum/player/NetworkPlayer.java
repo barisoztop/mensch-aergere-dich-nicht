@@ -9,7 +9,7 @@ import de.tum.models.Dice;
  */
 public class NetworkPlayer extends Player {
 	/** notification for dice thrown */
-	public static final int DICE_THROWN = 0;
+	public static final int DICE_THROWN = 11;
 	/** notification for peg moved */
 	public static final int PEG_MOVED = 1;
 	/** saving the first token in case, that game start is late */
