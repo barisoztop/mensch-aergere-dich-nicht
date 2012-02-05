@@ -23,7 +23,7 @@ import de.tum.R;
 public class BluetoothMPService {
 	// Debugging
 	private static final String TAG = "BluetoothMPService";
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	// Name for the SDP record when creating server socket
 	private static final String NAME = "MenschAergereDichNicht";

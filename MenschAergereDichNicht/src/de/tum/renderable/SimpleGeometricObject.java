@@ -79,6 +79,7 @@ public abstract class SimpleGeometricObject extends GeometricObject {
 				.allocateDirect(values1 != null ? size_float * values1.length
 						: size_short * values2.length);
 		bufferByte.order(ByteOrder.nativeOrder());
+		// insert values
 		return values1 != null ? ((FloatBuffer) bufferByte.asFloatBuffer()
 				.clear()).put(values1) : ((ShortBuffer) bufferByte
 				.asShortBuffer().clear()).put(values2);

@@ -30,7 +30,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class DeviceListActivity extends Activity {
     // Debugging
     private static final String TAG = "DeviceListActivity";
-    private static final boolean D = true;
+    private static final boolean D = false;
 
     // Intent extra to return selected device
     public static String EXTRA_DEVICE_ADDRESS = "device_address";

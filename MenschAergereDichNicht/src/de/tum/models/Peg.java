@@ -1,6 +1,5 @@
 package de.tum.models;
 
-import android.util.Log;
 import de.tum.Team;
 import de.tum.TupleFloat;
 import de.tum.player.Player;
@@ -93,8 +92,6 @@ public abstract class Peg extends GameObject {
 	/** method for moving the peg */
 	public final void move() {
 		if (action)	
-			Log.d("peg",
-					"move: already moving ######	################!!!!+++++++++++++++++++++++");
 		frame_current = frames;
 		pos_next.set(x, y);
 		pos_offset_z = 0x00;
@@ -111,8 +108,6 @@ public abstract class Peg extends GameObject {
 	 */
 	public final void giveWay(float dx, float dy) {
 		if (action)	
-			Log.d("peg",
-					"giveWay: already moving ######	################!!!!+++++++++++++++++++++++");
 		action = true;
 		pos_final = -1;
 		pos_offset.set(dx / frames, dy / frames);
@@ -124,8 +119,6 @@ public abstract class Peg extends GameObject {
 	 */
 	public final void reset() {
 		if (action)	
-			Log.d("peg",
-					"reset: already moving ######	################!!!!+++++++++++++++++++++++");
 		action = true;
 		pos_current = pos_start;
 //		// getting the coordinates

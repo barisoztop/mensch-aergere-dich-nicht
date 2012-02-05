@@ -20,7 +20,7 @@ public class WelcomeActivity extends Activity {
 	private static final int code_result_single_player = 123;
 	// Debugging
 	private static final String TAG = "WelcomeActivity";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	
 	private static boolean loaded;
 
@@ -117,7 +117,7 @@ public class WelcomeActivity extends Activity {
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK){
+		if (keyCode == KeyEvent.KEYCODE_BACK) { // user has to confirm that he wants to exit
 				new AlertDialog.Builder(WelcomeActivity.this)
 		        .setIcon(android.R.drawable.ic_dialog_alert)
 		        .setTitle(R.string.button_exit)
