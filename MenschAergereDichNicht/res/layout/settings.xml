@@ -65,6 +65,31 @@
         android:textColor="#ff777777"
         android:textSize="7pt" />
     
+    <ImageView
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:src="@android:drawable/divider_horizontal_dark"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:scaleType="fitXY"
+	    android:padding="2dp"
+	    android:paddingTop="2dp" />
+    
+    <CheckBox
+        android:id="@+id/checkBoxOptionsSound"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/options_sound"
+        android:textSize="10pt" />
+	
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-3pt"
+        android:layout_marginLeft="10pt"
+        android:text="@string/options_sound_summary"
+        android:textColor="#ff777777"
+        android:textSize="7pt" />
+    
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

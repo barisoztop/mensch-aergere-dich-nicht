@@ -69,7 +69,7 @@
     <string name="button_confirm">Bestätigen</string>
     <string name="select_strategy">Wähle eine Strategie</string>
     <string name="select_device_for_this_team">Wähle das Gerät für das Team</string>
-    <string name="no_players">Es muss mindestens ein Team aktiviert sein</string>
+    <string name="no_players">Es muss mindestens ein benutzergesteuertes Team aktiviert sein</string>
 
     <string-array name="strategy">
         <item>Einfach</item>
@@ -101,6 +101,8 @@
     <string name="options_shaking_summary">Schüttlen des Geräts zum Würfeln</string>
     <string name="options_zoom">Ermöglicht Zoom</string>
     <string name="options_zoom_summary">Ermöglicht Multitouchzoom mit zwei Fingern</string>
+    <string name="options_sound">Sound</string>
+    <string name="options_sound_summary">Spielt Sound, wenn ein Spieler gewinnt</string>
     <string name="options_animations">Animationen</string>
     <string name="options_animated_peg">Animierter Kegel</string>
     <string name="options_animated_peg_summary">Kegel bewegt sich auf dem Brett</string>
