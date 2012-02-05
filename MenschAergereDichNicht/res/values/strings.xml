@@ -69,7 +69,7 @@
     <string name="button_confirm">Confirm</string>
     <string name="select_strategy">Select strategy</string>
     <string name="select_device_for_this_team">Select team\'s device</string>
-    <string name="no_players">At least one player has to be enabled</string>
+    <string name="no_players">At least one human player has to be enabled</string>
 
     <string-array name="strategy">
         <item>Easy</item>
@@ -101,7 +101,9 @@
     <string name="options_shaking_summary">Shaking the device will throw the dice</string>
     <string name="options_zoom">Enable Zoom</string>
     <string name="options_zoom_summary">Enables multi-touch zoom</string>
-	<string name="options_animations">Animations</string>
+    <string name="options_sound">Sound</string>
+    <string name="options_sound_summary">Enables sound when a player wins</string>
+   	<string name="options_animations">Animations</string>
     <string name="options_animated_peg">Animated Peg</string>
     <string name="options_animated_peg_summary">Peg moves across the board</string>
     <string name="options_animated_dice">Animated Dice</string>

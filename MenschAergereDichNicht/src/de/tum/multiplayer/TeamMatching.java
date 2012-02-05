@@ -3,6 +3,7 @@ package de.tum.multiplayer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.Toast;
 import de.tum.R;
 
 /**
@@ -170,12 +172,12 @@ public class TeamMatching extends Activity {
 		@Override
 		public void onClick(View v) {
 			// checking if at least one player is enabled
-			for (int i = 0; i < matches.length; ++i)
-				if (i == 5) { // no enabled players found
-					MultiplayerActivity.showToast(R.string.no_players);
+			for (int i = 0; i < matches.length + 1; ++i)
+				if (i == 4) { // no enabled players found
+					Toast.makeText(TeamMatching.this, R.string.no_players, 1).show();
 					return;
 				}
-				else if (matches[i].enabled) // found one enabled player
+				else if (matches[i].enabled && matches[i].human) // found one enabled player
 					break;
 			// creating the players configuration
 			int[] players = new int[TeamMatching.this.devices.length * 4];

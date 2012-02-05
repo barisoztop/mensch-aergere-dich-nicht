@@ -13,6 +13,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import de.tum.models.ClassicPeg;
 import de.tum.models.Dice;
 import de.tum.models.Peg;
+import de.tum.player.Player;
 import de.tum.renderable.GameObject;
 
 /**
@@ -23,6 +24,7 @@ public class SettingsActivity extends Activity{
 	/** the screen components */
 	private static CheckBox shaking;
 	private static CheckBox zooming;
+	private static CheckBox sound;
 	private static CheckBox animated_peg;
 	private static CheckBox animated_dice;
 	private static CheckBox rotating_board;
@@ -50,6 +52,14 @@ public class SettingsActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				GameRenderer.zooming = zooming.isChecked();
+			}
+		});
+
+		sound = (CheckBox) findViewById(R.id.checkBoxOptionsSound);
+		sound.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Player.sound = sound.isChecked();
 			}
 		});
 
@@ -151,6 +161,7 @@ public class SettingsActivity extends Activity{
 	private static final void setValues() {
 		shaking.setChecked(GameListener.shaking);
 		zooming.setChecked(GameRenderer.zooming);
+		sound.setChecked(Player.sound);
 		animated_peg.setChecked(Peg.moving);
 		animated_dice.setChecked(Dice.moving);
 		rotating_board.setChecked(GameRenderer.rotating);
@@ -165,6 +176,7 @@ public class SettingsActivity extends Activity{
 		// reading the stored settings
 		GameListener.shaking = settings.getBoolean("enable_shaking", true);
 		GameRenderer.zooming = settings.getBoolean("enable_zoom", true);
+		Player.sound = settings.getBoolean("enable_sound", true);
 		Peg.moving = settings.getBoolean("animated_peg", true);
 		Dice.moving = settings.getBoolean("animated_dice", true);
 		GameRenderer.rotating = settings.getBoolean("rotating_board", true);
@@ -179,6 +191,7 @@ public class SettingsActivity extends Activity{
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putBoolean("enable_shaking", GameListener.shaking);
 		editor.putBoolean("enable_zoom", GameRenderer.zooming);
+		editor.putBoolean("enable_sound", Player.sound);
 		editor.putBoolean("animated_peg", Peg.moving);
 		editor.putBoolean("animated_dice", Dice.moving);
 		editor.putBoolean("rotating_board", GameRenderer.rotating);

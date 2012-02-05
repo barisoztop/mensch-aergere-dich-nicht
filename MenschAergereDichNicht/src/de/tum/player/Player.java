@@ -14,6 +14,9 @@ import de.tum.multiplayer.MultiplayerActivity;
  * controls one team
  */
 public abstract class Player {
+	/** is true if sound is enabled */
+	public static boolean sound;
+
 	/** the current dice number */
 	private static int number;
 
@@ -190,14 +193,17 @@ public abstract class Player {
 				return;
 		won = true;
 		// player has won - a sound is played
-		Context context;
-		if (MenschAergereDichNichtActivity.getContext() == null)
-			context = MultiplayerActivity.getActivity();
-		else
-			context = MenschAergereDichNichtActivity.getContext();
-
-	    mp = MediaPlayer.create(context, R.raw.tada);
-	    mp.setLooping(false);
+		if (sound) {
+			Context context;
+			if (MenschAergereDichNichtActivity.getContext() == null)
+				context = MultiplayerActivity.getActivity();
+			else
+				context = MenschAergereDichNichtActivity.getContext();
+	
+		    mp = MediaPlayer.create(context, R.raw.tada);
+		    mp.setLooping(false);
+			mp.start();
+		}
 
 	    // notification is done
 		if (this instanceof HumanPlayer)
@@ -216,8 +222,6 @@ public abstract class Player {
 			case 3:
 				MultiplayerActivity.showToast(R.string.won_blue);
 			}
-		
-		mp.start();
 	}
 	
 	/**
