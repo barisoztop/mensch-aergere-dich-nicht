@@ -1,5 +1,6 @@
 package de.tum.player;
 
+import android.util.Log;
 import de.tum.Team;
 import de.tum.models.Dice;
 
@@ -11,6 +12,8 @@ public class NetworkPlayer extends Player {
 	public static final int DICE_THROWN = 0;
 	/** notification for peg moved */
 	public static final int PEG_MOVED = 1;
+	/** saving the first token in case, that game start is late */
+	private static int firstToken[];
 	
 	/**
 	 * creating a player
@@ -25,6 +28,10 @@ public class NetworkPlayer extends Player {
 	/** {@inheritDoc} */
 	@Override
 	protected void throwDice() {
+		if (firstToken != null) {
+			notify(firstToken);
+			firstToken = null;
+		}
 		// waiting for notification
 		return;
 	}
@@ -43,8 +50,13 @@ public class NetworkPlayer extends Player {
 	 *            the notification
 	 */
 	public static void notify(int[] tokens) {
+		if (player == null) { // storing token for game start
+			firstToken = tokens;
+			return;
+		}
 		switch (tokens[0]) {
 		case NetworkPlayer.DICE_THROWN:
+			Log.d("notify", "player=" + player + "; ");
 			Dice.throwIt(player.team, tokens);
 			break;
 		case NetworkPlayer.PEG_MOVED:

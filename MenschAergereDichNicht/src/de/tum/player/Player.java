@@ -1,6 +1,5 @@
 package de.tum.player;
 
-import android.util.Log;
 import de.tum.R;
 import de.tum.Team;
 import de.tum.models.Board;
