@@ -116,7 +116,7 @@ public class MultiplayerActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		activity = this;
+		setActivity(this);
 		if (D) Log.e(TAG, "+++ ON CREATE +++");
 
 		// Get local Bluetooth adapter
@@ -202,14 +202,14 @@ public class MultiplayerActivity extends Activity {
 	}
 
 	public static final void showToast(int toast) {
-		if (activity == null)
+		if (getActivity() == null)
 			MenschAergereDichNichtActivity.showToast(toast);
 		else {
-		    Message msg = activity.mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
+		    Message msg = getActivity().mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
 	        Bundle bundle = new Bundle();
-	        bundle.putString(MenschAergereDichNichtActivity.TOAST, activity.getString(toast));
+	        bundle.putString(MenschAergereDichNichtActivity.TOAST, getActivity().getString(toast));
 	        msg.setData(bundle);
-	        activity.mHandler.sendMessage(msg);
+	        getActivity().mHandler.sendMessage(msg);
 		}
 	}
 
@@ -644,11 +644,11 @@ public class MultiplayerActivity extends Activity {
     }
     
     public static final void notifyPlayers(int[] token) {
-		if (activity != null) {
+		if (getActivity() != null) {
 			addToken(token, false);
-			activity.sendMessage(
+			getActivity().sendMessage(
 					new DataTransfer(DataTransfer.IS_NOTIFICATION, token),
-					activity.bluetoothMPService.serverDevice ? BluetoothMPService.ALL_DEVICES
+					getActivity().bluetoothMPService.serverDevice ? BluetoothMPService.ALL_DEVICES
 							: BluetoothMPService.SERVER_ID);
 		}
     }
@@ -727,7 +727,7 @@ public class MultiplayerActivity extends Activity {
 			if (bluetoothMPService.serverDevice)
 				for (int i = 0; i < bluetoothMPService.getConnectedDevices(); ++i)
 					if (i != deviceNo) // forward message to clients
-						activity.sendMessage(new DataTransfer(
+						getActivity().sendMessage(new DataTransfer(
 								DataTransfer.IS_NOTIFICATION, transfer.tokens),
 								i + 1);
 			break;
@@ -784,4 +784,12 @@ public class MultiplayerActivity extends Activity {
 					NetworkPlayer.notify(tokens.element());
 	    	}
     }
+
+	public static MultiplayerActivity getActivity() {
+		return activity;
+	}
+
+	public static void setActivity(MultiplayerActivity activity) {
+		MultiplayerActivity.activity = activity;
+	}
 }
