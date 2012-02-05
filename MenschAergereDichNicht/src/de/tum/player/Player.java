@@ -189,16 +189,17 @@ public abstract class Player {
 			if (!peg.hasFinished())
 				return;
 		won = true;
+		// player has won - a sound is played
 		Context context;
-		if (MenschAergereDichNichtActivity.getContext() == null) {
+		if (MenschAergereDichNichtActivity.getContext() == null)
 			context = MultiplayerActivity.getActivity();
-		} else {
+		else
 			context = MenschAergereDichNichtActivity.getContext();
-		}
 
 	    mp = MediaPlayer.create(context, R.raw.tada);
 	    mp.setLooping(false);
-	    
+
+	    // notification is done
 		if (this instanceof HumanPlayer)
 			MultiplayerActivity.showToast(R.string.you_won);
 		else

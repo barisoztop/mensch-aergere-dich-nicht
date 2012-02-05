@@ -36,6 +36,7 @@ public class GameListener implements OnTouchListener, OnLongClickListener, Senso
 	private static Sensor sensor_accelerometer;
 	private static GameListener content;
 
+	// different states
 	private static boolean waitingForInput;
 	public static final int waitingForDice = 0;
 	public static final int waitingForPegSelection = 1;
@@ -47,6 +48,7 @@ public class GameListener implements OnTouchListener, OnLongClickListener, Senso
 	private static long time;
 	private static int count;
 
+	// current values
 	private float down_x;
 	private float down_y;
 	
@@ -54,6 +56,7 @@ public class GameListener implements OnTouchListener, OnLongClickListener, Senso
 	private static float acceleration_y;
 	private static float acceleration_z;
 
+	// just for synchronizing
 	private static final Object sync = new Object();
 	
 	public GameListener(Activity main) {
@@ -62,6 +65,14 @@ public class GameListener implements OnTouchListener, OnLongClickListener, Senso
 	    content = this;
 	}
 
+	/**
+	 * human player waits for input
+	 * 
+	 * @param player
+	 *            the human player
+	 * @param waitingFor
+	 *            the reason for input
+	 * */
 	public static final void waitForInput(HumanPlayer player, int waitingFor) {
 		synchronized (sync) {
 			waitingForInput = true;
@@ -72,12 +83,14 @@ public class GameListener implements OnTouchListener, OnLongClickListener, Senso
 		}
 	}
 
+	/** no longer waiting for input */
 	public static final void stopWaiting() {
 		synchronized (sync) {
 			waitingForInput = false;
 		}
 	}
 
+	/** verifying if waiting for input */
 	public static final void verifyWaiting() {
 		synchronized (sync) {
 			if (!waitingForInput)
@@ -147,14 +160,21 @@ public class GameListener implements OnTouchListener, OnLongClickListener, Senso
 	 * Calculate distance between two fingers for touch events
 	 * 
 	 * @param event
-	 * @return
+	 *            the event for calculating the distance
+	 * @return the distance
 	 */
 	private float calcDistance(MotionEvent event) {
 		float x = event.getX(0) - event.getX(1);
 		float y = event.getY(0) - event.getY(1);
 		return FloatMath.sqrt(x * x + y * y);
 	}
-	
+
+	/**
+	 * will add this listeners to the given view
+	 * 
+	 * @param view
+	 *            the given view
+	 */
 	public static final void onResume(View view) {
 		if (shaking && manager != null)
 	        manager.registerListener(
@@ -163,6 +183,12 @@ public class GameListener implements OnTouchListener, OnLongClickListener, Senso
         view.setOnLongClickListener(content);
 	}
 
+	/**
+	 * will remove this listeners from the given view
+	 * 
+	 * @param view
+	 *            the given view
+	 */
 	public static final void onPause(View view) {
 		if (shaking && manager != null)
 			manager.unregisterListener(content);

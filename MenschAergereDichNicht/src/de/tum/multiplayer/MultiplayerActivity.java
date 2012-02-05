@@ -48,7 +48,7 @@ import de.tum.player.Player;
 public class MultiplayerActivity extends Activity {
 	// Debugging
 	private static final String TAG = "MultiplayerActivity";
-	private static final boolean D = true;
+	private static final boolean D = false;
 
 	/* Bluetooth communication */
 	// Message types of the handler
@@ -218,6 +218,7 @@ public class MultiplayerActivity extends Activity {
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// asks for confirmation if user wants to exit
 		if (keyCode == KeyEvent.KEYCODE_BACK){
 			
 			if (this.lastBackPressTime < System.currentTimeMillis() - 3000) {
@@ -301,7 +302,6 @@ public class MultiplayerActivity extends Activity {
 				break;
 			case MESSAGE_WRITE:
 				// message that this device send to other(s)
-				byte[] writeBuf = (byte[]) msg.obj;
 				if (D) Log.d(TAG, "MESSAGE_WRITE - Message is sent to other device(s)");
 				break;
 			case MESSAGE_READ:
@@ -643,6 +643,12 @@ public class MultiplayerActivity extends Activity {
         }
     }
     
+	/**
+	 * sends a notification to other devices
+	 * 
+	 * @param token
+	 *            the notification
+	 */
     public static final void notifyPlayers(int[] token) {
 		if (getActivity() != null) {
 			addToken(token, false);

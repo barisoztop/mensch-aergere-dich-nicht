@@ -25,7 +25,7 @@ import de.tum.player.Player;
 public class MenschAergereDichNichtActivity extends Activity {
     // Debugging
     private static final String TAG = "MenschAergereDichNicht";
-    private static final boolean D = true;
+    private static final boolean D = false;
     
     public static final int MESSAGE_TOAST = 5;
     public static final int MESSAGE_TITLE = 6;    
@@ -108,6 +108,12 @@ public class MenschAergereDichNichtActivity extends Activity {
       if(D) Log.e(TAG, "+ ON RESUME +");
     }
     
+	/**
+	 * displays a toast according to the given string value (resources)
+	 * 
+	 * @param toast
+	 *            the int id
+	 */
 	public static final void showToast(int toast) {
 	    Message msg = getContext().mHandler.obtainMessage(MenschAergereDichNichtActivity.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
@@ -139,11 +145,13 @@ public class MenschAergereDichNichtActivity extends Activity {
 			return false;
 		return true;
 	}
-    
+
+	/** getting the context */
     public static MenschAergereDichNichtActivity getContext() {
 		return context;
 	}
 
+	/** setting the context */
 	public static void setContext(MenschAergereDichNichtActivity context) {
 		MenschAergereDichNichtActivity.context = context;
 	}

@@ -89,6 +89,7 @@ public class Dice extends GameObject {
 		reset();
 	}
 	
+	/** resets the dice */
 	public static final void reset() {
 		dice.x = dice.y = dice.z = 0;
 		dice.transfer(0, 0, side / 2);
@@ -171,14 +172,14 @@ public class Dice extends GameObject {
 	 */
 	private static final void throwIt(Team team, int result, int tokens[]) {
 		TupleFloat start = null;
-		if (result == -1) {
+		if (result == -1) { // not a real move, just animation to show
 			result = tokens[1];
 			start = Board.getPositionForDice(team, tokens[2]);
 			ax = tokens[3] / 100.0f;
 			ay = tokens[4] / 100.0f;
 			az = tokens[5] / 100.0f;
 		}
-		else {
+		else { // real move, creating notification
 			tokens = new int[6];
 			tokens[0] = NetworkPlayer.DICE_THROWN;
 			tokens[1] = result;

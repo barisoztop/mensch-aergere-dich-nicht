@@ -14,7 +14,7 @@ import de.tum.R;
 public class ModeSelectionActivity extends Activity {
 	// Debugging
 	private static final String TAG = "ModeSelectionActivity";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	
 	// Local Bluetooth adapter
 	private BluetoothAdapter mBluetoothAdapter = null;
@@ -78,14 +78,6 @@ public class ModeSelectionActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-//		if (D) Log.e(TAG, "+ ON RESUME +");
-//		// If the adapter is null, then Bluetooth is not supported
-//		if (mBluetoothAdapter == null) {
-//			Toast.makeText(this, "Bluetooth is not available, try New Game",
-//					Toast.LENGTH_LONG).show();
-//			finish();
-//			return;
-//		}
 	}
 	
 	@Override

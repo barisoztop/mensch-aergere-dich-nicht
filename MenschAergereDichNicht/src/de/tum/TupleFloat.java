@@ -23,6 +23,14 @@ public class TupleFloat {
 		this.y = y;
 	}
 	
+	/**
+	 * sets the coordinates
+	 * 
+	 * @param x
+	 *            the x-coordinate
+	 * @param y
+	 *            the y-coordinate
+	 */
 	public final void set(float x, float y) {
 		this.x = x;
 		this.y = y;

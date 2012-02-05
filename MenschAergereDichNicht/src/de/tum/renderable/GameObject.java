@@ -75,6 +75,7 @@ public abstract class GameObject extends GeometricObject {
 		action();
 		if (!visible || sgobjects == null)
 			return;
+		// push matrix to save it on the stack
 		gl.glPushMatrix();
 		// setting game object position
 		gl.glTranslatef(x, y, z);

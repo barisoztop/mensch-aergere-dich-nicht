@@ -17,7 +17,7 @@ import de.tum.R;
 public class ClientNumberPicker extends Activity {
 	// Debugging
 	private static final String TAG = "ClientNumberPicker";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	private int numberOfClients = 0;
 
 	@Override
