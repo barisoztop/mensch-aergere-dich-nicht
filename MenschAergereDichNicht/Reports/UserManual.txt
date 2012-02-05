@@ -1,76 +1,0 @@
-
-
-Game Application
-USER MANUAL
-Table of Contents
-Welcome Screen	3
-Single Player	4
-Deciding Team Properties	4
-Playing the Game	5
-Multi Player	8
-Deciding the Server and Client Devices	8
-Server Mode	8
-Client Mode	10
-Settings	12
-Help	13
-About	14
-Exit	14
-
-
-
-
-Welcome Screen
-Welcome screen is the first screen that comes up when the application first runs. It has buttons to continue to game in the following ways:
-1. Single Player: 	Starts the single player version of the game
-2. Multi Player: 	Starts the multiplayer version of the game
-3. Settings: 	Brings up the settings screen to customize the game
-4. Help: 		Brings up the help screen summarizing how to play the game
-5. About: 		Brings up application information including developers, and license information
-6. Exit: 		Leaves the game application
-
-Welcome ScreenSingle Player
-Single player mode allows user to play the game against AI players with different difficulty levels or playing with at most four people on the screen of one of the device.
-Deciding Team Properties
-After you have picked the single player mode, another screen will come to let you pick all the four players’ properties. These properties are which teams are going to be AI players, including their difficulty level to beat them (Easy, Medium, and Hard), and which teams are going to be human players. Game application allows you to play the game with different combinations of AI and human players on one device’s screen. User can also decide his team’s color by enabling the “Is human” check box. There are colors associated with each of the four teams. Those colors also represent the color of pegs and final home fields of the corresponding team on the game board.
-Selecting each team’s propertiesSelecting the difficulty level of AI playersPlaying the Game
-After the confirmation of the team properties by clicking the “Confirm” button at the bottom of the screen, game board will come up to the view. If it’s your turn to throw the dice, you will get a notification on the screen. There are two options to throw the dice: You can shake the device like you shake the real dice in your palm or you can touch on the screen. If your pegs are at their beginning fields, you have to throw the dice three times until you get a six on the dice. If that’s not the case, you have to wait other players until the turn comes back to you again. After you throw a six, one of your pegs will get a highlighted color to notify you to move it. Movement of the peg is done by long touching on the screen of your device. Your peg will move with an animation to first position on the board on its team direction to the destination fields. If there are more than one pegs on the board, you can switch between pegs by touching on the screen. Selected peg will always be highlighted, and then you can make it move again by long clicking on the screen. 
-Notifications to guide you in the gameSelected peg is highlighted
-During the game you can change the position of the board according to your best view. You can rotate the board by moving your finger on the screen to the direction you want to rotate the board. You can also change the zoom level of the board by pinching on the screen.
-Different zoom levels to the board
-
-Positioning the board 
-
-
-Multi Player
-You can play the game up to 8 players. While 4 of these players playing the game, the other 4 can watch the game on their device’s screen.
-Deciding the Server and Client Devices
-For the multiplayer version of the game, one of the devices has to be assigned as “server” device, and the other devices have to connect to that device as “client” devices. After you pressed the “multi player” button on the welcome screen, a dialog box will appear to ask you to select the mode of the device. 
-Server Mode
-If you decide to be a “server” device click on the server mode button. At the next screen after you have selected server mode, you can decide how many client devices can join the game by picking the number from drop-down list, and confirming it by clicking “select” button.
-Selecting the device modeDeciding the number of clients
-Next thing will be waiting for the client devices to connect to your device. You can follow the progress on the screen with a progress bar.
-Server device waits for all the clients connectionTeam properties screen
-After all the devices are connected to server device, you will get the screen allowing you to set the team properties. You can decide which device will belong to which team, and difficulty level of the AI players if you want them to be available. After you’ve decided, you can click the confirm button to start the game.
-
-Client Mode
-If you decide to be a “client” that connects to a server device, you should click the client mode button after you click the multi player mode button at the welcome screen. Then, you have to select the name of the device from the list that appeared. If the sever device and the client device have not been paired before, you have to pair them. While you can do this before starting the game application under Bluetooth settings, you can also do without leaving the application. To do this, the client device user has to select “Make this device discoverable”, right after entering the multi player mode. This will allow the client device to be discoverable for 300 seconds, which is enough time to connect all the devices. After this, client device users have to click the “Scan for devices” button after they have selected the client mode. All the recognized devices’ name will start to appear under the list of “Other available devices”. When you click on the server device name, a pairing confirmation question will come. After, both of the devices’ user accept the pairing question, client device will be connected to server device.
-Selecting a server device name to connectScanning for other devices that has not been paired before
-If server device’s user selected more than one client to play the game, you will get a progress screen that let you know about the connection of the other devices to the server device.
-Following the progree of other devices conenction to the serverHurry up modeIt’s also possible to reach conenction options with options menu button on the device
-After ll the devices are connected you can start to enjoy the game. You can follow the commands on the screen for the next movement. But if you don’t do your movement in a proper time, Hurry up mode will start with getting a warning saying “Hury up!” and your peg will move automatically after a while. If one of the device left the game, you can setup a new game with options menu button of your device, instead of switching back to the main screen.
-
-
-Settings
-Under settings menu, you can change many properties of the game.
-Settings menu
-Help
-Help screen
-A summarized version of the user manual of the game application.
-About
-About the game application screen
-It includes information about developers of the game, and license.
-Exit
-It leaves the application and switch to the last activity that you left on you device.
-2
-
-
