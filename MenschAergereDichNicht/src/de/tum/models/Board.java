@@ -125,11 +125,21 @@ public abstract class Board extends GameObject {
 			int distance) {
 		return fieldPos < start_pegs ? new TupleFloat(start_pegs,
 				distance == 6 ? isFree(team, start_pegs) : -2)
-				: new TupleFloat(distance += fieldPos, distance >= 2
-						* start_pegs + path_length ? -2
-						: isFree(team, distance));
+				: new TupleFloat(fieldPos += distance, fieldPos < start_pegs
+						+ path_length ? isFree(team, fieldPos) : fieldPos >= 2
+						* start_pegs + path_length ? -2 : verifyNext(team,
+						fieldPos, distance));
 	}
 	
+	// verify if the path is free on the final fields
+	private static int verifyNext(Team team, int fieldPos, int distance) {
+		int abs = getAbsolutePositionOnPathOrEnd(team, fieldPos);
+		for (int i = 0; i < distance && fieldPos - i >= path_length + start_pegs; ++i)
+			if (peg_fields[abs - i] != null)
+				return -2;
+		return -1;
+	}
+
 	/**
 	 * getting the current start field for the dice
 	 * 

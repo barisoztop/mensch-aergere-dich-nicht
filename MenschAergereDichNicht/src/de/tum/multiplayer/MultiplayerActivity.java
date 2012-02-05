@@ -35,11 +35,8 @@ import de.tum.GameListener;
 import de.tum.GameRenderer;
 import de.tum.MenschAergereDichNichtActivity;
 import de.tum.R;
-import de.tum.Room;
 import de.tum.Team;
 import de.tum.models.Board;
-import de.tum.models.ClassicBoard;
-import de.tum.models.Dice;
 import de.tum.player.AIPlayer;
 import de.tum.player.HumanPlayer;
 import de.tum.player.NetworkPlayer;
@@ -107,7 +104,6 @@ public class MultiplayerActivity extends Activity {
 	private int numberOfClients = 0;
 	
 	private View toastLayout;
-	private boolean dialogOpened = true;
 
 	/* graphics members */
 	private GLSurfaceView view;
@@ -135,8 +131,6 @@ public class MultiplayerActivity extends Activity {
 		}
 
 		/* setup game */
-		Room.addRenderable(new ClassicBoard(true));
-		Room.addRenderable(new Dice(true));
 		players = new Player[Board.getPlayers()];
 		
 		renderer = new GameRenderer();
@@ -307,7 +301,6 @@ public class MultiplayerActivity extends Activity {
 				break;
 			case MESSAGE_WRITE:
 				// message that this device send to other(s)
-				byte[] writeBuf = (byte[]) msg.obj;
 				if (D) Log.d(TAG, "MESSAGE_WRITE - Message is sent to other device(s)");
 				break;
 			case MESSAGE_READ:

@@ -10,7 +10,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
+import de.tum.models.ClassicBoard;
+import de.tum.models.Dice;
 import de.tum.multiplayer.MultiplayerActivity;
 import de.tum.multiplayer.TeamMatching;
 
@@ -20,6 +21,8 @@ public class WelcomeActivity extends Activity {
 	// Debugging
 	private static final String TAG = "WelcomeActivity";
 	private static final boolean D = true;
+	
+	private static boolean loaded;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -95,7 +98,12 @@ public class WelcomeActivity extends Activity {
 		});
 		
 		// loading settings
-		SettingsActivity.loadConfiguration(PreferenceManager.getDefaultSharedPreferences(this)); 
+		SettingsActivity.loadConfiguration(PreferenceManager.getDefaultSharedPreferences(this));
+		if (!loaded) {
+		      Room.addRenderable(new ClassicBoard(true));
+		      Room.addRenderable(new Dice(true));
+		      loaded = true;
+		}
 	}
 	
 	@Override

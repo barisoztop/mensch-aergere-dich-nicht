@@ -1,5 +1,7 @@
 package de.tum.player;
 
+import android.util.Log;
+import de.tum.R;
 import de.tum.Team;
 import de.tum.models.Board;
 import de.tum.models.Peg;
@@ -182,6 +184,22 @@ public abstract class Player {
 			if (!peg.hasFinished())
 				return;
 		won = true;
+		if (this instanceof HumanPlayer)
+			MultiplayerActivity.showToast(R.string.you_won);
+		else
+			switch(team.id) {
+			case 0:
+				MultiplayerActivity.showToast(R.string.won_red);
+				break;
+			case 1:
+				MultiplayerActivity.showToast(R.string.won_yellow);
+				break;
+			case 2:
+				MultiplayerActivity.showToast(R.string.won_green);
+				break;
+			case 3:
+				MultiplayerActivity.showToast(R.string.won_blue);
+			}
 	}
 	
 	/**
@@ -190,9 +208,15 @@ public abstract class Player {
     public static final void nextTurn() {
     	Team team = player.team;
     	Player player = null;
-    	while(player == null) {
+    	int count = 0;
+    	while(player == null || player.won) {
+    		if (count == players.length) {// game over
+    			MultiplayerActivity.showToast(R.string.game_over);
+    			return;
+    		}
     		team = Team.getById((team.id + 1) % players.length);
     		player = players[team.id];
+    		++count;
     	}
     	player.makeTurn();
     }

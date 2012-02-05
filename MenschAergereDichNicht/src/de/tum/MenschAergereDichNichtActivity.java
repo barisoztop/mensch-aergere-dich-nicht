@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.tum.models.Board;
-import de.tum.models.ClassicBoard;
-import de.tum.models.Dice;
 import de.tum.multiplayer.TeamMatching;
 import de.tum.player.AIPlayer;
 import de.tum.player.HumanPlayer;
@@ -50,9 +48,6 @@ public class MenschAergereDichNichtActivity extends Activity {
       if(D) Log.e(TAG, "+++ ON CREATE +++");      
       
 	  int teams[] = getIntent().getExtras().getIntArray(TeamMatching.key);
-
-      Room.addRenderable(new ClassicBoard(true));
-      Room.addRenderable(new Dice(true));
       players = new Player[Board.getTeams()];
       int playing = 4;
       for (int i = 0; i < teams.length; ++i)

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
 import de.tum.R;
 
 public class ModeSelectionActivity extends Activity {
