@@ -7,7 +7,12 @@
     <string name="throw_dice">Please throw the dice</string>
     <string name="select_peg">Please touch to select a peg</string>
     <string name="hurry">Hurry up !</string>
-    <string name="player_won">You win !</string>
+    <string name="you_won">You win !</string>
+    <string name="won_red">RED Team won !</string>
+    <string name="won_yellow">YELLOW Team won !</string>
+    <string name="won_green">GREEN Team won !</string>
+    <string name="won_blue">BLUE Team won !</string>
+    <string name="game_over">GAME OVER</string>
 
     <!-- BluetoothMPService -->
     <string name="title_connecting">connecting...</string>
