@@ -301,6 +301,7 @@ public class MultiplayerActivity extends Activity {
 				break;
 			case MESSAGE_WRITE:
 				// message that this device send to other(s)
+				byte[] writeBuf = (byte[]) msg.obj;
 				if (D) Log.d(TAG, "MESSAGE_WRITE - Message is sent to other device(s)");
 				break;
 			case MESSAGE_READ:
@@ -710,7 +711,6 @@ public class MultiplayerActivity extends Activity {
 		Log.d(TAG, "processArrivalServerData() --");
 		switch (transfer.reason) {
 		case DataTransfer.SETUP_GAME:
-			startGame(transfer.tokens);
 			if (MultiplayerActivity.this.waitingDialog != null) {
 				waitingDialog.dismiss();
 				waitingDialog = null;
@@ -719,6 +719,7 @@ public class MultiplayerActivity extends Activity {
 			waitingTeamSettings = null;
 			Toast.makeText(getApplicationContext(),
 					"start game", Toast.LENGTH_SHORT).show();
+			startGame(transfer.tokens);
 			break;
 		case DataTransfer.IS_NOTIFICATION:
 			addToken(transfer.tokens, true);
