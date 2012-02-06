@@ -280,8 +280,15 @@ public class MultiplayerActivity extends Activity {
 						devices[index++] = connectedDeviceName7;
 					
 					//Send the progress dialog's value to the client
-					MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.STATUS_SETTINGS,
-							null), BluetoothMPService.ALL_DEVICES);
+//					MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.STATUS_SETTINGS,
+//							null), BluetoothMPService.ALL_DEVICES);
+					
+//					// Not to send overlapped messages
+//					try {
+//						Thread.sleep(200);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
 						
 					startActivityForResult(new Intent(getApplicationContext(),
 							TeamMatching.class).putExtra(
@@ -332,61 +339,61 @@ public class MultiplayerActivity extends Activity {
 						// Change the progress dialog's value
 						MultiplayerActivity.this.setProgessValue(1);
 						// Send the progress dialog's value to the client
-						if (bluetoothMPService.getMaxDeviceNumber() != 1) {
+//						if (bluetoothMPService.getMaxDeviceNumber() != 1) {
 							conStatus = new int[]{bluetoothMPService.getMaxDeviceNumber(), 1};
 							MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.STATUS_WAITING,
 									conStatus), BluetoothMPService.ALL_DEVICES);
-						}
+//						}
 						break;
 					case 2:
 						connectedDeviceName2 = conenctedDeviceName;
 						toastConnectedDevice(connectedDeviceName2);
 						MultiplayerActivity.this.setProgessValue(2);
-						if (bluetoothMPService.getMaxDeviceNumber() != 2) {
+//						if (bluetoothMPService.getMaxDeviceNumber() != 2) {
 							conStatus = new int[]{bluetoothMPService.getMaxDeviceNumber(), 2};
 							MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.STATUS_WAITING,
 									conStatus), BluetoothMPService.ALL_DEVICES);
-						}
+//						}
 						break;
 					case 3:
 						connectedDeviceName3 = conenctedDeviceName;
 						toastConnectedDevice(connectedDeviceName3);
 						MultiplayerActivity.this.setProgessValue(3);
-						if (bluetoothMPService.getMaxDeviceNumber() != 3) {
+//						if (bluetoothMPService.getMaxDeviceNumber() != 3) {
 							conStatus = new int[]{bluetoothMPService.getMaxDeviceNumber(), 3};
 							MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.STATUS_WAITING,
 									conStatus), BluetoothMPService.ALL_DEVICES);
-						}
+//						}
 						break;
 					case 4:
 						connectedDeviceName4 = conenctedDeviceName;
 						toastConnectedDevice(connectedDeviceName4);
 						MultiplayerActivity.this.setProgessValue(4);
-						if (bluetoothMPService.getMaxDeviceNumber() != 4) {
+//						if (bluetoothMPService.getMaxDeviceNumber() != 4) {
 							conStatus = new int[]{bluetoothMPService.getMaxDeviceNumber(), 4};
 							MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.STATUS_WAITING,
 									conStatus), BluetoothMPService.ALL_DEVICES);
-						}
+//						}
 						break;
 					case 5:
 						 connectedDeviceName5 = conenctedDeviceName;
 						 toastConnectedDevice(connectedDeviceName5);
 						 MultiplayerActivity.this.setProgessValue(5);
-						 if (bluetoothMPService.getMaxDeviceNumber() != 5) {
+//						 if (bluetoothMPService.getMaxDeviceNumber() != 5) {
 							 conStatus = new int[]{bluetoothMPService.getMaxDeviceNumber(), 5};
 							 MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.STATUS_WAITING,
 									conStatus), BluetoothMPService.ALL_DEVICES);
-						 }
+//						 }
 						 break;
 					case 6:
 						 connectedDeviceName6 = conenctedDeviceName;
 						 toastConnectedDevice(connectedDeviceName6);
 						 MultiplayerActivity.this.setProgessValue(6);
-						 if (bluetoothMPService.getMaxDeviceNumber() != 6) {
+//						 if (bluetoothMPService.getMaxDeviceNumber() != 6) {
 							 conStatus = new int[]{bluetoothMPService.getMaxDeviceNumber(), 6};
 							 MultiplayerActivity.this.sendMessage(new DataTransfer(DataTransfer.STATUS_WAITING,
 										conStatus), BluetoothMPService.ALL_DEVICES);
-						 }
+//						 }
 						 break;
 					case 7:
 						 connectedDeviceName7 = conenctedDeviceName;
@@ -584,9 +591,18 @@ public class MultiplayerActivity extends Activity {
 				int start[][] = new int[teams.length / 4][4];
 				for (int i = 0; i < teams.length; ++i)
 					start[i / 4][i % 4] = teams[i];
-				startGame(start[0]);
-				for (int i = 0; i < bluetoothMPService.getConnectedDevices(); ++i)
+				
+				for (int i = 0; i < bluetoothMPService.getConnectedDevices(); ++i){
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					sendMessage(new DataTransfer(DataTransfer.SETUP_GAME, start[i + 1]), i + 1);
+					Log.d(TAG, "DEVICE EEEEE" + i + 1);
+					
+				}
+				startGame(start[0]);
 			}
 		}
 	}
@@ -717,6 +733,7 @@ public class MultiplayerActivity extends Activity {
 		Log.d(TAG, "processArrivalServerData() --");
 		switch (transfer.reason) {
 		case DataTransfer.SETUP_GAME:
+			Log.d(TAG, "DataTransfer.SETUP_GAME");
 			if (MultiplayerActivity.this.waitingDialog != null) {
 				if (D) Log.d(TAG, "waitingDialog.dismiss()");
 				waitingDialog.dismiss();
