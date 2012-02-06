@@ -91,7 +91,6 @@ public abstract class Peg extends GameObject {
 
 	/** method for moving the peg */
 	public final void move() {
-		if (action)	
 		frame_current = frames;
 		pos_next.set(x, y);
 		pos_offset_z = 0x00;
@@ -107,7 +106,6 @@ public abstract class Peg extends GameObject {
 	 *            the offset in y-direction
 	 */
 	public final void giveWay(float dx, float dy) {
-		if (action)	
 		action = true;
 		pos_final = -1;
 		pos_offset.set(dx / frames, dy / frames);
@@ -118,7 +116,6 @@ public abstract class Peg extends GameObject {
 	 * resetting this peg will move it back to its start position
 	 */
 	public final void reset() {
-		if (action)	
 		action = true;
 		pos_current = pos_start;
 //		// getting the coordinates
